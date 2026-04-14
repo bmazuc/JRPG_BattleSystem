@@ -1,9 +1,10 @@
 #include "Engine.h"
 
 #include "Texture.h"
-#include "SpriteRenderer.h"
+#include "Renderer.h"
 #include "Sprite.h"
 #include "Game.h"
+#include "SpriteRenderer.h"
 
 #include <glm/vec2.hpp>
 #include <glm/vec3.hpp>
@@ -49,23 +50,27 @@ void Engine::Start(WindowData windowData, Game* _game, int swapInterval)
         return;
     }
 
-    spriteRenderer = new SpriteRenderer();
-    spriteRenderer->InitShader("Shaders/sprite.vs", "Shaders/sprite.frag");
+    renderer = new Renderer();
+    renderer->InitShader("Shaders/sprite.vs", "Shaders/sprite.frag");
 
     Run();
 }
 
 void Engine::Run()
 {
-    if (game)
+    if (!game)
     {
-        game->Init(spriteRenderer);
+        return;
     }
 
-    spriteRenderer->InitRenderData(viewportBaseResolution);
+    game->Init();
+
+    renderer->InitRenderData(viewportBaseResolution);
 
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+    std::vector<GameObject*> gameObjects = game->GetScene()->GetGameObjects();
 
     SDL_Event event;
     bool shouldExit = false;
@@ -83,21 +88,29 @@ void Engine::Run()
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
-        spriteRenderer->Render(window);
+        for (GameObject* gameObject : gameObjects)
+        {
+            if (gameObject)
+            {
+                SpriteRenderer* spriteRenderer = gameObject->GetComponent<SpriteRenderer>();
+
+                if (spriteRenderer)
+                {
+                    renderer->RenderSprite(spriteRenderer->GetSprite(), window);
+                }
+            }
+        }
 
         SDL_GL_SwapWindow(window);
 
-        if (game)
-        {
-            game->Update();
-        }
+        game->Update();
     }
 }
 
 void Engine::Shutdown()
 {
-    delete spriteRenderer;
-    spriteRenderer = nullptr;
+    delete renderer;
+    renderer = nullptr;
 
     // Destroy any SDL objects we are allocated
     if (glContext)

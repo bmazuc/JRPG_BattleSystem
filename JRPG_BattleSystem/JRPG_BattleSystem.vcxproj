@@ -133,19 +133,28 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Engine\source\Component.cpp" />
     <ClCompile Include="Engine\source\Engine.cpp" />
+    <ClCompile Include="Engine\source\Game.cpp" />
+    <ClCompile Include="Engine\source\GameObject.cpp" />
+    <ClCompile Include="Engine\source\Scene.cpp" />
     <ClCompile Include="Engine\source\Shader.cpp" />
     <ClCompile Include="Engine\source\Sprite.cpp" />
+    <ClCompile Include="Engine\source\Renderer.cpp" />
     <ClCompile Include="Engine\source\SpriteRenderer.cpp" />
     <ClCompile Include="Engine\source\Texture.cpp" />
     <ClCompile Include="Game\source\BattleSystemGame.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Engine\include\Component.h" />
     <ClInclude Include="Engine\include\Engine.h" />
     <ClInclude Include="Engine\include\Game.h" />
+    <ClInclude Include="Engine\include\GameObject.h" />
+    <ClInclude Include="Engine\include\Scene.h" />
     <ClInclude Include="Engine\include\Shader.h" />
     <ClInclude Include="Engine\include\Sprite.h" />
+    <ClInclude Include="Engine\include\Renderer.h" />
     <ClInclude Include="Engine\include\SpriteRenderer.h" />
     <ClInclude Include="Engine\include\Texture.h" />
     <ClInclude Include="Game\include\BattleSystemGame.h" />

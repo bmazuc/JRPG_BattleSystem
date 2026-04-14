@@ -7,7 +7,7 @@
 #include <glm/vec2.hpp>
 
 class Game;
-class SpriteRenderer;
+class Renderer;
 
 // Allows to pass the data needed to create the SDL window when starting the engine
 struct WindowData
@@ -36,7 +36,7 @@ private:
 	void Run();
 
 	Game* game;
-	SpriteRenderer* spriteRenderer;
+	Renderer* renderer;
 	SDL_Window* window;
 	SDL_GLContext glContext;
 

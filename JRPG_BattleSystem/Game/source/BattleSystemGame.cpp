@@ -1,31 +1,23 @@
 #include "BattleSystemGame.h"
-#include "Sprite.h"
 #include "SpriteRenderer.h"
 
-BattleSystemGame::~BattleSystemGame()
+void BattleSystemGame::Init()
 {
-    delete sprite;
-    sprite = nullptr;
+    GameObject* background = new GameObject();
+    SpriteRenderer* backgroundSpriteRenderer = background->AddComponent<SpriteRenderer>();
+    Sprite* backgroundSprite = backgroundSpriteRenderer->CreateSprite("Assets/battleback1_0.png");
+    backgroundSprite->SetPosition(glm::vec2(320, 240));
+    backgroundSprite->SetSize(glm::vec2(640, 480));
 
-    delete sprite2;
-    sprite2 = nullptr;
-}
+    scene->AddGameObject(background);
 
-void BattleSystemGame::Init(SpriteRenderer* renderer)
-{
-    sprite = new Sprite();
-    sprite->LoadPNG("Assets/battleback1_0.png");
-    sprite->SetPosition(glm::vec2(320, 240));
-    sprite->SetSize(glm::vec2(640, 480));
+    GameObject* enemy = new GameObject();
+    SpriteRenderer* enemySpriteRenderer = enemy->AddComponent<SpriteRenderer>();
+    Sprite* enemySprite = enemySpriteRenderer->CreateSprite("Assets/goblin.png");
+    enemySprite->SetPosition(glm::vec2(320, 240));
+    enemySprite->SetSize(glm::vec2(300, 306));
 
-    renderer->AddSprite(sprite);
-
-    sprite2 = new Sprite();
-    sprite2->LoadPNG("Assets/goblin.png");
-    sprite2->SetPosition(glm::vec2(320, 240));
-    sprite2->SetSize(glm::vec2(300, 306));
-
-    renderer->AddSprite(sprite2);
+    scene->AddGameObject(enemy);
 }
 
 void BattleSystemGame::Update()

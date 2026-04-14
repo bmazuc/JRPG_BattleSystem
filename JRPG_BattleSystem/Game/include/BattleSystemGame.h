@@ -5,19 +5,11 @@
 
 class Sprite;
 
-class BattleSystemGame :
-    public Game
+class BattleSystemGame : public Game
 {
 public:
-    ~BattleSystemGame();
-
-    void Init(SpriteRenderer* renderer) override;
+    void Init() override;
     void Update() override;
-
-private:
-    // Temp
-    Sprite* sprite;
-    Sprite* sprite2;
 };
 
 #endif // __BATTLE_SYSTEM_GAME_H_INCLUDED__
