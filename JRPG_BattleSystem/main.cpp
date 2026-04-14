@@ -2,6 +2,8 @@
 //
 
 #include "Engine.h"
+#include "BattleSystemGame.h"
+
 #ifdef _DEBUG
 #include <crtdbg.h>
 #endif // _DEBUG
@@ -15,9 +17,14 @@ int main()
 
     WindowData windowData("JRPG_BattleSystem", 640, 480, SDL_WINDOW_RESIZABLE);
 
+    BattleSystemGame* game = new BattleSystemGame();
+
     Engine* engine = new Engine();
-    engine->Start(windowData);
+    engine->Start(windowData, game);
     engine->Shutdown();
+
+    delete game;
+    game = nullptr;
 
     delete engine;
     engine = nullptr;

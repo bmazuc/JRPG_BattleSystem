@@ -104,7 +104,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)\Libs\glm-1.0.3\glm-1.0.3;$(SolutionDir)\Libs\glew-2.3.1\glew-2.3.1\include;$(SolutionDir)\JRPG_BattleSystem\Engine\include;$(SolutionDir)\Libs\SDL3-3.4.2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\Libs\glm-1.0.3\glm-1.0.3;$(SolutionDir)\Libs\glew-2.3.1\glew-2.3.1\include;$(SolutionDir)\JRPG_BattleSystem\Game\include;$(SolutionDir)\JRPG_BattleSystem\Engine\include;$(SolutionDir)\Libs\SDL3-3.4.2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -121,7 +121,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)\Libs\glm-1.0.3\glm-1.0.3;$(SolutionDir)\Libs\glew-2.3.1\glew-2.3.1\include;$(SolutionDir)\JRPG_BattleSystem\Engine\include;$(SolutionDir)\Libs\SDL3-3.4.2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\Libs\glm-1.0.3\glm-1.0.3;$(SolutionDir)\Libs\glew-2.3.1\glew-2.3.1\include;$(SolutionDir)\JRPG_BattleSystem\Game\include;$(SolutionDir)\JRPG_BattleSystem\Engine\include;$(SolutionDir)\Libs\SDL3-3.4.2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -138,14 +138,17 @@
     <ClCompile Include="Engine\source\Sprite.cpp" />
     <ClCompile Include="Engine\source\SpriteRenderer.cpp" />
     <ClCompile Include="Engine\source\Texture.cpp" />
+    <ClCompile Include="Game\source\BattleSystemGame.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\include\Engine.h" />
+    <ClInclude Include="Engine\include\Game.h" />
     <ClInclude Include="Engine\include\Shader.h" />
     <ClInclude Include="Engine\include\Sprite.h" />
     <ClInclude Include="Engine\include\SpriteRenderer.h" />
     <ClInclude Include="Engine\include\Texture.h" />
+    <ClInclude Include="Game\include\BattleSystemGame.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

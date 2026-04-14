@@ -19,6 +19,12 @@
     <Filter Include="Source Files\Engine">
       <UniqueIdentifier>{e37ad967-5d32-41be-8c2e-9056df806146}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Game">
+      <UniqueIdentifier>{f02f5877-5126-4e0e-b5b2-53d45284621e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game">
+      <UniqueIdentifier>{f7686e8c-e675-4113-abf3-22c2c1feeee7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -39,6 +45,9 @@
     <ClCompile Include="Engine\source\SpriteRenderer.cpp">
       <Filter>Source Files\Engine</Filter>
     </ClCompile>
+    <ClCompile Include="Game\source\BattleSystemGame.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\include\Engine.h">
@@ -55,6 +64,12 @@
     </ClInclude>
     <ClInclude Include="Engine\include\SpriteRenderer.h">
       <Filter>Header Files\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\include\Game.h">
+      <Filter>Header Files\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\include\BattleSystemGame.h">
+      <Filter>Header Files\Game</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

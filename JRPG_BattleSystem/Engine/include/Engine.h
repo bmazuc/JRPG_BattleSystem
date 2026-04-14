@@ -6,6 +6,7 @@
 #include <SDL3/SDL_opengl.h>
 #include <glm/vec2.hpp>
 
+class Game;
 class SpriteRenderer;
 
 // Allows to pass the data needed to create the SDL window when starting the engine
@@ -25,14 +26,16 @@ public:
 	*		Start the engine and run it if all initialization complete successfully
 	*		swapInterval : Set the swap interval for the current OpenGL context (0 for immediate updates, 1 for updates synchronized with the vertical retrace, -1 for adaptive vsync) 
 	**/
-	void Start(WindowData windowData, int swapInterval = 0);
+	void Start(WindowData windowData, Game* _game, int swapInterval = 0);
 	void Shutdown();
+
 
 	void SetViewportBaseResolution(glm::vec2 resolution) { viewportBaseResolution = resolution; }
 
 private:
 	void Run();
 
+	Game* game;
 	SpriteRenderer* spriteRenderer;
 	SDL_Window* window;
 	SDL_GLContext glContext;

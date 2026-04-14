@@ -3,6 +3,7 @@
 #include "Texture.h"
 #include "SpriteRenderer.h"
 #include "Sprite.h"
+#include "Game.h"
 
 #include <glm/vec2.hpp>
 #include <glm/vec3.hpp>
@@ -12,8 +13,10 @@ WindowData::WindowData(const char* _title, int _width, int _height, SDL_WindowFl
 {
 }
 
-void Engine::Start(WindowData windowData, int swapInterval)
+void Engine::Start(WindowData windowData, Game* _game, int swapInterval)
 {
+    game = _game;
+
     if (!SDL_Init(SDL_INIT_VIDEO))
     {
         SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Couldn't initialize SDL: %s", SDL_GetError());
@@ -54,21 +57,10 @@ void Engine::Start(WindowData windowData, int swapInterval)
 
 void Engine::Run()
 {
-    //Temp test
-    Sprite* sprite = new Sprite();
-    sprite->LoadPNG("Assets/battleback1_0.png");
-    sprite->SetPosition(glm::vec2(320, 240));
-    sprite->SetSize(glm::vec2(640, 480));
-
-    spriteRenderer->AddSprite(sprite);
-
-    Sprite* sprite2 = new Sprite();
-    sprite2->LoadPNG("Assets/goblin.png");
-    sprite2->SetPosition(glm::vec2(320, 240));
-    sprite2->SetSize(glm::vec2(300, 306));
-
-    spriteRenderer->AddSprite(sprite2);
-    // end Temp
+    if (game)
+    {
+        game->Init(spriteRenderer);
+    }
 
     spriteRenderer->InitRenderData(viewportBaseResolution);
 
@@ -94,15 +86,12 @@ void Engine::Run()
         spriteRenderer->Render(window);
 
         SDL_GL_SwapWindow(window);
+
+        if (game)
+        {
+            game->Update();
+        }
     }
-
-    // Temp
-    delete sprite;
-    sprite = nullptr;
-
-    delete sprite2;
-    sprite2 = nullptr;
-    // end temp
 }
 
 void Engine::Shutdown()
