@@ -4,6 +4,7 @@
 #include <GL/glew.h>
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_opengl.h>
+#include <glm/vec2.hpp>
 
 class SpriteRenderer;
 
@@ -27,12 +28,16 @@ public:
 	void Start(WindowData windowData, int swapInterval = 0);
 	void Shutdown();
 
+	void SetViewportBaseResolution(glm::vec2 resolution) { viewportBaseResolution = resolution; }
+
 private:
 	void Run();
 
 	SpriteRenderer* spriteRenderer;
 	SDL_Window* window;
 	SDL_GLContext glContext;
+
+	glm::vec2 viewportBaseResolution = glm::vec2(640, 480);
 };
 
 #endif // __ENGINE_H_INCLUDED__

@@ -6,6 +6,7 @@ class Sprite;
 
 #include <SDL3/SDL.h>
 #include <vector>
+#include <glm/vec2.hpp>
 
 class SpriteRenderer
 {
@@ -13,7 +14,7 @@ public:
 	~SpriteRenderer();
 
 	void InitShader(const char* vShaderFile, const char* fShaderFile);
-	void InitRenderData();
+	void InitRenderData(glm::vec2 viewportBaseResolution);
 
 	void Render(SDL_Window* window);
 

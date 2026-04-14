@@ -57,19 +57,23 @@ void Engine::Run()
     //Temp test
     Sprite* sprite = new Sprite();
     sprite->LoadPNG("Assets/battleback1_0.png");
-    sprite->SetPosition(glm::vec2(170, 190));
-    sprite->SetSize(glm::vec2(200, 200));
+    sprite->SetPosition(glm::vec2(320, 240));
+    sprite->SetSize(glm::vec2(640, 480));
 
     spriteRenderer->AddSprite(sprite);
 
     Sprite* sprite2 = new Sprite();
-    sprite2->LoadPNG("Assets/battleback1_0.png");
-    sprite2->SetSize(glm::vec2(50, 50));
+    sprite2->LoadPNG("Assets/goblin.png");
+    sprite2->SetPosition(glm::vec2(320, 240));
+    sprite2->SetSize(glm::vec2(300, 306));
 
     spriteRenderer->AddSprite(sprite2);
     // end Temp
 
-    spriteRenderer->InitRenderData();
+    spriteRenderer->InitRenderData(viewportBaseResolution);
+
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     SDL_Event event;
     bool shouldExit = false;
@@ -78,7 +82,12 @@ void Engine::Run()
         SDL_PollEvent(&event);
         if (event.type == SDL_EVENT_QUIT)
             shouldExit = true;
-
+        else if (event.type == SDL_EVENT_WINDOW_RESIZED)
+        {
+            int w = event.window.data1;
+            int h = event.window.data2;
+            glViewport(0, 0, w, h);
+        }
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 

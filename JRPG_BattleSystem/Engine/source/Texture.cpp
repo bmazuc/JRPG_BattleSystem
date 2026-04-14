@@ -12,21 +12,24 @@ void Texture::LoadPNG(const char* file)
 
 void Texture::CreateTexture(SDL_Surface* surface)
 {
-    glGenTextures(1, &texture);
-    glBindTexture(GL_TEXTURE_2D, texture);
+    if (surface)
+    {
+        glGenTextures(1, &texture);
+        glBindTexture(GL_TEXTURE_2D, texture);
 
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-    GLenum format = GetGLFormat(surface->format);
+        GLenum format = GetGLFormat(surface->format);
 
-    glTexImage2D(GL_TEXTURE_2D, 0, format,
-        surface->w, surface->h,
-        0, format,
-        GL_UNSIGNED_BYTE,
-        surface->pixels);
+        glTexImage2D(GL_TEXTURE_2D, 0, format,
+            surface->w, surface->h,
+            0, format,
+            GL_UNSIGNED_BYTE,
+            surface->pixels);
 
-    SDL_DestroySurface(surface);
+        SDL_DestroySurface(surface);
+    }
 }
 
 GLenum Texture::GetGLFormat(SDL_PixelFormat format)

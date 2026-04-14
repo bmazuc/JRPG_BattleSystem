@@ -30,19 +30,19 @@ void SpriteRenderer::Render(SDL_Window* window)
     }
 }
 
-void SpriteRenderer::InitRenderData()
+void SpriteRenderer::InitRenderData(glm::vec2 viewportBaseResolution)
 {
     // configure VAO/VBO
     unsigned int VBO;
     float vertices[] = {
         // pos      // tex
-        0.0f, 1.0f, 0.0f, 1.0f,
-        1.0f, 0.0f, 1.0f, 0.0f,
-        0.0f, 0.0f, 0.0f, 0.0f,
+        -0.5f, 0.5f, 0.0f, 1.0f,
+        0.5f, -0.5f, 1.0f, 0.0f,
+        -0.5f, -0.5f, 0.0f, 0.0f,
 
-        0.0f, 1.0f, 0.0f, 1.0f,
-        1.0f, 1.0f, 1.0f, 1.0f,
-        1.0f, 0.0f, 1.0f, 0.0f
+        -0.5f, 0.5f, 0.0, 1.0f,
+        0.5f, 0.5f, 1.0f, 1.0f,
+        0.5f, -0.5f, 1.0f, 0.0f
     };
 
     glGenVertexArrays(1, &quadVAO);
@@ -56,6 +56,15 @@ void SpriteRenderer::InitRenderData()
     glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
+
+    if (shader)
+    {
+        shader->Use();
+        shader->SetInteger("image", 0);
+        glm::mat4 projection = glm::ortho(0.0f, viewportBaseResolution.x, viewportBaseResolution.y, 0.0f, -1.0f, 1.0f);
+        shader->SetMatrix4("projection", projection);
+    }
+
 }
 
 void SpriteRenderer::RenderSprite(Sprite* sprite, SDL_Window* window)
@@ -71,12 +80,6 @@ void SpriteRenderer::RenderSprite(Sprite* sprite, SDL_Window* window)
 
         model = glm::scale(model, glm::vec3(sprite->GetSize(), 1.0f));
 
-        // Move image & projection set to shader init ?
-        shader->SetInteger("image", 0);
-        int w, h;
-        SDL_GetWindowSize(window, &w, &h);
-        glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(h), static_cast<float>(w), 0.0f, -1.0f, 1.0f);
-        shader->SetMatrix4("projection", projection);
         shader->SetMatrix4("model", model);
         shader->SetVector3f("spriteColor", sprite->GetColor());
 
