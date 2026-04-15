@@ -1,21 +1,27 @@
 #include "Renderer.h"
+#include "Scene.h"
 
 #include <GL/glew.h>
 #include <glm/ext/matrix_transform.hpp>
 
 #include "Sprite.h"
+#include "SpriteRenderer.h"
 #include "Shader.h"
 #include <glm/ext/matrix_clip_space.hpp>
 
 Renderer::~Renderer()
 {
+    buckets.clear();
+
     delete shader;
     shader = nullptr;
 }
 
-void Renderer::InitShader(const char* vShaderFile, const char* fShaderFile)
+void Renderer::Init(const char* vShaderFile, const char* fShaderFile, glm::vec2 viewportBaseResolution)
 {
     shader = new Shader(vShaderFile, fShaderFile);
+
+    InitRenderData(viewportBaseResolution);
 }
 
 void Renderer::InitRenderData(glm::vec2 viewportBaseResolution)
@@ -54,7 +60,48 @@ void Renderer::InitRenderData(glm::vec2 viewportBaseResolution)
     }
 }
 
-void Renderer::RenderSprite(Sprite* sprite, SDL_Window* window)
+void Renderer::Render(Scene* scene, SDL_Window* window)
+{
+    glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT);
+
+    Build(scene);
+
+    for (auto it = buckets.begin(); it != buckets.end(); ++it)
+    {
+        int layer = it->first;
+        std::vector<Sprite*>& sprites = it->second;
+
+        for (Sprite* s : sprites)
+        {
+            DrawSprite(s, window);
+        }
+    }
+
+    SDL_GL_SwapWindow(window);
+}
+
+void Renderer::Build(Scene* scene)
+{
+    buckets.clear();
+
+    std::vector<GameObject*> gameObjects = scene->GetGameObjects();
+    for (GameObject* gameObject : gameObjects)
+    {
+        if (gameObject)
+        {
+            SpriteRenderer* spriteRenderer = gameObject->GetComponent<SpriteRenderer>();
+
+            if (spriteRenderer)
+            {
+                Sprite* sprite = spriteRenderer->GetSprite();
+                buckets[sprite->GetLayer()].push_back(sprite);
+            }
+        }
+    }
+}
+
+void Renderer::DrawSprite(Sprite* sprite, SDL_Window* window)
 {
     if (sprite)
     {

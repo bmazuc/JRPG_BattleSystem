@@ -51,26 +51,22 @@ void Engine::Start(WindowData windowData, Game* _game, int swapInterval)
     }
 
     renderer = new Renderer();
-    renderer->InitShader("Shaders/sprite.vs", "Shaders/sprite.frag");
+    renderer->Init("Shaders/sprite.vs", "Shaders/sprite.frag", viewportBaseResolution);
 
+    if (!game)
+    {
+        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "No game");
+        return;
+    }
+
+    game->Init();
     Run();
 }
 
 void Engine::Run()
 {
-    if (!game)
-    {
-        return;
-    }
-
-    game->Init();
-
-    renderer->InitRenderData(viewportBaseResolution);
-
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-    std::vector<GameObject*> gameObjects = game->GetScene()->GetGameObjects();
 
     SDL_Event event;
     bool shouldExit = false;
@@ -85,25 +81,9 @@ void Engine::Run()
             int h = event.window.data2;
             glViewport(0, 0, w, h);
         }
-        glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT);
-
-        for (GameObject* gameObject : gameObjects)
-        {
-            if (gameObject)
-            {
-                SpriteRenderer* spriteRenderer = gameObject->GetComponent<SpriteRenderer>();
-
-                if (spriteRenderer)
-                {
-                    renderer->RenderSprite(spriteRenderer->GetSprite(), window);
-                }
-            }
-        }
-
-        SDL_GL_SwapWindow(window);
 
         game->Update();
+        renderer->Render(game->GetScene(), window);
     }
 }
 

@@ -19,17 +19,22 @@ public:
 	float GetRotate() const { return rotate; }
 	glm::vec2 GetSize() const { return size; }
 	glm::vec3 GetColor() const { return color; }
+	int GetLayer() const { return layer; }
+
 
 	void SetPosition(glm::vec2 _position) { position = _position; }
 	void SetRotate(float _rotate) { rotate = _rotate; }
 	void SetSize(glm::vec2 _size) { size = _size; }
 	void SetColor(glm::vec3 _color) { color = _color; }
+	void SetLayer(int _layer) { layer = _layer; }
 
 private:
 	glm::vec2 position = glm::vec2(0, 0);
 	float rotate = 0;
 	glm::vec2 size = glm::vec2(1, 1); 
 	glm::vec3 color = glm::vec3(1, 1, 1);
+
+	int layer = 0;
 
 	Texture* texture;
 };
