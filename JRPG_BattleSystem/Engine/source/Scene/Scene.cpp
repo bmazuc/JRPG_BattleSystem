@@ -1,4 +1,4 @@
-#include "Scene.h"
+#include "Scene/Scene.h"
 
 void Scene::AddGameObject(GameObject* gameObject)
 {

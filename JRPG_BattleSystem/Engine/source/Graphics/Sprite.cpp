@@ -1,4 +1,4 @@
-#include "Sprite.h"
+#include "Graphics/Sprite.h"
 
 void Sprite::LoadBMP(const char* file)
 {

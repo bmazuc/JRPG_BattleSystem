@@ -1,5 +1,5 @@
 #include "BattleSystemGame.h"
-#include "SpriteRenderer.h"
+#include "Components/SpriteRenderer.h"
 
 void BattleSystemGame::Init()
 {

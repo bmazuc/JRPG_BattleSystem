@@ -1,7 +1,7 @@
 #ifndef __BATTLE_SYSTEM_GAME_H_INCLUDED__
 #define __BATTLE_SYSTEM_GAME_H_INCLUDED__
 
-#include "Game.h"
+#include "Core/Game.h"
 
 class GameObject;
 

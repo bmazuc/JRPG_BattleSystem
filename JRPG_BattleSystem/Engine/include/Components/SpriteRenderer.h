@@ -2,7 +2,7 @@
 #define __SPRITE_RENDERER_H_INCLUDED__
 
 #include "Component.h"
-#include "Sprite.h"
+#include "Graphics/Sprite.h"
 
 enum ImageExtension
 {

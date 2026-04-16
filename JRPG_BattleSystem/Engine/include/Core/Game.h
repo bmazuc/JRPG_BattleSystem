@@ -1,7 +1,7 @@
 #ifndef __GAME_H_INCLUDED__
 #define __GAME_H_INCLUDED__
 
-#include "Scene.h"
+#include "Scene/Scene.h"
 
 // A virtual class needed to be inherited to implement game logic
 class Game

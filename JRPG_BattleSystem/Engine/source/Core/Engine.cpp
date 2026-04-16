@@ -1,10 +1,7 @@
-#include "Engine.h"
+#include "Core/Engine.h"
 
-#include "Texture.h"
-#include "Renderer.h"
-#include "Sprite.h"
-#include "Game.h"
-#include "SpriteRenderer.h"
+#include "Core/Renderer.h"
+#include "Core/Game.h"
 
 #include <glm/vec2.hpp>
 #include <glm/vec3.hpp>

@@ -1,4 +1,4 @@
-#include "SpriteRenderer.h"
+#include "Components/SpriteRenderer.h"
 
 Sprite* SpriteRenderer::CreateSprite(const char* file, ImageExtension extension)
 {

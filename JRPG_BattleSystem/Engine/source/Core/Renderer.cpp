@@ -1,12 +1,12 @@
-#include "Renderer.h"
-#include "Scene.h"
+#include "Core/Renderer.h"
+#include "Scene/Scene.h"
 
 #include <GL/glew.h>
 #include <glm/ext/matrix_transform.hpp>
 
-#include "Sprite.h"
-#include "SpriteRenderer.h"
-#include "Shader.h"
+#include "Graphics/Sprite.h"
+#include "Components/SpriteRenderer.h"
+#include "Core/Shader.h"
 #include <glm/ext/matrix_clip_space.hpp>
 
 Renderer::~Renderer()
