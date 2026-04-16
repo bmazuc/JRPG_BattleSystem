@@ -1,7 +1,7 @@
 #include "Core/Engine.h"
 
 #include "Core/Renderer.h"
-#include "Core/Game.h"
+#include "Scene/Scene.h"
 
 #include <glm/vec2.hpp>
 #include <glm/vec3.hpp>
@@ -11,14 +11,12 @@ WindowData::WindowData(const char* _title, int _width, int _height, SDL_WindowFl
 {
 }
 
-void Engine::Start(WindowData windowData, Game* _game, int swapInterval)
+bool Engine::Start(WindowData windowData, int swapInterval)
 {
-    game = _game;
-
     if (!SDL_Init(SDL_INIT_VIDEO))
     {
         SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Couldn't initialize SDL: %s", SDL_GetError());
-        return;
+        return false;
     }
 
     windowData.flags |= SDL_WINDOW_OPENGL;
@@ -29,14 +27,14 @@ void Engine::Start(WindowData windowData, Game* _game, int swapInterval)
     if (!window)
     {
         SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Couldn't create window: %s", SDL_GetError());
-        return;
+        return false;
     }
 
     glContext = SDL_GL_CreateContext(window);
     if (!SDL_GL_SetSwapInterval(1))
     {
         SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "VSync not supported: %s", SDL_GetError());
-        return;
+        return false;
     }
 
     // Initialisation de GLEW
@@ -44,24 +42,31 @@ void Engine::Start(WindowData windowData, Game* _game, int swapInterval)
     if (err != GLEW_OK) 
     {
         SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Error glewInit: %s", glewGetErrorString(err));
-        return;
+        return false;
     }
 
     renderer = new Renderer();
     renderer->Init("Shaders/sprite.vs", "Shaders/sprite.frag", viewportBaseResolution);
 
-    if (!game)
+    if (!renderer)
     {
-        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "No game");
-        return;
+        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Couldn't create renderer");
+        return false;
     }
 
-    game->Init();
-    Run();
+    return true;
 }
 
 void Engine::Run()
 {
+    if (!scene)
+    {
+        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "No scene");
+        return;
+    }
+
+    scene->Init();
+
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
@@ -79,13 +84,16 @@ void Engine::Run()
             glViewport(0, 0, w, h);
         }
 
-        game->Update();
-        renderer->Render(game->GetScene(), window);
+        scene->Update();
+        renderer->Render(scene, window);
     }
 }
 
 void Engine::Shutdown()
 {
+    delete scene;
+    scene = nullptr;
+
     delete renderer;
     renderer = nullptr;
 

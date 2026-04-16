@@ -6,7 +6,7 @@
 #include <SDL3/SDL_opengl.h>
 #include <glm/vec2.hpp>
 
-class Game;
+class Scene;
 class Renderer;
 
 // Allows to pass the data needed to create the SDL window when starting the engine
@@ -23,19 +23,26 @@ class Engine
 {
 public:
 	/** 
-	*		Start the engine and run it if all initialization complete successfully
 	*		swapInterval : Set the swap interval for the current OpenGL context (0 for immediate updates, 1 for updates synchronized with the vertical retrace, -1 for adaptive vsync) 
 	**/
-	void Start(WindowData windowData, Game* _game, int swapInterval = 0);
+	bool Start(WindowData windowData, int swapInterval = 0);
+	void Run();
 	void Shutdown();
 
+	template<typename T, typename... Args>
+	void SetScene(Args&&... args)
+	{
+		static_assert(std::is_base_of<Scene, T>::value, "T must inherit Scene");
+
+		scene = new T(std::forward<Args>(args)...);
+	}
 
 	void SetViewportBaseResolution(glm::vec2 resolution) { viewportBaseResolution = resolution; }
 
 private:
-	void Run();
 
-	Game* game;
+
+	Scene* scene;
 	Renderer* renderer;
 	SDL_Window* window;
 	SDL_GLContext glContext;

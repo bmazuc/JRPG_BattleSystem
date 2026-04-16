@@ -2,7 +2,7 @@
 //
 
 #include "Core/Engine.h"
-#include "BattleSystemGame.h"
+#include "BattleScene.h"
 
 #ifdef _DEBUG
 #include <crtdbg.h>
@@ -15,17 +15,15 @@ int main()
     _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 #endif // _DEBUG
 
-    WindowData windowData("JRPG_BattleSystem", 640, 480, SDL_WINDOW_RESIZABLE);
-
-    BattleSystemGame* game = new BattleSystemGame();
-
     Engine* engine = new Engine();
-    engine->Start(windowData, game);
+
+    if (engine->Start(WindowData("JRPG_BattleSystem", 640, 480, SDL_WINDOW_RESIZABLE)))
+    {
+        engine->SetScene<BattleScene>();
+        engine->Run();
+    }
+
     engine->Shutdown();
-
-    delete game;
-    game = nullptr;
-
     delete engine;
     engine = nullptr;
 

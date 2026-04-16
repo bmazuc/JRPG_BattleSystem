@@ -136,14 +136,13 @@
     <ClCompile Include="Engine\source\Components\Component.cpp" />
     <ClCompile Include="Engine\source\Components\SpriteRenderer.cpp" />
     <ClCompile Include="Engine\source\Core\Engine.cpp" />
-    <ClCompile Include="Engine\source\Core\Game.cpp" />
     <ClCompile Include="Engine\source\Core\Renderer.cpp" />
     <ClCompile Include="Engine\source\Core\Shader.cpp" />
     <ClCompile Include="Engine\source\Graphics\Sprite.cpp" />
     <ClCompile Include="Engine\source\Graphics\Texture.cpp" />
     <ClCompile Include="Engine\source\Scene\GameObject.cpp" />
     <ClCompile Include="Engine\source\Scene\Scene.cpp" />
-    <ClCompile Include="Game\source\BattleSystemGame.cpp" />
+    <ClCompile Include="Game\source\BattleScene.cpp" />
     <ClCompile Include="Game\source\Enemy.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
@@ -151,14 +150,13 @@
     <ClInclude Include="Engine\include\Components\Component.h" />
     <ClInclude Include="Engine\include\Components\SpriteRenderer.h" />
     <ClInclude Include="Engine\include\Core\Engine.h" />
-    <ClInclude Include="Engine\include\Core\Game.h" />
     <ClInclude Include="Engine\include\Core\Renderer.h" />
     <ClInclude Include="Engine\include\Core\Shader.h" />
     <ClInclude Include="Engine\include\Graphics\Sprite.h" />
     <ClInclude Include="Engine\include\Graphics\Texture.h" />
     <ClInclude Include="Engine\include\Scene\GameObject.h" />
     <ClInclude Include="Engine\include\Scene\Scene.h" />
-    <ClInclude Include="Game\include\BattleSystemGame.h" />
+    <ClInclude Include="Game\include\BattleScene.h" />
     <ClInclude Include="Game\include\Enemy.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
