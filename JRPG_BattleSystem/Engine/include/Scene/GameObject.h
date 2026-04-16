@@ -10,6 +10,9 @@ class GameObject
 public:
 	~GameObject();
 
+	virtual void Init() {}
+	virtual void Update() {}
+
 	template<typename T, typename... Args>
 	T* AddComponent(Args&&... args)
 	{

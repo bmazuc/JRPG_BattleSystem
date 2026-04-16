@@ -144,6 +144,7 @@
     <ClCompile Include="Engine\source\Scene\GameObject.cpp" />
     <ClCompile Include="Engine\source\Scene\Scene.cpp" />
     <ClCompile Include="Game\source\BattleSystemGame.cpp" />
+    <ClCompile Include="Game\source\Enemy.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -158,6 +159,7 @@
     <ClInclude Include="Engine\include\Scene\GameObject.h" />
     <ClInclude Include="Engine\include\Scene\Scene.h" />
     <ClInclude Include="Game\include\BattleSystemGame.h" />
+    <ClInclude Include="Game\include\Enemy.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
