@@ -7,19 +7,17 @@ BattleScene::BattleScene()
 {
     Enemy* enemy = new Enemy("Assets/goblin.png", 3.0f);
     AddGameObject(enemy);
-
     enemy->SetSpeed(50.0f);
 
-    GameObject* cameraObject = new GameObject();
+    Actor* cameraObject = new Actor();
     CameraComponent* camera = cameraObject->AddComponent<CameraComponent>();
-    SetActiveCamera(camera);
     AddGameObject(cameraObject);
+    SetActiveCamera(camera);
 
-
-    GameObject* background = new GameObject();
+    Actor* background = new Actor();
     SpriteRendererComponent* backgroundSpriteRenderer = background->AddComponent<SpriteRendererComponent>();
     Sprite* backgroundSprite = backgroundSpriteRenderer->CreateSprite("Assets/battleback1_0.png");
-    backgroundSprite->SetPosition(glm::vec2(320, 240));
+    background->SetPosition(glm::vec2(320, 240));
     backgroundSprite->SetSize(glm::vec2(640, 480));
 
     AddGameObject(background);

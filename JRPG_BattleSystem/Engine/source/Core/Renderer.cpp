@@ -81,9 +81,9 @@ void Renderer::Render(Scene* scene, SDL_Window* window)
         for (auto it = buckets.begin(); it != buckets.end(); ++it)
         {
             int layer = it->first;
-            std::vector<Sprite*>& sprites = it->second;
+            std::vector<SpriteRendererComponent*>& sprites = it->second;
 
-            for (Sprite* s : sprites)
+            for (SpriteRendererComponent* s : sprites)
             {
                 DrawSprite(s, window);
             }
@@ -95,8 +95,8 @@ void Renderer::Build(Scene* scene)
 {
     buckets.clear();
 
-    std::vector<GameObject*> gameObjects = scene->GetGameObjects();
-    for (GameObject* gameObject : gameObjects)
+    std::vector<Actor*> gameObjects = scene->GetGameObjects();
+    for (Actor* gameObject : gameObjects)
     {
         if (gameObject)
         {
@@ -105,30 +105,26 @@ void Renderer::Build(Scene* scene)
             if (spriteRenderer)
             {
                 Sprite* sprite = spriteRenderer->GetSprite();
-                buckets[sprite->GetLayer()].push_back(sprite);
+                buckets[sprite->GetLayer()].push_back(spriteRenderer);
             }
         }
     }
 }
 
-void Renderer::DrawSprite(Sprite* sprite, SDL_Window* window)
+void Renderer::DrawSprite(SpriteRendererComponent* sprite, SDL_Window* window)
 {
     if (sprite)
     {
-        glm::mat4 model = glm::mat4(1.0f);
-        model = glm::translate(model, glm::vec3(sprite->GetPosition(), 0.0f));
+        Sprite* s = sprite->GetSprite();
 
-        model = glm::translate(model, glm::vec3(0.5f * sprite->GetSize().x, 0.5f * sprite->GetSize().y, 0.0f));
-        model = glm::rotate(model, glm::radians(sprite->GetRotate()), glm::vec3(0.0f, 0.0f, 1.0f));
-        model = glm::translate(model, glm::vec3(-0.5f * sprite->GetSize().x, -0.5f * sprite->GetSize().y, 0.0f));
-
-        model = glm::scale(model, glm::vec3(sprite->GetSize(), 1.0f));
+        glm::mat4 model = sprite->GetTransform().world;
+        model = glm::scale(model, glm::vec3(s->GetSize(), 1.0f));
 
         shader->SetMatrix4("model", model);
-        shader->SetVector3f("spriteColor", sprite->GetColor());
+        shader->SetVector3f("spriteColor", s->GetColor());
 
         glActiveTexture(GL_TEXTURE0);
-        sprite->GetTexture()->Render();
+        s->GetTexture()->Render();
 
         glBindVertexArray(quadVAO);
         glDrawArrays(GL_TRIANGLES, 0, 6);

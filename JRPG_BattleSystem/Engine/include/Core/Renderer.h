@@ -2,7 +2,7 @@
 #define __RENDERER_H_INCLUDED__
 
 class Shader;
-class Sprite;
+class SpriteRendererComponent;
 class Scene;
 
 #include <SDL3/SDL.h>
@@ -23,12 +23,12 @@ private:
 	void InitRenderData(glm::vec2 viewportBaseResolution);
 
 	void Build(Scene* scene);
-	void DrawSprite(Sprite* sprite, SDL_Window* window);
+	void DrawSprite(SpriteRendererComponent* sprite, SDL_Window* window);
 
 	Shader* shader;
 	unsigned int quadVAO;
 
-	std::map<int, std::vector<Sprite*>> buckets;
+	std::map<int, std::vector<SpriteRendererComponent*>> buckets;
 };
 
 #endif // __RENDERER_H_INCLUDED__

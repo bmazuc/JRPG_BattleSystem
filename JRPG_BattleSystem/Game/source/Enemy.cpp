@@ -10,22 +10,19 @@ void Enemy::Init()
 {
     spriteRenderer = AddComponent<SpriteRendererComponent>();
     sprite = spriteRenderer->CreateSprite(spriteFile);
-    sprite->SetPosition(glm::vec2(320, 240));
     sprite->SetSize(glm::vec2(300, 306));
     sprite->SetLayer(1);
+    SetPosition(glm::vec2(320, 240));
 }
 
 void Enemy::Update(float deltaTime)
 {
-    if (sprite)
+    glm::vec2 currentPos = GetPosition();
+
+    if (currentPos.x <= 250 || currentPos.x >= 370)
     {
-        glm::vec2 currentPos = sprite->GetPosition();
-
-        if (currentPos.x <= 250 || currentPos.x >= 370)
-        {
-            enemyMoveDirection *= -1.0f;
-        }
-
-        sprite->SetPosition(glm::vec2(currentPos.x + (enemyMoveDirection * enemySpeed * deltaTime), currentPos.y));
+        enemyMoveDirection *= -1.0f;
     }
+
+    SetPosition(glm::vec2(currentPos.x + (enemyMoveDirection * enemySpeed * deltaTime), currentPos.y));
 }

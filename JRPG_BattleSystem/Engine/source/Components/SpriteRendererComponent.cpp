@@ -1,4 +1,5 @@
 #include "Components/SpriteRendererComponent.h"
+#include <glm/ext/matrix_transform.hpp>
 
 Sprite* SpriteRendererComponent::CreateSprite(const char* file, ImageExtension extension)
 {

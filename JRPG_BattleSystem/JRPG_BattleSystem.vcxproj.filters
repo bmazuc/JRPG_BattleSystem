@@ -75,7 +75,7 @@
     <ClCompile Include="Engine\source\Core\Shader.cpp">
       <Filter>Source Files\Engine\Core</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\source\Scene\GameObject.cpp">
+    <ClCompile Include="Engine\source\Scene\Actor.cpp">
       <Filter>Source Files\Engine\Scene</Filter>
     </ClCompile>
     <ClCompile Include="Engine\source\Scene\Scene.cpp">
@@ -113,7 +113,7 @@
     <ClInclude Include="Engine\include\Core\Shader.h">
       <Filter>Header Files\Engine\Core</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\include\Scene\GameObject.h">
+    <ClInclude Include="Engine\include\Scene\Actor.h">
       <Filter>Header Files\Engine\Scene</Filter>
     </ClInclude>
     <ClInclude Include="Engine\include\Scene\Scene.h">
@@ -127,6 +127,9 @@
     </ClInclude>
     <ClInclude Include="Engine\include\Components\CameraComponent.h">
       <Filter>Header Files\Engine\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\include\Transform.h">
+      <Filter>Header Files\Engine</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

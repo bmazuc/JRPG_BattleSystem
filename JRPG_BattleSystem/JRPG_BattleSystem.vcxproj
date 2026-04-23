@@ -141,7 +141,7 @@
     <ClCompile Include="Engine\source\Core\Shader.cpp" />
     <ClCompile Include="Engine\source\Graphics\Sprite.cpp" />
     <ClCompile Include="Engine\source\Graphics\Texture.cpp" />
-    <ClCompile Include="Engine\source\Scene\GameObject.cpp" />
+    <ClCompile Include="Engine\source\Scene\Actor.cpp" />
     <ClCompile Include="Engine\source\Scene\Scene.cpp" />
     <ClCompile Include="Game\source\BattleScene.cpp" />
     <ClCompile Include="Game\source\Enemy.cpp" />
@@ -156,8 +156,9 @@
     <ClInclude Include="Engine\include\Core\Shader.h" />
     <ClInclude Include="Engine\include\Graphics\Sprite.h" />
     <ClInclude Include="Engine\include\Graphics\Texture.h" />
-    <ClInclude Include="Engine\include\Scene\GameObject.h" />
+    <ClInclude Include="Engine\include\Scene\Actor.h" />
     <ClInclude Include="Engine\include\Scene\Scene.h" />
+    <ClInclude Include="Engine\include\Transform.h" />
     <ClInclude Include="Game\include\BattleScene.h" />
     <ClInclude Include="Game\include\Enemy.h" />
   </ItemGroup>

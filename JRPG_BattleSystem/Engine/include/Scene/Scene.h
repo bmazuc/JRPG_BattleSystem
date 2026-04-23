@@ -3,7 +3,7 @@
 
 class CameraComponent;
 
-#include "GameObject.h"
+#include "Actor.h"
 
 class Scene
 {
@@ -13,14 +13,14 @@ public:
 	void Init();
 	void Update(float deltaTime);
 
-	void AddGameObject(GameObject* gameObject);
+	void AddGameObject(Actor* gameObject);
 
 	CameraComponent* GetActiveCamera() { return activeCamera; }
 	void SetActiveCamera(CameraComponent* camera) { activeCamera = camera; }
-	std::vector<GameObject*> GetGameObjects() const { return gameObjects; }
+	std::vector<Actor*> GetGameObjects() const { return gameObjects; }
 
 private:
-	std::vector<GameObject*> gameObjects;
+	std::vector<Actor*> gameObjects;
 	CameraComponent* activeCamera;
 };
 

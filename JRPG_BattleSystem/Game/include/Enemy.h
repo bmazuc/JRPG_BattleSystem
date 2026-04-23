@@ -1,12 +1,12 @@
 #ifndef __ENEMY_H_INCLUDED__
 #define __ENEMY_H_INCLUDED__
 
-#include "Scene/GameObject.h"
+#include "Scene/Actor.h"
 
 class SpriteRendererComponent;
 class Sprite;
 
-class Enemy : public GameObject
+class Enemy : public Actor
 {
 public:
 	Enemy(const char* _spriteFile, float _enemySpeed);
