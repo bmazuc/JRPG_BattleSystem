@@ -3,7 +3,7 @@
 
 #include "Scene/GameObject.h"
 
-class SpriteRenderer;
+class SpriteRendererComponent;
 class Sprite;
 
 class Enemy : public GameObject
@@ -16,7 +16,7 @@ public:
 	void SetSpeed(float speed) { enemySpeed = speed; }
 
 private:
-	SpriteRenderer* spriteRenderer;
+	SpriteRendererComponent* spriteRenderer;
 	Sprite* sprite;
 
 	const char* spriteFile;

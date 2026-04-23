@@ -1,11 +1,12 @@
 #include "Core/Renderer.h"
 #include "Scene/Scene.h"
+#include "Components/CameraComponent.h"
 
 #include <GL/glew.h>
 #include <glm/ext/matrix_transform.hpp>
 
 #include "Graphics/Sprite.h"
-#include "Components/SpriteRenderer.h"
+#include "Components/SpriteRendererComponent.h"
 #include "Core/Shader.h"
 #include <glm/ext/matrix_clip_space.hpp>
 
@@ -65,16 +66,27 @@ void Renderer::Render(Scene* scene, SDL_Window* window)
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
-    Build(scene);
-
-    for (auto it = buckets.begin(); it != buckets.end(); ++it)
+    CameraComponent* camera = scene->GetActiveCamera();
+    if (camera)
     {
-        int layer = it->first;
-        std::vector<Sprite*>& sprites = it->second;
+        Build(scene);
 
-        for (Sprite* s : sprites)
+        glm::mat4 view = glm::mat4(1.0f);
+        view = glm::scale(view, glm::vec3(camera->GetZoom(), camera->GetZoom(), 1.0f));
+        view = glm::rotate(view, glm::radians(-camera->GetRotate()), glm::vec3(0.0f, 0.0f, 1.0f));
+        view = glm::translate(view, glm::vec3(-camera->GetPosition(), 0.0f));
+
+        shader->SetMatrix4("view", view);
+
+        for (auto it = buckets.begin(); it != buckets.end(); ++it)
         {
-            DrawSprite(s, window);
+            int layer = it->first;
+            std::vector<Sprite*>& sprites = it->second;
+
+            for (Sprite* s : sprites)
+            {
+                DrawSprite(s, window);
+            }
         }
     }
 }
@@ -88,7 +100,7 @@ void Renderer::Build(Scene* scene)
     {
         if (gameObject)
         {
-            SpriteRenderer* spriteRenderer = gameObject->GetComponent<SpriteRenderer>();
+            SpriteRendererComponent* spriteRenderer = gameObject->GetComponent<SpriteRendererComponent>();
 
             if (spriteRenderer)
             {

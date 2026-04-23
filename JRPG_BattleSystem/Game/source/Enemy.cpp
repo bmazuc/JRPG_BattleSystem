@@ -1,5 +1,5 @@
 #include "Enemy.h"
-#include "Components/SpriteRenderer.h"
+#include "Components/SpriteRendererComponent.h"
 
 Enemy::Enemy(const char* _spriteFile, float _enemySpeed)
     : spriteFile(_spriteFile), enemySpeed(_enemySpeed)
@@ -8,7 +8,7 @@ Enemy::Enemy(const char* _spriteFile, float _enemySpeed)
 
 void Enemy::Init()
 {
-    spriteRenderer = AddComponent<SpriteRenderer>();
+    spriteRenderer = AddComponent<SpriteRendererComponent>();
     sprite = spriteRenderer->CreateSprite(spriteFile);
     sprite->SetPosition(glm::vec2(320, 240));
     sprite->SetSize(glm::vec2(300, 306));

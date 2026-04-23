@@ -1,6 +1,6 @@
-#include "Components/SpriteRenderer.h"
+#include "Components/SpriteRendererComponent.h"
 
-Sprite* SpriteRenderer::CreateSprite(const char* file, ImageExtension extension)
+Sprite* SpriteRendererComponent::CreateSprite(const char* file, ImageExtension extension)
 {
 	sprite = new Sprite();
 	switch (extension)
@@ -17,7 +17,7 @@ Sprite* SpriteRenderer::CreateSprite(const char* file, ImageExtension extension)
 	return sprite;
 }
 
-SpriteRenderer::~SpriteRenderer()
+SpriteRendererComponent::~SpriteRendererComponent()
 {
 	delete sprite;
 	sprite = nullptr;

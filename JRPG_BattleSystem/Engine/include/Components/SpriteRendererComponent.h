@@ -1,5 +1,5 @@
-#ifndef __SPRITE_RENDERER_H_INCLUDED__
-#define __SPRITE_RENDERER_H_INCLUDED__
+#ifndef __SPRITE_RENDERER_COMPONENT_H_INCLUDED__
+#define __SPRITE_RENDERER_COMPONENT_H_INCLUDED__
 
 #include "Component.h"
 #include "Graphics/Sprite.h"
@@ -10,10 +10,10 @@ enum ImageExtension
 	BPM = 1
 };
 
-class SpriteRenderer : public Component
+class SpriteRendererComponent : public Component
 {
 public:
-	~SpriteRenderer();
+	~SpriteRendererComponent();
 
 	Sprite* CreateSprite(const char* file, ImageExtension extension = ImageExtension::PNG);
 	Sprite* GetSprite() const { return sprite; }
@@ -22,4 +22,4 @@ private:
 	Sprite* sprite;
 };
 
-#endif // __SPRITE_RENDERER_H_INCLUDED__
+#endif // __SPRITE_RENDERER_COMPONENT_H_INCLUDED__

@@ -133,8 +133,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Engine\source\Components\CameraComponent.cpp" />
     <ClCompile Include="Engine\source\Components\Component.cpp" />
-    <ClCompile Include="Engine\source\Components\SpriteRenderer.cpp" />
+    <ClCompile Include="Engine\source\Components\SpriteRendererComponent.cpp" />
     <ClCompile Include="Engine\source\Core\Engine.cpp" />
     <ClCompile Include="Engine\source\Core\Renderer.cpp" />
     <ClCompile Include="Engine\source\Core\Shader.cpp" />
@@ -147,8 +148,9 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Engine\include\Components\CameraComponent.h" />
     <ClInclude Include="Engine\include\Components\Component.h" />
-    <ClInclude Include="Engine\include\Components\SpriteRenderer.h" />
+    <ClInclude Include="Engine\include\Components\SpriteRendererComponent.h" />
     <ClInclude Include="Engine\include\Core\Engine.h" />
     <ClInclude Include="Engine\include\Core\Renderer.h" />
     <ClInclude Include="Engine\include\Core\Shader.h" />

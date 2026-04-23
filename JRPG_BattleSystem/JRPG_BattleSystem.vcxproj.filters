@@ -66,7 +66,7 @@
     <ClCompile Include="Engine\source\Components\Component.cpp">
       <Filter>Source Files\Engine\Components</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\source\Components\SpriteRenderer.cpp">
+    <ClCompile Include="Engine\source\Components\SpriteRendererComponent.cpp">
       <Filter>Source Files\Engine\Components</Filter>
     </ClCompile>
     <ClCompile Include="Engine\source\Core\Renderer.cpp">
@@ -87,6 +87,9 @@
     <ClCompile Include="Game\source\BattleScene.cpp">
       <Filter>Source Files\Game</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\source\Components\CameraComponent.cpp">
+      <Filter>Source Files\Engine\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\include\Core\Engine.h">
@@ -101,7 +104,7 @@
     <ClInclude Include="Engine\include\Components\Component.h">
       <Filter>Header Files\Engine\Components</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\include\Components\SpriteRenderer.h">
+    <ClInclude Include="Engine\include\Components\SpriteRendererComponent.h">
       <Filter>Header Files\Engine\Components</Filter>
     </ClInclude>
     <ClInclude Include="Engine\include\Core\Renderer.h">
@@ -121,6 +124,9 @@
     </ClInclude>
     <ClInclude Include="Game\include\BattleScene.h">
       <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\include\Components\CameraComponent.h">
+      <Filter>Header Files\Engine\Components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
