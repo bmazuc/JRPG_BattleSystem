@@ -16,13 +16,13 @@ void Scene::Init()
 	}
 }
 
-void Scene::Update()
+void Scene::Update(float deltaTime)
 {
 	for (GameObject* gameObject : gameObjects)
 	{
 		if (gameObject)
 		{
-			gameObject->Update();
+			gameObject->Update(deltaTime);
 		}
 	}
 }

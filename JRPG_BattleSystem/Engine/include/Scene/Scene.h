@@ -9,7 +9,7 @@ public:
 	~Scene();
 
 	void Init();
-	void Update();
+	void Update(float deltaTime);
 
 	void AddGameObject(GameObject* gameObject);
 

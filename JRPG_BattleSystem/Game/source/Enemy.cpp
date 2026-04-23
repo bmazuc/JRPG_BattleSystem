@@ -15,7 +15,7 @@ void Enemy::Init()
     sprite->SetLayer(1);
 }
 
-void Enemy::Update()
+void Enemy::Update(float deltaTime)
 {
     if (sprite)
     {
@@ -26,6 +26,6 @@ void Enemy::Update()
             enemyMoveDirection *= -1.0f;
         }
 
-        sprite->SetPosition(glm::vec2(currentPos.x + (enemyMoveDirection * enemySpeed), currentPos.y));
+        sprite->SetPosition(glm::vec2(currentPos.x + (enemyMoveDirection * enemySpeed * deltaTime), currentPos.y));
     }
 }

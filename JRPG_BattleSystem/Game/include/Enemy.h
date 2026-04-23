@@ -11,7 +11,9 @@ class Enemy : public GameObject
 public:
 	Enemy(const char* _spriteFile, float _enemySpeed);
 	void Init() override;
-	void Update() override;
+	void Update(float deltaTime) override;
+
+	void SetSpeed(float speed) { enemySpeed = speed; }
 
 private:
 	SpriteRenderer* spriteRenderer;

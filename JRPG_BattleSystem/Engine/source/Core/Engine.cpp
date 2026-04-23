@@ -84,7 +84,12 @@ void Engine::Run()
             glViewport(0, 0, w, h);
         }
 
-        scene->Update();
+        // Compute delta time
+        lastTick = currentTick;
+        currentTick = SDL_GetTicks();
+        float deltaTime = (currentTick - lastTick)/1000.0f;
+
+        scene->Update(deltaTime);
 
         renderer->Render(scene, window);
 
@@ -97,9 +102,6 @@ void Engine::Shutdown()
 {
     delete scene;
     scene = nullptr;
-
-    delete imGuiRenderer;
-    imGuiRenderer = nullptr;
 
     delete renderer;
     renderer = nullptr;

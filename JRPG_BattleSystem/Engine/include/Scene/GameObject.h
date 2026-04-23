@@ -11,7 +11,7 @@ public:
 	~GameObject();
 
 	virtual void Init() {}
-	virtual void Update() {}
+	virtual void Update(float deltaTime) {}
 
 	template<typename T, typename... Args>
 	T* AddComponent(Args&&... args)

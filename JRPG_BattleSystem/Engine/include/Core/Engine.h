@@ -48,6 +48,9 @@ private:
 	SDL_GLContext glContext;
 
 	glm::vec2 viewportBaseResolution = glm::vec2(640, 480);
+
+	Uint64 lastTick = 0;
+	Uint64 currentTick = 0;
 };
 
 #endif // __ENGINE_H_INCLUDED__
