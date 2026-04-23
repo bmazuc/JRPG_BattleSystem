@@ -77,8 +77,6 @@ void Renderer::Render(Scene* scene, SDL_Window* window)
             DrawSprite(s, window);
         }
     }
-
-    SDL_GL_SwapWindow(window);
 }
 
 void Renderer::Build(Scene* scene)

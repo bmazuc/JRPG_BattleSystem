@@ -50,7 +50,7 @@ bool Engine::Start(WindowData windowData, int swapInterval)
 
     if (!renderer)
     {
-        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Couldn't create renderer");
+        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Couldn't create OpenGL renderer");
         return false;
     }
 
@@ -85,7 +85,11 @@ void Engine::Run()
         }
 
         scene->Update();
+
         renderer->Render(scene, window);
+
+        SDL_GL_SwapWindow(window);
+
     }
 }
 
@@ -93,6 +97,9 @@ void Engine::Shutdown()
 {
     delete scene;
     scene = nullptr;
+
+    delete imGuiRenderer;
+    imGuiRenderer = nullptr;
 
     delete renderer;
     renderer = nullptr;
