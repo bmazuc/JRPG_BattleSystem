@@ -47,15 +47,22 @@ public:
 		return nullptr;
 	}
 
-	glm::vec2 GetPosition() const;
-	float GetRotate() const;
-	glm::vec2 GetScale() const;
+	glm::vec2 GetWorldPosition() const;
+	float GetWorldRotate() const;
+	glm::vec2 GetWorldScale() const;
 
-	void SetPosition(glm::vec2 position);
-	void SetRotate(float rotate);
-	void SetScale(glm::vec2 scale);
+	void SetWorldPosition(glm::vec2 position);
+	void SetWorldRotate(float rotate);
+	void SetWorldScale(glm::vec2 scale);
 
-	void SetRoot(Component* newRoot);
+	glm::vec2 GetLocalPosition() const;
+	float GetLocalRotate() const;
+	glm::vec2 GetLocalScale() const;
+
+	void SetLocalPosition(glm::vec2 position);
+	void SetLocalRotate(float rotate);
+	void SetLocalScale(glm::vec2 scale);
+
 	Component* GetRoot() const { return root; }
 
 private:

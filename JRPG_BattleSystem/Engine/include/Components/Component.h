@@ -14,15 +14,23 @@ public:
 	virtual void Update(float deltaTime) {}
 	void UpdateTransform();
 
-	Transform GetTransform() { return transform; }
+	Transform GetTransform() const { return transform; }
 
-	glm::vec2 GetPosition() const { return transform.position; }
-	float GetRotate() const { return transform.rotate; }
-	glm::vec2 GetScale() const { return transform.scale; }
+	glm::vec2 GetWorldPosition() const;
+	float GetWorldRotate() const;
+	glm::vec2 GetWorldScale() const;
 
-	void SetPosition(glm::vec2 position) { transform.position = position; }
-	void SetRotate(float rotate) { transform.rotate = rotate; }
-	void SetScale(glm::vec2 scale) { transform.scale = scale; }
+	void SetWorldPosition(glm::vec2 position);
+	void SetWorldRotate(float rotate);
+	void SetWorldScale(glm::vec2 scale);
+
+	glm::vec2 GetLocalPosition() const;
+	float GetLocalRotate() const;
+	glm::vec2 GetLocalScale() const;
+
+	void SetLocalPosition(glm::vec2 position);
+	void SetLocalRotate(float rotate);
+	void SetLocalScale(glm::vec2 scale);
 
 	Actor* GetOwner() const { return owner; }
 	void SetOwner(Actor* _owner) { owner = _owner; }
@@ -34,6 +42,9 @@ private:
 	void AddChild(Component* child);
 	void RemoveChild(Component* child);
 	bool IsAncestorOf(Component* component);
+	Component* GetRoot();
+
+	void SetDirty();
 
 	Transform transform;
 
@@ -41,6 +52,7 @@ private:
 
 	Component* parent;
 	std::vector<Component*> children;
+	bool isDirty = true;
 };
 
 #endif // __COMPONENT_H_INCLUDED__

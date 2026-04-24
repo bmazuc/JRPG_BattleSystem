@@ -48,56 +48,80 @@ void Actor::UpdateComponents(float deltaTime)
 	}
 }
 
-glm::vec2 Actor::GetPosition() const
+glm::vec2 Actor::GetLocalPosition() const
 {
-	return root ? root->GetPosition() : glm::vec2();
+	return root ? root->GetLocalPosition() : glm::vec2();
 }
 
-float Actor::GetRotate() const
+float Actor::GetLocalRotate() const
 {
-	return root ? root->GetRotate() : 0.0f;
+	return root ? root->GetLocalRotate() : 0.0f;
 }
 
-glm::vec2 Actor::GetScale() const
+glm::vec2 Actor::GetLocalScale() const
 {
-	return root ? root->GetScale() : glm::vec2();
+	return root ? root->GetLocalScale() : glm::vec2();
 }
 
-void Actor::SetPosition(glm::vec2 position)
-{
-	if (root)
-	{
-		root->SetPosition(position);
-	}
-}
-
-void Actor::SetRotate(float rotate)
+void Actor::SetLocalPosition(glm::vec2 position)
 {
 	if (root)
 	{
-		root->SetRotate(rotate);
+		root->SetLocalPosition(position);
 	}
 }
 
-void Actor::SetScale(glm::vec2 scale)
+void Actor::SetLocalRotate(float rotate)
 {
 	if (root)
 	{
-		root->SetScale(scale);
+		root->SetLocalRotate(rotate);
 	}
 }
 
-void Actor::SetRoot(Component* newRoot) 
-{ 
-	// Check if changing root doesn't create cyclic references inside graph
-
-	/*if (root)
+void Actor::SetLocalScale(glm::vec2 scale)
+{
+	if (root)
 	{
-		if (newRoot && newRoot != root && children > 0)
-		{
-			//Verifier si root et newroot ne crée des références cycliques
-		}
-	}*/
+		root->SetLocalScale(scale);
+	}
+}
 
-	root = newRoot;
+glm::vec2 Actor::GetWorldPosition() const
+{
+	return root ? root->GetWorldPosition() : glm::vec2();
+}
+
+float Actor::GetWorldRotate() const
+{
+	return root ? root->GetWorldRotate() : 0.0f;
+}
+
+glm::vec2 Actor::GetWorldScale() const
+{
+	return root ? root->GetWorldScale() : glm::vec2();
+}
+
+void Actor::SetWorldPosition(glm::vec2 position)
+{
+	if (root)
+	{
+		root->SetWorldPosition(position);
+	}
+}
+
+void Actor::SetWorldRotate(float rotate)
+{
+	if (root)
+	{
+		root->SetWorldRotate(rotate);
+	}
+}
+
+void Actor::SetWorldScale(glm::vec2 scale)
+{
+	if (root)
+	{
+		root->SetWorldScale(scale);
+	}
 }
