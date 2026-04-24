@@ -89,6 +89,7 @@ void Engine::Run()
         currentTick = SDL_GetTicks();
         float deltaTime = (currentTick - lastTick)/1000.0f;
 
+        scene->UpdateTransforms();
         scene->Update(deltaTime);
 
         renderer->Render(scene, window);

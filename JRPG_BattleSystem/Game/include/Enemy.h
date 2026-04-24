@@ -9,17 +9,16 @@ class Sprite;
 class Enemy : public Actor
 {
 public:
-	Enemy(const char* _spriteFile, float _enemySpeed);
-	void Init() override;
+	Enemy(const char* spriteFile);
 	void Update(float deltaTime) override;
 
+	Sprite* GetSprite() const { return sprite; }
 	void SetSpeed(float speed) { enemySpeed = speed; }
 
 private:
 	SpriteRendererComponent* spriteRenderer;
 	Sprite* sprite;
 
-	const char* spriteFile;
 	float enemyMoveDirection = 1.0f;
 	float enemySpeed;
 };

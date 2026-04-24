@@ -1,5 +1,6 @@
 #include "Components/Component.h"
 #include <glm/ext/matrix_transform.hpp>
+#include <SDL3/SDL.h>
 
 void Component::UpdateTransform()
 {
@@ -26,6 +27,12 @@ void Component::SetParent(Component* _parent)
 {
 	if (parent != _parent)
 	{
+		if (_parent->IsAncestorOf(this))
+		{ 
+			SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Cannot attach parent to one of its children.");
+			return;
+		}
+
 		if (parent)
 		{
 			parent->RemoveChild(this);
@@ -48,4 +55,22 @@ void Component::AddChild(Component* child)
 void Component::RemoveChild(Component* child)
 {
 	children.erase(std::remove(children.begin(), children.end(), child), children.end());
+}
+
+bool Component::IsAncestorOf(Component* component)
+{
+	if (this == component)
+	{
+		return true;
+	}
+
+	for (auto* c : children)
+	{
+		if (c->IsAncestorOf(component))
+		{
+			return true;
+		}
+	}
+
+	return false;
 }

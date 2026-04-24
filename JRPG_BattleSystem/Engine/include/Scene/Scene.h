@@ -11,6 +11,8 @@ public:
 	~Scene();
 
 	void Init();
+
+	void UpdateTransforms();
 	void Update(float deltaTime);
 
 	void AddGameObject(Actor* gameObject);

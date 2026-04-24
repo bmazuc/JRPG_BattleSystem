@@ -5,9 +5,22 @@
 
 BattleScene::BattleScene()
 {
-    Enemy* enemy = new Enemy("Assets/goblin.png", 3.0f);
-    AddGameObject(enemy);
+    Enemy* enemy = new Enemy("Assets/goblin.png");
+    enemy->SetPosition(glm::vec2(320, 240));
     enemy->SetSpeed(50.0f);
+    Sprite* enemySprite = enemy->GetSprite();
+    enemySprite->SetSize(glm::vec2(300, 306));
+    enemySprite->SetLayer(1);
+    AddGameObject(enemy);
+
+    Actor* followEnemy = new Actor();
+    SpriteRendererComponent* followEnemySpriteRenderer = followEnemy->AddComponent<SpriteRendererComponent>();
+    Sprite* followEnemySprite = followEnemySpriteRenderer->CreateSprite("Assets/goblin.png");
+    followEnemySprite->SetSize(glm::vec2(160, 120));
+    followEnemySprite->SetLayer(1);
+    followEnemy->AttachToActor(enemy);
+    followEnemy->SetPosition(glm::vec2(-220, -140));
+    AddGameObject(followEnemy);
 
     Actor* cameraObject = new Actor();
     CameraComponent* camera = cameraObject->AddComponent<CameraComponent>();

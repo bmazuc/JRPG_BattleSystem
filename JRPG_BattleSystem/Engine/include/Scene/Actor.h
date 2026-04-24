@@ -15,6 +15,9 @@ public:
 	virtual void Init() {}
 	virtual void Update(float deltaTime) {}
 
+	void AttachToActor(Actor* actor);
+	void Detach();
+
 	void UpdateTransforms();
 	void UpdateComponents(float deltaTime);
 

@@ -1,4 +1,5 @@
 #include "Scene/Scene.h"
+#include "Components/Component.h"
 
 void Scene::AddGameObject(Actor* gameObject)
 {
@@ -16,13 +17,26 @@ void Scene::Init()
 	}
 }
 
+void Scene::UpdateTransforms()
+{
+	for (Actor* gameObject : gameObjects)
+	{
+		if (gameObject)
+		{
+			if (!gameObject->GetRoot()->HasParent())
+			{
+				gameObject->UpdateTransforms();
+			}
+		}
+	}
+}
+
 void Scene::Update(float deltaTime)
 {
 	for (Actor* gameObject : gameObjects)
 	{
 		if (gameObject)
 		{
-			gameObject->UpdateTransforms();
 			gameObject->Update(deltaTime);
 			gameObject->UpdateComponents(deltaTime);
 		}

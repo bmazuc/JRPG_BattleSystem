@@ -28,10 +28,12 @@ public:
 	void SetOwner(Actor* _owner) { owner = _owner; }
 
 	void SetParent(Component* _parent);
+	bool HasParent() const { return parent; }
 
 private:
 	void AddChild(Component* child);
 	void RemoveChild(Component* child);
+	bool IsAncestorOf(Component* component);
 
 	Transform transform;
 

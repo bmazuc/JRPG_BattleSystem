@@ -16,6 +16,19 @@ Actor::~Actor()
 	components.clear();
 }
 
+void Actor::AttachToActor(Actor* actor)
+{
+	if (actor)
+	{
+		root->SetParent(actor->GetRoot());
+	}
+}
+
+void Actor::Detach()
+{
+	root->SetParent(nullptr);
+}
+
 void Actor::UpdateTransforms()
 {
 	if (root)
