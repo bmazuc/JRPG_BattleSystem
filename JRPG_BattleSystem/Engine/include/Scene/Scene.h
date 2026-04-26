@@ -14,15 +14,29 @@ public:
 
 	void UpdateTransforms();
 	void Update(float deltaTime);
-
-	void AddGameObject(Actor* gameObject);
+	void ProcessDestroy();
 
 	CameraComponent* GetActiveCamera() { return activeCamera; }
 	void SetActiveCamera(CameraComponent* camera) { activeCamera = camera; }
-	std::vector<Actor*> GetGameObjects() const { return gameObjects; }
+	std::vector<Actor*> GetActors() const { return actors; }
+
+	template<typename T, typename... Args>
+	T* CreateActors(Args&&... args)
+	{
+		static_assert(std::is_base_of<Actor, T>::value, "T must inherit Actor");
+
+		T* actor = new T(std::forward<Args>(args)...);
+		actor->SetScene(this);
+		actors.push_back(actor);
+
+		return actor;
+	}
+
+	void RegisterToDestroy(Actor* actor);
 
 private:
-	std::vector<Actor*> gameObjects;
+	std::vector<Actor*> actors;
+	std::vector<Actor*> actorsToDestroy;
 	CameraComponent* activeCamera;
 };
 

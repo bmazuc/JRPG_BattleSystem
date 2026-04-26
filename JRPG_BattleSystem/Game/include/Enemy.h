@@ -21,6 +21,8 @@ private:
 
 	float enemyMoveDirection = 1.0f;
 	float enemySpeed;
+
+	float timer = 0.0f;
 };
 
 #endif // __ENEMY_H_INCLUDED__

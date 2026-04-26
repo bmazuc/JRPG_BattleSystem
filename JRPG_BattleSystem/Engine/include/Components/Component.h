@@ -9,10 +9,13 @@ class Actor;
 class Component
 {
 public:
-	virtual ~Component() = default;
+	virtual ~Component();
 
 	virtual void Update(float deltaTime) {}
 	void UpdateTransform();
+
+	// Future upgrade : Add a destroy with a timer
+	void Destroy();
 
 	Transform GetTransform() const { return transform; }
 
@@ -53,6 +56,7 @@ private:
 	Component* parent;
 	std::vector<Component*> children;
 	bool isDirty = true;
+	bool isPendingDestroy = false;
 };
 
 #endif // __COMPONENT_H_INCLUDED__

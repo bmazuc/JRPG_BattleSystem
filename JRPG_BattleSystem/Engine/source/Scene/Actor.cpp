@@ -1,5 +1,6 @@
 #include "Scene/Actor.h"
 #include "Components/Component.h"
+#include "Scene/Scene.h"
 
 Actor::Actor()
 {
@@ -46,6 +47,20 @@ void Actor::UpdateComponents(float deltaTime)
 			component->Update(deltaTime);
 		}
 	}
+}
+
+void Actor::ProcessComponentsDestroy()
+{
+	for (Component* componentToDestroy : componentsToDestroy)
+	{
+		if (componentToDestroy)
+		{
+			components.erase(std::remove(components.begin(), components.end(), componentToDestroy), components.end());
+			delete componentToDestroy;
+		}
+	}
+
+	componentsToDestroy.clear();
 }
 
 glm::vec2 Actor::GetLocalPosition() const
@@ -124,4 +139,18 @@ void Actor::SetWorldScale(glm::vec2 scale)
 	{
 		root->SetWorldScale(scale);
 	}
+}
+
+void Actor::Destroy()
+{
+	if (!isPendingDestroy)
+	{
+		isPendingDestroy = true;
+		scene->RegisterToDestroy(this);
+	}
+}
+
+void Actor::RegisterComponentsToDestroy(Component* component)
+{
+	componentsToDestroy.push_back(component);
 }

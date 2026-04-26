@@ -40,8 +40,6 @@ public:
 	void SetViewportBaseResolution(glm::vec2 resolution) { viewportBaseResolution = resolution; }
 
 private:
-
-
 	Scene* scene;
 	Renderer* renderer;
 	SDL_Window* window;

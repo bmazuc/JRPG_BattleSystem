@@ -5,6 +5,7 @@
 #include <vector>
 
 class Component;
+class Scene;
 
 class Actor
 {
@@ -15,11 +16,15 @@ public:
 	virtual void Init() {}
 	virtual void Update(float deltaTime) {}
 
+	// Future upgrade : Add a destroy with a timer
+	void Destroy();
+
 	void AttachToActor(Actor* actor);
 	void Detach();
 
 	void UpdateTransforms();
 	void UpdateComponents(float deltaTime);
+	void ProcessComponentsDestroy();
 
 	template<typename T, typename... Args>
 	T* AddComponent(Args&&... args)
@@ -47,6 +52,8 @@ public:
 		return nullptr;
 	}
 
+	void RegisterComponentsToDestroy(Component* component);
+
 	glm::vec2 GetWorldPosition() const;
 	float GetWorldRotate() const;
 	glm::vec2 GetWorldScale() const;
@@ -65,9 +72,17 @@ public:
 
 	Component* GetRoot() const { return root; }
 
+	Scene* GetScene() const { return scene; }
+	void SetScene(Scene* _scene) { scene = _scene; }
+
 private:
 	Component* root;
 	std::vector<Component*> components;
+	std::vector<Component*> componentsToDestroy;
+	// reference to the scene the actor lives in
+	Scene* scene;
+
+	bool isPendingDestroy = false;
 };
 
 #endif // __ACTOR_H_INCLUDED__

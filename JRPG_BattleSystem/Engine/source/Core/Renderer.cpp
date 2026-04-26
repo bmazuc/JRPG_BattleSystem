@@ -95,7 +95,7 @@ void Renderer::Build(Scene* scene)
 {
     buckets.clear();
 
-    std::vector<Actor*> gameObjects = scene->GetGameObjects();
+    std::vector<Actor*> gameObjects = scene->GetActors();
     for (Actor* gameObject : gameObjects)
     {
         if (gameObject)

@@ -1,14 +1,9 @@
 #include "Scene/Scene.h"
 #include "Components/Component.h"
 
-void Scene::AddGameObject(Actor* gameObject)
-{
-	gameObjects.push_back(gameObject);
-}
-
 void Scene::Init()
 {
-	for (Actor* gameObject : gameObjects)
+	for (Actor* gameObject : actors)
 	{
 		if (gameObject)
 		{
@@ -19,13 +14,13 @@ void Scene::Init()
 
 void Scene::UpdateTransforms()
 {
-	for (Actor* gameObject : gameObjects)
+	for (Actor* actor : actors)
 	{
-		if (gameObject)
+		if (actor)
 		{
-			if (!gameObject->GetRoot()->HasParent())
+			if (!actor->GetRoot()->HasParent())
 			{
-				gameObject->UpdateTransforms();
+				actor->UpdateTransforms();
 			}
 		}
 	}
@@ -33,22 +28,49 @@ void Scene::UpdateTransforms()
 
 void Scene::Update(float deltaTime)
 {
-	for (Actor* gameObject : gameObjects)
+	for (Actor* actor : actors)
 	{
-		if (gameObject)
+		if (actor)
 		{
-			gameObject->Update(deltaTime);
-			gameObject->UpdateComponents(deltaTime);
+			actor->Update(deltaTime);
+			actor->UpdateComponents(deltaTime);
+		}
+	}
+}
+
+void Scene::ProcessDestroy()
+{
+	for (Actor* actorToDestroy : actorsToDestroy)
+	{
+		if (actorToDestroy)
+		{
+			actors.erase(std::remove(actors.begin(), actors.end(), actorToDestroy), actors.end());
+			delete actorToDestroy;
+		}
+	}
+
+	actorsToDestroy.clear();
+
+	for (Actor* actor : actors)
+	{
+		if (actor)
+		{
+			actor->ProcessComponentsDestroy();
 		}
 	}
 }
 
 Scene::~Scene()
 {
-	for (Actor* gameObject : gameObjects)
+	for (Actor* actor : actors)
 	{
-		delete gameObject;
+		delete actor;
 	}
 
-	gameObjects.clear();
+	actors.clear();
+}
+
+void Scene::RegisterToDestroy(Actor* actor)
+{
+	actorsToDestroy.push_back(actor);
 }

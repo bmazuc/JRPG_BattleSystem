@@ -1,4 +1,6 @@
 #include "Components/Component.h"
+#include "Scene/Actor.h"
+
 #include <glm/ext/matrix_transform.hpp>
 #include <SDL3/SDL.h>
 
@@ -34,7 +36,7 @@ void Component::SetParent(Component* _parent)
 {
 	if (parent != _parent)
 	{
-		if (_parent->IsAncestorOf(this))
+		if (_parent && _parent->IsAncestorOf(this))
 		{ 
 			SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Cannot attach parent to one of its children.");
 			return;
@@ -215,5 +217,25 @@ void Component::SetDirty()
 	for (Component* child : children)
 	{
 		child->SetDirty();
+	}
+}
+
+Component::~Component()
+{
+	for (Component* child : children)
+	{
+		child->SetParent(parent);
+	}
+}
+
+void Component::Destroy()
+{ 
+	if (!isPendingDestroy)
+	{
+		isPendingDestroy = true;
+		if (owner)
+		{
+			owner->RegisterComponentsToDestroy(this);
+		}
 	}
 }

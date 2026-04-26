@@ -91,6 +91,7 @@ void Engine::Run()
 
         scene->UpdateTransforms();
         scene->Update(deltaTime);
+        scene->ProcessDestroy();
 
         renderer->Render(scene, window);
 
