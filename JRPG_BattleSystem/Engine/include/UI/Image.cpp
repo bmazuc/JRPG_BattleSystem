@@ -1,19 +1,14 @@
 #include "Image.h"
+#include "Core/ResourceManager.h"
+#include "Graphics/Material.h"
 
-void Image::LoadBMP(const char* file)
+Image::Image(std::string textureName, std::string shaderName, glm::vec3 color)
 {
-	texture = new Texture();
-	texture->LoadBMP(file);
-}
-
-void Image::LoadPNG(const char* file)
-{
-	texture = new Texture();
-	texture->LoadPNG(file);
+	material = new Material(textureName, shaderName, color);
 }
 
 Image::~Image()
 {
-	delete texture;
-	texture = nullptr;
+	delete material;
+	material = nullptr;
 }

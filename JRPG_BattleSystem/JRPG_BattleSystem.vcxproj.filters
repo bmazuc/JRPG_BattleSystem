@@ -49,6 +49,12 @@
     <Filter Include="Source Files\Engine\Scene">
       <UniqueIdentifier>{9f50b888-8a21-4c7a-b66c-bf2d86d81e83}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Engine\UI">
+      <UniqueIdentifier>{a4ecd94d-c147-44f9-9ef1-bb46ace8380d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\UI">
+      <UniqueIdentifier>{925d2b3f-c787-4afd-9c10-c6618dc470b3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -90,14 +96,20 @@
     <ClCompile Include="Engine\source\Components\CameraComponent.cpp">
       <Filter>Source Files\Engine\Components</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\source\UI\UIElement.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Game\source\AutoDestroyImage.cpp">
+      <Filter>Source Files\Game</Filter>
     </ClCompile>
     <ClCompile Include="Engine\include\UI\Image.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Engine\UI</Filter>
     </ClCompile>
-    <ClCompile Include="Game\source\AutoDestroyImage.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Engine\source\UI\UIElement.cpp">
+      <Filter>Source Files\Engine\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\source\Graphics\Material.cpp">
+      <Filter>Source Files\Engine\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\source\Core\ResourceManager.cpp">
+      <Filter>Source Files\Engine\Core</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -140,14 +152,20 @@
     <ClInclude Include="Engine\include\Transform2D.h">
       <Filter>Header Files\Engine</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\include\UI\UIElement.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Game\include\AutoDestroyImage.h">
+      <Filter>Header Files\Game</Filter>
     </ClInclude>
     <ClInclude Include="Engine\include\UI\Image.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Engine\UI</Filter>
     </ClInclude>
-    <ClInclude Include="Game\include\AutoDestroyImage.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Engine\include\UI\UIElement.h">
+      <Filter>Header Files\Engine\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\include\Graphics\Material.h">
+      <Filter>Header Files\Engine\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\include\Core\ResourceManager.h">
+      <Filter>Header Files\Engine\Core</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

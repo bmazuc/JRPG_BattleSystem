@@ -1,35 +1,33 @@
 #ifndef __SPRITE_H_INCLUDED__
 #define __SPRITE_H_INCLUDED__
 
-#include "Texture.h"
+class Material;
+
+#include "Core/Shader.h"
 #include <glm/vec2.hpp>
 #include <glm/vec3.hpp>
+#include <string>
 
 class Sprite
 {
 public:
+	Sprite(std::string textureName, std::string shaderName, glm::vec3 color = glm::vec3(1, 1, 1));
 	~Sprite();
 
-	void LoadBMP(const char* file);
-	void LoadPNG(const char* file);
-
-	Texture* GetTexture() const { return texture; }
+	Material* GetMaterial() const { return material; }
 
 	glm::vec2 GetSize() const { return size; }
-	glm::vec3 GetColor() const { return color; }
 	int GetLayer() const { return layer; }
 
 	void SetSize(glm::vec2 _size) { size = _size; }
-	void SetColor(glm::vec3 _color) { color = _color; }
 	void SetLayer(int _layer) { layer = _layer; }
 
 private:
 	glm::vec2 size = glm::vec2(1, 1); 
-	glm::vec3 color = glm::vec3(1, 1, 1);
 
 	int layer = 0;
 
-	Texture* texture;
+	Material* material;
 };
 
 #endif // __SPRITE_H_INCLUDED__

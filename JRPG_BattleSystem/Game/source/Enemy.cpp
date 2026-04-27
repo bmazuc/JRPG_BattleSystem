@@ -1,10 +1,14 @@
 #include "Enemy.h"
 #include "Components/SpriteRendererComponent.h"
 
-Enemy::Enemy(const char* spriteFile)
+Enemy::Enemy(std::string textureName, std::string shaderName)
 {
-    spriteRenderer = AddComponent<SpriteRendererComponent>();
-    sprite = spriteRenderer->CreateSprite(spriteFile);
+    spriteRenderer = AddComponent<SpriteRendererComponent>(textureName, shaderName);
+}
+
+Sprite* Enemy::GetSprite() const
+{
+    return spriteRenderer->GetSprite();
 }
 
 void Enemy::Update(float deltaTime)

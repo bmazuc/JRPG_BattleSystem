@@ -1,19 +1,14 @@
 #include "Graphics/Sprite.h"
+#include "Core/ResourceManager.h"
+#include "Graphics/Material.h"
 
-void Sprite::LoadBMP(const char* file)
+Sprite::Sprite(std::string textureName, std::string shaderName, glm::vec3 color)
 {
-	texture = new Texture();
-	texture->LoadBMP(file);
-}
-
-void Sprite::LoadPNG(const char* file)
-{
-	texture = new Texture();
-	texture->LoadPNG(file);
+	material = new Material(textureName, shaderName, color);
 }
 
 Sprite::~Sprite()
 {
-	delete texture;
-	texture = nullptr;
+	delete material;
+	material = nullptr;
 }

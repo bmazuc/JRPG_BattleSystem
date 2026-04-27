@@ -3,21 +3,20 @@
 #include "Enemy.h"
 #include "Components/CameraComponent.h"
 #include "AutoDestroyImage.h"
+#include "Core/ResourceManager.h"
 
-BattleScene::BattleScene()
+void BattleScene::CreateScene()
 {
-    AutoDestroyImage* image = CreateUIElement<AutoDestroyImage>();
-    image->LoadPNG("Assets/button.png");
+    AutoDestroyImage* image = CreateUIElement<AutoDestroyImage>("button","default");
     image->SetWorldPosition(glm::vec2(100, 100));
     image->SetSize(glm::vec2(50, 50));
 
-    Image* image2 = CreateUIElement<Image>();
-    image2->LoadPNG("Assets/button.png");
+    Image* image2 = CreateUIElement<Image>("button", "default");
     image2->SetWorldPosition(glm::vec2(100, 100));
     image2->SetSize(glm::vec2(25, 25));
     image2->SetParent(image);
 
-    Enemy* enemy = CreateActors<Enemy>("Assets/goblin.png");
+    Enemy* enemy = CreateActors<Enemy>("goblin", "default");
     enemy->SetWorldPosition(glm::vec2(320, 240));
     enemy->SetSpeed(50.0f);
     Sprite* enemySprite = enemy->GetSprite();
@@ -25,16 +24,16 @@ BattleScene::BattleScene()
     enemySprite->SetLayer(1);
 
     Actor* followEnemy = CreateActors<Actor>();
-    SpriteRendererComponent* followEnemySpriteRenderer = followEnemy->AddComponent<SpriteRendererComponent>();
-    Sprite* followEnemySprite = followEnemySpriteRenderer->CreateSprite("Assets/goblin.png");
+    SpriteRendererComponent* followEnemySpriteRenderer = followEnemy->AddComponent<SpriteRendererComponent>("goblin", "default");
+    Sprite* followEnemySprite = followEnemySpriteRenderer->GetSprite();
     followEnemySprite->SetSize(glm::vec2(160, 120));
     followEnemySprite->SetLayer(2);
     followEnemy->SetWorldPosition(glm::vec2(320, 240));
     followEnemy->AttachToActor(enemy);
 
     Actor* followEnemy2 = CreateActors<Actor>();
-    SpriteRendererComponent* followEnemySpriteRenderer2 = followEnemy2->AddComponent<SpriteRendererComponent>();
-    Sprite* followEnemySprite2 = followEnemySpriteRenderer2->CreateSprite("Assets/goblin.png");
+    SpriteRendererComponent* followEnemySpriteRenderer2 = followEnemy2->AddComponent<SpriteRendererComponent>("goblin", "default");
+    Sprite* followEnemySprite2 = followEnemySpriteRenderer2->GetSprite();
     followEnemySprite2->SetSize(glm::vec2(80, 60));
     followEnemySprite2->SetLayer(3);
     followEnemy2->SetWorldPosition(glm::vec2(320, 240));
@@ -45,8 +44,14 @@ BattleScene::BattleScene()
     SetActiveCamera(camera);
 
     Actor* background = CreateActors<Actor>();
-    SpriteRendererComponent* backgroundSpriteRenderer = background->AddComponent<SpriteRendererComponent>();
-    Sprite* backgroundSprite = backgroundSpriteRenderer->CreateSprite("Assets/battleback1_0.png");
+    SpriteRendererComponent* backgroundSpriteRenderer = background->AddComponent<SpriteRendererComponent>("background", "default");
     background->SetWorldPosition(glm::vec2(320, 240));
-    backgroundSprite->SetSize(glm::vec2(640, 480));
+    backgroundSpriteRenderer->GetSprite()->SetSize(glm::vec2(640, 480));
+}
+
+void BattleScene::LoadAssets()
+{
+    ResourceManager::LoadPNGTexture("Assets/button.png", "button"); 
+    ResourceManager::LoadPNGTexture("Assets/goblin.png", "goblin");
+    ResourceManager::LoadPNGTexture("Assets/battleback1_0.png", "background");
 }

@@ -6,11 +6,16 @@ class CameraComponent;
 #include "Actor.h"
 #include "UI/UIElement.h"
 
+class Shader;
+class Texture;
+
 class Scene
 {
 public:
 	~Scene();
 
+	virtual void LoadAssets() {}
+	virtual void CreateScene() {}
 	void Init();
 
 	void UpdateTransforms();

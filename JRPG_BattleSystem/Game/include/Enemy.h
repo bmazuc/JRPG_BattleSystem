@@ -2,6 +2,7 @@
 #define __ENEMY_H_INCLUDED__
 
 #include "Scene/Actor.h"
+#include <string>
 
 class SpriteRendererComponent;
 class Sprite;
@@ -9,15 +10,14 @@ class Sprite;
 class Enemy : public Actor
 {
 public:
-	Enemy(const char* spriteFile);
+	Enemy(std::string textureName, std::string shaderName);
 	void Update(float deltaTime) override;
 
-	Sprite* GetSprite() const { return sprite; }
+	Sprite* GetSprite() const;
 	void SetSpeed(float speed) { enemySpeed = speed; }
 
 private:
 	SpriteRendererComponent* spriteRenderer;
-	Sprite* sprite;
 
 	float enemyMoveDirection = 1.0f;
 	float enemySpeed;

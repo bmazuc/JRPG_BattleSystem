@@ -2,9 +2,12 @@
 
 #include "Core/Renderer.h"
 #include "Scene/Scene.h"
+#include "Core/ResourceManager.h"
 
 #include <glm/vec2.hpp>
 #include <glm/vec3.hpp>
+
+
 
 WindowData::WindowData(const char* _title, int _width, int _height, SDL_WindowFlags _flags) 
     : title(_title), width(_width), height(_height), flags(_flags) 
@@ -54,6 +57,9 @@ bool Engine::Start(WindowData windowData, int swapInterval)
         return false;
     }
 
+    ResourceManager::LoadShader("Shaders/default.vs", "Shaders/default.frag", "default");
+    ResourceManager::LoadPNGTexture("Assets/missing.png", "missing");
+
     return true;
 }
 
@@ -65,6 +71,8 @@ void Engine::Run()
         return;
     }
 
+    scene->LoadAssets();
+    scene->CreateScene();
     scene->Init();
 
     glEnable(GL_BLEND);
@@ -103,6 +111,8 @@ void Engine::Run()
 
 void Engine::Shutdown()
 {
+    ResourceManager::Clear();
+
     delete scene;
     scene = nullptr;
 

@@ -139,7 +139,9 @@
     <ClCompile Include="Engine\source\Components\SpriteRendererComponent.cpp" />
     <ClCompile Include="Engine\source\Core\Engine.cpp" />
     <ClCompile Include="Engine\source\Core\Renderer.cpp" />
+    <ClCompile Include="Engine\source\Core\ResourceManager.cpp" />
     <ClCompile Include="Engine\source\Core\Shader.cpp" />
+    <ClCompile Include="Engine\source\Graphics\Material.cpp" />
     <ClCompile Include="Engine\source\Graphics\Sprite.cpp" />
     <ClCompile Include="Engine\source\Graphics\Texture.cpp" />
     <ClCompile Include="Engine\source\Scene\Actor.cpp" />
@@ -156,7 +158,9 @@
     <ClInclude Include="Engine\include\Components\SpriteRendererComponent.h" />
     <ClInclude Include="Engine\include\Core\Engine.h" />
     <ClInclude Include="Engine\include\Core\Renderer.h" />
+    <ClInclude Include="Engine\include\Core\ResourceManager.h" />
     <ClInclude Include="Engine\include\Core\Shader.h" />
+    <ClInclude Include="Engine\include\Graphics\Material.h" />
     <ClInclude Include="Engine\include\Graphics\Sprite.h" />
     <ClInclude Include="Engine\include\Graphics\Texture.h" />
     <ClInclude Include="Engine\include\Scene\Actor.h" />

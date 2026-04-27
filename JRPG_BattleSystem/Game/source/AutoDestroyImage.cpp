@@ -1,5 +1,10 @@
 #include "AutoDestroyImage.h"
 
+AutoDestroyImage::AutoDestroyImage(std::string textureName, std::string shaderName, glm::vec3 color)
+    : Image(textureName, shaderName, color)
+{  
+}
+
 void AutoDestroyImage::Update(float deltaTime)
 {
 	timer += deltaTime;

@@ -6,7 +6,8 @@
 class BattleScene : public Scene
 {
 public:
-	BattleScene();
+	void LoadAssets() override;
+	void CreateScene() override;
 };
 
 #endif // __BATTLE_SCENE_H_INCLUDED__

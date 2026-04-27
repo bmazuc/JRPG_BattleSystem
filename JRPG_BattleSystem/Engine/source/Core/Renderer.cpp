@@ -11,19 +11,15 @@
 #include <glm/ext/matrix_clip_space.hpp>
 
 #include "UI/Image.h"
+#include "Graphics/Material.h"
 
 Renderer::~Renderer()
 {
     buckets.clear();
-
-    delete shader;
-    shader = nullptr;
 }
 
 void Renderer::Init(const char* vShaderFile, const char* fShaderFile, glm::vec2 viewportBaseResolution)
 {
-    shader = new Shader(vShaderFile, fShaderFile);
-
     InitRenderData(viewportBaseResolution);
 }
 
@@ -54,12 +50,6 @@ void Renderer::InitRenderData(glm::vec2 _viewportBaseResolution)
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
 
-    if (shader)
-    {
-        shader->Use();
-        shader->SetInteger("image", 0);
-    }
-
     viewportBaseResolution = _viewportBaseResolution;
 }
 
@@ -78,19 +68,38 @@ void Renderer::RenderWorld(Scene* scene)
         view = glm::rotate(view, glm::radians(-camera->GetRotate()), glm::vec3(0.0f, 0.0f, 1.0f));
         view = glm::translate(view, glm::vec3(-camera->GetPosition(), 0.0f));
 
-        shader->SetMatrix4("view", view);
-
         glm::mat4 projection = glm::ortho(0.0f, viewportBaseResolution.x, viewportBaseResolution.y, 0.0f, -1.0f, 1.0f);
-        shader->SetMatrix4("projection", projection);
 
         for (auto it = buckets.begin(); it != buckets.end(); ++it)
         {
             int layer = it->first;
-            std::vector<SpriteRendererComponent*>& sprites = it->second;
+            std::vector<SpriteRendererComponent*>& spriteRenderers = it->second;
 
-            for (SpriteRendererComponent* s : sprites)
+            for (SpriteRendererComponent* spriteRenderer : spriteRenderers)
             {
-                DrawSprite(s);
+                if (spriteRenderer)
+                {
+                    Sprite* sprite = spriteRenderer->GetSprite();
+                    if (sprite)
+                    {
+                        Material* material = sprite->GetMaterial();
+                        if (material)
+                        {
+                            Shader* shader = material->GetShader();
+                            if (shader)
+                            {
+                                shader->Use();
+                                shader->SetInteger("image", 0);
+                                shader->SetMatrix4("view", view);
+                                shader->SetMatrix4("model", glm::scale(spriteRenderer->GetTransform().world, glm::vec3(sprite->GetSize(), 1.0f)));
+                                shader->SetMatrix4("projection", projection);
+                                shader->SetVector3f("spriteColor", material->GetColor());
+                            }
+
+                            DrawTexture(material->GetTexture());
+                        }
+                    }
+                }
             }
         }
     }
@@ -98,11 +107,9 @@ void Renderer::RenderWorld(Scene* scene)
 
 void Renderer::RenderUI(Scene* scene, SDL_Window* window)
 {
-    shader->SetMatrix4("view", glm::mat4(1.0f));
     int windowWidth, windowHeight;
     SDL_GetWindowSize(window, &windowWidth, &windowHeight);
     glm::mat4 projection = glm::ortho(0.0f, (float)windowWidth, (float)windowHeight, 0.0f, -1.0f, 1.0f);
-    shader->SetMatrix4("projection", projection);
 
     // To Upgrade find a way to avoid cast
     std::vector<UIElement*> uiElements = scene->GetUIElements();
@@ -111,7 +118,22 @@ void Renderer::RenderUI(Scene* scene, SDL_Window* window)
         Image* image = dynamic_cast<Image*>(element);
         if (image)
         {
-            DrawImage(image);
+            Material* material = image->GetMaterial();
+            if (material)
+            {
+                Shader* shader = material->GetShader();
+                if (shader)
+                {
+                    shader->Use();
+                    shader->SetInteger("image", 0);
+                    shader->SetMatrix4("view", glm::mat4(1.0f));
+                    shader->SetMatrix4("model", glm::scale(image->GetWorld(), glm::vec3(image->GetSize(), 1.0f)));
+                    shader->SetMatrix4("projection", projection);
+                    shader->SetVector3f("spriteColor", material->GetColor());
+                }
+
+                DrawTexture(material->GetTexture());
+            }
         }
     }
 }
@@ -136,32 +158,10 @@ void Renderer::Build(Scene* scene)
     }
 }
 
-void Renderer::DrawSprite(SpriteRendererComponent* spriteRenderer)
-{
-    if (spriteRenderer)
-    {
-        Sprite* sprite = spriteRenderer->GetSprite();
-        DrawTexture(sprite->GetTexture(), spriteRenderer->GetTransform().world, sprite->GetSize(), sprite->GetColor());
-    }
-}
-
-void Renderer::DrawImage(Image* image)
-{
-    if (image)
-    {
-        DrawTexture(image->GetTexture(), image->GetWorld(), image->GetSize(), image->GetColor());
-    }
-}
-
-void Renderer::DrawTexture(Texture* texture, glm::mat4 model, glm::vec2 size, glm::vec3 color)
+void Renderer::DrawTexture(Texture* texture)
 {
     if (texture)
     {
-        model = glm::scale(model, glm::vec3(size, 1.0f));
-
-        shader->SetMatrix4("model", model);
-        shader->SetVector3f("spriteColor", color);
-
         glActiveTexture(GL_TEXTURE0);
         texture->Render();
 

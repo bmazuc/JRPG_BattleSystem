@@ -1,7 +1,6 @@
 #ifndef __RENDERER_H_INCLUDED__
 #define __RENDERER_H_INCLUDED__
 
-class Shader;
 class SpriteRendererComponent;
 class Scene;
 class Texture;
@@ -20,6 +19,7 @@ public:
 
 	void Init(const char* vShaderFile, const char* fShaderFile, glm::vec2 viewportBaseResolution);
 
+	// To upgrade make a render command system
 	void RenderWorld(Scene* scene);
 	void RenderUI(Scene* scene, SDL_Window* window);
 
@@ -27,14 +27,11 @@ private:
 	void InitRenderData(glm::vec2 _viewportBaseResolution);
 
 	void Build(Scene* scene);
-	void DrawSprite(SpriteRendererComponent* sprite);
-	void DrawImage(Image* image);
 
-	void DrawTexture(Texture* texture, glm::mat4 model, glm::vec2 size, glm::vec3 color);
+	void DrawTexture(Texture* texture);
 
 	glm::vec2 viewportBaseResolution;
 
-	Shader* shader;
 	unsigned int quadVAO;
 
 	std::map<int, std::vector<SpriteRendererComponent*>> buckets;

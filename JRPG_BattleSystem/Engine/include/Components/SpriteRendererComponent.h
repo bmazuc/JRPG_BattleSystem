@@ -13,9 +13,9 @@ enum ImageExtension
 class SpriteRendererComponent : public Component
 {
 public:
+	SpriteRendererComponent(std::string textureName, std::string shaderName, glm::vec3 color = glm::vec3(1, 1, 1));
 	~SpriteRendererComponent();
 
-	Sprite* CreateSprite(const char* file, ImageExtension extension = ImageExtension::PNG);
 	Sprite* GetSprite() const { return sprite; }
 	
 private:
