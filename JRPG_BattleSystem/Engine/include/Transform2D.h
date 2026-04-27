@@ -3,7 +3,7 @@
 #include <glm/vec2.hpp>
 #include <glm/mat4x4.hpp>
 
-struct Transform
+struct Transform2D
 {
 	glm::vec2 position = glm::vec2(0, 0);
 	float rotate = 0;

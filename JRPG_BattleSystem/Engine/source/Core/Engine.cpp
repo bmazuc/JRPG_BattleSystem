@@ -93,7 +93,8 @@ void Engine::Run()
         scene->Update(deltaTime);
         scene->ProcessDestroy();
 
-        renderer->Render(scene, window);
+        renderer->RenderWorld(scene);
+        renderer->RenderUI(scene, window);
 
         SDL_GL_SwapWindow(window);
 

@@ -133,6 +133,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Engine\include\UI\Image.cpp" />
     <ClCompile Include="Engine\source\Components\CameraComponent.cpp" />
     <ClCompile Include="Engine\source\Components\Component.cpp" />
     <ClCompile Include="Engine\source\Components\SpriteRendererComponent.cpp" />
@@ -143,6 +144,8 @@
     <ClCompile Include="Engine\source\Graphics\Texture.cpp" />
     <ClCompile Include="Engine\source\Scene\Actor.cpp" />
     <ClCompile Include="Engine\source\Scene\Scene.cpp" />
+    <ClCompile Include="Engine\source\UI\UIElement.cpp" />
+    <ClCompile Include="Game\source\AutoDestroyImage.cpp" />
     <ClCompile Include="Game\source\BattleScene.cpp" />
     <ClCompile Include="Game\source\Enemy.cpp" />
     <ClCompile Include="main.cpp" />
@@ -158,7 +161,10 @@
     <ClInclude Include="Engine\include\Graphics\Texture.h" />
     <ClInclude Include="Engine\include\Scene\Actor.h" />
     <ClInclude Include="Engine\include\Scene\Scene.h" />
-    <ClInclude Include="Engine\include\Transform.h" />
+    <ClInclude Include="Engine\include\Transform2D.h" />
+    <ClInclude Include="Engine\include\UI\Image.h" />
+    <ClInclude Include="Engine\include\UI\UIElement.h" />
+    <ClInclude Include="Game\include\AutoDestroyImage.h" />
     <ClInclude Include="Game\include\BattleScene.h" />
     <ClInclude Include="Game\include\Enemy.h" />
   </ItemGroup>

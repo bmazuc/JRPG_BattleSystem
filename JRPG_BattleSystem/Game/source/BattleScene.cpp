@@ -2,9 +2,21 @@
 #include "Components/SpriteRendererComponent.h"
 #include "Enemy.h"
 #include "Components/CameraComponent.h"
+#include "AutoDestroyImage.h"
 
 BattleScene::BattleScene()
 {
+    AutoDestroyImage* image = CreateUIElement<AutoDestroyImage>();
+    image->LoadPNG("Assets/button.png");
+    image->SetWorldPosition(glm::vec2(100, 100));
+    image->SetSize(glm::vec2(50, 50));
+
+    Image* image2 = CreateUIElement<Image>();
+    image2->LoadPNG("Assets/button.png");
+    image2->SetWorldPosition(glm::vec2(100, 100));
+    image2->SetSize(glm::vec2(25, 25));
+    image2->SetParent(image);
+
     Enemy* enemy = CreateActors<Enemy>("Assets/goblin.png");
     enemy->SetWorldPosition(glm::vec2(320, 240));
     enemy->SetSpeed(50.0f);

@@ -3,11 +3,19 @@
 
 void Scene::Init()
 {
-	for (Actor* gameObject : actors)
+	for (Actor* actor : actors)
 	{
-		if (gameObject)
+		if (actor)
 		{
-			gameObject->Init();
+			actor->Init();
+		}
+	}
+
+	for (UIElement* uiElement : uiElements)
+	{
+		if (uiElement)
+		{
+			uiElement->Init();
 		}
 	}
 }
@@ -24,6 +32,17 @@ void Scene::UpdateTransforms()
 			}
 		}
 	}
+
+	for (UIElement* element : uiElements)
+	{
+		if (element)
+		{
+			if (!element->GetRoot()->HasParent())
+			{
+				element->UpdateTransform();
+			}
+		}
+	}
 }
 
 void Scene::Update(float deltaTime)
@@ -34,6 +53,14 @@ void Scene::Update(float deltaTime)
 		{
 			actor->Update(deltaTime);
 			actor->UpdateComponents(deltaTime);
+		}
+	}
+
+	for (UIElement* uiElement : uiElements)
+	{
+		if (uiElement)
+		{
+			uiElement->Update(deltaTime);
 		}
 	}
 }
@@ -58,6 +85,17 @@ void Scene::ProcessDestroy()
 			actor->ProcessComponentsDestroy();
 		}
 	}
+
+	for (UIElement* uiElementToDestroy : uiElementsToDestroy)
+	{
+		if (uiElementToDestroy)
+		{
+			uiElements.erase(std::remove(uiElements.begin(), uiElements.end(), uiElementToDestroy), uiElements.end());
+			delete uiElementToDestroy;
+		}
+	}
+
+	uiElementsToDestroy.clear();
 }
 
 Scene::~Scene()
@@ -68,9 +106,21 @@ Scene::~Scene()
 	}
 
 	actors.clear();
+
+	for (UIElement* uiElement : uiElements)
+	{
+		delete uiElement;
+	}
+
+	uiElements.clear();
 }
 
 void Scene::RegisterToDestroy(Actor* actor)
 {
 	actorsToDestroy.push_back(actor);
+}
+
+void Scene::RegisterToDestroy(UIElement* uiElement)
+{
+	uiElementsToDestroy.push_back(uiElement);
 }

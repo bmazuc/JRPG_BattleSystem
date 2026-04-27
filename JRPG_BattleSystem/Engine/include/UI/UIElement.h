@@ -1,23 +1,26 @@
-#ifndef __COMPONENT_H_INCLUDED__
-#define __COMPONENT_H_INCLUDED__
+#ifndef __UI_ELEMENT_H_INCLUDED__
+#define __UI_ELEMENT_H_INCLUDED__
 
 #include "Transform2D.h"
 #include <vector>
 
-class Actor;
+class Scene;
 
-class Component
+class UIElement
 {
 public:
-	virtual ~Component();
+	virtual ~UIElement();
 
+	virtual void Init() {}
 	virtual void Update(float deltaTime) {}
+
 	void UpdateTransform();
 
-	// Future upgrade : Add a destroy with a timer
-	void Destroy();
+	void AddChild(UIElement* child);
+	void RemoveChild(UIElement* child);
 
-	Transform2D GetTransform() const { return transform; }
+	void SetParent(UIElement* _parent);
+	bool HasParent() const { return parent; }
 
 	glm::vec2 GetWorldPosition() const;
 	float GetWorldRotate() const;
@@ -35,28 +38,27 @@ public:
 	void SetLocalRotate(float rotate);
 	void SetLocalScale(glm::vec2 scale);
 
-	Actor* GetOwner() const { return owner; }
-	void SetOwner(Actor* _owner) { owner = _owner; }
+	glm::mat4 GetWorld() { return transform.world; }
 
-	void SetParent(Component* _parent);
-	bool HasParent() const { return parent; }
+	UIElement* GetRoot();
+
+	Scene* GetScene() const { return scene; }
+	void SetScene(Scene* _scene) { scene = _scene; }
+
+	void Destroy();
 
 private:
-	void AddChild(Component* child);
-	void RemoveChild(Component* child);
-	bool IsAncestorOf(Component* component);
-	Component* GetRoot();
-
 	void SetDirty();
+	bool IsAncestorOf(UIElement* element);
 
 	Transform2D transform;
 
-	Actor* owner;
+	Scene* scene;
+	UIElement* parent = nullptr;
+	std::vector<UIElement*> children;
 
-	Component* parent;
-	std::vector<Component*> children;
 	bool isDirty = true;
 	bool isPendingDestroy = false;
 };
 
-#endif // __COMPONENT_H_INCLUDED__
+#endif // __UI_ELEMENT_H_INCLUDED__

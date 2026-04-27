@@ -10,6 +10,8 @@
 #include "Core/Shader.h"
 #include <glm/ext/matrix_clip_space.hpp>
 
+#include "UI/Image.h"
+
 Renderer::~Renderer()
 {
     buckets.clear();
@@ -25,7 +27,7 @@ void Renderer::Init(const char* vShaderFile, const char* fShaderFile, glm::vec2 
     InitRenderData(viewportBaseResolution);
 }
 
-void Renderer::InitRenderData(glm::vec2 viewportBaseResolution)
+void Renderer::InitRenderData(glm::vec2 _viewportBaseResolution)
 {
     // configure VAO/VBO
     unsigned int VBO;
@@ -56,12 +58,12 @@ void Renderer::InitRenderData(glm::vec2 viewportBaseResolution)
     {
         shader->Use();
         shader->SetInteger("image", 0);
-        glm::mat4 projection = glm::ortho(0.0f, viewportBaseResolution.x, viewportBaseResolution.y, 0.0f, -1.0f, 1.0f);
-        shader->SetMatrix4("projection", projection);
     }
+
+    viewportBaseResolution = _viewportBaseResolution;
 }
 
-void Renderer::Render(Scene* scene, SDL_Window* window)
+void Renderer::RenderWorld(Scene* scene)
 {
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
@@ -78,6 +80,9 @@ void Renderer::Render(Scene* scene, SDL_Window* window)
 
         shader->SetMatrix4("view", view);
 
+        glm::mat4 projection = glm::ortho(0.0f, viewportBaseResolution.x, viewportBaseResolution.y, 0.0f, -1.0f, 1.0f);
+        shader->SetMatrix4("projection", projection);
+
         for (auto it = buckets.begin(); it != buckets.end(); ++it)
         {
             int layer = it->first;
@@ -85,8 +90,28 @@ void Renderer::Render(Scene* scene, SDL_Window* window)
 
             for (SpriteRendererComponent* s : sprites)
             {
-                DrawSprite(s, window);
+                DrawSprite(s);
             }
+        }
+    }
+}
+
+void Renderer::RenderUI(Scene* scene, SDL_Window* window)
+{
+    shader->SetMatrix4("view", glm::mat4(1.0f));
+    int windowWidth, windowHeight;
+    SDL_GetWindowSize(window, &windowWidth, &windowHeight);
+    glm::mat4 projection = glm::ortho(0.0f, (float)windowWidth, (float)windowHeight, 0.0f, -1.0f, 1.0f);
+    shader->SetMatrix4("projection", projection);
+
+    // To Upgrade find a way to avoid cast
+    std::vector<UIElement*> uiElements = scene->GetUIElements();
+    for (UIElement* element : uiElements)
+    {
+        Image* image = dynamic_cast<Image*>(element);
+        if (image)
+        {
+            DrawImage(image);
         }
     }
 }
@@ -111,24 +136,37 @@ void Renderer::Build(Scene* scene)
     }
 }
 
-void Renderer::DrawSprite(SpriteRendererComponent* sprite, SDL_Window* window)
+void Renderer::DrawSprite(SpriteRendererComponent* spriteRenderer)
 {
-    if (sprite)
+    if (spriteRenderer)
     {
-        Sprite* s = sprite->GetSprite();
+        Sprite* sprite = spriteRenderer->GetSprite();
+        DrawTexture(sprite->GetTexture(), spriteRenderer->GetTransform().world, sprite->GetSize(), sprite->GetColor());
+    }
+}
 
-        glm::mat4 model = sprite->GetTransform().world;
-        model = glm::scale(model, glm::vec3(s->GetSize(), 1.0f));
+void Renderer::DrawImage(Image* image)
+{
+    if (image)
+    {
+        DrawTexture(image->GetTexture(), image->GetWorld(), image->GetSize(), image->GetColor());
+    }
+}
+
+void Renderer::DrawTexture(Texture* texture, glm::mat4 model, glm::vec2 size, glm::vec3 color)
+{
+    if (texture)
+    {
+        model = glm::scale(model, glm::vec3(size, 1.0f));
 
         shader->SetMatrix4("model", model);
-        shader->SetVector3f("spriteColor", s->GetColor());
+        shader->SetVector3f("spriteColor", color);
 
         glActiveTexture(GL_TEXTURE0);
-        s->GetTexture()->Render();
+        texture->Render();
 
         glBindVertexArray(quadVAO);
         glDrawArrays(GL_TRIANGLES, 0, 6);
         glBindVertexArray(0);
     }
 }
-
