@@ -6,6 +6,8 @@
 #include <SDL3/SDL_opengl.h>
 #include <glm/vec2.hpp>
 
+#include <chrono>
+
 class Scene;
 class Renderer;
 
@@ -40,6 +42,9 @@ public:
 	void SetViewportBaseResolution(glm::vec2 resolution) { viewportBaseResolution = resolution; }
 
 private:
+	void LoadDefaultResources();
+	float ComputeDeltaTime(std::chrono::high_resolution_clock::time_point& lastTime);
+
 	Scene* scene;
 	Renderer* renderer;
 	SDL_Window* window;
@@ -47,8 +52,12 @@ private:
 
 	glm::vec2 viewportBaseResolution = glm::vec2(640, 480);
 
-	Uint64 lastTick = 0;
-	Uint64 currentTick = 0;
+	/*
+	 * Values used for clamping deltatime(avoid spike when using breakpoints for example.
+	 * From what I've looked into, these are the values used by Unreal.
+	 */ 
+	float minDeltaTime = 0.0005f;
+	float maxDeltaTime = 0.40f;
 };
 
 #endif // __ENGINE_H_INCLUDED__

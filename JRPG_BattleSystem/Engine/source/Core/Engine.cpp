@@ -6,8 +6,7 @@
 
 #include <glm/vec2.hpp>
 #include <glm/vec3.hpp>
-
-
+#include <algorithm>
 
 WindowData::WindowData(const char* _title, int _width, int _height, SDL_WindowFlags _flags) 
     : title(_title), width(_width), height(_height), flags(_flags) 
@@ -48,10 +47,7 @@ bool Engine::Start(WindowData windowData, int swapInterval)
         return false;
     }
 
-    ResourceManager::LoadShader("Shaders/default.vs", "Shaders/default.frag", "default");
-    ResourceManager::LoadShader("Shaders/text.vs", "Shaders/text.frag", "text");
-    ResourceManager::LoadPNGTexture("Assets/missing.png", "default");
-    ResourceManager::LoadFont("Assets/arial.ttf", 24, "default");
+    LoadDefaultResources();
 
     renderer = new Renderer();
     renderer->Init("Shaders/sprite.vs", "Shaders/sprite.frag", viewportBaseResolution);
@@ -77,6 +73,8 @@ void Engine::Run()
     scene->CreateScene();
     scene->Init();
 
+    std::chrono::steady_clock::time_point lastTime = std::chrono::high_resolution_clock::now();
+
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
@@ -94,10 +92,7 @@ void Engine::Run()
             glViewport(0, 0, w, h);
         }
 
-        // Compute delta time
-        lastTick = currentTick;
-        currentTick = SDL_GetTicks();
-        float deltaTime = (currentTick - lastTick)/1000.0f;
+        float deltaTime = ComputeDeltaTime(lastTime);
 
         scene->UpdateTransforms();
         scene->Update(deltaTime);
@@ -135,4 +130,22 @@ void Engine::Shutdown()
 
     // Quit SDL and shutdown systems we have initialized
     SDL_Quit();
+}
+
+float Engine::ComputeDeltaTime(std::chrono::high_resolution_clock::time_point& lastTime)
+{
+    auto currentTime = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<float> delta = currentTime - lastTime;
+    lastTime = currentTime;
+
+    float deltaTime = delta.count();
+    return std::clamp(deltaTime, minDeltaTime, maxDeltaTime);
+}
+
+void Engine::LoadDefaultResources()
+{
+    ResourceManager::LoadShader("Shaders/default.vs", "Shaders/default.frag", "default");
+    ResourceManager::LoadShader("Shaders/text.vs", "Shaders/text.frag", "text");
+    ResourceManager::LoadPNGTexture("Assets/missing.png", "default");
+    ResourceManager::LoadFont("Assets/arial.ttf", 24, "default");
 }
