@@ -108,8 +108,11 @@ void Scene::ProcessDestroy()
 	uiElementsToDestroy.clear();
 }
 
-Scene::~Scene()
+void Scene::DestroyScene()
 {
+	pendingRequest.type = SceneRequestType::None;
+	pendingRequest.newSceneName = "";
+
 	for (Actor* actor : actors)
 	{
 		delete actor;
@@ -133,4 +136,10 @@ void Scene::RegisterToDestroy(Actor* actor)
 void Scene::RegisterToDestroy(UIElement* uiElement)
 {
 	uiElementsToDestroy.push_back(uiElement);
+}
+
+void Scene::RequestSceneChange(std::string sceneName)
+{
+	pendingRequest.type = SceneRequestType::ChangeScene;
+	pendingRequest.newSceneName = sceneName;
 }

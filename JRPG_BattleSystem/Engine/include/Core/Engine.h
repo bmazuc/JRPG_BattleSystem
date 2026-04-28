@@ -1,6 +1,8 @@
 #ifndef __ENGINE_H_INCLUDED__
 #define __ENGINE_H_INCLUDED__
 
+#include "Scene/SceneManager.h"
+
 #include <GL/glew.h>
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_opengl.h>
@@ -8,7 +10,6 @@
 
 #include <chrono>
 
-class Scene;
 class Renderer;
 
 // Allows to pass the data needed to create the SDL window when starting the engine
@@ -31,21 +32,15 @@ public:
 	void Run();
 	void Shutdown();
 
-	template<typename T, typename... Args>
-	void SetScene(Args&&... args)
-	{
-		static_assert(std::is_base_of<Scene, T>::value, "T must inherit Scene");
-
-		scene = new T(std::forward<Args>(args)...);
-	}
-
 	void SetViewportBaseResolution(glm::vec2 resolution) { viewportBaseResolution = resolution; }
+
+	SceneManager* GetSceneManager() const { return sceneManager; }
 
 private:
 	void LoadDefaultResources();
 	float ComputeDeltaTime(std::chrono::high_resolution_clock::time_point& lastTime);
 
-	Scene* scene;
+	SceneManager* sceneManager;
 	Renderer* renderer;
 	SDL_Window* window;
 	SDL_GLContext glContext;

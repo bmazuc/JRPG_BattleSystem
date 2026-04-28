@@ -27,7 +27,7 @@ void Enemy::Update(float deltaTime)
     if (timer >= 6)
     {
         // Destroy should not be called twice but I do it to check if it crashes.
-        Destroy();
-        Destroy();
+        //Destroy();
+        //Destroy();
     }
 }

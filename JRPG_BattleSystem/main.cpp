@@ -3,6 +3,7 @@
 
 #include "Core/Engine.h"
 #include "BattleScene.h"
+#include "MainMenuScene.h"
 
 #ifdef _DEBUG
 #include <crtdbg.h>
@@ -19,7 +20,12 @@ int main()
 
     if (engine->Start(WindowData("JRPG_BattleSystem", 640, 480, SDL_WINDOW_RESIZABLE)))
     {
-        engine->SetScene<BattleScene>();
+        if (SceneManager* sceneManager = engine->GetSceneManager())
+        {
+            sceneManager->AddScene<BattleScene>("battleScene");
+            sceneManager->AddScene<MainMenuScene>("mainMenu");
+            sceneManager->SetActiveScene("mainMenu");
+        }
         engine->Run();
     }
 

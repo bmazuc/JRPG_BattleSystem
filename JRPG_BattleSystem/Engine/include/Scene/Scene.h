@@ -5,17 +5,30 @@ class CameraComponent;
 
 #include "Actor.h"
 #include "UI/UIElement.h"
+#include <string>
 
 class Shader;
 class Texture;
 
+enum SceneRequestType
+{
+	None,
+	ChangeScene
+};
+
+struct SceneRequest
+{
+	SceneRequestType type = SceneRequestType::None;
+	std::string newSceneName = "";
+};
+
 class Scene
 {
 public:
-	~Scene();
-
 	virtual void LoadAssets() {}
 	virtual void CreateScene() {}
+	void DestroyScene();
+
 	void Init();
 
 	void UpdateTransforms();
@@ -28,7 +41,7 @@ public:
 	std::vector<UIElement*> GetUIElements() const { return uiElements; }
 
 	template<typename T, typename... Args>
-	T* CreateActors(Args&&... args)
+	T* CreateActor(Args&&... args)
 	{
 		static_assert(std::is_base_of<Actor, T>::value, "T must inherit Actor");
 
@@ -54,6 +67,10 @@ public:
 	void RegisterToDestroy(Actor* actor);
 	void RegisterToDestroy(UIElement* uiElement);
 
+	void RequestSceneChange(std::string sceneName);
+	SceneRequest GetPendingRequest() const { return pendingRequest; }
+	bool HasRequest() const { return pendingRequest.type == SceneRequestType::ChangeScene; }
+
 private:
 	std::vector<Actor*> actors;
 	std::vector<Actor*> actorsToDestroy;
@@ -62,6 +79,8 @@ private:
 
 	std::vector<UIElement*> uiElements;
 	std::vector<UIElement*> uiElementsToDestroy;
+
+	SceneRequest pendingRequest;
 };
 
 #endif // __SCENE_H_INCLUDED__

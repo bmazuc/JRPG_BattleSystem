@@ -24,14 +24,14 @@ void BattleScene::CreateScene()
     text->SetColor(glm::vec3(1, 0, 0));
     text->SetSize(24);
 
-    Enemy* enemy = CreateActors<Enemy>("goblin", "default");
+    Enemy* enemy = CreateActor<Enemy>("goblin", "default");
     enemy->SetWorldPosition(glm::vec2(320, 240));
     enemy->SetSpeed(50.0f);
     Sprite* enemySprite = enemy->GetSprite();
     enemySprite->SetSize(glm::vec2(300, 306));
     enemySprite->SetLayer(1);
 
-    Actor* followEnemy = CreateActors<Actor>();
+    Actor* followEnemy = CreateActor<Actor>();
     SpriteRendererComponent* followEnemySpriteRenderer = followEnemy->AddComponent<SpriteRendererComponent>("goblin", "default");
     Sprite* followEnemySprite = followEnemySpriteRenderer->GetSprite();
     followEnemySprite->SetSize(glm::vec2(160, 120));
@@ -39,7 +39,7 @@ void BattleScene::CreateScene()
     followEnemy->SetWorldPosition(glm::vec2(320, 240));
     followEnemy->AttachToActor(enemy);
 
-    Actor* followEnemy2 = CreateActors<Actor>();
+    Actor* followEnemy2 = CreateActor<Actor>();
     SpriteRendererComponent* followEnemySpriteRenderer2 = followEnemy2->AddComponent<SpriteRendererComponent>("goblin", "default");
     Sprite* followEnemySprite2 = followEnemySpriteRenderer2->GetSprite();
     followEnemySprite2->SetSize(glm::vec2(80, 60));
@@ -47,11 +47,11 @@ void BattleScene::CreateScene()
     followEnemy2->SetWorldPosition(glm::vec2(320, 240));
     followEnemy2->AttachToActor(followEnemy);
 
-    Actor* cameraObject = CreateActors<Actor>();
+    Actor* cameraObject = CreateActor<Actor>();
     CameraComponent* camera = cameraObject->AddComponent<CameraComponent>();
     SetActiveCamera(camera);
 
-    Actor* background = CreateActors<Actor>();
+    Actor* background = CreateActor<Actor>();
     SpriteRendererComponent* backgroundSpriteRenderer = background->AddComponent<SpriteRendererComponent>("background", "default");
     background->SetWorldPosition(glm::vec2(320, 240));
     backgroundSpriteRenderer->GetSprite()->SetSize(glm::vec2(640, 480));

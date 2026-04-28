@@ -1,7 +1,7 @@
 #include "Core/Engine.h"
 
 #include "Core/Renderer.h"
-#include "Scene/Scene.h"
+#include "Scene/SceneManager.h"
 #include "Core/ResourceManager.h"
 
 #include <glm/vec2.hpp>
@@ -49,6 +49,8 @@ bool Engine::Start(WindowData windowData, int swapInterval)
 
     LoadDefaultResources();
 
+    sceneManager = new SceneManager();
+
     renderer = new Renderer();
     renderer->Init("Shaders/sprite.vs", "Shaders/sprite.frag", viewportBaseResolution);
 
@@ -63,15 +65,7 @@ bool Engine::Start(WindowData windowData, int swapInterval)
 
 void Engine::Run()
 {
-    if (!scene)
-    {
-        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "No scene");
-        return;
-    }
-
-    scene->LoadAssets();
-    scene->CreateScene();
-    scene->Init();
+    sceneManager->Init();
 
     std::chrono::steady_clock::time_point lastTime = std::chrono::high_resolution_clock::now();
 
@@ -94,12 +88,13 @@ void Engine::Run()
 
         float deltaTime = ComputeDeltaTime(lastTime);
 
-        scene->UpdateTransforms();
-        scene->Update(deltaTime);
-        scene->ProcessDestroy();
+        sceneManager->Update(deltaTime);
 
-        renderer->RenderWorld(scene);
-        renderer->RenderUI(scene, window);
+        if (Scene* scene = sceneManager->GetActiveScene())
+        {
+            renderer->RenderWorld(scene);
+            renderer->RenderUI(scene, window);
+        }
 
         SDL_GL_SwapWindow(window);
 
@@ -110,8 +105,8 @@ void Engine::Shutdown()
 {
     ResourceManager::Clear();
 
-    delete scene;
-    scene = nullptr;
+    delete sceneManager;
+    sceneManager = nullptr;
 
     delete renderer;
     renderer = nullptr;
