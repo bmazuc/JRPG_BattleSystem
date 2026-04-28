@@ -1,9 +1,13 @@
-#include "Core/ResourceManager.h"
+﻿#include "Core/ResourceManager.h"
 
 #include <stdexcept>
 
 std::map<std::string, Shader*> ResourceManager::shaders;
 std::map<std::string, Texture*> ResourceManager::textures;
+std::map<std::string, Font*> ResourceManager::fonts;
+
+FT_Library ResourceManager::ft;
+bool ResourceManager::ftInitialized = false;
 
 void ResourceManager::Clear()
 {
@@ -22,6 +26,19 @@ void ResourceManager::Clear()
     }
 
     textures.clear();
+
+    for (auto& it : fonts)
+    {
+        delete it.second;
+        it.second = nullptr;
+    }
+
+    fonts.clear();
+
+    if (ftInitialized)
+    {
+        FT_Done_FreeType(ft);
+    }
 }
 
 Shader& ResourceManager::GetShader(std::string name)
@@ -50,7 +67,7 @@ Texture& ResourceManager::GetTexture(std::string name)
         return *it->second;
     }
 
-    auto def = textures.find("missing");
+    auto def = textures.find("default");
     if (def != textures.end())
     {
         SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Texture not found: %s, using default", name.c_str());
@@ -58,6 +75,24 @@ Texture& ResourceManager::GetTexture(std::string name)
     }
 
     throw std::runtime_error("Default texture missing!");
+}
+
+Font& ResourceManager::GetFont(std::string name)
+{
+    auto it = fonts.find(name);
+    if (it != fonts.end())
+    {
+        return *it->second;
+    }
+
+    auto def = fonts.find("default");
+    if (def != fonts.end())
+    {
+        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Font not found: %s, using default", name.c_str());
+        return *(def->second);
+    }
+
+    throw std::runtime_error("Default font missing!");
 }
 
 Shader& ResourceManager::LoadShader(const char* vShaderFile, const char* fShaderFile, std::string name)
@@ -81,4 +116,27 @@ Texture& ResourceManager::LoadBMPTexture(const char* file, std::string name)
     texture->LoadBMP(file);
     textures[name] = texture;
     return *texture;
+}
+
+Font& ResourceManager::LoadFont(const char* file, unsigned int size, std::string name)
+{
+    InitFreeType();
+
+    Font* font = new Font();
+    font->Load(ft, file, size);
+
+    fonts[name] = font;
+    return *font;
+}
+
+void ResourceManager::InitFreeType()
+{
+    if (!ftInitialized)
+    {
+        if (FT_Init_FreeType(&ft))
+        {
+            SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Failed to init FreeType");
+        }
+        ftInitialized = true;
+    }
 }

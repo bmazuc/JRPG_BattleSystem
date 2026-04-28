@@ -104,13 +104,13 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)\Libs\glm;$(SolutionDir)\Libs\glew\include;$(SolutionDir)\JRPG_BattleSystem\Game\include;$(SolutionDir)\JRPG_BattleSystem\Engine\include;$(SolutionDir)\Libs\SDL3\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\basti\Desktop\JRPG_BattleSystem\Libs\freetype\include;$(SolutionDir)\Libs\glm;$(SolutionDir)\Libs\glew\include;$(SolutionDir)\JRPG_BattleSystem\Game\include;$(SolutionDir)\JRPG_BattleSystem\Engine\include;$(SolutionDir)\Libs\SDL3\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)\Libs\SDL3\lib\x64;$(SolutionDir)\Libs\glew\lib\Release\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;glew32.lib;SDL3.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)\Libs\SDL3\lib\x64;$(SolutionDir)\Libs\freetype\objs\x64\Debug;$(SolutionDir)\Libs\glew\lib\Release\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>freetype.lib;opengl32.lib;glew32.lib;SDL3.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -121,15 +121,15 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)\Libs\glm;$(SolutionDir)\Libs\glew\include;$(SolutionDir)\JRPG_BattleSystem\Game\include;$(SolutionDir)\JRPG_BattleSystem\Engine\include;$(SolutionDir)\Libs\SDL3\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\basti\Desktop\JRPG_BattleSystem\Libs\freetype\include;$(SolutionDir)\Libs\glm;$(SolutionDir)\Libs\glew\include;$(SolutionDir)\JRPG_BattleSystem\Game\include;$(SolutionDir)\JRPG_BattleSystem\Engine\include;$(SolutionDir)\Libs\SDL3\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)\Libs\SDL3\lib\x64;$(SolutionDir)\Libs\glew\lib\Release\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;glew32.lib;SDL3.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)\Libs\SDL3\lib\x64;$(SolutionDir)\Libs\freetype\objs\x64\Debug;$(SolutionDir)\Libs\glew\lib\Release\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>freetype.lib;opengl32.lib;glew32.lib;SDL3.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -141,11 +141,13 @@
     <ClCompile Include="Engine\source\Core\Renderer.cpp" />
     <ClCompile Include="Engine\source\Core\ResourceManager.cpp" />
     <ClCompile Include="Engine\source\Core\Shader.cpp" />
+    <ClCompile Include="Engine\source\Graphics\Font.cpp" />
     <ClCompile Include="Engine\source\Graphics\Material.cpp" />
     <ClCompile Include="Engine\source\Graphics\Sprite.cpp" />
     <ClCompile Include="Engine\source\Graphics\Texture.cpp" />
     <ClCompile Include="Engine\source\Scene\Actor.cpp" />
     <ClCompile Include="Engine\source\Scene\Scene.cpp" />
+    <ClCompile Include="Engine\source\UI\Text.cpp" />
     <ClCompile Include="Engine\source\UI\UIElement.cpp" />
     <ClCompile Include="Game\source\AutoDestroyImage.cpp" />
     <ClCompile Include="Game\source\BattleScene.cpp" />
@@ -160,6 +162,7 @@
     <ClInclude Include="Engine\include\Core\Renderer.h" />
     <ClInclude Include="Engine\include\Core\ResourceManager.h" />
     <ClInclude Include="Engine\include\Core\Shader.h" />
+    <ClInclude Include="Engine\include\Graphics\Font.h" />
     <ClInclude Include="Engine\include\Graphics\Material.h" />
     <ClInclude Include="Engine\include\Graphics\Sprite.h" />
     <ClInclude Include="Engine\include\Graphics\Texture.h" />
@@ -167,6 +170,7 @@
     <ClInclude Include="Engine\include\Scene\Scene.h" />
     <ClInclude Include="Engine\include\Transform2D.h" />
     <ClInclude Include="Engine\include\UI\Image.h" />
+    <ClInclude Include="Engine\include\UI\Text.h" />
     <ClInclude Include="Engine\include\UI\UIElement.h" />
     <ClInclude Include="Game\include\AutoDestroyImage.h" />
     <ClInclude Include="Game\include\BattleScene.h" />

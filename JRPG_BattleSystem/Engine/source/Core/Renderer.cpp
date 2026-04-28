@@ -12,6 +12,9 @@
 
 #include "UI/Image.h"
 #include "Graphics/Material.h"
+#include "Graphics/Font.h"
+#include "UI/Text.h"
+#include "Core/ResourceManager.h"
 
 Renderer::~Renderer()
 {
@@ -21,6 +24,7 @@ Renderer::~Renderer()
 void Renderer::Init(const char* vShaderFile, const char* fShaderFile, glm::vec2 viewportBaseResolution)
 {
     InitRenderData(viewportBaseResolution);
+    textShader = &ResourceManager::GetShader("text");
 }
 
 void Renderer::InitRenderData(glm::vec2 _viewportBaseResolution)
@@ -38,6 +42,7 @@ void Renderer::InitRenderData(glm::vec2 _viewportBaseResolution)
         0.5f, -0.5f, 1.0f, 0.0f
     };
 
+    // Generate quad VAO
     glGenVertexArrays(1, &quadVAO);
     glGenBuffers(1, &VBO);
 
@@ -48,6 +53,20 @@ void Renderer::InitRenderData(glm::vec2 _viewportBaseResolution)
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindVertexArray(0);
+
+    // Generate text VAO & VBO
+
+    glGenVertexArrays(1, &textVAO);
+    glGenBuffers(1, &textVBO);
+
+    glBindVertexArray(textVAO);
+    glBindBuffer(GL_ARRAY_BUFFER, textVBO);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 6 * 4, nullptr, GL_DYNAMIC_DRAW);
+
+    glEnableVertexAttribArray(0);
+    glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
+
     glBindVertexArray(0);
 
     viewportBaseResolution = _viewportBaseResolution;
@@ -77,29 +96,19 @@ void Renderer::RenderWorld(Scene* scene)
 
             for (SpriteRendererComponent* spriteRenderer : spriteRenderers)
             {
-                if (spriteRenderer)
+                if (!spriteRenderer)
                 {
-                    Sprite* sprite = spriteRenderer->GetSprite();
-                    if (sprite)
-                    {
-                        Material* material = sprite->GetMaterial();
-                        if (material)
-                        {
-                            Shader* shader = material->GetShader();
-                            if (shader)
-                            {
-                                shader->Use();
-                                shader->SetInteger("image", 0);
-                                shader->SetMatrix4("view", view);
-                                shader->SetMatrix4("model", glm::scale(spriteRenderer->GetTransform().world, glm::vec3(sprite->GetSize(), 1.0f)));
-                                shader->SetMatrix4("projection", projection);
-                                shader->SetVector3f("spriteColor", material->GetColor());
-                            }
-
-                            DrawTexture(material->GetTexture());
-                        }
-                    }
+                    continue;
                 }
+
+                Sprite* sprite = spriteRenderer->GetSprite();
+                if (!sprite)
+                {
+                    continue;
+                }
+                
+                glm::mat4 model = glm::scale(spriteRenderer->GetTransform().world, glm::vec3(sprite->GetSize(), 1.0f));
+                RenderMaterial(sprite->GetMaterial(), view, model, projection);
             }
         }
     }
@@ -115,25 +124,14 @@ void Renderer::RenderUI(Scene* scene, SDL_Window* window)
     std::vector<UIElement*> uiElements = scene->GetUIElements();
     for (UIElement* element : uiElements)
     {
-        Image* image = dynamic_cast<Image*>(element);
-        if (image)
+        if (Image* image = dynamic_cast<Image*>(element))
         {
-            Material* material = image->GetMaterial();
-            if (material)
-            {
-                Shader* shader = material->GetShader();
-                if (shader)
-                {
-                    shader->Use();
-                    shader->SetInteger("image", 0);
-                    shader->SetMatrix4("view", glm::mat4(1.0f));
-                    shader->SetMatrix4("model", glm::scale(image->GetWorld(), glm::vec3(image->GetSize(), 1.0f)));
-                    shader->SetMatrix4("projection", projection);
-                    shader->SetVector3f("spriteColor", material->GetColor());
-                }
-
-                DrawTexture(material->GetTexture());
-            }
+            glm::mat4 model = glm::scale(image->GetWorld(), glm::vec3(image->GetSize(), 1.0f));
+            RenderMaterial(image->GetMaterial(), glm::mat4(1.0f), model, projection);
+        }
+        else if (Text* text = dynamic_cast<Text*>(element))
+        {
+            RenderText(text, projection);
         }
     }
 }
@@ -158,6 +156,29 @@ void Renderer::Build(Scene* scene)
     }
 }
 
+void Renderer::RenderMaterial(Material* material, glm::mat4 view, glm::mat4 model, glm::mat4 projection)
+{
+    if (!material)
+    {
+        return;
+    }
+
+    Shader* shader = material->GetShader();
+    if (!shader)
+    {
+        return;
+    }
+
+    shader->Use();
+    shader->SetInteger("image", 0);
+    shader->SetMatrix4("view", view);
+    shader->SetMatrix4("model", model);
+    shader->SetMatrix4("projection", projection);
+    shader->SetVector3f("spriteColor", material->GetColor());
+
+    DrawTexture(material->GetTexture());
+}
+
 void Renderer::DrawTexture(Texture* texture)
 {
     if (texture)
@@ -169,4 +190,92 @@ void Renderer::DrawTexture(Texture* texture)
         glDrawArrays(GL_TRIANGLES, 0, 6);
         glBindVertexArray(0);
     }
+}
+
+void Renderer::RenderText(Text* text, glm::mat4 projection)
+{
+    Font* font = text->GetFont();
+    if (!font)
+    {
+        return;
+    }
+
+    textShader->Use();
+
+    textShader->SetMatrix4("projection", projection);
+    textShader->SetVector3f("textColor", text->GetColor());
+
+    glActiveTexture(GL_TEXTURE0);
+    glBindVertexArray(textVAO);
+
+    glm::vec2 position = text->GetWorldPosition();
+    float x = position.x;
+    float y = position.y;
+
+    float fontSize = font->GetSize();
+    if (fontSize == 0.0f)
+    {
+        fontSize = 0.01f;
+    }
+
+    glm::vec2 scale = text->GetWorldScale();
+
+    if (text->GetScaleMode() == TextScaleMode::Uniform)
+    {
+        float uniformScale = std::min(scale.x, scale.y);
+        scale = glm::vec2(uniformScale, uniformScale);
+    }
+    
+    glm::vec2 finalScale = scale * (text->GetSize()/ fontSize);
+
+    std::string content = text->GetContent();
+    if (text->IsCenter())
+    {
+        float totalWidth = 0.0f;
+
+        for (char c : content)
+        {
+            Glyph g = font->GetGlyph(c);
+            totalWidth += (g.advance >> 6) * finalScale.x;
+        }
+
+        x -= totalWidth * 0.5f;
+        y -= font->GetGlyph('H').size.y * finalScale.y * 0.5f;
+    }
+
+    for (char c : content)
+    {
+        Glyph g = font->GetGlyph(c);
+
+        float xpos = x + g.bearing.x * finalScale.x;
+        float ypos = y + (font->GetGlyph('H').bearing.y - g.bearing.y) * finalScale.y;
+
+        float w = g.size.x * finalScale.x;
+        float h = g.size.y * finalScale.y;
+
+        // update VBO for each character
+        float vertices[6][4] = {
+            { xpos,     ypos + h,   0.0f, 1.0f },
+            { xpos + w, ypos,       1.0f, 0.0f },
+            { xpos,     ypos,       0.0f, 0.0f },
+
+            { xpos,     ypos + h,   0.0f, 1.0f },
+            { xpos + w, ypos + h,   1.0f, 1.0f },
+            { xpos + w, ypos,       1.0f, 0.0f }
+        };
+
+        // render glyph texture over quad
+        glBindTexture(GL_TEXTURE_2D, g.textureID);
+        // update content of VBO memory
+        glBindBuffer(GL_ARRAY_BUFFER, textVBO);
+        glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices);
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+        // render quad
+        glDrawArrays(GL_TRIANGLES, 0, 6);
+        // now advance cursors for next glyph (note that advance is number of 1/64 pixels)
+        x += (g.advance >> 6) * finalScale.x; // bitshift by 6 to get value in pixels (2^6 = 64)
+    }
+
+    glBindVertexArray(0);
+    glBindTexture(GL_TEXTURE_2D, 0);
 }

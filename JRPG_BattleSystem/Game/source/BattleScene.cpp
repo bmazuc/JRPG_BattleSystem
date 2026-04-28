@@ -4,6 +4,7 @@
 #include "Components/CameraComponent.h"
 #include "AutoDestroyImage.h"
 #include "Core/ResourceManager.h"
+#include "UI/Text.h"
 
 void BattleScene::CreateScene()
 {
@@ -15,6 +16,13 @@ void BattleScene::CreateScene()
     image2->SetWorldPosition(glm::vec2(100, 100));
     image2->SetSize(glm::vec2(25, 25));
     image2->SetParent(image);
+
+    Text* text = CreateUIElement<Text>("default");
+    text->SetParent(image2);
+    text->SetWorldPosition(glm::vec2(100, 100));
+    text->SetContent("test");
+    text->SetColor(glm::vec3(1, 0, 0));
+    text->SetSize(24);
 
     Enemy* enemy = CreateActors<Enemy>("goblin", "default");
     enemy->SetWorldPosition(glm::vec2(320, 240));

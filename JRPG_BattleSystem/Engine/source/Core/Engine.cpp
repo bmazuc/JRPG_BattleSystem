@@ -48,6 +48,11 @@ bool Engine::Start(WindowData windowData, int swapInterval)
         return false;
     }
 
+    ResourceManager::LoadShader("Shaders/default.vs", "Shaders/default.frag", "default");
+    ResourceManager::LoadShader("Shaders/text.vs", "Shaders/text.frag", "text");
+    ResourceManager::LoadPNGTexture("Assets/missing.png", "default");
+    ResourceManager::LoadFont("Assets/arial.ttf", 24, "default");
+
     renderer = new Renderer();
     renderer->Init("Shaders/sprite.vs", "Shaders/sprite.frag", viewportBaseResolution);
 
@@ -56,9 +61,6 @@ bool Engine::Start(WindowData windowData, int swapInterval)
         SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Couldn't create OpenGL renderer");
         return false;
     }
-
-    ResourceManager::LoadShader("Shaders/default.vs", "Shaders/default.frag", "default");
-    ResourceManager::LoadPNGTexture("Assets/missing.png", "missing");
 
     return true;
 }
