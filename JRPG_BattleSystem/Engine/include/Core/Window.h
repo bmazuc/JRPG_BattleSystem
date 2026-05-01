@@ -7,10 +7,12 @@
 // Allows to pass the data needed to create the SDL window when starting the engine
 struct WindowData
 {
+public:
+	WindowData() {}
 	WindowData(const char* _title, int _width, int _height, SDL_WindowFlags _flags);
-	const char* title;
-	int width;
-	int height;
+	const char* title = "";
+	int width = 640;
+	int height = 480;
 	SDL_WindowFlags flags;
 };
 

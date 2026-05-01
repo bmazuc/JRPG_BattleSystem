@@ -16,9 +16,12 @@ int main()
     _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 #endif // _DEBUG
 
+    EngineConfig config = EngineConfig();
+    config.windowData = WindowData("JRPG_BattleSystem", 640, 480, SDL_WINDOW_RESIZABLE);
+    
     Engine* engine = new Engine();
 
-    if (engine->Start(WindowData("JRPG_BattleSystem", 640, 480, SDL_WINDOW_RESIZABLE)))
+    if (engine->Start(config))
     {
         if (SceneManager* sceneManager = engine->GetSceneManager())
         {

@@ -11,13 +11,28 @@
 
 class Renderer;
 
+struct EngineConfig
+{
+public:
+	EngineConfig() {}
+
+	WindowData windowData;
+	/*
+	 * Swap interval for the current OpenGL context :
+	 *	0	: immediate updates, 
+	 *	1	: updates synchronized with the vertical retrace,
+	 *	-1	: adaptive vsync
+	 */
+	int swapInterval = 1;
+};
+
 class Engine
 {
 public:
 	/** 
 	*		swapInterval : Set the swap interval for the current OpenGL context (0 for immediate updates, 1 for updates synchronized with the vertical retrace, -1 for adaptive vsync) 
 	**/
-	bool Start(WindowData windowData, int swapInterval = 0);
+	bool Start(const EngineConfig& config);
 	void Run();
 	void Shutdown();
 
@@ -25,10 +40,8 @@ public:
 
 private:
 	bool InitSDL();
-	bool CreateWindow(WindowData windowData);
-	bool InitOpenGL();
-	bool CreateSceneManager();
-	bool CreateRenderer();
+	bool CreateWindow(WindowData data);
+	bool InitOpenGL(int swapInterval);
 
 	void LoadDefaultResources();
 	float ComputeDeltaTime(std::chrono::high_resolution_clock::time_point& lastTime);

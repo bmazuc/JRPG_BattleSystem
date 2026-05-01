@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __SCENE_MANAGER_H_INCLUDED__
+#define __SCENE_MANAGER_H_INCLUDED__
 
 #include "Scene/Scene.h"
 
@@ -42,3 +43,5 @@ private:
 	std::unordered_map<std::string, Scene*> scenes;
 };
 
+
+#endif // __SCENE_MANAGER_H_INCLUDED__

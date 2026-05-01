@@ -8,36 +8,19 @@
 #include <glm/vec3.hpp>
 #include <algorithm>
 
-bool Engine::Start(WindowData windowData, int swapInterval)
+bool Engine::Start(const EngineConfig& config)
 {
-    if (!InitSDL())
+    if (InitSDL() 
+        && CreateWindow(config.windowData) 
+        && InitOpenGL(config.swapInterval))
     {
-        return false;
+        LoadDefaultResources();
+        sceneManager = new SceneManager();
+        renderer = new Renderer();
+        return true;
     }
 
-    if (!CreateWindow(windowData))
-    {
-        return false;
-    }
-
-    if (!InitOpenGL())
-    {
-        return false;
-    }
-
-    LoadDefaultResources();
-  
-    if (!CreateRenderer())
-    {
-        return false;
-    }
-
-    if (!CreateSceneManager())
-    {
-        return false;
-    }
-
-    return true;
+    return false;
 }
 
 void Engine::Run()
@@ -134,10 +117,10 @@ bool Engine::CreateWindow(WindowData windowData)
     return window->CreateSDLWindow(windowData);
 }
 
-bool Engine::InitOpenGL()
+bool Engine::InitOpenGL(int swapInterval)
 {
     glContext = SDL_GL_CreateContext(window->GetSDLWindow());
-    if (!SDL_GL_SetSwapInterval(1))
+    if (!SDL_GL_SetSwapInterval(swapInterval))
     {
         SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "VSync not supported: %s", SDL_GetError());
         return false;
@@ -148,32 +131,6 @@ bool Engine::InitOpenGL()
     if (err != GLEW_OK)
     {
         SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Error glewInit: %s", glewGetErrorString(err));
-        return false;
-    }
-
-    return true;
-}
-
-bool Engine::CreateSceneManager()
-{
-    sceneManager = new SceneManager();
-
-    if (!sceneManager)
-    {
-        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Couldn't create sceneManager");
-        return false;
-    }
-
-    return true;
-}
-
-bool Engine::CreateRenderer()
-{
-    renderer = new Renderer();
-
-    if (!renderer)
-    {
-        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Couldn't create OpenGL renderer");
         return false;
     }
 
