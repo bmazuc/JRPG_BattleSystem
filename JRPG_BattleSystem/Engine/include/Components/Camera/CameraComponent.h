@@ -5,6 +5,9 @@
 
 #include <glm/vec2.hpp>
 
+/*
+ *	Represents a camera viewpoint.
+ */
 class CameraComponent : public Component
 {
 public:

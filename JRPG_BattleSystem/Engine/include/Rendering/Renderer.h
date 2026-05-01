@@ -14,6 +14,9 @@ class Shader;
 #include <map>
 #include <vector>
 
+/*
+ *	Core rendering system base on OpenGL.
+ */
 class Renderer
 {
 public:

@@ -6,12 +6,20 @@
 #include "Graphics/Font.h"
 #include <string>
 
+/*
+ *  Define text scaling behaviour :
+ *  - Uniform : Keep ratio.
+ *  - Free : X/Y scale independants.
+ */
 enum class TextScaleMode
 {
     Uniform,
     Free
 };
 
+/*
+ *	An UI element displaying a text.
+ */
 class Text : public UIElement
 {
 public:

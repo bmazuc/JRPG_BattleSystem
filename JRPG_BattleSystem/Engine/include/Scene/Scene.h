@@ -10,18 +10,27 @@ class CameraComponent;
 class Shader;
 class Texture;
 
+/*
+ *	Request type that a scene can send.
+ */
 enum class SceneRequestType
 {
 	None,
 	ChangeScene
 };
 
+/*
+ *	Represents a change scene request
+ */
 struct SceneRequest
 {
 	SceneRequestType type = SceneRequestType::None;
 	std::string newSceneName = "";
 };
 
+/*
+ *	Represent a game level.
+ */
 class Scene
 {
 public:

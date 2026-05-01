@@ -8,6 +8,12 @@
 #include <map>
 #include <string>
 
+/*
+ *  Static resource manager.
+ *  Load resources from files, global access from std::string,
+ *  auto fallback toward "default" (load in Engine class), resources
+ *  global clear
+ */
 class ResourceManager
 {
 public:

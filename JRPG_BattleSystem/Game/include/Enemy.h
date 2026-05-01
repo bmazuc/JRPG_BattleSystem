@@ -13,7 +13,8 @@ public:
 	Enemy(std::string textureName, std::string shaderName);
 	void Update(float deltaTime) override;
 
-	Sprite* GetSprite() const;
+	SpriteRendererComponent* GetSpriteRenderer() { return spriteRenderer; }
+
 	void SetSpeed(float speed) { enemySpeed = speed; }
 
 private:

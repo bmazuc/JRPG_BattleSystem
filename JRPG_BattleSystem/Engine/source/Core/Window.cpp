@@ -2,17 +2,17 @@
 
 #include "SDL3/SDL_opengl.h"
 
-WindowData::WindowData(const char* _title, int _width, int _height, SDL_WindowFlags _flags)
-	: title(_title), width(_width), height(_height), flags(_flags)
+SDLWindowConfig::SDLWindowConfig(const char* _title, glm::vec2 _resolution, SDL_WindowFlags _flags)
+	: title(_title), resolution(_resolution), flags(_flags)
 {
 }
 
-bool Window::CreateSDLWindow(WindowData data)
+bool Window::CreateSDLWindow(SDLWindowConfig config)
 {
-	data.flags |= SDL_WINDOW_OPENGL;
+	config.flags |= SDL_WINDOW_OPENGL;
 
 	// Setup one SDL Window
-	window = SDL_CreateWindow(data.title, data.width, data.height, data.flags);
+	window = SDL_CreateWindow(config.title, config.resolution.x, config.resolution.y, config.flags);
 
 	if (!window)
 	{
@@ -20,7 +20,19 @@ bool Window::CreateSDLWindow(WindowData data)
 		return false;
 	}
 
-	viewportBaseResolution = glm::vec2(data.width, data.height);
+	viewportBaseResolution = config.resolution;
+
+	return true;
+}
+
+bool Window::CreateOpenGLContext(int swapInterval)
+{
+	glContext = SDL_GL_CreateContext(window);
+	if (!SDL_GL_SetSwapInterval(swapInterval))
+	{
+		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "VSync not supported: %s", SDL_GetError());
+		return false;
+	}
 
 	return true;
 }
@@ -34,6 +46,11 @@ glm::vec2 Window::GetSize() const
 
 Window::~Window()
 {
+	if (glContext)
+	{
+		SDL_GL_DestroyContext(glContext);
+	}
+
 	if (window)
 	{
 		SDL_DestroyWindow(window);

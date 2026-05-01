@@ -5,7 +5,6 @@
 #include <GL/glew.h>
 #include <glm/ext/matrix_transform.hpp>
 
-#include "Graphics/Sprite.h"
 #include "Components/Rendering/SpriteRendererComponent.h"
 #include "Rendering/Shader.h"
 #include <glm/ext/matrix_clip_space.hpp>
@@ -101,15 +100,9 @@ void Renderer::RenderWorld(Scene* scene, glm::vec2 viewportBaseResolution)
                 {
                     continue;
                 }
-
-                Sprite* sprite = spriteRenderer->GetSprite();
-                if (!sprite)
-                {
-                    continue;
-                }
                 
-                glm::mat4 model = glm::scale(spriteRenderer->GetTransform().world, glm::vec3(sprite->GetSize(), 1.0f));
-                RenderMaterial(sprite->GetMaterial(), view, model, projection);
+                glm::mat4 model = glm::scale(spriteRenderer->GetTransform().world, glm::vec3(spriteRenderer->GetSize(), 1.0f));
+                RenderMaterial(spriteRenderer->GetMaterial(), view, model, projection);
             }
         }
     }
@@ -119,7 +112,6 @@ void Renderer::RenderUI(Scene* scene, glm::vec2 windowSize)
 {
     glm::mat4 projection = glm::ortho(0.0f, windowSize.x, windowSize.y, 0.0f, -1.0f, 1.0f);
 
-    // To Upgrade find a way to avoid cast
     std::vector<UIElement*> uiElements = scene->GetUIElements();
     for (UIElement* element : uiElements)
     {
@@ -148,8 +140,7 @@ void Renderer::Build(Scene* scene)
 
             if (spriteRenderer)
             {
-                Sprite* sprite = spriteRenderer->GetSprite();
-                buckets[sprite->GetLayer()].push_back(spriteRenderer);
+                buckets[spriteRenderer->GetLayer()].push_back(spriteRenderer);
             }
         }
     }
@@ -183,7 +174,7 @@ void Renderer::DrawTexture(Texture* texture)
     if (texture)
     {
         glActiveTexture(GL_TEXTURE0);
-        texture->Render();
+        texture->BindTexture();
 
         glBindVertexArray(quadVAO);
         glDrawArrays(GL_TRIANGLES, 0, 6);

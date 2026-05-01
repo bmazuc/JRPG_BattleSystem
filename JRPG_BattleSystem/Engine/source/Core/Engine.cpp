@@ -11,7 +11,7 @@
 bool Engine::Start(const EngineConfig& config)
 {
     if (InitSDL() 
-        && CreateWindow(config.windowData) 
+        && CreateWindow(config.windowConfig) 
         && InitOpenGL(config.swapInterval))
     {
         LoadDefaultResources();
@@ -68,12 +68,6 @@ void Engine::Shutdown()
     delete renderer;
     renderer = nullptr;
 
-    // Destroy any SDL objects we are allocated
-    if (glContext)
-    {
-        SDL_GL_DestroyContext(glContext);
-    }
-
     delete window;
     window = nullptr;
 
@@ -110,21 +104,16 @@ bool Engine::InitSDL()
     return true;
 }
 
-bool Engine::CreateWindow(WindowData windowData)
+bool Engine::CreateWindow(SDLWindowConfig config)
 {
     // Setup one SDL Window
     window = new Window();
-    return window->CreateSDLWindow(windowData);
+    return window->CreateSDLWindow(config);
 }
 
 bool Engine::InitOpenGL(int swapInterval)
 {
-    glContext = SDL_GL_CreateContext(window->GetSDLWindow());
-    if (!SDL_GL_SetSwapInterval(swapInterval))
-    {
-        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "VSync not supported: %s", SDL_GetError());
-        return false;
-    }
+    window->CreateOpenGLContext(swapInterval);
 
     // Initialisation de GLEW
     GLenum err = glewInit();

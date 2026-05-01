@@ -6,11 +6,6 @@ Enemy::Enemy(std::string textureName, std::string shaderName)
     spriteRenderer = AddComponent<SpriteRendererComponent>(textureName, shaderName);
 }
 
-Sprite* Enemy::GetSprite() const
-{
-    return spriteRenderer->GetSprite();
-}
-
 void Enemy::Update(float deltaTime)
 {
     timer += deltaTime;

@@ -6,6 +6,9 @@
 
 class Scene;
 
+/*
+ *	Base class for UI element.
+ */
 class UIElement
 {
 public:

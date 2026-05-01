@@ -6,6 +6,9 @@
 
 class Actor;
 
+/*
+ *	An element that can be attached to an Actor.
+ */
 class Component
 {
 public:

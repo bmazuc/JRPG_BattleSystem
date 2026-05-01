@@ -11,14 +11,20 @@
 
 class Renderer;
 
+/*
+ *	Contains engine creation parameters.
+ */
 struct EngineConfig
 {
 public:
 	EngineConfig() {}
 
-	WindowData windowData;
 	/*
-	 * Swap interval for the current OpenGL context :
+	 *	Window creation parameter
+	 */
+	SDLWindowConfig windowConfig;
+	/*
+	 *	Swap interval for the current OpenGL context :
 	 *	0	: immediate updates, 
 	 *	1	: updates synchronized with the vertical retrace,
 	 *	-1	: adaptive vsync
@@ -26,6 +32,14 @@ public:
 	int swapInterval = 1;
 };
 
+/*
+ *	Core Engine class. 
+ *	Manager global lifetime :
+ *	- Initialisation (SDL, OpenGL, resources)
+ *	- Main loop (events, update, render)
+ *	- Shutdown
+ *	Centralise core systems : Window, Renderer, SceneManager
+ */
 class Engine
 {
 public:
@@ -40,7 +54,7 @@ public:
 
 private:
 	bool InitSDL();
-	bool CreateWindow(WindowData data);
+	bool CreateWindow(SDLWindowConfig config);
 	bool InitOpenGL(int swapInterval);
 
 	void LoadDefaultResources();
@@ -49,7 +63,6 @@ private:
 	SceneManager* sceneManager;
 	Renderer* renderer;
 	Window* window;
-	SDL_GLContext glContext;
 
 	/*
 	 * Values used for clamping deltatime(avoid spike when using breakpoints for example.

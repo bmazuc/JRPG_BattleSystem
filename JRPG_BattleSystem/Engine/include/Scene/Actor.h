@@ -7,6 +7,9 @@
 class Component;
 class Scene;
 
+/*
+ *	Base class for anything that has a position, rotation, and scale in the game world
+ */
 class Actor
 {
 public:

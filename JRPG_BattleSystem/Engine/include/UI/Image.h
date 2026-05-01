@@ -11,6 +11,9 @@
 
 class Material;
 
+/*
+ *	An UI element displaying an image.
+ */
 class Image : public UIElement
 {
 public:

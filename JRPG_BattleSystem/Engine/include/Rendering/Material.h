@@ -7,6 +7,9 @@ class Shader;
 #include <glm/vec3.hpp>
 #include <string>
 
+/*
+ *	Collection of parameters that how a surface is rendered on screen.
+ */
 class Material
 {
 public:

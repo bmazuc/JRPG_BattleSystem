@@ -90,9 +90,6 @@
     <ClCompile Include="Engine\source\Core\Engine.cpp">
       <Filter>Source Files\Engine\Core</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\source\Graphics\Sprite.cpp">
-      <Filter>Source Files\Engine\Graphics</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\source\Graphics\Texture.cpp">
       <Filter>Source Files\Engine\Graphics</Filter>
     </ClCompile>
@@ -160,9 +157,6 @@
   <ItemGroup>
     <ClInclude Include="Engine\include\Core\Engine.h">
       <Filter>Header Files\Engine\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\include\Graphics\Sprite.h">
-      <Filter>Header Files\Engine\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="Engine\include\Graphics\Texture.h">
       <Filter>Header Files\Engine\Graphics</Filter>

@@ -17,7 +17,7 @@ int main()
 #endif // _DEBUG
 
     EngineConfig config = EngineConfig();
-    config.windowData = WindowData("JRPG_BattleSystem", 640, 480, SDL_WINDOW_RESIZABLE);
+    config.windowConfig = SDLWindowConfig("JRPG_BattleSystem", glm::vec2(640.0f, 480.0f), SDL_WINDOW_RESIZABLE);
     
     Engine* engine = new Engine();
 

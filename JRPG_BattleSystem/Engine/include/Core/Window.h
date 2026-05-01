@@ -4,22 +4,28 @@
 #include "SDL3/SDL.h"
 #include <glm/vec2.hpp>
 
-// Allows to pass the data needed to create the SDL window when starting the engine
-struct WindowData
+/*
+ *	Contains SDL window creation parameters.
+ */
+struct SDLWindowConfig
 {
 public:
-	WindowData() {}
-	WindowData(const char* _title, int _width, int _height, SDL_WindowFlags _flags);
+	SDLWindowConfig() {}
+	SDLWindowConfig(const char* _title, glm::vec2 _resolution, SDL_WindowFlags _flags);
+	
 	const char* title = "";
-	int width = 640;
-	int height = 480;
-	SDL_WindowFlags flags;
+	glm::vec2 resolution = glm::vec2(640.0f, 480.0f);
+	SDL_WindowFlags flags = 0;
 };
 
+/*
+ *	Wrapper for SDL window and OpenGL context.
+ */
 class Window
 {
 public:
-	bool CreateSDLWindow(WindowData data);
+	bool CreateSDLWindow(SDLWindowConfig config);
+	bool CreateOpenGLContext(int swapInterval);
 
 	~Window();
 	// Swap buffer to display the current contents of buffer on screen
@@ -32,6 +38,7 @@ public:
 
 private: 
 	SDL_Window* window = nullptr;
+	SDL_GLContext glContext;
 
 	glm::vec2 viewportBaseResolution;
 };

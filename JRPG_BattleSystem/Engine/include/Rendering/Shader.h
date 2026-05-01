@@ -7,6 +7,16 @@
 #include <glm/vec4.hpp>
 #include <glm/mat4x4.hpp>
 
+/*
+ *	OpenGL shader wrapper.
+ *	Manage :
+ *	- load and compilation (vertex + fragment)
+ *	- OpenGL program use.
+ *	- Uniforms sending
+ * 
+ *	Only vertex and fragment shaders are handle. Could be improve
+ *  by adding geometry shader handling.
+ */
 class Shader
 {
 public:

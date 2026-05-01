@@ -1,13 +1,13 @@
 #include "Components/Rendering/SpriteRendererComponent.h"
-#include <glm/ext/matrix_transform.hpp>
+#include "Rendering/Material.h"
 
 SpriteRendererComponent::SpriteRendererComponent(std::string textureName, std::string shaderName, glm::vec3 color)
 {
-	sprite = new Sprite(textureName, shaderName, color);
+	material = new Material(textureName, shaderName, color);
 }
 
 SpriteRendererComponent::~SpriteRendererComponent()
 {
-	delete sprite;
-	sprite = nullptr;
+	delete material;
+	material = nullptr;
 }

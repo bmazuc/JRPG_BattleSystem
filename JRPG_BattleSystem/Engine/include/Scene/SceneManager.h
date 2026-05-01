@@ -6,6 +6,11 @@
 #include <string>
 #include <SDL3/SDL.h>
 
+/*
+ *	Manage the differents scenes (levels) of the game.
+ *	Store the scenes, load and unload them, handle the scene
+ *	transitions, handle active scene
+ */
 class SceneManager
 {
 public:

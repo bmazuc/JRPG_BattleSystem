@@ -52,7 +52,7 @@ GLenum Texture::GetGLFormat(SDL_PixelFormat format)
     }
 }
 
-void Texture::Render()
+void Texture::BindTexture()
 {
     glBindTexture(GL_TEXTURE_2D, texture);
 }

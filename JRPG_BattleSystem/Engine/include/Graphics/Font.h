@@ -8,6 +8,9 @@
 #include <ft2build.h>
 #include FT_FREETYPE_H
 
+/*
+ *  Represents a character rasterized by Freetype.
+ */
 struct Glyph 
 {
     unsigned int textureID;  // ID handle of the glyph texture
@@ -16,6 +19,9 @@ struct Glyph
     int advance;             // Offset to advance to next glyph
 };
 
+/*
+ *  Handle a font with Freetype.
+ */
 class Font
 {
 public:

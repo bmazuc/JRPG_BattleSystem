@@ -4,13 +4,17 @@
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_opengl.h>
 
+/*
+ *	Represent an OpenGL texture.
+ *	Can be load from BMP or PNG.
+ */
 class Texture
 {
 public:
 	void LoadBMP(const char* file);
 	void LoadPNG(const char* file);
 
-	void Render();
+	void BindTexture();
 
 private:
 	void CreateTexture(SDL_Surface* surface);

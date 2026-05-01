@@ -143,7 +143,6 @@
     <ClCompile Include="Engine\source\Core\Resource\ResourceManager.cpp" />
     <ClCompile Include="Engine\source\Core\Window.cpp" />
     <ClCompile Include="Engine\source\Graphics\Font.cpp" />
-    <ClCompile Include="Engine\source\Graphics\Sprite.cpp" />
     <ClCompile Include="Engine\source\Graphics\Texture.cpp" />
     <ClCompile Include="Engine\source\Rendering\Material.cpp" />
     <ClCompile Include="Engine\source\Rendering\Renderer.cpp" />
@@ -169,7 +168,6 @@
     <ClInclude Include="Engine\include\Core\Resource\ResourceManager.h" />
     <ClInclude Include="Engine\include\Core\Window.h" />
     <ClInclude Include="Engine\include\Graphics\Font.h" />
-    <ClInclude Include="Engine\include\Graphics\Sprite.h" />
     <ClInclude Include="Engine\include\Graphics\Texture.h" />
     <ClInclude Include="Engine\include\Rendering\Material.h" />
     <ClInclude Include="Engine\include\Rendering\Renderer.h" />
