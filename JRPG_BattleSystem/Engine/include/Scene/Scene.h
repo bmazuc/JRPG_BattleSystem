@@ -10,7 +10,7 @@ class CameraComponent;
 class Shader;
 class Texture;
 
-enum SceneRequestType
+enum class SceneRequestType
 {
 	None,
 	ChangeScene

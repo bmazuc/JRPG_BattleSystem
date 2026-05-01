@@ -6,7 +6,7 @@
 #include "Graphics/Font.h"
 #include <string>
 
-enum TextScaleMode
+enum class TextScaleMode
 {
     Uniform,
     Free

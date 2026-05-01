@@ -4,10 +4,10 @@
 #include "Components/Component.h"
 #include "Graphics/Sprite.h"
 
-enum ImageExtension
+enum class ImageExtension
 {
-	PNG = 0,
-	BPM = 1
+	PNG,
+	BPM
 };
 
 class SpriteRendererComponent : public Component

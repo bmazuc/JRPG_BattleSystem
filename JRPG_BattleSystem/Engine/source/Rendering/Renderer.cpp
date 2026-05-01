@@ -211,7 +211,7 @@ void Renderer::RenderText(Text* text, glm::mat4 projection)
     float x = position.x;
     float y = position.y;
 
-    float fontSize = font->GetSize();
+    float fontSize = (float)font->GetSize();
     if (fontSize == 0.0f)
     {
         fontSize = 0.01f;
