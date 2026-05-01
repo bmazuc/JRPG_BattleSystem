@@ -1,5 +1,5 @@
 #include "UI/Text.h"
-#include "Core/ResourceManager.h"
+#include "Core/Resource/ResourceManager.h"
 
 Text::Text(std::string fontName, bool _isCenter, glm::vec3 _color)
 	: isCenter(_isCenter), color(_color)

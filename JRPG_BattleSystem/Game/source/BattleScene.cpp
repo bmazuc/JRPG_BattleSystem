@@ -1,9 +1,9 @@
 #include "BattleScene.h"
-#include "Components/SpriteRendererComponent.h"
+#include "Components/Rendering/SpriteRendererComponent.h"
 #include "Enemy.h"
-#include "Components/CameraComponent.h"
+#include "Components/Camera/CameraComponent.h"
 #include "AutoDestroyImage.h"
-#include "Core/ResourceManager.h"
+#include "Core/Resource/ResourceManager.h"
 #include "UI/Text.h"
 
 void BattleScene::CreateScene()

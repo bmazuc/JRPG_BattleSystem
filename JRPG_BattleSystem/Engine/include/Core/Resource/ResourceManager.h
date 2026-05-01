@@ -2,7 +2,7 @@
 #define __RESOURCE_MANAGER_H_INCLUDED__
 
 #include "Graphics/Texture.h"
-#include "Core/Shader.h"
+#include "Rendering/Shader.h"
 #include "Graphics/Font.h"
 
 #include <map>

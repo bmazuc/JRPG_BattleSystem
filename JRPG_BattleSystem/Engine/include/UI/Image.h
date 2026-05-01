@@ -4,7 +4,7 @@
 #include "UIElement.h"
 
 #include "Graphics/Texture.h"
-#include "Core/Shader.h"
+#include "Rendering/Shader.h"
 
 #include <glm/vec2.hpp>
 #include <glm/vec3.hpp>

@@ -1,33 +1,36 @@
-#include "Core/Renderer.h"
+#include "Rendering/Renderer.h"
 #include "Scene/Scene.h"
-#include "Components/CameraComponent.h"
+#include "Components/Camera/CameraComponent.h"
 
 #include <GL/glew.h>
 #include <glm/ext/matrix_transform.hpp>
 
 #include "Graphics/Sprite.h"
-#include "Components/SpriteRendererComponent.h"
-#include "Core/Shader.h"
+#include "Components/Rendering/SpriteRendererComponent.h"
+#include "Rendering/Shader.h"
 #include <glm/ext/matrix_clip_space.hpp>
 
 #include "UI/Image.h"
-#include "Graphics/Material.h"
+#include "Rendering/Material.h"
 #include "Graphics/Font.h"
 #include "UI/Text.h"
-#include "Core/ResourceManager.h"
+#include "Core/Resource/ResourceManager.h"
 
 Renderer::~Renderer()
 {
     buckets.clear();
 }
 
-void Renderer::Init(const char* vShaderFile, const char* fShaderFile, glm::vec2 viewportBaseResolution)
+void Renderer::Init()
 {
-    InitRenderData(viewportBaseResolution);
+    InitRenderData();
     textShader = &ResourceManager::GetShader("text");
+
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
-void Renderer::InitRenderData(glm::vec2 _viewportBaseResolution)
+void Renderer::InitRenderData()
 {
     // configure VAO/VBO
     unsigned int VBO;
@@ -68,8 +71,6 @@ void Renderer::InitRenderData(glm::vec2 _viewportBaseResolution)
     glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
 
     glBindVertexArray(0);
-
-    viewportBaseResolution = _viewportBaseResolution;
 }
 
 void Renderer::RenderWorld(Scene* scene)

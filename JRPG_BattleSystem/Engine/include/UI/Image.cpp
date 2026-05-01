@@ -1,6 +1,6 @@
 #include "Image.h"
-#include "Core/ResourceManager.h"
-#include "Graphics/Material.h"
+#include "Core/Resource/ResourceManager.h"
+#include "Rendering/Material.h"
 
 Image::Image(std::string textureName, std::string shaderName, glm::vec3 color)
 {

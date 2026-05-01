@@ -28,11 +28,16 @@ public:
 		scene->LoadAssets();
 	}
 
-	void SetActiveScene(std::string name);
+	void SetDefaultScene(std::string name) { defaultScene = name; }
 	Scene* GetActiveScene() const { return activeScene; }
 	void Update(float deltaTime);
 
 private:
+	void LoadScene(std::string name);
+	void UnloadActiveScene();
+
+	std::string defaultScene;
+
 	Scene* activeScene;
 	std::unordered_map<std::string, Scene*> scenes;
 };

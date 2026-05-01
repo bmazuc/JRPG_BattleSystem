@@ -4,23 +4,7 @@
 
 void SceneManager::Init()
 {
-	if (activeScene)
-	{
-		activeScene->CreateScene();
-		activeScene->Init();
-	}
-}
-
-void  SceneManager::SetActiveScene(std::string name)
-{
-	auto it = scenes.find(name);
-	if (it != scenes.end())
-	{
-		activeScene = it->second;
-		return;
-	}
-
-	SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Scene %s does not exist", name.c_str());
+	LoadScene(defaultScene);
 }
 
 void SceneManager::Update(float deltaTime)
@@ -34,17 +18,41 @@ void SceneManager::Update(float deltaTime)
 		if (activeScene->HasRequest())
 		{
 			std::string newSceneName = activeScene->GetPendingRequest().newSceneName;
-			activeScene->DestroyScene();
-			SetActiveScene(newSceneName);
+			UnloadActiveScene();
+			LoadScene(newSceneName);
+		}
+	}
+}
+
+void SceneManager::LoadScene(std::string name)
+{
+	auto it = scenes.find(name);
+	if (it != scenes.end())
+	{
+		activeScene = it->second;
+		if (activeScene)
+		{
 			activeScene->CreateScene();
 			activeScene->Init();
 		}
+		return;
+	}
+
+	SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Scene %s does not exist", name.c_str());
+}
+
+void SceneManager::UnloadActiveScene()
+{
+	if (activeScene)
+	{
+		activeScene->DestroyScene();
+		activeScene = nullptr;
 	}
 }
 
 SceneManager::~SceneManager()
 {
-	activeScene->DestroyScene();
+	UnloadActiveScene();
 	for (auto& it : scenes)
 	{
 		delete it.second;

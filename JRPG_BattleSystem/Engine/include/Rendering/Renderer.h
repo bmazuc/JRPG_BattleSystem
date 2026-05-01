@@ -20,14 +20,16 @@ class Renderer
 public:
 	~Renderer();
 
-	void Init(const char* vShaderFile, const char* fShaderFile, glm::vec2 viewportBaseResolution);
+	void Init();
+
+	void SetViewportResolution(glm::vec2 newViewportBaseResolution) { viewportBaseResolution = newViewportBaseResolution; }
 
 	// To upgrade make a render command system
 	void RenderWorld(Scene* scene);
 	void RenderUI(Scene* scene, SDL_Window* window);
 	
 private:
-	void InitRenderData(glm::vec2 _viewportBaseResolution);
+	void InitRenderData();
 
 	void Build(Scene* scene);
 

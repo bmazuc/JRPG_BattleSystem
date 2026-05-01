@@ -55,6 +55,33 @@
     <Filter Include="Source Files\Engine\UI">
       <UniqueIdentifier>{925d2b3f-c787-4afd-9c10-c6618dc470b3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Engine\Components\Camera">
+      <UniqueIdentifier>{33b4ebe5-80b7-4c16-834f-99f390caca64}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Components\Rendering">
+      <UniqueIdentifier>{2eab34c5-3cc8-4c89-92b3-23f9a7ba01ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Components\Camera">
+      <UniqueIdentifier>{d1f93a64-4161-46ff-9ce6-5aa62269cce3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Components\Rendering">
+      <UniqueIdentifier>{b6537714-3917-4781-ab69-d2c0523f2663}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Core\Math">
+      <UniqueIdentifier>{e9308300-3ea1-44fc-9709-dd5820a96a3c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Core\Resource">
+      <UniqueIdentifier>{6f81e850-c429-437b-b436-6fbcd35c2054}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Core\Resource">
+      <UniqueIdentifier>{3a231370-7e07-4c99-8fc8-fc7f9faf74c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Rendering">
+      <UniqueIdentifier>{3daf414b-3466-477a-a010-a47002ed4ae1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Rendering">
+      <UniqueIdentifier>{bfdf0559-6ba5-40a3-934e-41e11f8aaa1c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -72,15 +99,6 @@
     <ClCompile Include="Engine\source\Components\Component.cpp">
       <Filter>Source Files\Engine\Components</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\source\Components\SpriteRendererComponent.cpp">
-      <Filter>Source Files\Engine\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\source\Core\Renderer.cpp">
-      <Filter>Source Files\Engine\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\source\Core\Shader.cpp">
-      <Filter>Source Files\Engine\Core</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\source\Scene\Actor.cpp">
       <Filter>Source Files\Engine\Scene</Filter>
     </ClCompile>
@@ -93,9 +111,6 @@
     <ClCompile Include="Game\source\BattleScene.cpp">
       <Filter>Source Files\Game</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\source\Components\CameraComponent.cpp">
-      <Filter>Source Files\Engine\Components</Filter>
-    </ClCompile>
     <ClCompile Include="Game\source\AutoDestroyImage.cpp">
       <Filter>Source Files\Game</Filter>
     </ClCompile>
@@ -104,12 +119,6 @@
     </ClCompile>
     <ClCompile Include="Engine\source\UI\UIElement.cpp">
       <Filter>Source Files\Engine\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\source\Graphics\Material.cpp">
-      <Filter>Source Files\Engine\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\source\Core\ResourceManager.cpp">
-      <Filter>Source Files\Engine\Core</Filter>
     </ClCompile>
     <ClCompile Include="Engine\source\Graphics\Font.cpp">
       <Filter>Source Files\Engine\Graphics</Filter>
@@ -126,6 +135,24 @@
     <ClCompile Include="Game\source\ChangeSceneTimer.cpp">
       <Filter>Source Files\Game</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\source\Components\Rendering\SpriteRendererComponent.cpp">
+      <Filter>Source Files\Engine\Components\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\source\Components\Camera\CameraComponent.cpp">
+      <Filter>Source Files\Engine\Components\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\source\Core\Resource\ResourceManager.cpp">
+      <Filter>Source Files\Engine\Core\Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\source\Rendering\Material.cpp">
+      <Filter>Source Files\Engine\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\source\Rendering\Renderer.cpp">
+      <Filter>Source Files\Engine\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\source\Rendering\Shader.cpp">
+      <Filter>Source Files\Engine\Rendering</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\include\Core\Engine.h">
@@ -140,15 +167,6 @@
     <ClInclude Include="Engine\include\Components\Component.h">
       <Filter>Header Files\Engine\Components</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\include\Components\SpriteRendererComponent.h">
-      <Filter>Header Files\Engine\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\include\Core\Renderer.h">
-      <Filter>Header Files\Engine\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\include\Core\Shader.h">
-      <Filter>Header Files\Engine\Core</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\include\Scene\Actor.h">
       <Filter>Header Files\Engine\Scene</Filter>
     </ClInclude>
@@ -161,12 +179,6 @@
     <ClInclude Include="Game\include\BattleScene.h">
       <Filter>Header Files\Game</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\include\Components\CameraComponent.h">
-      <Filter>Header Files\Engine\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\include\Transform2D.h">
-      <Filter>Header Files\Engine</Filter>
-    </ClInclude>
     <ClInclude Include="Game\include\AutoDestroyImage.h">
       <Filter>Header Files\Game</Filter>
     </ClInclude>
@@ -175,12 +187,6 @@
     </ClInclude>
     <ClInclude Include="Engine\include\UI\UIElement.h">
       <Filter>Header Files\Engine\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\include\Graphics\Material.h">
-      <Filter>Header Files\Engine\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\include\Core\ResourceManager.h">
-      <Filter>Header Files\Engine\Core</Filter>
     </ClInclude>
     <ClInclude Include="Engine\include\Graphics\Font.h">
       <Filter>Header Files\Engine\Graphics</Filter>
@@ -196,6 +202,27 @@
     </ClInclude>
     <ClInclude Include="Game\include\ChangeSceneTimer.h">
       <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\include\Components\Camera\CameraComponent.h">
+      <Filter>Header Files\Engine\Components\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\include\Components\Rendering\SpriteRendererComponent.h">
+      <Filter>Header Files\Engine\Components\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\include\Core\Math\Transform2D.h">
+      <Filter>Header Files\Engine\Core\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\include\Core\Resource\ResourceManager.h">
+      <Filter>Header Files\Engine\Core\Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\include\Rendering\Material.h">
+      <Filter>Header Files\Engine\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\include\Rendering\Renderer.h">
+      <Filter>Header Files\Engine\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\include\Rendering\Shader.h">
+      <Filter>Header Files\Engine\Rendering</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

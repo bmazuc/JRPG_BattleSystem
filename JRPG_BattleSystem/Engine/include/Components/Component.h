@@ -1,7 +1,7 @@
 #ifndef __COMPONENT_H_INCLUDED__
 #define __COMPONENT_H_INCLUDED__
 
-#include "Transform2D.h"
+#include "Core/Math/Transform2D.h"
 #include <vector>
 
 class Actor;

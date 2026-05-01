@@ -1,5 +1,5 @@
 #include "Enemy.h"
-#include "Components/SpriteRendererComponent.h"
+#include "Components/Rendering/SpriteRendererComponent.h"
 
 Enemy::Enemy(std::string textureName, std::string shaderName)
 {

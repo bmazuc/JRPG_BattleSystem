@@ -24,7 +24,7 @@ int main()
         {
             sceneManager->AddScene<BattleScene>("battleScene");
             sceneManager->AddScene<MainMenuScene>("mainMenu");
-            sceneManager->SetActiveScene("mainMenu");
+            sceneManager->SetDefaultScene("mainMenu");
         }
         engine->Run();
     }

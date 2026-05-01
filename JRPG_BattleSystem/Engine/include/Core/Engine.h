@@ -37,6 +37,12 @@ public:
 	SceneManager* GetSceneManager() const { return sceneManager; }
 
 private:
+	bool InitSDL();
+	bool CreateWindow(WindowData windowData);
+	bool InitOpenGL();
+	bool CreateSceneManager();
+	bool CreateRenderer();
+
 	void LoadDefaultResources();
 	float ComputeDeltaTime(std::chrono::high_resolution_clock::time_point& lastTime);
 
@@ -45,7 +51,7 @@ private:
 	SDL_Window* window;
 	SDL_GLContext glContext;
 
-	glm::vec2 viewportBaseResolution = glm::vec2(640, 480);
+	glm::vec2 viewportBaseResolution;
 
 	/*
 	 * Values used for clamping deltatime(avoid spike when using breakpoints for example.

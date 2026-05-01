@@ -136,17 +136,17 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Engine\include\UI\Image.cpp" />
-    <ClCompile Include="Engine\source\Components\CameraComponent.cpp" />
+    <ClCompile Include="Engine\source\Components\Camera\CameraComponent.cpp" />
     <ClCompile Include="Engine\source\Components\Component.cpp" />
-    <ClCompile Include="Engine\source\Components\SpriteRendererComponent.cpp" />
+    <ClCompile Include="Engine\source\Components\Rendering\SpriteRendererComponent.cpp" />
     <ClCompile Include="Engine\source\Core\Engine.cpp" />
-    <ClCompile Include="Engine\source\Core\Renderer.cpp" />
-    <ClCompile Include="Engine\source\Core\ResourceManager.cpp" />
-    <ClCompile Include="Engine\source\Core\Shader.cpp" />
+    <ClCompile Include="Engine\source\Core\Resource\ResourceManager.cpp" />
     <ClCompile Include="Engine\source\Graphics\Font.cpp" />
-    <ClCompile Include="Engine\source\Graphics\Material.cpp" />
     <ClCompile Include="Engine\source\Graphics\Sprite.cpp" />
     <ClCompile Include="Engine\source\Graphics\Texture.cpp" />
+    <ClCompile Include="Engine\source\Rendering\Material.cpp" />
+    <ClCompile Include="Engine\source\Rendering\Renderer.cpp" />
+    <ClCompile Include="Engine\source\Rendering\Shader.cpp" />
     <ClCompile Include="Engine\source\Scene\Actor.cpp" />
     <ClCompile Include="Engine\source\Scene\Scene.cpp" />
     <ClCompile Include="Engine\source\Scene\SceneManager.cpp" />
@@ -160,21 +160,21 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Engine\include\Components\CameraComponent.h" />
+    <ClInclude Include="Engine\include\Components\Camera\CameraComponent.h" />
     <ClInclude Include="Engine\include\Components\Component.h" />
-    <ClInclude Include="Engine\include\Components\SpriteRendererComponent.h" />
+    <ClInclude Include="Engine\include\Components\Rendering\SpriteRendererComponent.h" />
     <ClInclude Include="Engine\include\Core\Engine.h" />
-    <ClInclude Include="Engine\include\Core\Renderer.h" />
-    <ClInclude Include="Engine\include\Core\ResourceManager.h" />
-    <ClInclude Include="Engine\include\Core\Shader.h" />
+    <ClInclude Include="Engine\include\Core\Math\Transform2D.h" />
+    <ClInclude Include="Engine\include\Core\Resource\ResourceManager.h" />
     <ClInclude Include="Engine\include\Graphics\Font.h" />
-    <ClInclude Include="Engine\include\Graphics\Material.h" />
     <ClInclude Include="Engine\include\Graphics\Sprite.h" />
     <ClInclude Include="Engine\include\Graphics\Texture.h" />
+    <ClInclude Include="Engine\include\Rendering\Material.h" />
+    <ClInclude Include="Engine\include\Rendering\Renderer.h" />
+    <ClInclude Include="Engine\include\Rendering\Shader.h" />
     <ClInclude Include="Engine\include\Scene\Actor.h" />
     <ClInclude Include="Engine\include\Scene\Scene.h" />
     <ClInclude Include="Engine\include\Scene\SceneManager.h" />
-    <ClInclude Include="Engine\include\Transform2D.h" />
     <ClInclude Include="Engine\include\UI\Image.h" />
     <ClInclude Include="Engine\include\UI\Text.h" />
     <ClInclude Include="Engine\include\UI\UIElement.h" />

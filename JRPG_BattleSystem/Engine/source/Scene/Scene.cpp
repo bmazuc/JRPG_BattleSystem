@@ -1,15 +1,15 @@
 #include "Scene/Scene.h"
 #include "Components/Component.h"
-#include "Components/CameraComponent.h"
-#include "Components/SpriteRendererComponent.h"
-#include "Graphics/Material.h"
+#include "Components/Camera/CameraComponent.h"
+#include "Components/Rendering/SpriteRendererComponent.h"
+#include "Rendering/Material.h"
 
 #include <glm/ext/matrix_transform.hpp>
 #include <glm/ext/matrix_clip_space.hpp>
 #include <UI/Image.h>
 
 #include "Graphics/Texture.h"
-#include "Core/Shader.h"
+#include "Rendering/Shader.h"
 
 void Scene::Init()
 {
