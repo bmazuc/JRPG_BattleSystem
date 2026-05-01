@@ -8,11 +8,6 @@
 #include <glm/vec3.hpp>
 #include <algorithm>
 
-WindowData::WindowData(const char* _title, int _width, int _height, SDL_WindowFlags _flags) 
-    : title(_title), width(_width), height(_height), flags(_flags) 
-{
-}
-
 bool Engine::Start(WindowData windowData, int swapInterval)
 {
     if (!InitSDL())
@@ -63,7 +58,7 @@ void Engine::Run()
         {
             int w = event.window.data1;
             int h = event.window.data2;
-            glViewport(0, 0, w, h);
+            window->OnResize(w, h);
         }
 
         float deltaTime = ComputeDeltaTime(lastTime);
@@ -72,11 +67,11 @@ void Engine::Run()
 
         if (Scene* scene = sceneManager->GetActiveScene())
         {
-            renderer->RenderWorld(scene);
-            renderer->RenderUI(scene, window);
+            renderer->RenderWorld(scene, window->GetViewportBaseResolution());
+            renderer->RenderUI(scene, window->GetSize());
         }
 
-        SDL_GL_SwapWindow(window);
+        window->SwapBuffers();
     }
 }
 
@@ -96,11 +91,8 @@ void Engine::Shutdown()
         SDL_GL_DestroyContext(glContext);
     }
 
-    if (window)
-    {
-        SDL_DestroyWindow(window);
-        window = nullptr;
-    }
+    delete window;
+    window = nullptr;
 
     // Quit SDL and shutdown systems we have initialized
     SDL_Quit();
@@ -137,25 +129,14 @@ bool Engine::InitSDL()
 
 bool Engine::CreateWindow(WindowData windowData)
 {
-    windowData.flags |= SDL_WINDOW_OPENGL;
-
     // Setup one SDL Window
-    window = SDL_CreateWindow(windowData.title, windowData.width, windowData.height, windowData.flags);
-
-    if (!window)
-    {
-        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Couldn't create window: %s", SDL_GetError());
-        return false;
-    }
-
-    viewportBaseResolution = glm::vec2(windowData.width, windowData.height);
-
-    return true;
+    window = new Window();
+    return window->CreateSDLWindow(windowData);
 }
 
 bool Engine::InitOpenGL()
 {
-    glContext = SDL_GL_CreateContext(window);
+    glContext = SDL_GL_CreateContext(window->GetSDLWindow());
     if (!SDL_GL_SetSwapInterval(1))
     {
         SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "VSync not supported: %s", SDL_GetError());
@@ -195,8 +176,6 @@ bool Engine::CreateRenderer()
         SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Couldn't create OpenGL renderer");
         return false;
     }
-
-    renderer->SetViewportResolution(viewportBaseResolution);
 
     return true;
 }

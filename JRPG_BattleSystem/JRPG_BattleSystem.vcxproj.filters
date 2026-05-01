@@ -153,6 +153,9 @@
     <ClCompile Include="Engine\source\Rendering\Shader.cpp">
       <Filter>Source Files\Engine\Rendering</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\source\Core\Window.cpp">
+      <Filter>Source Files\Engine\Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\include\Core\Engine.h">
@@ -223,6 +226,9 @@
     </ClInclude>
     <ClInclude Include="Engine\include\Rendering\Shader.h">
       <Filter>Header Files\Engine\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\include\Core\Window.h">
+      <Filter>Header Files\Engine\Core</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

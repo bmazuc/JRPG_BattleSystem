@@ -9,7 +9,6 @@ class Material;
 class Text;
 class Shader;
 
-#include <SDL3/SDL.h>
 #include <glm/vec2.hpp>
 #include <glm/mat4x4.hpp>
 #include <map>
@@ -22,11 +21,9 @@ public:
 
 	void Init();
 
-	void SetViewportResolution(glm::vec2 newViewportBaseResolution) { viewportBaseResolution = newViewportBaseResolution; }
-
 	// To upgrade make a render command system
-	void RenderWorld(Scene* scene);
-	void RenderUI(Scene* scene, SDL_Window* window);
+	void RenderWorld(Scene* scene, glm::vec2 viewportBaseResolution);
+	void RenderUI(Scene* scene, glm::vec2 windowSize);
 	
 private:
 	void InitRenderData();
@@ -37,8 +34,6 @@ private:
 	void DrawTexture(Texture* texture);
 
 	void RenderText(Text* text, glm::mat4 projection);
-
-	glm::vec2 viewportBaseResolution;
 
 	unsigned int quadVAO;
 	unsigned int textVAO;

@@ -73,7 +73,7 @@ void Renderer::InitRenderData()
     glBindVertexArray(0);
 }
 
-void Renderer::RenderWorld(Scene* scene)
+void Renderer::RenderWorld(Scene* scene, glm::vec2 viewportBaseResolution)
 {
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
@@ -115,11 +115,9 @@ void Renderer::RenderWorld(Scene* scene)
     }
 }
 
-void Renderer::RenderUI(Scene* scene, SDL_Window* window)
+void Renderer::RenderUI(Scene* scene, glm::vec2 windowSize)
 {
-    int windowWidth, windowHeight;
-    SDL_GetWindowSize(window, &windowWidth, &windowHeight);
-    glm::mat4 projection = glm::ortho(0.0f, (float)windowWidth, (float)windowHeight, 0.0f, -1.0f, 1.0f);
+    glm::mat4 projection = glm::ortho(0.0f, windowSize.x, windowSize.y, 0.0f, -1.0f, 1.0f);
 
     // To Upgrade find a way to avoid cast
     std::vector<UIElement*> uiElements = scene->GetUIElements();

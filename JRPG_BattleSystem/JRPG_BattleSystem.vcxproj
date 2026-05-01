@@ -141,6 +141,7 @@
     <ClCompile Include="Engine\source\Components\Rendering\SpriteRendererComponent.cpp" />
     <ClCompile Include="Engine\source\Core\Engine.cpp" />
     <ClCompile Include="Engine\source\Core\Resource\ResourceManager.cpp" />
+    <ClCompile Include="Engine\source\Core\Window.cpp" />
     <ClCompile Include="Engine\source\Graphics\Font.cpp" />
     <ClCompile Include="Engine\source\Graphics\Sprite.cpp" />
     <ClCompile Include="Engine\source\Graphics\Texture.cpp" />
@@ -166,6 +167,7 @@
     <ClInclude Include="Engine\include\Core\Engine.h" />
     <ClInclude Include="Engine\include\Core\Math\Transform2D.h" />
     <ClInclude Include="Engine\include\Core\Resource\ResourceManager.h" />
+    <ClInclude Include="Engine\include\Core\Window.h" />
     <ClInclude Include="Engine\include\Graphics\Font.h" />
     <ClInclude Include="Engine\include\Graphics\Sprite.h" />
     <ClInclude Include="Engine\include\Graphics\Texture.h" />

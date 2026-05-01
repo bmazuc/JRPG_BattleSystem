@@ -2,25 +2,14 @@
 #define __ENGINE_H_INCLUDED__
 
 #include "Scene/SceneManager.h"
+#include "Core/Window.h"
 
 #include <GL/glew.h>
-#include <SDL3/SDL.h>
 #include <SDL3/SDL_opengl.h>
-#include <glm/vec2.hpp>
 
 #include <chrono>
 
 class Renderer;
-
-// Allows to pass the data needed to create the SDL window when starting the engine
-struct WindowData
-{
-	WindowData(const char* _title, int _width, int _height, SDL_WindowFlags _flags);
-	const char* title;
-	int width; 
-	int height; 
-	SDL_WindowFlags flags;
-};
 
 class Engine
 {
@@ -31,8 +20,6 @@ public:
 	bool Start(WindowData windowData, int swapInterval = 0);
 	void Run();
 	void Shutdown();
-
-	void SetViewportBaseResolution(glm::vec2 resolution) { viewportBaseResolution = resolution; }
 
 	SceneManager* GetSceneManager() const { return sceneManager; }
 
@@ -48,10 +35,8 @@ private:
 
 	SceneManager* sceneManager;
 	Renderer* renderer;
-	SDL_Window* window;
+	Window* window;
 	SDL_GLContext glContext;
-
-	glm::vec2 viewportBaseResolution;
 
 	/*
 	 * Values used for clamping deltatime(avoid spike when using breakpoints for example.
