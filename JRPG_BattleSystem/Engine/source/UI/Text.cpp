@@ -2,7 +2,7 @@
 #include "Core/Resource/ResourceManager.h"
 
 Text::Text(std::string fontName, bool _isCenter, glm::vec3 _color)
-	: isCenter(_isCenter), color(_color)
+	: isCenterX(_isCenter), color(_color)
 {
 	font = &ResourceManager::GetFont(fontName);
 }

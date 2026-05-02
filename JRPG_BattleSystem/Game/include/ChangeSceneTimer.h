@@ -6,7 +6,7 @@
 class ChangeSceneTimer : public Text
 {
 public:
-	ChangeSceneTimer(std::string fontName, bool isCenter = true, glm::vec3 _color = glm::vec3(1, 1, 1));
+	ChangeSceneTimer(std::string fontName, bool isCenterX = true, glm::vec3 _color = glm::vec3(1, 1, 1));
 
 	void Update(float deltaTime) override;
 

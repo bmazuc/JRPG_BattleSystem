@@ -18,6 +18,7 @@ void Scene::Init()
 		if (actor)
 		{
 			actor->Init();
+			actor->InitComponents();
 		}
 	}
 

@@ -11,15 +11,34 @@
 class Texture
 {
 public:
+	/*
+	 *  Load the texture from a BMP file.
+	 *  @param file texture file
+	 */
 	void LoadBMP(const char* file);
+	/*
+	 *  Load the texture from a PNG file.
+	 *  @param file texture file
+	 */
 	void LoadPNG(const char* file);
 
+	// Bind texture for rendering
 	void BindTexture();
 
 private:
+	/*
+	 *	Create the texture from a SDL surface ( A collection of pixels used in software blitting)
+	 *	@param surface the SDL surface
+	 */
 	void CreateTexture(SDL_Surface* surface);
+	/*
+	 *	Convert a SDL format to an OpenGL format.
+	 *	@param format the SDL format
+	 *	@return OpenGL format
+	 */
 	GLenum GetGLFormat(SDL_PixelFormat format);
 
+	// texture name for OpenGL
 	GLuint texture;
 };
 

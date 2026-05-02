@@ -4,6 +4,16 @@ Some can be done later in the project. Others will be over-engineering for this 
 
 
 
+\#Scene
+
+* Add destroy with timer for :
+
+  * Actor
+  * Component
+  * UIElement
+
+
+
 \#Rendering
 
 * 3D

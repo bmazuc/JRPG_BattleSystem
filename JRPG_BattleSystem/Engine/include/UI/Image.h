@@ -20,7 +20,8 @@ public:
 	Image(std::string textureName, std::string shaderName, glm::vec3 color = glm::vec3(1, 1, 1));
 	~Image();
 
-	Material* GetMaterial() const { return material; }
+	Material* GetMaterial() { return material; }
+	const Material* GetMaterial() const { return material; }
 
 	glm::vec2 GetSize() const { return size; }
 

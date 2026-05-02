@@ -15,20 +15,34 @@ class Material;
 class SpriteRendererComponent : public Component
 {
 public:
+	/*
+	 *	@param textureName the texture used by the material
+	 *	@param shaderName the shader used by the material
+	 *  @param color the color used by the material
+	 */
 	SpriteRendererComponent(std::string textureName, std::string shaderName, glm::vec3 color = glm::vec3(1, 1, 1));
 	~SpriteRendererComponent();
 
-	Material* GetMaterial() const { return material; }
+	Material* GetMaterial() { return material; }
+	const Material* GetMaterial() const { return material; }
 
 	glm::vec2 GetSize() const { return size; }
-	int GetLayer() const { return layer; }
+	int GetZOrder() const { return zOrder; }
 
 	void SetSize(glm::vec2 _size) { size = _size; }
-	void SetLayer(int _layer) { layer = _layer; }
+	/*
+	 *	The zOrder decides what priority each sprite has to the renderer.
+	 *	The lower the number you give it, the further back the sprite appears.
+	 */
+	void SetZOrder(int _zOrder) { zOrder = _zOrder; }
 	
 private:
 	glm::vec2 size = glm::vec2(1, 1);
-	int layer = 0;
+	/*
+	 *	The zOrder decides what priority each sprite has to the renderer.
+	 *	The lower the number you give it, the further back the sprite appears.
+	 */ 
+	int zOrder = 0;
 
 	Material* material;
 };

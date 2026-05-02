@@ -41,7 +41,7 @@ void Engine::Run()
         {
             int w = event.window.data1;
             int h = event.window.data2;
-            window->OnResize(w, h);
+            window->Resize(glm::vec2(w, h));
         }
 
         float deltaTime = ComputeDeltaTime(lastTime);

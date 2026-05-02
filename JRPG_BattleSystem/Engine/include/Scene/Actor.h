@@ -16,19 +16,52 @@ public:
 	Actor();
 	~Actor();
 
+	/*
+	 *	Behavior called after scene loading
+	 */
 	virtual void Init() {}
+	/*
+	 *	Behavior called each frame
+	 */
 	virtual void Update(float deltaTime) {}
 
-	// Future upgrade : Add a destroy with a timer
+	/*
+	 *	Mark an actor for destroy
+	 *	Future upgrade : Add a destroy with a timer
+	 */ 
 	void Destroy();
 
+	/*
+	 *	Attach this actor root to another actor root.
+	 *	@param actor the parent actor
+	 */
 	void AttachToActor(Actor* actor);
+	/*
+	 *	Detach this actor root from its parent.
+	 */
 	void Detach();
 
+	/*
+	 *	Update components transform.
+	 */
 	void UpdateTransforms();
+	/*
+	 *	Called each components init behavior. Called after scene loading.
+	 */
+	void InitComponents();
+	/*
+	 *	Called each components update behavior. Called each frame.
+	 */
 	void UpdateComponents(float deltaTime);
+	/*
+	 *	Destroy each components marked for destruction.
+	 */
 	void ProcessComponentsDestroy();
 
+	/*
+	 *	Create and add a component to this actor.
+	 *	New component parent will be actor root.
+	 */
 	template<typename T, typename... Args>
 	T* AddComponent(Args&&... args)
 	{
@@ -43,6 +76,9 @@ public:
 		return comp;
 	}
 
+	/*
+	 *	Get the first component of specified type.
+	 */
 	template<typename T>
 	T* GetComponent()
 	{
@@ -54,8 +90,42 @@ public:
 		}
 		return nullptr;
 	}
+	
+	/*
+	 *	Get the first component of specified type.
+	 */
+	template<typename T>
+	const T* GetComponent() const
+	{
+		for (auto& c : components) {
+			T* casted = dynamic_cast<T*>(c);
 
+			if (casted)
+				return casted;
+		}
+		return nullptr;
+	}
+
+	/*
+	 *	Call by component destroy. Register this component inside a list of components to destroy.
+	 *	@param component the component to register
+	 */
 	void RegisterComponentsToDestroy(Component* component);
+
+	Component* GetRoot() { return root; }
+	const Component* GetRoot() const{ return root; }
+
+	Actor* GetParent();
+	const Actor* GetParent() const;
+
+	Scene* GetScene() { return scene; }
+	const Scene* GetScene() const { return scene; }
+
+	void SetScene(Scene* _scene) { scene = _scene; }
+
+	/*
+	 *	Transform getter/setter
+	 */
 
 	glm::vec2 GetWorldPosition() const;
 	float GetWorldRotate() const;
@@ -73,11 +143,6 @@ public:
 	void SetLocalRotate(float rotate);
 	void SetLocalScale(glm::vec2 scale);
 
-	Component* GetRoot() const { return root; }
-
-	Scene* GetScene() const { return scene; }
-	void SetScene(Scene* _scene) { scene = _scene; }
-
 private:
 	Component* root;
 	std::vector<Component*> components;
@@ -85,6 +150,7 @@ private:
 	// reference to the scene the actor lives in
 	Scene* scene;
 
+	// Are actor mark for destruction ?
 	bool isPendingDestroy = false;
 };
 

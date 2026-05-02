@@ -22,8 +22,14 @@ class Shader
 public:
 	Shader(const char* vShaderFile, const char* fShaderFile);
 
-	// sets the current shader as active
+	/*
+	 *	Sets this shader as active for glew.
+	 */ 
 	void Use();
+
+	/*
+	 *	Uniforms setters
+	 */
 
 	void SetFloat(const char* name, float value);
 	void SetInteger(const char* name, int value);
@@ -36,8 +42,13 @@ public:
 	void SetMatrix4(const char* name, const glm::mat4& matrix);
 
 private:
+	/*
+	 *	Compile and link the shaders.
+	 */
 	void Compile(const char* vertexSource, const char* fragmentSource);
-	// utility function for checking shader compilation/linking errors.
+	/*
+	 *	Utility function for checking shader compilation / linking errors.
+	 */ 
 	void CheckCompileErrors(unsigned int shader, std::string type);
 
 	unsigned int ID;

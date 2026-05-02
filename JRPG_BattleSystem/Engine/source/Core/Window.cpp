@@ -12,7 +12,7 @@ bool Window::CreateSDLWindow(SDLWindowConfig config)
 	config.flags |= SDL_WINDOW_OPENGL;
 
 	// Setup one SDL Window
-	window = SDL_CreateWindow(config.title, config.resolution.x, config.resolution.y, config.flags);
+	window = SDL_CreateWindow(config.title, (int)config.resolution.x, (int)config.resolution.y, config.flags);
 
 	if (!window)
 	{
@@ -63,7 +63,7 @@ bool Window::SwapBuffers()
 	return SDL_GL_SwapWindow(window);
 }
 
-void Window::OnResize(int w, int h)
+void Window::Resize(glm::vec2 size)
 {
-	glViewport(0, 0, w, h);
+	glViewport(0, 0, (int)size.x, (int)size.y);
 }

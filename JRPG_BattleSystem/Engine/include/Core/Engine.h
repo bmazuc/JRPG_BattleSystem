@@ -43,29 +43,67 @@ public:
 class Engine
 {
 public:
-	/** 
-	*		swapInterval : Set the swap interval for the current OpenGL context (0 for immediate updates, 1 for updates synchronized with the vertical retrace, -1 for adaptive vsync) 
-	**/
+	/*
+	 *	Initialize the engine.
+	 * 
+	 *	@param config engine config parameters
+	 *	@return true on success or false on failure
+	 */
 	bool Start(const EngineConfig& config);
+	
+	/*
+	 *	Launch the engine main loop
+	 */ 
 	void Run();
+
+	/*
+	 *	Clean all resources, all objects created and stop engine
+	 */
 	void Shutdown();
 
-	SceneManager* GetSceneManager() const { return sceneManager; }
+	SceneManager* GetSceneManager() { return sceneManager; }
+	const SceneManager* GetSceneManager() const { return sceneManager; }
 
 private:
+	/*
+	 *	Initialize the SDL library
+	 *	@return true on success or false on failure
+	 */
 	bool InitSDL();
+	/*
+	 *	Create a window wrapping and creating the sdl window.
+	 *	@param config sdl window creation config parameters
+	 *	@return true on success or false on failure
+	 */
 	bool CreateWindow(SDLWindowConfig config);
+	/*
+	 *	Initiliaze OpenGL + Glew + VSync (swapInterval)
+	 *	@param swapInterval Swap interval for the current OpenGL context
+	 *	@return true on success or false on failure
+	 */
 	bool InitOpenGL(int swapInterval);
 
+	/*
+	 *	Load the fallback resources
+	 */ 
 	void LoadDefaultResources();
+	/*
+	 *	Compute deltaTime between two frame.
+	 *	Clamp to avoid spikes (when using breakpoints for example)debug, breakpoints, etc.)
+	 *	@param lastTime time register at the previous frame.
+	 *	@return computation result
+	 */
 	float ComputeDeltaTime(std::chrono::high_resolution_clock::time_point& lastTime);
 
+	// Manage the different scenes (levels) of the game
 	SceneManager* sceneManager;
+	// Core rendering system base on OpenGL
 	Renderer* renderer;
+	// Wrapper for sdl window
 	Window* window;
 
 	/*
-	 * Values used for clamping deltatime(avoid spike when using breakpoints for example.
+	 * Values used for clamping deltatime.
 	 * From what I've looked into, these are the values used by Unreal.
 	 */ 
 	float minDeltaTime = 0.0005f;

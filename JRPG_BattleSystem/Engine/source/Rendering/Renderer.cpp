@@ -84,14 +84,14 @@ void Renderer::RenderWorld(Scene* scene, glm::vec2 viewportBaseResolution)
 
         glm::mat4 view = glm::mat4(1.0f);
         view = glm::scale(view, glm::vec3(camera->GetZoom(), camera->GetZoom(), 1.0f));
-        view = glm::rotate(view, glm::radians(-camera->GetRotate()), glm::vec3(0.0f, 0.0f, 1.0f));
-        view = glm::translate(view, glm::vec3(-camera->GetPosition(), 0.0f));
+        view = glm::rotate(view, glm::radians(-camera->GetWorldRotate()), glm::vec3(0.0f, 0.0f, 1.0f));
+        view = glm::translate(view, glm::vec3(-camera->GetWorldPosition(), 0.0f));
 
         glm::mat4 projection = glm::ortho(0.0f, viewportBaseResolution.x, viewportBaseResolution.y, 0.0f, -1.0f, 1.0f);
 
         for (auto it = buckets.begin(); it != buckets.end(); ++it)
         {
-            int layer = it->first;
+            int zOrder = it->first;
             std::vector<SpriteRendererComponent*>& spriteRenderers = it->second;
 
             for (SpriteRendererComponent* spriteRenderer : spriteRenderers)
@@ -140,7 +140,7 @@ void Renderer::Build(Scene* scene)
 
             if (spriteRenderer)
             {
-                buckets[spriteRenderer->GetLayer()].push_back(spriteRenderer);
+                buckets[spriteRenderer->GetZOrder()].push_back(spriteRenderer);
             }
         }
     }
@@ -219,7 +219,7 @@ void Renderer::RenderText(Text* text, glm::mat4 projection)
     glm::vec2 finalScale = scale * (text->GetSize()/ fontSize);
 
     std::string content = text->GetContent();
-    if (text->IsCenter())
+    if (text->IsCenterX())
     {
         float totalWidth = 0.0f;
 

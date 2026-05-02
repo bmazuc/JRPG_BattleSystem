@@ -38,6 +38,17 @@ void Actor::UpdateTransforms()
 	}
 }
 
+void Actor::InitComponents()
+{
+	for (Component* component : components)
+	{
+		if (component)
+		{
+			component->Init();
+		}
+	}
+}
+
 void Actor::UpdateComponents(float deltaTime)
 {
 	for (Component* component : components)
@@ -153,4 +164,14 @@ void Actor::Destroy()
 void Actor::RegisterComponentsToDestroy(Component* component)
 {
 	componentsToDestroy.push_back(component);
+}
+
+Actor* Actor::GetParent()
+{ 
+	return root->HasParent() ? root->GetParent()->GetOwner() : nullptr; 
+}
+
+const Actor* Actor::GetParent() const
+{ 
+	return root->HasParent() ? root->GetParent()->GetOwner() : nullptr; 
 }

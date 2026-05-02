@@ -15,8 +15,15 @@ class SceneManager
 {
 public:
 	~SceneManager();
+	/*
+	 *	Load the default scene.
+	 */
 	void Init();
 
+	/*
+	 *  Create and register a scene.
+	 *  @param name the key used to register the shader
+	 */
 	template<typename T, typename... Args>
 	void AddScene(std::string name, Args&&... args)
 	{
@@ -34,16 +41,40 @@ public:
 		scene->LoadAssets();
 	}
 
+	/*
+	 *	Set the scene load at engine start.
+	 *	@param name the key used to register the scene
+	 */
 	void SetDefaultScene(std::string name) { defaultScene = name; }
-	Scene* GetActiveScene() const { return activeScene; }
+	/*
+	 *	Get the scene currently loaded.
+	 */
+	Scene* GetActiveScene() { return activeScene; }
+	/*
+	 *	Get the scene currently loaded.
+	 */
+	const Scene* GetActiveScene() const { return activeScene; }
+
+	/*
+	 *	Update the active scene. Called each frame.
+	 */
 	void Update(float deltaTime);
 
 private:
+	/*
+	 *	Create the scene associated to the key.
+	 *	@param name the key used to register the scene
+	 */
 	void LoadScene(std::string name);
+	/*
+	 *	Destroy the current scene.
+	 */
 	void UnloadActiveScene();
 
+	// The scene load at engine start.
 	std::string defaultScene;
 
+	// The scene currently loaded
 	Scene* activeScene;
 	std::unordered_map<std::string, Scene*> scenes;
 };

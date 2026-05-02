@@ -25,15 +25,27 @@ struct Glyph
 class Font
 {
 public:
-    // size = pixel font size
+    /*
+     *   Load a font and generate ASCII glyphs.
+     *   @param ft handle to a FreeType library instance
+     *   @param file fontFile
+     *   @param _size pixel font size
+     */
     void Load(FT_Library ft, const char* file, unsigned int _size);
 
+    /*
+     *  Return the glyph corresponding to the character.
+     */
     Glyph GetGlyph(char c) const { return glyphs.at(c); }
+    /*
+     *  Return the pixel font size.
+     */
     unsigned int GetSize() const { return size; }
 
 private:
+    // List of all generated ASCII glyphs.
     std::map<char, Glyph> glyphs;
-
+    // pixel font size
     unsigned int size;
 };
 

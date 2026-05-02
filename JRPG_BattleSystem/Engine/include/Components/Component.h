@@ -14,11 +14,30 @@ class Component
 public:
 	virtual ~Component();
 
+	/*
+	 *	Behavior called after scene loading
+	 */
+	virtual void Init() {}
+
+	/*
+	 *	Behavior called each frame
+	 */
 	virtual void Update(float deltaTime) {}
+	/*
+	 *	If marked dirty, update this component transform.
+	 *	Called UpdateTransform() on children.
+	 */
 	void UpdateTransform();
 
-	// Future upgrade : Add a destroy with a timer
+	/*
+	 *	Mark a component for destroy
+	 *	Future upgrade : Add a destroy with a timer
+	 */
 	void Destroy();
+
+	/*
+	 *	Transform getter/setter
+	 */
 
 	Transform2D GetTransform() const { return transform; }
 
@@ -38,27 +57,36 @@ public:
 	void SetLocalRotate(float rotate);
 	void SetLocalScale(glm::vec2 scale);
 
-	Actor* GetOwner() const { return owner; }
+	Actor* GetOwner() { return owner; }
+	const Actor* GetOwner() const { return owner; }
 	void SetOwner(Actor* _owner) { owner = _owner; }
 
+	Component* GetParent() { return parent; }
+	const Component* GetParent() const { return parent; }
 	void SetParent(Component* _parent);
+	// Does this component have a parent ?
 	bool HasParent() const { return parent; }
 
 private:
 	void AddChild(Component* child);
 	void RemoveChild(Component* child);
+	// Is this component an ancestor of the specified component ?
 	bool IsAncestorOf(Component* component);
 	Component* GetRoot();
 
+	// Mark this component as dirty
 	void SetDirty();
 
 	Transform2D transform;
 
+	// The actor owning this component.
 	Actor* owner;
 
 	Component* parent;
 	std::vector<Component*> children;
+	// Should this component update its transform ?
 	bool isDirty = true;
+	// Are component marked for destruction ?
 	bool isPendingDestroy = false;
 };
 

@@ -23,8 +23,12 @@ enum class TextScaleMode
 class Text : public UIElement
 {
 public:
-    Text(std::string fontName, bool isCenter = true, glm::vec3 _color = glm::vec3(1, 1, 1));
-
+    /*
+     * @param fontName which font this text use
+     * @param isCenterX does this text start at position or is center in X ?
+     * @param color text color
+     */
+    Text(std::string fontName, bool isCenterX = true, glm::vec3 _color = glm::vec3(1, 1, 1));
 
     void SetFont(std::string fontName);
     void SetContent(std::string newContent) { content = newContent; }
@@ -35,14 +39,15 @@ public:
      * size, not text size.
      */
     void SetSize(float newScale) { size = newScale; }
-    void SetIsCenter(bool newIsCenter) { isCenter = newIsCenter; }
+    void SetIsCenterX(bool newIsCenterX) { isCenterX = newIsCenterX; }
     void SetScaleMode(TextScaleMode newMode) { scaleMode = newMode; }
 
-    Font* GetFont() const { return font; }
+    Font* GetFont() { return font; }
+    const Font* GetFont() const { return font; }
     const std::string& GetContent() const { return content; }
     glm::vec3 GetColor() const { return color; }
     float GetSize() const { return size; }
-    bool IsCenter() const { return isCenter; }
+    bool IsCenterX() const { return isCenterX; }
     TextScaleMode GetScaleMode() { return scaleMode; }
 
 private:
@@ -54,7 +59,8 @@ private:
     // Add a scale mode to allow an user to do non uniform scaling for text
     TextScaleMode scaleMode = TextScaleMode::Uniform;
 
-    bool isCenter;
+    // Does this text start at position or is center in X ?
+    bool isCenterX;
 };
 
 #endif // __TEXT_H_INCLUDED__

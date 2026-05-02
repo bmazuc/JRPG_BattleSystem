@@ -1,8 +1,8 @@
 #include "ChangeSceneTimer.h"
 #include "Scene/Scene.h"
 
-ChangeSceneTimer::ChangeSceneTimer(std::string fontName, bool isCenter, glm::vec3 _color)
-    : Text(fontName, isCenter, _color)
+ChangeSceneTimer::ChangeSceneTimer(std::string fontName, bool isCenterX, glm::vec3 _color)
+    : Text(fontName, isCenterX, _color)
 {
 
 }

@@ -210,6 +210,18 @@ UIElement* UIElement::GetRoot()
 	return current;
 }
 
+const UIElement* UIElement::GetRoot() const
+{
+	const UIElement* current = this;
+
+	while (current->parent)
+	{
+		current = current->parent;
+	}
+
+	return current;
+}
+
 void UIElement::SetDirty()
 {
 	isDirty = true;

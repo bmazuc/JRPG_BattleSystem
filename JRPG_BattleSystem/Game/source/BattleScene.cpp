@@ -29,19 +29,19 @@ void BattleScene::CreateScene()
     enemy->SetSpeed(50.0f);
     SpriteRendererComponent* enemySprite = enemy->GetSpriteRenderer();
     enemySprite->SetSize(glm::vec2(300, 306));
-    enemySprite->SetLayer(1);
+    enemySprite->SetZOrder(1);
 
     Actor* followEnemy = CreateActor<Actor>();
     SpriteRendererComponent* followEnemySpriteRenderer = followEnemy->AddComponent<SpriteRendererComponent>("goblin", "default");
     followEnemySpriteRenderer->SetSize(glm::vec2(160, 120));
-    followEnemySpriteRenderer->SetLayer(2);
+    followEnemySpriteRenderer->SetZOrder(2);
     followEnemy->SetWorldPosition(glm::vec2(320, 240));
     followEnemy->AttachToActor(enemy);
 
     Actor* followEnemy2 = CreateActor<Actor>();
     SpriteRendererComponent* followEnemySpriteRenderer2 = followEnemy2->AddComponent<SpriteRendererComponent>("goblin", "default");
     followEnemySpriteRenderer2->SetSize(glm::vec2(80, 60));
-    followEnemySpriteRenderer2->SetLayer(3);
+    followEnemySpriteRenderer2->SetZOrder(3);
     followEnemy2->SetWorldPosition(glm::vec2(320, 240));
     followEnemy2->AttachToActor(followEnemy);
 

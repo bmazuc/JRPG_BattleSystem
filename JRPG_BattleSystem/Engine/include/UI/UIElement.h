@@ -14,16 +14,38 @@ class UIElement
 public:
 	virtual ~UIElement();
 
+	/*
+	 *	Behavior called after scene loading
+	 */
 	virtual void Init() {}
+	/*
+	 *	Behavior called each frame
+	 */
 	virtual void Update(float deltaTime) {}
 
+	/*
+	 *	If marked dirty, update this element transform.
+	 *	Called UpdateTransform() on children.
+	 */
 	void UpdateTransform();
+
+	/*
+	 *	Mark a component for destroy
+	 *	Future upgrade : Add a destroy with a timer
+	 */
+	void Destroy();
 
 	void AddChild(UIElement* child);
 	void RemoveChild(UIElement* child);
 
+	UIElement* GetParent() { return parent; }
+	const UIElement* GetParent() const { return parent; }
 	void SetParent(UIElement* _parent);
 	bool HasParent() const { return parent; }
+
+	/*
+	 *	Transform getter/setter
+	 */
 
 	glm::vec2 GetWorldPosition() const;
 	float GetWorldRotate() const;
@@ -44,23 +66,28 @@ public:
 	glm::mat4 GetWorld() { return transform.world; }
 
 	UIElement* GetRoot();
+	const UIElement* GetRoot() const;
 
-	Scene* GetScene() const { return scene; }
+	Scene* GetScene() { return scene; }
+	const Scene* GetScene() const { return scene; }
 	void SetScene(Scene* _scene) { scene = _scene; }
 
-	void Destroy();
-
 private:
+	// Mark this element as dirty
 	void SetDirty();
+	// Is this element an ancestor of the specified element ?
 	bool IsAncestorOf(UIElement* element);
 
 	Transform2D transform;
 
+	// reference to the scene the element lives in
 	Scene* scene;
 	UIElement* parent = nullptr;
 	std::vector<UIElement*> children;
 
+	// Should this element update its transform ?
 	bool isDirty = true;
+	// Are element mark for destruction ?
 	bool isPendingDestroy = false;
 };
 

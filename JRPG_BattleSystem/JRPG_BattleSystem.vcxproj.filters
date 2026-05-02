@@ -22,9 +22,6 @@
     <Filter Include="Source Files\Game">
       <UniqueIdentifier>{f02f5877-5126-4e0e-b5b2-53d45284621e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Game">
-      <UniqueIdentifier>{f7686e8c-e675-4113-abf3-22c2c1feeee7}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Engine\Core">
       <UniqueIdentifier>{13c9ba09-0b30-4eab-a3b8-63be1d30cb82}</UniqueIdentifier>
     </Filter>
@@ -81,6 +78,9 @@
     </Filter>
     <Filter Include="Source Files\Engine\Rendering">
       <UniqueIdentifier>{bfdf0559-6ba5-40a3-934e-41e11f8aaa1c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game">
+      <UniqueIdentifier>{f7686e8c-e675-4113-abf3-22c2c1feeee7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
