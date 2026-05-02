@@ -1,4 +1,4 @@
-#include "Image.h"
+#include "UI/Image.h"
 #include "Core/Resource/ResourceManager.h"
 #include "Rendering/Material.h"
 

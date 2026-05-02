@@ -2,8 +2,8 @@
 //
 
 #include "Core/Engine.h"
-#include "BattleScene.h"
-#include "MainMenuScene.h"
+#include "BattleScene/BattleScene.h"
+#include "MainMenu/MainMenuScene.h"
 
 #ifdef _DEBUG
 #include <crtdbg.h>

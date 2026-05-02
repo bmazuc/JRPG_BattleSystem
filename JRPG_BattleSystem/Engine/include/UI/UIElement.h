@@ -21,7 +21,7 @@ public:
 	/*
 	 *	Behavior called each frame
 	 */
-	virtual void Update(float deltaTime) {}
+	virtual void UpdateInputs(float deltaTime) {}
 
 	/*
 	 *	If marked dirty, update this element transform.
@@ -33,7 +33,7 @@ public:
 	 *	Mark a component for destroy
 	 *	Future upgrade : Add a destroy with a timer
 	 */
-	void Destroy();
+	void Destroy(bool destroyChildren = false);
 
 	void AddChild(UIElement* child);
 	void RemoveChild(UIElement* child);

@@ -7,12 +7,13 @@ void SceneManager::Init()
 	LoadScene(defaultScene);
 }
 
-void SceneManager::Update(float deltaTime)
+void SceneManager::UpdateInputs(float deltaTime, InputManager* inputManager)
 {
 	if (activeScene)
 	{
 		activeScene->UpdateTransforms();
-		activeScene->Update(deltaTime);
+		activeScene->UpdateInputs(inputManager);
+		activeScene->UpdateInputs(deltaTime);
 		activeScene->ProcessDestroy();
 
 		if (activeScene->HasRequest())

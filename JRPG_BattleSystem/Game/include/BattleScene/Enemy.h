@@ -11,19 +11,26 @@ class Enemy : public Actor
 {
 public:
 	Enemy(std::string textureName, std::string shaderName);
-	void Update(float deltaTime) override;
+	void UpdateInputs(float deltaTime) override;
+	void SetupInputs(PlayerController* _playerController) override;
+
+	void OnClick();
 
 	SpriteRendererComponent* GetSpriteRenderer() { return spriteRenderer; }
 
 	void SetSpeed(float speed) { enemySpeed = speed; }
 
 private:
+	bool IsHovered(glm::vec2 mousePos);
+
 	SpriteRendererComponent* spriteRenderer;
+
+	PlayerController* playerController;
+
+	bool isMoving = false;
 
 	float enemyMoveDirection = 1.0f;
 	float enemySpeed;
-
-	float timer = 0.0f;
 };
 
 #endif // __ENEMY_H_INCLUDED__

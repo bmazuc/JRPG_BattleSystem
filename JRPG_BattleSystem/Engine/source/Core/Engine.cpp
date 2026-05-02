@@ -3,6 +3,7 @@
 #include "Rendering/Renderer.h"
 #include "Scene/SceneManager.h"
 #include "Core/Resource/ResourceManager.h"
+#include "Core/Inputs/InputManager.h"
 
 #include <glm/vec2.hpp>
 #include <glm/vec3.hpp>
@@ -17,6 +18,7 @@ bool Engine::Start(const EngineConfig& config)
         LoadDefaultResources();
         sceneManager = new SceneManager();
         renderer = new Renderer();
+        inputManager = new InputManager();
         return true;
     }
 
@@ -30,23 +32,18 @@ void Engine::Run()
 
     std::chrono::steady_clock::time_point lastTime = std::chrono::high_resolution_clock::now();
 
-    SDL_Event event;
-    bool shouldExit = false;
-    while (!shouldExit)
+    while (!inputManager->IsQuitRequested())
     {
-        SDL_PollEvent(&event);
-        if (event.type == SDL_EVENT_QUIT)
-            shouldExit = true;
-        else if (event.type == SDL_EVENT_WINDOW_RESIZED)
+        inputManager->UpdateInputs();
+
+        if (inputManager->IsWindowResized())
         {
-            int w = event.window.data1;
-            int h = event.window.data2;
-            window->Resize(glm::vec2(w, h));
+            window->Resize(inputManager->GetWindowSize());
         }
 
         float deltaTime = ComputeDeltaTime(lastTime);
-
-        sceneManager->Update(deltaTime);
+   
+        sceneManager->UpdateInputs(deltaTime, inputManager);
 
         if (Scene* scene = sceneManager->GetActiveScene())
         {
@@ -61,6 +58,9 @@ void Engine::Run()
 void Engine::Shutdown()
 {
     ResourceManager::Clear();
+
+    delete inputManager;
+    inputManager = nullptr;
 
     delete sceneManager;
     sceneManager = nullptr;

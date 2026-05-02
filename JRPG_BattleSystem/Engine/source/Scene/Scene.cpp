@@ -3,6 +3,9 @@
 #include "Components/Camera/CameraComponent.h"
 #include "Components/Rendering/SpriteRendererComponent.h"
 #include "Rendering/Material.h"
+#include "Scene/PlayerController.h"
+#include "Core/Inputs/InputManager.h"
+#include "UI/Button.h"
 
 #include <glm/ext/matrix_transform.hpp>
 #include <glm/ext/matrix_clip_space.hpp>
@@ -13,12 +16,15 @@
 
 void Scene::Init()
 {
+	playerController = new PlayerController();
+
 	for (Actor* actor : actors)
 	{
 		if (actor)
 		{
 			actor->Init();
 			actor->InitComponents();
+			actor->SetupInputs(playerController);
 		}
 	}
 
@@ -56,13 +62,13 @@ void Scene::UpdateTransforms()
 	}
 }
 
-void Scene::Update(float deltaTime)
+void Scene::UpdateInputs(float deltaTime)
 {
 	for (Actor* actor : actors)
 	{
 		if (actor)
 		{
-			actor->Update(deltaTime);
+			actor->UpdateInputs(deltaTime);
 			actor->UpdateComponents(deltaTime);
 		}
 	}
@@ -71,9 +77,34 @@ void Scene::Update(float deltaTime)
 	{
 		if (uiElement)
 		{
-			uiElement->Update(deltaTime);
+			uiElement->UpdateInputs(deltaTime);
 		}
 	}
+}
+
+void Scene::UpdateInputs(InputManager* inputManager)
+{
+	glm::vec2 mouse = inputManager->GetMousePosition();
+
+	for (UIElement* element : uiElements)
+	{
+		if (Button* button = dynamic_cast<Button*>(element))
+		{
+			bool hover = button->IsPointInside(mouse);
+
+			if (hover)
+			{
+				button->OnHover();
+
+				if (inputManager->IsMousePressed(SDL_BUTTON_LEFT))
+				{
+					button->OnClicked();
+				}
+			}
+		}
+	}
+
+	playerController->UpdateInputs(inputManager);
 }
 
 void Scene::ProcessDestroy()
@@ -127,6 +158,9 @@ void Scene::DestroyScene()
 	}
 
 	uiElements.clear();
+
+	delete playerController;
+	playerController = nullptr;
 }
 
 void Scene::RegisterToDestroy(Actor* actor)
@@ -143,4 +177,17 @@ void Scene::RequestSceneChange(std::string sceneName)
 {
 	pendingRequest.type = SceneRequestType::ChangeScene;
 	pendingRequest.newSceneName = sceneName;
+}
+
+glm::vec2 Scene::ScreenToWorld(glm::vec2 screenPos)
+{
+	glm::vec2 worldPos = screenPos;
+
+	if (activeCamera)
+	{
+		worldPos -= activeCamera->GetWorldPosition();
+		worldPos /= activeCamera->GetZoom();
+	}
+
+	return worldPos;
 }

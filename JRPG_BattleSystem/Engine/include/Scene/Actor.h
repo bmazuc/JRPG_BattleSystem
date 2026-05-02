@@ -6,6 +6,7 @@
 
 class Component;
 class Scene;
+class PlayerController;
 
 /*
  *	Base class for anything that has a position, rotation, and scale in the game world
@@ -23,13 +24,17 @@ public:
 	/*
 	 *	Behavior called each frame
 	 */
-	virtual void Update(float deltaTime) {}
-
+	virtual void UpdateInputs(float deltaTime) {}
 	/*
 	 *	Mark an actor for destroy
 	 *	Future upgrade : Add a destroy with a timer
 	 */ 
-	void Destroy();
+	void Destroy(bool destroyChildren = false);
+
+	/*
+	 *	Call after scene loading. Allow to link inputs and behaviour for this actor.
+	 */
+	virtual void SetupInputs(PlayerController* playerController) {}
 
 	/*
 	 *	Attach this actor root to another actor root.
@@ -143,12 +148,14 @@ public:
 	void SetLocalRotate(float rotate);
 	void SetLocalScale(glm::vec2 scale);
 
+protected:
+	// reference to the scene the actor lives in
+	Scene* scene;
+
 private:
 	Component* root;
 	std::vector<Component*> components;
 	std::vector<Component*> componentsToDestroy;
-	// reference to the scene the actor lives in
-	Scene* scene;
 
 	// Are actor mark for destruction ?
 	bool isPendingDestroy = false;

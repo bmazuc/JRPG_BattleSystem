@@ -22,7 +22,7 @@ public:
 	/*
 	 *	Behavior called each frame
 	 */
-	virtual void Update(float deltaTime) {}
+	virtual void UpdateInputs(float deltaTime) {}
 	/*
 	 *	If marked dirty, update this component transform.
 	 *	Called UpdateTransform() on children.
@@ -66,6 +66,8 @@ public:
 	void SetParent(Component* _parent);
 	// Does this component have a parent ?
 	bool HasParent() const { return parent; }
+
+	const std::vector<Component*> GetChildren() const { return children; }
 
 private:
 	void AddChild(Component* child);

@@ -9,6 +9,8 @@ class CameraComponent;
 
 class Shader;
 class Texture;
+class PlayerController;
+class InputManager;
 
 /*
  *	Request type that a scene can send.
@@ -59,7 +61,11 @@ public:
 	/*
 	 *	Update all actors, UIElements, components.
 	 */
-	void Update(float deltaTime);
+	void UpdateInputs(float deltaTime);
+	/*
+	*	Update player controller and UI inputs
+	*/
+	void UpdateInputs(InputManager* inputManager);
 	/*
 	 *	Process the destruction of actors, components and UI elements marked for destruction.
 	 */
@@ -126,6 +132,13 @@ public:
 	// Does the scene request a scene change ?
 	bool HasRequest() const { return pendingRequest.type == SceneRequestType::ChangeScene; }
 
+	/* 
+	 *	Convert a screen position to a world position
+	 *	@param screenPos screen position to convert
+	 *	@return converted screen position in world position
+	 */ 
+	glm::vec2 ScreenToWorld(glm::vec2 screenPos);
+
 private:
 	// All actors living in the scene
 	std::vector<Actor*> actors;
@@ -135,6 +148,8 @@ private:
 	// Camera used to compute the rendering view matric
 	CameraComponent* activeCamera;
 
+	// The player controller associated to this scene
+	PlayerController* playerController;
 	// All UIElements living in the scene
 	std::vector<UIElement*> uiElements;
 	// All UIElements marked for destruction

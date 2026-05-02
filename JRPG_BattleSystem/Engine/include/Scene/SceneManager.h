@@ -6,6 +6,8 @@
 #include <string>
 #include <SDL3/SDL.h>
 
+class InputManager;
+
 /*
  *	Manage the differents scenes (levels) of the game.
  *	Store the scenes, load and unload them, handle the scene
@@ -58,7 +60,7 @@ public:
 	/*
 	 *	Update the active scene. Called each frame.
 	 */
-	void Update(float deltaTime);
+	void UpdateInputs(float deltaTime, InputManager* inputManager);
 
 private:
 	/*

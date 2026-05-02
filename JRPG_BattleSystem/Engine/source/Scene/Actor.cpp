@@ -55,7 +55,7 @@ void Actor::UpdateComponents(float deltaTime)
 	{
 		if (component)
 		{
-			component->Update(deltaTime);
+			component->UpdateInputs(deltaTime);
 		}
 	}
 }
@@ -152,12 +152,24 @@ void Actor::SetWorldScale(glm::vec2 scale)
 	}
 }
 
-void Actor::Destroy()
+void Actor::Destroy(bool destroyChildren)
 {
 	if (!isPendingDestroy)
 	{
 		isPendingDestroy = true;
 		scene->RegisterToDestroy(this);
+
+		if (destroyChildren)
+		{
+			std::vector<Component*> children = root->GetChildren();
+			for (Component* child : children)
+			{
+				if (child->GetOwner() != this)
+				{
+					child->GetOwner()->Destroy(true);
+				}
+			}
+		}
 	}
 }
 

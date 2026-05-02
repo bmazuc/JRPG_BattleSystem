@@ -240,7 +240,7 @@ UIElement::~UIElement()
 	}
 }
 
-void UIElement::Destroy()
+void UIElement::Destroy(bool destroyChildren)
 {
 	if (!isPendingDestroy)
 	{
@@ -248,6 +248,14 @@ void UIElement::Destroy()
 		if (scene)
 		{
 			scene->RegisterToDestroy(this);
+		}
+
+		if (destroyChildren)
+		{
+			for (UIElement* child : children)
+			{
+				child->Destroy(true);
+			}
 		}
 	}
 }

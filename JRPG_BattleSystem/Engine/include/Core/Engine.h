@@ -10,6 +10,7 @@
 #include <chrono>
 
 class Renderer;
+class InputManager;
 
 /*
  *	Contains engine creation parameters.
@@ -97,6 +98,7 @@ private:
 
 	// Manage the different scenes (levels) of the game
 	SceneManager* sceneManager;
+	InputManager* inputManager;
 	// Core rendering system base on OpenGL
 	Renderer* renderer;
 	// Wrapper for sdl window
