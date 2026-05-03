@@ -1,12 +1,13 @@
 #ifndef __SCENE_H_INCLUDED__
 #define __SCENE_H_INCLUDED__
 
-class CameraComponent;
-
-#include "Actor.h"
-#include "UI/UIElement.h"
 #include <string>
+#include <vector>
+#include <glm/vec2.hpp>
 
+class CameraComponent;
+class Actor;
+class UIElement;
 class Shader;
 class Texture;
 class PlayerController;
@@ -44,15 +45,21 @@ public:
 	 *	Should be override and fill with all actors, components and UI elements creation and setup.
 	 */
 	virtual void CreateScene() {}
+
+	/*
+	 *	Call CreateScene then set isLoaded to true.
+	 */
+	void Load();
+
 	/*
 	 *	Destroy all actors and UIElements living in the scene.
 	 */
-	void DestroyScene();
+	void Unload();
 	
 	/*
 	 *	Initialize all actors, UIElements, components.
 	 */
-	void Init();
+	void BeginPlay();
 
 	/*
 	 *	Update the transforms of all UIElements and components.
@@ -91,9 +98,7 @@ public:
 		static_assert(std::is_base_of<Actor, T>::value, "T must inherit Actor");
 
 		T* actor = new T(std::forward<Args>(args)...);
-		actor->SetScene(this);
-		actors.push_back(actor);
-
+		InternalAddActor(actor);
 		return actor;
 	}
 
@@ -106,9 +111,7 @@ public:
 		static_assert(std::is_base_of<UIElement, T>::value, "T must inherit UIElement");
 
 		T* element = new T(std::forward<Args>(args)...);
-		element->SetScene(this);
-		uiElements.push_back(element);
-
+		InternalAddUIElement(element);
 		return element;
 	}
 
@@ -139,7 +142,21 @@ public:
 	 */ 
 	glm::vec2 ScreenToWorld(glm::vec2 screenPos);
 
+	// Are the scene already loaded ?
+	bool IsLoaded() const { return isLoaded; }
+
 private:
+	/*
+	 *	Add the actor to the list of actors and call its begin play if scene is already loaded.
+	 *	Also reduce the amount of code in .h
+	 */
+	void InternalAddActor(Actor* actor);
+	/*
+	 *	Add the UI element to the list of UI elements and call its begin play if scene is already loaded.
+	 *	Also reduce the amount of code in .h
+	 */
+	void InternalAddUIElement(UIElement* element);
+
 	// All actors living in the scene
 	std::vector<Actor*> actors;
 	// All actors marked for destruction
@@ -154,6 +171,9 @@ private:
 	std::vector<UIElement*> uiElements;
 	// All UIElements marked for destruction
 	std::vector<UIElement*> uiElementsToDestroy;
+
+	// Are the scene already loaded ?
+	bool isLoaded = false;
 
 	SceneRequest pendingRequest;
 };

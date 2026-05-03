@@ -38,13 +38,13 @@ void Actor::UpdateTransforms()
 	}
 }
 
-void Actor::InitComponents()
+void Actor::ComponentsBeginPlay()
 {
 	for (Component* component : components)
 	{
 		if (component)
 		{
-			component->Init();
+			component->BeginPlay();
 		}
 	}
 }
@@ -66,6 +66,7 @@ void Actor::ProcessComponentsDestroy()
 	{
 		if (componentToDestroy)
 		{
+			componentToDestroy->DetachChidren();
 			components.erase(std::remove(components.begin(), components.end(), componentToDestroy), components.end());
 			delete componentToDestroy;
 		}
@@ -186,4 +187,17 @@ Actor* Actor::GetParent()
 const Actor* Actor::GetParent() const
 { 
 	return root->HasParent() ? root->GetParent()->GetOwner() : nullptr; 
+}
+
+void Actor::InternalAddComponent(Component* component)
+{
+	component->SetOwner(this);
+	component->SetParent(root);
+
+	components.emplace_back(component);
+
+	if (scene && scene->IsLoaded())
+	{
+		component->BeginPlay();
+	}
 }

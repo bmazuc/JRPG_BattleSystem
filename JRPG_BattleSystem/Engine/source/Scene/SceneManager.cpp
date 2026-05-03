@@ -33,8 +33,8 @@ void SceneManager::LoadScene(std::string name)
 		activeScene = it->second;
 		if (activeScene)
 		{
-			activeScene->CreateScene();
-			activeScene->Init();
+			activeScene->Load();
+			activeScene->BeginPlay();
 		}
 		return;
 	}
@@ -46,7 +46,7 @@ void SceneManager::UnloadActiveScene()
 {
 	if (activeScene)
 	{
-		activeScene->DestroyScene();
+		activeScene->Unload();
 		activeScene = nullptr;
 	}
 }

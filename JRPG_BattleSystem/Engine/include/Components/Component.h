@@ -12,12 +12,12 @@ class Actor;
 class Component
 {
 public:
-	virtual ~Component();
+	virtual ~Component() {};
 
 	/*
 	 *	Behavior called after scene loading
 	 */
-	virtual void Init() {}
+	virtual void BeginPlay() {}
 
 	/*
 	 *	Behavior called each frame
@@ -68,6 +68,9 @@ public:
 	bool HasParent() const { return parent; }
 
 	const std::vector<Component*> GetChildren() const { return children; }
+
+	// Detach all the children of this component from him.
+	void DetachChidren();
 
 private:
 	void AddChild(Component* child);

@@ -20,7 +20,7 @@ public:
 	/*
 	 *	Behavior called after scene loading
 	 */
-	virtual void Init() {}
+	virtual void BeginPlay() {}
 	/*
 	 *	Behavior called each frame
 	 */
@@ -53,7 +53,7 @@ public:
 	/*
 	 *	Called each components init behavior. Called after scene loading.
 	 */
-	void InitComponents();
+	void ComponentsBeginPlay();
 	/*
 	 *	Called each components update behavior. Called each frame.
 	 */
@@ -72,13 +72,9 @@ public:
 	{
 		static_assert(std::is_base_of<Component, T>::value, "T must inherit Component");
 
-		T* comp = new T(std::forward<Args>(args)...);
-		comp->SetOwner(this);
-		comp->SetParent(root);
-
-		components.emplace_back(comp);
-
-		return comp;
+		T* component = new T(std::forward<Args>(args)...);
+		InternalAddComponent(component);
+		return component;
 	}
 
 	/*
@@ -153,6 +149,12 @@ protected:
 	Scene* scene;
 
 private:
+	/*
+	 *	Add the component to the list of components and call its begin play if scene is already loaded.
+	 *	Also reduce the amount of code in .h
+	 */
+	void InternalAddComponent(Component* component);
+
 	Component* root;
 	std::vector<Component*> components;
 	std::vector<Component*> componentsToDestroy;

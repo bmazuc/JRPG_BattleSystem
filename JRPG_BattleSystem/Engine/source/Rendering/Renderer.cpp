@@ -1,5 +1,7 @@
 #include "Rendering/Renderer.h"
 #include "Scene/Scene.h"
+#include "Scene/Actor.h"
+#include "UI/UIElement.h"
 #include "Components/Camera/CameraComponent.h"
 
 #include <GL/glew.h>

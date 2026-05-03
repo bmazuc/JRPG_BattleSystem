@@ -220,11 +220,11 @@ void Component::SetDirty()
 	}
 }
 
-Component::~Component()
+void Component::DetachChidren()
 {
 	for (Component* child : children)
 	{
-		child->SetParent(parent);
+		child->SetParent(nullptr);
 	}
 }
 

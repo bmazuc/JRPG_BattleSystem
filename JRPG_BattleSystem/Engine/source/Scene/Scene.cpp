@@ -13,8 +13,16 @@
 
 #include "Graphics/Texture.h"
 #include "Rendering/Shader.h"
+#include "Scene/Actor.h"
+#include "UI/UIElement.h"
 
-void Scene::Init()
+void Scene::Load()
+{
+	CreateScene();
+	isLoaded = true;
+}
+
+void Scene::BeginPlay()
 {
 	playerController = new PlayerController();
 
@@ -22,8 +30,8 @@ void Scene::Init()
 	{
 		if (actor)
 		{
-			actor->Init();
-			actor->InitComponents();
+			actor->BeginPlay();
+			actor->ComponentsBeginPlay();
 			actor->SetupInputs(playerController);
 		}
 	}
@@ -32,7 +40,7 @@ void Scene::Init()
 	{
 		if (uiElement)
 		{
-			uiElement->Init();
+			uiElement->BeginPlay();
 		}
 	}
 }
@@ -113,6 +121,8 @@ void Scene::ProcessDestroy()
 	{
 		if (actorToDestroy)
 		{
+			actorToDestroy->GetRoot()->DetachChidren();
+
 			actors.erase(std::remove(actors.begin(), actors.end(), actorToDestroy), actors.end());
 			delete actorToDestroy;
 		}
@@ -140,7 +150,7 @@ void Scene::ProcessDestroy()
 	uiElementsToDestroy.clear();
 }
 
-void Scene::DestroyScene()
+void Scene::Unload()
 {
 	pendingRequest.type = SceneRequestType::None;
 	pendingRequest.newSceneName = "";
@@ -161,6 +171,8 @@ void Scene::DestroyScene()
 
 	delete playerController;
 	playerController = nullptr;
+
+	isLoaded = false;
 }
 
 void Scene::RegisterToDestroy(Actor* actor)
@@ -190,4 +202,26 @@ glm::vec2 Scene::ScreenToWorld(glm::vec2 screenPos)
 	}
 
 	return worldPos;
+}
+
+void Scene::InternalAddActor(Actor* actor)
+{
+	actor->SetScene(this);
+	actors.push_back(actor);
+
+	if (isLoaded)
+	{
+		actor->BeginPlay();
+	}
+}
+
+void Scene::InternalAddUIElement(UIElement* element)
+{
+	element->SetScene(this);
+	uiElements.push_back(element);
+
+	if (isLoaded)
+	{
+		element->BeginPlay();
+	}
 }

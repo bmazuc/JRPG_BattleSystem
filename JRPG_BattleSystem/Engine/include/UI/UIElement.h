@@ -17,7 +17,7 @@ public:
 	/*
 	 *	Behavior called after scene loading
 	 */
-	virtual void Init() {}
+	virtual void BeginPlay() {}
 	/*
 	 *	Behavior called each frame
 	 */

@@ -59,10 +59,10 @@ void BattleScene::CreateScene()
     SpriteRendererComponent* followEnemySpriteRenderer2 = followEnemy2->AddComponent<SpriteRendererComponent>("goblin", "default");
     followEnemySpriteRenderer2->SetSize(glm::vec2(150, 153));
     followEnemySpriteRenderer2->SetZOrder(3);
-    //followEnemy2->AttachToActor(enemy);
-    //followEnemy2->SetLocalPosition(glm::vec2(-165, 0));
-    followEnemy2->AttachToActor(followEnemy);
-    followEnemy2->SetLocalPosition(glm::vec2(-320, 0));
+    followEnemy2->AttachToActor(enemy);
+    followEnemy2->SetLocalPosition(glm::vec2(-165, 0));
+    //followEnemy2->AttachToActor(followEnemy);
+    //followEnemy2->SetLocalPosition(glm::vec2(-320, 0));
 
 
     Actor* cameraObject = CreateActor<Actor>();

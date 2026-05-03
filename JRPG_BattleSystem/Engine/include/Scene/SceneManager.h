@@ -5,6 +5,7 @@
 
 #include <string>
 #include <SDL3/SDL.h>
+#include <unordered_map>
 
 class InputManager;
 
