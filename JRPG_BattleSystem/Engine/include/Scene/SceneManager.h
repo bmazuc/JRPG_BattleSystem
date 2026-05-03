@@ -61,7 +61,7 @@ public:
 	/*
 	 *	Update the active scene. Called each frame.
 	 */
-	void UpdateInputs(float deltaTime, InputManager* inputManager);
+	void Update(float deltaTime, InputManager* inputManager);
 
 private:
 	/*

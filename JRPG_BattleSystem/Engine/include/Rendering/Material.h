@@ -19,6 +19,8 @@ public:
 	Shader* GetShader() const { return shader; }
 	Texture* GetTexture() const { return texture; }
 
+	void SetColor(glm::vec3 _color) { color = _color; }
+
 private:
 	glm::vec3 color = glm::vec3(1, 1, 1);
 

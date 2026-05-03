@@ -55,7 +55,7 @@ void Actor::UpdateComponents(float deltaTime)
 	{
 		if (component)
 		{
-			component->UpdateInputs(deltaTime);
+			component->Update(deltaTime);
 		}
 	}
 }

@@ -3,15 +3,17 @@
 
 class InputManager;
 
-#include <functional>
+#include "Core/Delegate/Delegate.h"
 #include <glm/vec2.hpp>
 
 class PlayerController
 {
 public:
+	~PlayerController();
+
 	void UpdateInputs(const InputManager* inputManager);
 
-	std::function<void()> OnClick;
+	Delegate<void> OnClick;
 
 	glm::vec2 GetMousePosition() const { return mousePos; }
 

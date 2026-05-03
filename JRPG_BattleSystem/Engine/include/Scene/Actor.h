@@ -24,7 +24,7 @@ public:
 	/*
 	 *	Behavior called each frame
 	 */
-	virtual void UpdateInputs(float deltaTime) {}
+	virtual void Update(float deltaTime) {}
 	/*
 	 *	Mark an actor for destroy
 	 *	Future upgrade : Add a destroy with a timer

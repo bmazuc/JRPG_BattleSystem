@@ -1,22 +1,30 @@
 #include "BattleScene/BattleScene.h"
 #include "Components/Rendering/SpriteRendererComponent.h"
 #include "BattleScene/Enemy.h"
+#include "battleScene/RotatingEnemy.h"
 #include "Components/Camera/CameraComponent.h"
 #include "Core/Resource/ResourceManager.h"
 #include "UI/Text.h"
 #include "BattleScene/ReturnButton.h"
 #include "BattleScene/CrossButton.h"
+#include "Rendering/Material.h"
 
 void BattleScene::CreateScene()
 {
     Text* goblinText = CreateUIElement<Text>("default");
     goblinText->SetWorldPosition(glm::vec2(320, 50));
-    goblinText->SetContent("Click on the middle goblin to make them move.");
+    goblinText->SetContent("Click on the middle goblin to make them move or stop.");
     goblinText->SetColor(glm::vec3(1, 0, 0));
     goblinText->SetSize(24);
 
+    Text* goblinText2 = CreateUIElement<Text>("default");
+    goblinText2->SetWorldPosition(glm::vec2(320, 75));
+    goblinText2->SetContent("Click on the red goblin to make him rotate or stop.");
+    goblinText2->SetColor(glm::vec3(1, 0, 0));
+    goblinText2->SetSize(24);
+
     Text* crossText = CreateUIElement<Text>("default");
-    crossText->SetWorldPosition(glm::vec2(320, 75));
+    crossText->SetWorldPosition(glm::vec2(320, 100));
     crossText->SetContent("Click on the cross to destroy its button.");
     crossText->SetColor(glm::vec3(1, 0, 0));
     crossText->SetSize(24);
@@ -32,7 +40,7 @@ void BattleScene::CreateScene()
     mainMenuButtonText->SetSize(24);
 
     CrossButton* crossButton = CreateUIElement<CrossButton>("button", "default");
-    crossButton->SetWorldPosition(glm::vec2(40, 40));
+    crossButton->SetWorldPosition(glm::vec2(40, 440));
     crossButton->SetSize(glm::vec2(30, 30));
 
     Text* crossButtonText = CreateUIElement<Text>("default");
@@ -61,9 +69,14 @@ void BattleScene::CreateScene()
     followEnemySpriteRenderer2->SetZOrder(3);
     followEnemy2->AttachToActor(enemy);
     followEnemy2->SetLocalPosition(glm::vec2(-165, 0));
-    //followEnemy2->AttachToActor(followEnemy);
-    //followEnemy2->SetLocalPosition(glm::vec2(-320, 0));
 
+    RotatingEnemy* rotatingEnemy = CreateActor<RotatingEnemy>("goblin", "default");
+    rotatingEnemy->SetWorldPosition(glm::vec2(600, 440));
+    rotatingEnemy->SetSpeed(50.0f);
+    SpriteRendererComponent* rotatingEnemySprite = rotatingEnemy->GetSpriteRenderer();
+    rotatingEnemySprite->SetSize(glm::vec2(75, 78));
+    rotatingEnemySprite->SetZOrder(1);
+    rotatingEnemySprite->GetMaterial()->SetColor(glm::vec3(1, 0, 0));
 
     Actor* cameraObject = CreateActor<Actor>();
     CameraComponent* camera = cameraObject->AddComponent<CameraComponent>();

@@ -100,6 +100,9 @@
     <Filter Include="Source Files\Game\BattleScene">
       <UniqueIdentifier>{ce24a32d-c676-4cb6-a272-3fc7aa963c08}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Engine\Core\Delegate">
+      <UniqueIdentifier>{827786cf-7c0b-46d7-a5f9-292020c53144}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -183,6 +186,9 @@
     <ClCompile Include="Game\source\MainMenu\MainMenuScene.cpp">
       <Filter>Source Files\Game\MainMenu</Filter>
     </ClCompile>
+    <ClCompile Include="Game\source\BattleScene\RotatingEnemy.cpp">
+      <Filter>Source Files\Game\BattleScene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\include\Core\Engine.h">
@@ -265,6 +271,12 @@
     </ClInclude>
     <ClInclude Include="Game\include\MainMenu\MainMenuScene.h">
       <Filter>Header Files\Game\MainMenu</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\include\Core\Delegate\Delegate.h">
+      <Filter>Header Files\Engine\Core\Delegate</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\include\BattleScene\RotatingEnemy.h">
+      <Filter>Header Files\Game\BattleScene</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

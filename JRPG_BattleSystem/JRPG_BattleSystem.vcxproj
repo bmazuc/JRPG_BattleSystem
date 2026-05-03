@@ -159,6 +159,7 @@
     <ClCompile Include="Game\source\BattleScene\CrossButton.cpp" />
     <ClCompile Include="Game\source\BattleScene\Enemy.cpp" />
     <ClCompile Include="Game\source\BattleScene\ReturnButton.cpp" />
+    <ClCompile Include="Game\source\BattleScene\RotatingEnemy.cpp" />
     <ClCompile Include="Game\source\MainMenu\MainMenuScene.cpp" />
     <ClCompile Include="Game\source\MainMenu\StartButton.cpp" />
     <ClCompile Include="main.cpp" />
@@ -167,6 +168,7 @@
     <ClInclude Include="Engine\include\Components\Camera\CameraComponent.h" />
     <ClInclude Include="Engine\include\Components\Component.h" />
     <ClInclude Include="Engine\include\Components\Rendering\SpriteRendererComponent.h" />
+    <ClInclude Include="Engine\include\Core\Delegate\Delegate.h" />
     <ClInclude Include="Engine\include\Core\Engine.h" />
     <ClInclude Include="Engine\include\Core\Inputs\InputManager.h" />
     <ClInclude Include="Engine\include\Core\Math\Transform2D.h" />
@@ -189,6 +191,7 @@
     <ClInclude Include="Game\include\BattleScene\CrossButton.h" />
     <ClInclude Include="Game\include\BattleScene\Enemy.h" />
     <ClInclude Include="Game\include\BattleScene\ReturnButton.h" />
+    <ClInclude Include="Game\include\BattleScene\RotatingEnemy.h" />
     <ClInclude Include="Game\include\MainMenu\MainMenuScene.h" />
     <ClInclude Include="Game\include\MainMenu\StartButton.h" />
   </ItemGroup>

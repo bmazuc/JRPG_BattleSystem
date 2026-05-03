@@ -70,13 +70,13 @@ void Scene::UpdateTransforms()
 	}
 }
 
-void Scene::UpdateInputs(float deltaTime)
+void Scene::Update(float deltaTime)
 {
 	for (Actor* actor : actors)
 	{
 		if (actor)
 		{
-			actor->UpdateInputs(deltaTime);
+			actor->Update(deltaTime);
 			actor->UpdateComponents(deltaTime);
 		}
 	}
@@ -85,7 +85,7 @@ void Scene::UpdateInputs(float deltaTime)
 	{
 		if (uiElement)
 		{
-			uiElement->UpdateInputs(deltaTime);
+			uiElement->Update(deltaTime);
 		}
 	}
 }

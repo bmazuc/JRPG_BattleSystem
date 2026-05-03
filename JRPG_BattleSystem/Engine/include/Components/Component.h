@@ -22,7 +22,7 @@ public:
 	/*
 	 *	Behavior called each frame
 	 */
-	virtual void UpdateInputs(float deltaTime) {}
+	virtual void Update(float deltaTime) {}
 	/*
 	 *	If marked dirty, update this component transform.
 	 *	Called UpdateTransform() on children.

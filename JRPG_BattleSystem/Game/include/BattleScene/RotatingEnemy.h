@@ -1,15 +1,14 @@
-#ifndef __ENEMY_H_INCLUDED__
-#define __ENEMY_H_INCLUDED__
+#pragma once
 
 #include "Scene/Actor.h"
 #include <string>
 
 class SpriteRendererComponent;
 
-class Enemy : public Actor
+class RotatingEnemy : public Actor
 {
 public:
-	Enemy(std::string textureName, std::string shaderName);
+	RotatingEnemy(std::string textureName, std::string shaderName);
 	void Update(float deltaTime) override;
 	void SetupInputs(PlayerController* _playerController) override;
 
@@ -26,10 +25,8 @@ private:
 
 	PlayerController* playerController;
 
-	bool isMoving = false;
+	bool isRotating = false;
 
-	float enemyMoveDirection = 1.0f;
 	float enemySpeed;
 };
 
-#endif // __ENEMY_H_INCLUDED__

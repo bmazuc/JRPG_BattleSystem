@@ -43,7 +43,7 @@ void Engine::Run()
 
         float deltaTime = ComputeDeltaTime(lastTime);
    
-        sceneManager->UpdateInputs(deltaTime, inputManager);
+        sceneManager->Update(deltaTime, inputManager);
 
         if (Scene* scene = sceneManager->GetActiveScene())
         {

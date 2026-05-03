@@ -68,7 +68,7 @@ public:
 	/*
 	 *	Update all actors, UIElements, components.
 	 */
-	void UpdateInputs(float deltaTime);
+	void Update(float deltaTime);
 	/*
 	*	Update player controller and UI inputs
 	*/
