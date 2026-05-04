@@ -9,7 +9,7 @@ class SpriteRendererComponent;
 class RotatingEnemy : public Actor
 {
 public:
-	RotatingEnemy(std::string textureName, std::string shaderName);
+	RotatingEnemy(std::string textureName = "default", std::string shaderName = "default");
 	void Update(float deltaTime) override;
 	void SetupInputs(PlayerController* _playerController) override;
 

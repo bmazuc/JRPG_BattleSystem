@@ -17,11 +17,14 @@ public:
 	Material(std::string textureName, std::string shaderName, glm::vec3 _color);
 
 	glm::vec3 GetColor() const { return color; }
-	Shader* GetShader() const { return shader; }
-	Texture* GetTexture() const { return texture; }
+	Shader* GetShader() { return shader; }
+	const Shader* GetShader() const { return shader; }
+	Texture* GetTexture() { return texture; }
+	const Texture* GetTexture() const { return texture; }
 
 	void SetColor(glm::vec3 _color) { color = _color; }
-
+	void SetShader(std::string name);
+	void SetTexture(std::string name);
 private:
 	glm::vec3 color = glm::vec3(1, 1, 1);
 

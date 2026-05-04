@@ -12,54 +12,56 @@
 
 void BattleScene::CreateScene()
 {
-    Text* goblinText = CreateUIElement<Text>("GoblinText", glm::vec2(320, 50), 0, glm::vec2(1,1), "default");
+    Text* goblinText = CreateUIElement<Text>("GoblinText", glm::vec2(320, 50), 0, glm::vec2(1,1));
     goblinText->SetContent("Click on the middle goblin to make them move or stop.");
     goblinText->SetColor(glm::vec3(1, 0, 0));
     goblinText->SetSize(24);
 
-    Text* goblinText2 = CreateUIElement<Text>("GoblinText2", glm::vec2(320, 75), 0, glm::vec2(1, 1), "default");
+    Text* goblinText2 = CreateUIElement<Text>("GoblinText2", glm::vec2(320, 75), 0, glm::vec2(1, 1));
     goblinText2->SetContent("Click on the red goblin to make him rotate or stop.");
     goblinText2->SetColor(glm::vec3(1, 0, 0));
     goblinText2->SetSize(24);
 
-    Text* crossText = CreateUIElement<Text>("CrossText", glm::vec2(320, 100), 0, glm::vec2(1, 1), "default");
+    Text* crossText = CreateUIElement<Text>("CrossText", glm::vec2(320, 100), 0, glm::vec2(1, 1));
     crossText->SetContent("Click on the cross to destroy its button.");
     crossText->SetColor(glm::vec3(1, 0, 0));
     crossText->SetSize(24);
 
-    ReturnButton* mainMenuButton = CreateUIElement<ReturnButton>("MainMenuButton", glm::vec2(320, 390), 0, glm::vec2(1, 1), "button", "default");
+    ReturnButton* mainMenuButton = CreateUIElement<ReturnButton>("MainMenuButton", glm::vec2(320, 390), 0, glm::vec2(1, 1));
+    mainMenuButton->GetMaterial()->SetTexture("button");
     mainMenuButton->SetSize(glm::vec2(150, 50));
 
-    Text* mainMenuButtonText = CreateUIElement<Text>("MainMenuButtonText", mainMenuButton, glm::vec2(0, 0), 0, glm::vec2(1, 1), "default");
+    Text* mainMenuButtonText = CreateUIElement<Text>("MainMenuButtonText", mainMenuButton, glm::vec2(0, 0), 0, glm::vec2(1, 1));
     mainMenuButtonText->SetContent("Main Menu");
     mainMenuButtonText->SetSize(24);
 
-    CrossButton* crossButton = CreateUIElement<CrossButton>("CrossButton", glm::vec2(40, 440), 0, glm::vec2(1, 1), "button", "default");
+    CrossButton* crossButton = CreateUIElement<CrossButton>("CrossButton", glm::vec2(40, 440), 0, glm::vec2(1, 1));
+    crossButton->GetMaterial()->SetTexture("button");
     crossButton->SetSize(glm::vec2(30, 30));
 
-    Text* crossButtonText = CreateUIElement<Text>("CrossButtonText", crossButton, glm::vec2(0, 0), 0, glm::vec2(1, 1), "default");
+    Text* crossButtonText = CreateUIElement<Text>("CrossButtonText", crossButton, glm::vec2(0, 0), 0, glm::vec2(1, 1));
     crossButtonText->SetContent("X");
     crossButtonText->SetSize(24);
 
-    Enemy* enemy = SpawnActor<Enemy>("MovingEnemy", glm::vec2(320, 240), 0, glm::vec2(1,1), "goblin", "default");
+    Enemy* enemy = SpawnActor<Enemy>("MovingEnemy", glm::vec2(320, 240), 0, glm::vec2(1,1), "goblin");
     enemy->SetSpeed(50.0f);
     SpriteRendererComponent* enemySprite = enemy->GetSpriteRenderer();
     enemySprite->SetSize(glm::vec2(150, 153));
     enemySprite->SetZOrder(1);
 
     Actor* followEnemy = SpawnActor<Actor>("FollowEnemy", enemy, glm::vec2(165, 0), 0, glm::vec2(1, 1));
-    SpriteRendererComponent* followEnemySpriteRenderer = followEnemy->AddComponent<SpriteRendererComponent>("Sprite render", nullptr,
+    SpriteRendererComponent* followEnemySpriteRenderer = followEnemy->AddComponent<SpriteRendererComponent>("Sprite renderer", nullptr,
         glm::vec2(0, 0), 0, glm::vec2(1,1),
-        "goblin", "default");
+        "goblin");
     followEnemySpriteRenderer->SetSize(glm::vec2(150, 153));
     followEnemySpriteRenderer->SetZOrder(2);
 
-    KillableEnemy* followEnemy2 = SpawnActor<KillableEnemy>("KillableEnemy", enemy, glm::vec2(-165, 0), 0, glm::vec2(1, 1), "goblin", "default");
+    KillableEnemy* followEnemy2 = SpawnActor<KillableEnemy>("KillableEnemy", enemy, glm::vec2(-165, 0), 0, glm::vec2(1, 1), "goblin");
     SpriteRendererComponent* followEnemySpriteRenderer2 = followEnemy2->GetSpriteRenderer();
     followEnemySpriteRenderer2->SetSize(glm::vec2(150, 153));
     followEnemySpriteRenderer2->SetZOrder(3);
 
-    RotatingEnemy* rotatingEnemy = SpawnActor<RotatingEnemy>("RotatingEnemy", glm::vec2(600, 440), 0, glm::vec2(1, 1), "goblin", "default");
+    RotatingEnemy* rotatingEnemy = SpawnActor<RotatingEnemy>("RotatingEnemy", glm::vec2(600, 440), 0, glm::vec2(1, 1), "goblin");
     rotatingEnemy->SetSpeed(50.0f);
     SpriteRendererComponent* rotatingEnemySprite = rotatingEnemy->GetSpriteRenderer();
     rotatingEnemySprite->SetSize(glm::vec2(75, 78));
@@ -73,9 +75,9 @@ void BattleScene::CreateScene()
 
     Actor* background = SpawnActor<Actor>("Background", glm::vec2(320, 240), 0, glm::vec2(1, 1));
     background->SetWorldPosition(glm::vec2(320, 240));
-    SpriteRendererComponent* backgroundSpriteRenderer = background->AddComponent<SpriteRendererComponent>("Sprite render", nullptr,
+    SpriteRendererComponent* backgroundSpriteRenderer = background->AddComponent<SpriteRendererComponent>("Sprite renderer", nullptr,
         glm::vec2(0, 0), 0, glm::vec2(1, 1),
-        "background", "default");
+        "background");
     backgroundSpriteRenderer->SetSize(glm::vec2(640, 480));
 }
 

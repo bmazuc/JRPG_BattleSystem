@@ -6,8 +6,6 @@
 class ReturnButton : public Button
 {
 public:
-	ReturnButton(std::string textureName, std::string shaderName, glm::vec3 color = glm::vec3(1, 1, 1));
-
 	void OnClicked() override;
 };
 

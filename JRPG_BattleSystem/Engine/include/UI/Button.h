@@ -6,7 +6,7 @@
 class Button : public Image
 {
 public:
-	Button(std::string textureName, std::string shaderName, glm::vec3 color = glm::vec3(1, 1, 1));
+	Button(std::string textureName = "default", std::string shaderName = "default", glm::vec3 color = glm::vec3(1,1,1));
 
 	bool IsPointInside(glm::vec2 point) const;
 

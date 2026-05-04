@@ -10,7 +10,7 @@ class SpriteRendererComponent;
 class KillableEnemy : public Actor
 {
 public:
-	KillableEnemy(std::string textureName, std::string shaderName);
+	KillableEnemy(std::string textureName = "default", std::string shaderName = "default");
 	void SetupInputs(PlayerController* _playerController) override;
 
 	void OnClick();

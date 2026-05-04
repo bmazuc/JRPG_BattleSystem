@@ -9,7 +9,7 @@ class SpriteRendererComponent;
 class Enemy : public Actor
 {
 public:
-	Enemy(std::string textureName, std::string shaderName);
+	Enemy(std::string textureName = "default", std::string shaderName = "default");
 	void Update(float deltaTime) override;
 	void SetupInputs(PlayerController* _playerController) override;
 

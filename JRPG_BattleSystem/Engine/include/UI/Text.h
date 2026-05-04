@@ -28,7 +28,7 @@ public:
      * @param isCenterX does this text start at position or is center in X ?
      * @param color text color
      */
-    Text(std::string fontName, bool isCenterX = true, glm::vec3 _color = glm::vec3(1, 1, 1));
+    Text(std::string fontName = "default", bool isCenterX = true, glm::vec3 _color = glm::vec3(1, 1, 1));
 
     void SetFont(std::string fontName);
     void SetContent(std::string newContent) { content = newContent; }

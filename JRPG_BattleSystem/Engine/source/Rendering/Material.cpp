@@ -14,3 +14,13 @@ Material::Material(std::string textureName, std::string shaderName, glm::vec3 _c
 	shader = &ResourceManager::GetShader(shaderName);
 	texture = &ResourceManager::GetTexture(textureName);
 }
+
+void Material::SetShader(std::string name)
+{
+	shader = &ResourceManager::GetShader(name);
+}
+
+void Material::SetTexture(std::string name)
+{
+	texture = &ResourceManager::GetTexture(name);
+}

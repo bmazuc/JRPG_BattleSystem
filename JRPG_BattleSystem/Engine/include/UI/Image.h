@@ -17,7 +17,7 @@ class Material;
 class Image : public UIElement
 {
 public:
-	Image(std::string textureName, std::string shaderName, glm::vec3 color = glm::vec3(1, 1, 1));
+	Image(std::string textureName = "default", std::string shaderName = "default", glm::vec3 color = glm::vec3(1,1,1));
 	~Image();
 
 	Material* GetMaterial() { return material; }

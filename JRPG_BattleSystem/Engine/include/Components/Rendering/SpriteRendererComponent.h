@@ -20,7 +20,7 @@ public:
 	 *	@param shaderName the shader used by the material
 	 *  @param color the color used by the material
 	 */
-	SpriteRendererComponent(std::string textureName, std::string shaderName, glm::vec3 color = glm::vec3(1, 1, 1));
+	SpriteRendererComponent(std::string textureName = "default", std::string shaderName = "default", glm::vec3 color = glm::vec3(1, 1, 1));
 	~SpriteRendererComponent();
 
 	Material* GetMaterial() { return material; }
