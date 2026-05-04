@@ -1,10 +1,9 @@
 #include "Scene/Actor.h"
-#include "Components/Component.h"
 #include "Scene/Scene.h"
 
 Actor::Actor()
 {
-	root = AddComponent<Component>();
+	root = AddComponent<Component>(name + " root", nullptr, glm::vec2(0, 0), 0, glm::vec2(1,1));
 }
 
 Actor::~Actor()
@@ -66,7 +65,7 @@ void Actor::ProcessComponentsDestroy()
 	{
 		if (componentToDestroy)
 		{
-			componentToDestroy->DetachChidren();
+			componentToDestroy->DetachFromHierarchy();
 			components.erase(std::remove(components.begin(), components.end(), componentToDestroy), components.end());
 			delete componentToDestroy;
 		}
@@ -189,10 +188,15 @@ const Actor* Actor::GetParent() const
 	return root->HasParent() ? root->GetParent()->GetOwner() : nullptr; 
 }
 
-void Actor::InternalAddComponent(Component* component)
+void Actor::InternalAddComponent(Component* component, std::string name, Component* parent, glm::vec2 localLocation, float localRotate, glm::vec2 localScale)
 {
 	component->SetOwner(this);
-	component->SetParent(root);
+
+	component->SetName(name);
+	component->SetParent(parent ? parent : root);
+	component->SetLocalPosition(localLocation);
+	component->SetLocalRotate(localRotate);
+	component->SetLocalScale(localScale);
 
 	components.emplace_back(component);
 

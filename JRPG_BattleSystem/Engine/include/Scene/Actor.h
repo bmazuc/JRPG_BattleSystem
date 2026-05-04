@@ -1,8 +1,10 @@
 #ifndef __ACTOR_H_INCLUDED__
 #define __ACTOR_H_INCLUDED__
 
+#include "Components/Component.h"
 #include <glm/vec2.hpp>
 #include <vector>
+#include <string>
 
 class Component;
 class Scene;
@@ -68,17 +70,17 @@ public:
 	 *	New component parent will be actor root.
 	 */
 	template<typename T, typename... Args>
-	T* AddComponent(Args&&... args)
+	T* AddComponent(std::string name, Component* parent, glm::vec2 localLocation, float localRotate, glm::vec2 localScale, Args&&... args)
 	{
 		static_assert(std::is_base_of<Component, T>::value, "T must inherit Component");
 
 		T* component = new T(std::forward<Args>(args)...);
-		InternalAddComponent(component);
+		InternalAddComponent(component, name, parent, localLocation, localRotate, localScale);
 		return component;
 	}
 
 	/*
-	 *	Get the first component of specified type.
+	 *	Get the first component of given name and type in this actor.
 	 */
 	template<typename T>
 	T* GetComponent()
@@ -92,20 +94,6 @@ public:
 		return nullptr;
 	}
 	
-	/*
-	 *	Get the first component of specified type.
-	 */
-	template<typename T>
-	const T* GetComponent() const
-	{
-		for (auto& c : components) {
-			T* casted = dynamic_cast<T*>(c);
-
-			if (casted)
-				return casted;
-		}
-		return nullptr;
-	}
 
 	/*
 	 *	Call by component destroy. Register this component inside a list of components to destroy.
@@ -144,6 +132,9 @@ public:
 	void SetLocalRotate(float rotate);
 	void SetLocalScale(glm::vec2 scale);
 
+	void SetName(std::string newName) { name = newName; };
+	std::string GetName() const { return name; }
+
 protected:
 	// reference to the scene the actor lives in
 	Scene* scene;
@@ -153,7 +144,7 @@ private:
 	 *	Add the component to the list of components and call its begin play if scene is already loaded.
 	 *	Also reduce the amount of code in .h
 	 */
-	void InternalAddComponent(Component* component);
+	void InternalAddComponent(Component* component, std::string name, Component* parent, glm::vec2 localLocation, float localRotate, glm::vec2 localScale);
 
 	Component* root;
 	std::vector<Component*> components;
@@ -161,6 +152,9 @@ private:
 
 	// Are actor mark for destruction ?
 	bool isPendingDestroy = false;
+
+	// Name associated to this actor. Useful to identify this actor.
+	std::string name = "";
 };
 
 #endif // __ACTOR_H_INCLUDED__

@@ -189,6 +189,9 @@
     <ClCompile Include="Game\source\BattleScene\RotatingEnemy.cpp">
       <Filter>Source Files\Game\BattleScene</Filter>
     </ClCompile>
+    <ClCompile Include="Game\source\BattleScene\KillableEnemy.cpp">
+      <Filter>Source Files\Game\BattleScene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\include\Core\Engine.h">
@@ -276,6 +279,9 @@
       <Filter>Header Files\Engine\Core\Delegate</Filter>
     </ClInclude>
     <ClInclude Include="Game\include\BattleScene\RotatingEnemy.h">
+      <Filter>Header Files\Game\BattleScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\include\BattleScene\KillableEnemy.h">
       <Filter>Header Files\Game\BattleScene</Filter>
     </ClInclude>
   </ItemGroup>

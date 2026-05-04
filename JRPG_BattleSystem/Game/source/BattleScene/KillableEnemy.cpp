@@ -1,25 +1,25 @@
-#include "BattleScene/RotatingEnemy.h"
+#include "BattleScene/KillableEnemy.h"
 #include "Components/Rendering/SpriteRendererComponent.h"
 #include "Scene/PlayerController.h"
 #include "Scene/Scene.h"
 
-RotatingEnemy::RotatingEnemy(std::string textureName, std::string shaderName)
+KillableEnemy::KillableEnemy(std::string textureName, std::string shaderName)
 {
     spriteRenderer = AddComponent<SpriteRendererComponent>("Sprite render", nullptr,
         glm::vec2(0, 0), 0, glm::vec2(1, 1),
         textureName, shaderName);
 }
 
-void RotatingEnemy::SetupInputs(PlayerController* _playerController)
+void KillableEnemy::SetupInputs(PlayerController* _playerController)
 {
     playerController = _playerController;
     if (playerController)
     {
-        playerController->OnClick.Bind(std::bind(&RotatingEnemy::OnClick, this));
+        clickHandle = playerController->OnClick.Bind(std::bind(&KillableEnemy::OnClick, this));
     }
 }
 
-void RotatingEnemy::OnClick()
+void KillableEnemy::OnClick()
 {
     if (playerController)
     {
@@ -27,12 +27,13 @@ void RotatingEnemy::OnClick()
 
         if (IsHovered(mousePos))
         {
-            isRotating = !isRotating;
+            playerController->OnClick.Unbind(clickHandle);
+            Destroy();
         }
     }
 }
 
-bool RotatingEnemy::IsHovered(glm::vec2 mousePos)
+bool KillableEnemy::IsHovered(glm::vec2 mousePos)
 {
     if (!spriteRenderer)
     {
@@ -48,16 +49,4 @@ bool RotatingEnemy::IsHovered(glm::vec2 mousePos)
         mouseWorldPos.x <= worldPos.x + bounds.x &&
         mouseWorldPos.y >= worldPos.y - bounds.y &&
         mouseWorldPos.y <= worldPos.y + bounds.y;
-}
-
-void RotatingEnemy::Update(float deltaTime)
-{
-    if (!isRotating)
-    {
-        return;
-    }
-
-    glm::vec2 currentPos = GetWorldPosition();
-
-    SetLocalRotate(GetLocalRotate() + enemySpeed * deltaTime);
 }

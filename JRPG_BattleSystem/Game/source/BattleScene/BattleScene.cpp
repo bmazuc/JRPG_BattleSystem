@@ -8,83 +8,74 @@
 #include "BattleScene/ReturnButton.h"
 #include "BattleScene/CrossButton.h"
 #include "Rendering/Material.h"
+#include "BattleScene/KillableEnemy.h"
 
 void BattleScene::CreateScene()
 {
-    Text* goblinText = CreateUIElement<Text>("default");
-    goblinText->SetWorldPosition(glm::vec2(320, 50));
+    Text* goblinText = CreateUIElement<Text>("GoblinText", glm::vec2(320, 50), 0, glm::vec2(1,1), "default");
     goblinText->SetContent("Click on the middle goblin to make them move or stop.");
     goblinText->SetColor(glm::vec3(1, 0, 0));
     goblinText->SetSize(24);
 
-    Text* goblinText2 = CreateUIElement<Text>("default");
-    goblinText2->SetWorldPosition(glm::vec2(320, 75));
+    Text* goblinText2 = CreateUIElement<Text>("GoblinText2", glm::vec2(320, 75), 0, glm::vec2(1, 1), "default");
     goblinText2->SetContent("Click on the red goblin to make him rotate or stop.");
     goblinText2->SetColor(glm::vec3(1, 0, 0));
     goblinText2->SetSize(24);
 
-    Text* crossText = CreateUIElement<Text>("default");
-    crossText->SetWorldPosition(glm::vec2(320, 100));
+    Text* crossText = CreateUIElement<Text>("CrossText", glm::vec2(320, 100), 0, glm::vec2(1, 1), "default");
     crossText->SetContent("Click on the cross to destroy its button.");
     crossText->SetColor(glm::vec3(1, 0, 0));
     crossText->SetSize(24);
 
-    ReturnButton* mainMenuButton = CreateUIElement<ReturnButton>("button", "default");
-    mainMenuButton->SetWorldPosition(glm::vec2(320, 390));
+    ReturnButton* mainMenuButton = CreateUIElement<ReturnButton>("MainMenuButton", glm::vec2(320, 390), 0, glm::vec2(1, 1), "button", "default");
     mainMenuButton->SetSize(glm::vec2(150, 50));
 
-    Text* mainMenuButtonText = CreateUIElement<Text>("default");
-    mainMenuButtonText->SetParent(mainMenuButton);
-    mainMenuButtonText->SetLocalPosition(glm::vec2(0, 0));
+    Text* mainMenuButtonText = CreateUIElement<Text>("MainMenuButtonText", mainMenuButton, glm::vec2(0, 0), 0, glm::vec2(1, 1), "default");
     mainMenuButtonText->SetContent("Main Menu");
     mainMenuButtonText->SetSize(24);
 
-    CrossButton* crossButton = CreateUIElement<CrossButton>("button", "default");
-    crossButton->SetWorldPosition(glm::vec2(40, 440));
+    CrossButton* crossButton = CreateUIElement<CrossButton>("CrossButton", glm::vec2(40, 440), 0, glm::vec2(1, 1), "button", "default");
     crossButton->SetSize(glm::vec2(30, 30));
 
-    Text* crossButtonText = CreateUIElement<Text>("default");
-    crossButtonText->SetParent(crossButton);
-    crossButtonText->SetLocalPosition(glm::vec2(0, 0));
+    Text* crossButtonText = CreateUIElement<Text>("CrossButtonText", crossButton, glm::vec2(0, 0), 0, glm::vec2(1, 1), "default");
     crossButtonText->SetContent("X");
     crossButtonText->SetSize(24);
 
-    Enemy* enemy = CreateActor<Enemy>("goblin", "default");
-    enemy->SetWorldPosition(glm::vec2(320, 240));
+    Enemy* enemy = SpawnActor<Enemy>("MovingEnemy", glm::vec2(320, 240), 0, glm::vec2(1,1), "goblin", "default");
     enemy->SetSpeed(50.0f);
     SpriteRendererComponent* enemySprite = enemy->GetSpriteRenderer();
     enemySprite->SetSize(glm::vec2(150, 153));
     enemySprite->SetZOrder(1);
 
-    Actor* followEnemy = CreateActor<Actor>();
-    SpriteRendererComponent* followEnemySpriteRenderer = followEnemy->AddComponent<SpriteRendererComponent>("goblin", "default");
+    Actor* followEnemy = SpawnActor<Actor>("FollowEnemy", enemy, glm::vec2(165, 0), 0, glm::vec2(1, 1));
+    SpriteRendererComponent* followEnemySpriteRenderer = followEnemy->AddComponent<SpriteRendererComponent>("Sprite render", nullptr,
+        glm::vec2(0, 0), 0, glm::vec2(1,1),
+        "goblin", "default");
     followEnemySpriteRenderer->SetSize(glm::vec2(150, 153));
     followEnemySpriteRenderer->SetZOrder(2);
-    followEnemy->AttachToActor(enemy);
-    followEnemy->SetLocalPosition(glm::vec2(165, 0));
 
-    Actor* followEnemy2 = CreateActor<Actor>();
-    SpriteRendererComponent* followEnemySpriteRenderer2 = followEnemy2->AddComponent<SpriteRendererComponent>("goblin", "default");
+    KillableEnemy* followEnemy2 = SpawnActor<KillableEnemy>("KillableEnemy", enemy, glm::vec2(-165, 0), 0, glm::vec2(1, 1), "goblin", "default");
+    SpriteRendererComponent* followEnemySpriteRenderer2 = followEnemy2->GetSpriteRenderer();
     followEnemySpriteRenderer2->SetSize(glm::vec2(150, 153));
     followEnemySpriteRenderer2->SetZOrder(3);
-    followEnemy2->AttachToActor(enemy);
-    followEnemy2->SetLocalPosition(glm::vec2(-165, 0));
 
-    RotatingEnemy* rotatingEnemy = CreateActor<RotatingEnemy>("goblin", "default");
-    rotatingEnemy->SetWorldPosition(glm::vec2(600, 440));
+    RotatingEnemy* rotatingEnemy = SpawnActor<RotatingEnemy>("RotatingEnemy", glm::vec2(600, 440), 0, glm::vec2(1, 1), "goblin", "default");
     rotatingEnemy->SetSpeed(50.0f);
     SpriteRendererComponent* rotatingEnemySprite = rotatingEnemy->GetSpriteRenderer();
     rotatingEnemySprite->SetSize(glm::vec2(75, 78));
     rotatingEnemySprite->SetZOrder(1);
     rotatingEnemySprite->GetMaterial()->SetColor(glm::vec3(1, 0, 0));
 
-    Actor* cameraObject = CreateActor<Actor>();
-    CameraComponent* camera = cameraObject->AddComponent<CameraComponent>();
+    Actor* cameraObject = SpawnActor<Actor>("MainCamera", glm::vec2(0, 0), 0, glm::vec2(1, 1));
+    CameraComponent* camera = cameraObject->AddComponent<CameraComponent>("Camera component", nullptr,
+        glm::vec2(0, 0), 0, glm::vec2(1, 1));
     SetActiveCamera(camera);
 
-    Actor* background = CreateActor<Actor>();
-    SpriteRendererComponent* backgroundSpriteRenderer = background->AddComponent<SpriteRendererComponent>("background", "default");
+    Actor* background = SpawnActor<Actor>("Background", glm::vec2(320, 240), 0, glm::vec2(1, 1));
     background->SetWorldPosition(glm::vec2(320, 240));
+    SpriteRendererComponent* backgroundSpriteRenderer = background->AddComponent<SpriteRendererComponent>("Sprite render", nullptr,
+        glm::vec2(0, 0), 0, glm::vec2(1, 1),
+        "background", "default");
     backgroundSpriteRenderer->SetSize(glm::vec2(640, 480));
 }
 

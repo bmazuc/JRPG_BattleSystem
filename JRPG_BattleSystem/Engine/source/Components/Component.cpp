@@ -220,8 +220,13 @@ void Component::SetDirty()
 	}
 }
 
-void Component::DetachChidren()
+void Component::DetachFromHierarchy()
 {
+	if (parent)
+	{
+		parent->RemoveChild(this);
+	}
+
 	for (Component* child : children)
 	{
 		child->SetParent(nullptr);
@@ -239,3 +244,4 @@ void Component::Destroy()
 		}
 	}
 }
+

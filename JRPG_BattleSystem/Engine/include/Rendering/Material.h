@@ -13,6 +13,7 @@ class Shader;
 class Material
 {
 public:
+	Material();
 	Material(std::string textureName, std::string shaderName, glm::vec3 _color);
 
 	glm::vec3 GetColor() const { return color; }

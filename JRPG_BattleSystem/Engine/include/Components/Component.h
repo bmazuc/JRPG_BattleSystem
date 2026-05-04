@@ -3,6 +3,7 @@
 
 #include "Core/Math/Transform2D.h"
 #include <vector>
+#include <string>
 
 class Actor;
 
@@ -69,8 +70,11 @@ public:
 
 	const std::vector<Component*> GetChildren() const { return children; }
 
-	// Detach all the children of this component from him.
-	void DetachChidren();
+	// Detach all the children of this component from him and detach component from his parent.
+	void DetachFromHierarchy();
+
+	void SetName(std::string newName) { name = newName; };
+	std::string GetName() const { return name; }
 
 private:
 	void AddChild(Component* child);
@@ -81,6 +85,9 @@ private:
 
 	// Mark this component as dirty
 	void SetDirty();
+
+	// Name associated to this component. Useful to identify this component.
+	std::string name;
 
 	Transform2D transform;
 

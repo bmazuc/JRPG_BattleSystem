@@ -158,6 +158,7 @@
     <ClCompile Include="Game\source\BattleScene\BattleScene.cpp" />
     <ClCompile Include="Game\source\BattleScene\CrossButton.cpp" />
     <ClCompile Include="Game\source\BattleScene\Enemy.cpp" />
+    <ClCompile Include="Game\source\BattleScene\KillableEnemy.cpp" />
     <ClCompile Include="Game\source\BattleScene\ReturnButton.cpp" />
     <ClCompile Include="Game\source\BattleScene\RotatingEnemy.cpp" />
     <ClCompile Include="Game\source\MainMenu\MainMenuScene.cpp" />
@@ -190,6 +191,7 @@
     <ClInclude Include="Game\include\BattleScene\BattleScene.h" />
     <ClInclude Include="Game\include\BattleScene\CrossButton.h" />
     <ClInclude Include="Game\include\BattleScene\Enemy.h" />
+    <ClInclude Include="Game\include\BattleScene\KillableEnemy.h" />
     <ClInclude Include="Game\include\BattleScene\ReturnButton.h" />
     <ClInclude Include="Game\include\BattleScene\RotatingEnemy.h" />
     <ClInclude Include="Game\include\MainMenu\MainMenuScene.h" />

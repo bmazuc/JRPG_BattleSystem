@@ -1,23 +1,21 @@
-#ifndef __ROTATING_ENEMY_H_INCLUDED__
-#define __ROTATING_ENEMY_H_INCLUDED__
+#ifndef __KILLABLE_ENEMY_H_INCLUDED__
+#define __KILLABLE_ENEMY_H_INCLUDED__
 
 #include "Scene/Actor.h"
+#include "Core/Delegate/Delegate.h"
 #include <string>
 
 class SpriteRendererComponent;
 
-class RotatingEnemy : public Actor
+class KillableEnemy : public Actor
 {
 public:
-	RotatingEnemy(std::string textureName, std::string shaderName);
-	void Update(float deltaTime) override;
+	KillableEnemy(std::string textureName, std::string shaderName);
 	void SetupInputs(PlayerController* _playerController) override;
 
 	void OnClick();
 
 	SpriteRendererComponent* GetSpriteRenderer() { return spriteRenderer; }
-
-	void SetSpeed(float speed) { enemySpeed = speed; }
 
 private:
 	bool IsHovered(glm::vec2 mousePos);
@@ -26,9 +24,7 @@ private:
 
 	PlayerController* playerController;
 
-	bool isRotating = false;
-
-	float enemySpeed;
+	DelegateHandle clickHandle;
 };
 
-#endif // __ROTATING_ENEMY_H_INCLUDED__
+#endif // __KILLABLE_ENEMY_H_INCLUDED__

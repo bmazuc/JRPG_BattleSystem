@@ -5,7 +5,9 @@
 
 Enemy::Enemy(std::string textureName, std::string shaderName)
 {
-    spriteRenderer = AddComponent<SpriteRendererComponent>(textureName, shaderName);
+    spriteRenderer = AddComponent<SpriteRendererComponent>("Sprite render", nullptr,
+        glm::vec2(0, 0), 0, glm::vec2(1, 1),
+        textureName, shaderName);
 }
 
 void Enemy::SetupInputs(PlayerController* _playerController)

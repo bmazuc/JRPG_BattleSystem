@@ -3,6 +3,7 @@
 
 #include "Core/Math/Transform2D.h"
 #include <vector>
+#include <string>
 
 class Scene;
 
@@ -72,11 +73,17 @@ public:
 	const Scene* GetScene() const { return scene; }
 	void SetScene(Scene* _scene) { scene = _scene; }
 
+	void SetName(std::string newName) { name = newName; };
+	std::string GetName() const { return name; }
+
 private:
 	// Mark this element as dirty
 	void SetDirty();
 	// Is this element an ancestor of the specified element ?
 	bool IsAncestorOf(UIElement* element);
+
+	// Name associated to this element. Useful to identify this element.
+	std::string name = "";
 
 	Transform2D transform;
 
