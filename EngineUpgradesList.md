@@ -14,6 +14,15 @@ Some can be done later in the project. Others will be over-engineering for this 
 
 
 
+\#Component
+
+* Rename Component as ActorComponent (a virtual class virtual \~ActorComponent() = 0)
+
+  * ActorComponent will only contains logic behavior
+  * Add a SceneComponent who contains all world hierarchy behavior
+
+
+
 \#Rendering
 
 * 3D
