@@ -1,38 +1,38 @@
-#include "BattleScene/RotatingEnemy.h"
+#include "TestScene/MovingEntity.h"
 #include "Components/Rendering/SpriteRendererComponent.h"
 #include "Scene/PlayerController.h"
 #include "Scene/Scene.h"
 
-RotatingEnemy::RotatingEnemy(std::string textureName, std::string shaderName)
+MovingEntity::MovingEntity(std::string textureName, std::string shaderName)
 {
     spriteRenderer = AddComponent<SpriteRendererComponent>("Sprite render", nullptr,
         glm::vec2(0, 0), 0, glm::vec2(1, 1),
         textureName, shaderName);
 }
 
-void RotatingEnemy::SetupInputs(PlayerController* _playerController)
+void MovingEntity::SetupInputs(PlayerController* _playerController)
 {
     playerController = _playerController;
     if (playerController)
     {
-        playerController->OnClick.Bind(std::bind(&RotatingEnemy::OnClick, this));
+        playerController->OnClick.Bind(std::bind(&MovingEntity::OnClick, this));
     }
 }
 
-void RotatingEnemy::OnClick()
+void MovingEntity::OnClick()
 {
     if (playerController)
-    {
+    { 
         glm::vec2 mousePos = playerController->GetMousePosition();
 
         if (IsHovered(mousePos))
         {
-            isRotating = !isRotating;
+            isMoving = !isMoving;
         }
     }
 }
 
-bool RotatingEnemy::IsHovered(glm::vec2 mousePos)
+bool MovingEntity::IsHovered(glm::vec2 mousePos)
 {
     if (!spriteRenderer)
     {
@@ -50,14 +50,19 @@ bool RotatingEnemy::IsHovered(glm::vec2 mousePos)
         mouseWorldPos.y <= worldPos.y + bounds.y;
 }
 
-void RotatingEnemy::Update(float deltaTime)
+void MovingEntity::Update(float deltaTime)
 {
-    if (!isRotating)
+    if (!isMoving)
     {
         return;
     }
 
     glm::vec2 currentPos = GetWorldPosition();
 
-    SetLocalRotate(GetLocalRotate() + enemySpeed * deltaTime);
+    if (currentPos.x <= 250 || currentPos.x >= 370)
+    {
+        moveDirection *= -1.0f;
+    }
+
+    SetLocalPosition(glm::vec2(currentPos.x + (moveDirection * speed * deltaTime), currentPos.y));
 }

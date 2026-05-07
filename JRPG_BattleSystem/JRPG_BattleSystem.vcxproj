@@ -155,14 +155,13 @@
     <ClCompile Include="Engine\source\UI\Image.cpp" />
     <ClCompile Include="Engine\source\UI\Text.cpp" />
     <ClCompile Include="Engine\source\UI\UIElement.cpp" />
-    <ClCompile Include="Game\source\BattleScene\BattleScene.cpp" />
-    <ClCompile Include="Game\source\BattleScene\CrossButton.cpp" />
-    <ClCompile Include="Game\source\BattleScene\Enemy.cpp" />
-    <ClCompile Include="Game\source\BattleScene\KillableEnemy.cpp" />
-    <ClCompile Include="Game\source\BattleScene\ReturnButton.cpp" />
-    <ClCompile Include="Game\source\BattleScene\RotatingEnemy.cpp" />
+    <ClCompile Include="Game\source\Common\UI\LoadSceneButton.cpp" />
     <ClCompile Include="Game\source\MainMenu\MainMenuScene.cpp" />
-    <ClCompile Include="Game\source\MainMenu\StartButton.cpp" />
+    <ClCompile Include="Game\source\TestScene\CrossButton.cpp" />
+    <ClCompile Include="Game\source\TestScene\KillableEntity.cpp" />
+    <ClCompile Include="Game\source\TestScene\MovingEntity.cpp" />
+    <ClCompile Include="Game\source\TestScene\RotatingEntity.cpp" />
+    <ClCompile Include="Game\source\TestScene\TestScene.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -188,14 +187,13 @@
     <ClInclude Include="Engine\include\UI\Image.h" />
     <ClInclude Include="Engine\include\UI\Text.h" />
     <ClInclude Include="Engine\include\UI\UIElement.h" />
-    <ClInclude Include="Game\include\BattleScene\BattleScene.h" />
-    <ClInclude Include="Game\include\BattleScene\CrossButton.h" />
-    <ClInclude Include="Game\include\BattleScene\Enemy.h" />
-    <ClInclude Include="Game\include\BattleScene\KillableEnemy.h" />
-    <ClInclude Include="Game\include\BattleScene\ReturnButton.h" />
-    <ClInclude Include="Game\include\BattleScene\RotatingEnemy.h" />
+    <ClInclude Include="Game\include\Common\UI\LoadSceneButton.h" />
     <ClInclude Include="Game\include\MainMenu\MainMenuScene.h" />
-    <ClInclude Include="Game\include\MainMenu\StartButton.h" />
+    <ClInclude Include="Game\include\TestScene\CrossButton.h" />
+    <ClInclude Include="Game\include\TestScene\KillableEntity.h" />
+    <ClInclude Include="Game\include\TestScene\MovingEntity.h" />
+    <ClInclude Include="Game\include\TestScene\RotatingEntity.h" />
+    <ClInclude Include="Game\include\TestScene\TestScene.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

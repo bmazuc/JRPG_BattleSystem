@@ -1,5 +1,5 @@
-#ifndef __KILLABLE_ENEMY_H_INCLUDED__
-#define __KILLABLE_ENEMY_H_INCLUDED__
+#ifndef __KILLABLE_ENTITY_H_INCLUDED__
+#define __KILLABLE_ENTITY_H_INCLUDED__
 
 #include "Scene/Actor.h"
 #include "Core/Delegate/Delegate.h"
@@ -7,10 +7,10 @@
 
 class SpriteRendererComponent;
 
-class KillableEnemy : public Actor
+class KillableEntity : public Actor
 {
 public:
-	KillableEnemy(std::string textureName = "default", std::string shaderName = "default");
+	KillableEntity(std::string textureName = "default", std::string shaderName = "default");
 	void SetupInputs(PlayerController* _playerController) override;
 
 	void OnClick();
@@ -27,4 +27,4 @@ private:
 	DelegateHandle clickHandle;
 };
 
-#endif // __KILLABLE_ENEMY_H_INCLUDED__
+#endif // __KILLABLE_ENTITY_H_INCLUDED__

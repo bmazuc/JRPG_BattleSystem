@@ -1,15 +1,15 @@
-#ifndef __ENEMY_H_INCLUDED__
-#define __ENEMY_H_INCLUDED__
+#ifndef __MOVING_ENTITY_H_INCLUDED__
+#define __MOVING_ENTITY_H_INCLUDED__
 
 #include "Scene/Actor.h"
 #include <string>
 
 class SpriteRendererComponent;
 
-class Enemy : public Actor
+class MovingEntity : public Actor
 {
 public:
-	Enemy(std::string textureName = "default", std::string shaderName = "default");
+	MovingEntity(std::string textureName = "default", std::string shaderName = "default");
 	void Update(float deltaTime) override;
 	void SetupInputs(PlayerController* _playerController) override;
 
@@ -17,7 +17,7 @@ public:
 
 	SpriteRendererComponent* GetSpriteRenderer() { return spriteRenderer; }
 
-	void SetSpeed(float speed) { enemySpeed = speed; }
+	void SetSpeed(float newSpeed) { speed = newSpeed; }
 
 private:
 	bool IsHovered(glm::vec2 mousePos);
@@ -28,8 +28,8 @@ private:
 
 	bool isMoving = false;
 
-	float enemyMoveDirection = 1.0f;
-	float enemySpeed;
+	float moveDirection = 1.0f;
+	float speed;
 };
 
-#endif // __ENEMY_H_INCLUDED__
+#endif // __MOVING_ENTITY_H_INCLUDED__

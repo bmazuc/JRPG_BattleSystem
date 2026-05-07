@@ -1,15 +1,15 @@
-#ifndef __ROTATING_ENEMY_H_INCLUDED__
-#define __ROTATING_ENEMY_H_INCLUDED__
+#ifndef __ROTATING_ENTITY_H_INCLUDED__
+#define __ROTATING_ENTITY_H_INCLUDED__
 
 #include "Scene/Actor.h"
 #include <string>
 
 class SpriteRendererComponent;
 
-class RotatingEnemy : public Actor
+class RotatingEntity : public Actor
 {
 public:
-	RotatingEnemy(std::string textureName = "default", std::string shaderName = "default");
+	RotatingEntity(std::string textureName = "default", std::string shaderName = "default");
 	void Update(float deltaTime) override;
 	void SetupInputs(PlayerController* _playerController) override;
 
@@ -17,7 +17,7 @@ public:
 
 	SpriteRendererComponent* GetSpriteRenderer() { return spriteRenderer; }
 
-	void SetSpeed(float speed) { enemySpeed = speed; }
+	void SetSpeed(float newSpeed) { speed = newSpeed; }
 
 private:
 	bool IsHovered(glm::vec2 mousePos);
@@ -28,7 +28,7 @@ private:
 
 	bool isRotating = false;
 
-	float enemySpeed;
+	float speed;
 };
 
-#endif // __ROTATING_ENEMY_H_INCLUDED__
+#endif // __ROTATING_ENTITY_H_INCLUDED__

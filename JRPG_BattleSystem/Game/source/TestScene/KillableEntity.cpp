@@ -1,25 +1,25 @@
-#include "BattleScene/KillableEnemy.h"
+#include "TestScene/KillableEntity.h"
 #include "Components/Rendering/SpriteRendererComponent.h"
 #include "Scene/PlayerController.h"
 #include "Scene/Scene.h"
 
-KillableEnemy::KillableEnemy(std::string textureName, std::string shaderName)
+KillableEntity::KillableEntity(std::string textureName, std::string shaderName)
 {
     spriteRenderer = AddComponent<SpriteRendererComponent>("Sprite render", nullptr,
         glm::vec2(0, 0), 0, glm::vec2(1, 1),
         textureName, shaderName);
 }
 
-void KillableEnemy::SetupInputs(PlayerController* _playerController)
+void KillableEntity::SetupInputs(PlayerController* _playerController)
 {
     playerController = _playerController;
     if (playerController)
     {
-        clickHandle = playerController->OnClick.Bind(std::bind(&KillableEnemy::OnClick, this));
+        clickHandle = playerController->OnClick.Bind(std::bind(&KillableEntity::OnClick, this));
     }
 }
 
-void KillableEnemy::OnClick()
+void KillableEntity::OnClick()
 {
     if (playerController)
     {
@@ -33,7 +33,7 @@ void KillableEnemy::OnClick()
     }
 }
 
-bool KillableEnemy::IsHovered(glm::vec2 mousePos)
+bool KillableEntity::IsHovered(glm::vec2 mousePos)
 {
     if (!spriteRenderer)
     {

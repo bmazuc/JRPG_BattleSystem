@@ -94,14 +94,14 @@
     <Filter Include="Source Files\Game\MainMenu">
       <UniqueIdentifier>{3108de29-dec0-4c91-95c3-38fb87ab2e25}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Game\BattleScene">
-      <UniqueIdentifier>{4d94a0a8-cf01-49de-a506-a44c140a6f46}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Game\BattleScene">
-      <UniqueIdentifier>{ce24a32d-c676-4cb6-a272-3fc7aa963c08}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Engine\Core\Delegate">
       <UniqueIdentifier>{827786cf-7c0b-46d7-a5f9-292020c53144}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\TestScene">
+      <UniqueIdentifier>{4d94a0a8-cf01-49de-a506-a44c140a6f46}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\TestScene">
+      <UniqueIdentifier>{ce24a32d-c676-4cb6-a272-3fc7aa963c08}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -165,32 +165,29 @@
     <ClCompile Include="Engine\source\Core\Inputs\InputManager.cpp">
       <Filter>Source Files\Engine\Core\Inputs</Filter>
     </ClCompile>
-    <ClCompile Include="Game\source\MainMenu\StartButton.cpp">
-      <Filter>Source Files\Game\MainMenu</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\source\UI\Image.cpp">
       <Filter>Source Files\Engine\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\source\BattleScene\ReturnButton.cpp">
-      <Filter>Source Files\Game\BattleScene</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\source\BattleScene\BattleScene.cpp">
-      <Filter>Source Files\Game\BattleScene</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\source\BattleScene\Enemy.cpp">
-      <Filter>Source Files\Game\BattleScene</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\source\BattleScene\CrossButton.cpp">
-      <Filter>Source Files\Game\BattleScene</Filter>
     </ClCompile>
     <ClCompile Include="Game\source\MainMenu\MainMenuScene.cpp">
       <Filter>Source Files\Game\MainMenu</Filter>
     </ClCompile>
-    <ClCompile Include="Game\source\BattleScene\RotatingEnemy.cpp">
-      <Filter>Source Files\Game\BattleScene</Filter>
+    <ClCompile Include="Game\source\Common\UI\LoadSceneButton.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Game\source\BattleScene\KillableEnemy.cpp">
-      <Filter>Source Files\Game\BattleScene</Filter>
+    <ClCompile Include="Game\source\TestScene\CrossButton.cpp">
+      <Filter>Source Files\Game\TestScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\source\TestScene\KillableEntity.cpp">
+      <Filter>Source Files\Game\TestScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\source\TestScene\MovingEntity.cpp">
+      <Filter>Source Files\Game\TestScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\source\TestScene\RotatingEntity.cpp">
+      <Filter>Source Files\Game\TestScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\source\TestScene\TestScene.cpp">
+      <Filter>Source Files\Game\TestScene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -257,32 +254,29 @@
     <ClInclude Include="Engine\include\Core\Inputs\InputManager.h">
       <Filter>Header Files\Engine\Core\Inputs</Filter>
     </ClInclude>
-    <ClInclude Include="Game\include\MainMenu\StartButton.h">
-      <Filter>Header Files\Game\MainMenu</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\include\BattleScene\ReturnButton.h">
-      <Filter>Header Files\Game\BattleScene</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\include\BattleScene\BattleScene.h">
-      <Filter>Header Files\Game\BattleScene</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\include\BattleScene\Enemy.h">
-      <Filter>Header Files\Game\BattleScene</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\include\BattleScene\CrossButton.h">
-      <Filter>Header Files\Game\BattleScene</Filter>
-    </ClInclude>
     <ClInclude Include="Game\include\MainMenu\MainMenuScene.h">
       <Filter>Header Files\Game\MainMenu</Filter>
     </ClInclude>
     <ClInclude Include="Engine\include\Core\Delegate\Delegate.h">
       <Filter>Header Files\Engine\Core\Delegate</Filter>
     </ClInclude>
-    <ClInclude Include="Game\include\BattleScene\RotatingEnemy.h">
-      <Filter>Header Files\Game\BattleScene</Filter>
+    <ClInclude Include="Game\include\Common\UI\LoadSceneButton.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Game\include\BattleScene\KillableEnemy.h">
-      <Filter>Header Files\Game\BattleScene</Filter>
+    <ClInclude Include="Game\include\TestScene\CrossButton.h">
+      <Filter>Header Files\Game\TestScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\include\TestScene\KillableEntity.h">
+      <Filter>Header Files\Game\TestScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\include\TestScene\MovingEntity.h">
+      <Filter>Header Files\Game\TestScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\include\TestScene\RotatingEntity.h">
+      <Filter>Header Files\Game\TestScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\include\TestScene\TestScene.h">
+      <Filter>Header Files\Game\TestScene</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

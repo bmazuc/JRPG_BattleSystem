@@ -1,6 +1,6 @@
 #include "MainMenu/MainMenuScene.h"
 #include "UI/Text.h"
-#include "MainMenu/StartButton.h"
+#include "Common/UI/LoadSceneButton.h"
 #include "Rendering/Material.h"
 
 void MainMenuScene::CreateScene()
@@ -9,11 +9,12 @@ void MainMenuScene::CreateScene()
     text->SetContent("JRPG_BattleSystem");
     text->SetSize(36);
 
-    StartButton* button = CreateUIElement<StartButton>("Button", glm::vec2(320, 340), 0, glm::vec2(1, 1));
+    LoadSceneButton* button = CreateUIElement<LoadSceneButton>("Button", glm::vec2(320, 340), 0, glm::vec2(1, 1));
     button->GetMaterial()->SetTexture("button");
     button->SetSize(glm::vec2(75, 50));
+    button->SetSceneToLoad("testScene");
 
     Text* buttonText = CreateUIElement<Text>("ButtonText", button, glm::vec2(0, 0), 0, glm::vec2(1, 1));
-    buttonText->SetContent("Start");
+    buttonText->SetContent("Test");
     buttonText->SetSize(24);
 }
