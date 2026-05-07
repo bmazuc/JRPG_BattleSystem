@@ -19,82 +19,36 @@
 void Scene::Load()
 {
 	CreateScene();
-	isLoaded = true;
 }
 
 void Scene::BeginPlay()
 {
 	playerController = new PlayerController();
+	actorsCollection.SetPlayerController(playerController);
 
-	for (Actor* actor : actors)
-	{
-		if (actor)
-		{
-			actor->BeginPlay();
-			actor->ComponentsBeginPlay();
-			actor->SetupInputs(playerController);
-		}
-	}
+	UpdateTransforms();
 
-	for (UIElement* uiElement : uiElements)
-	{
-		if (uiElement)
-		{
-			uiElement->BeginPlay();
-		}
-	}
+	actorsCollection.BeginPlay();
+	uiElementsCollection.BeginPlay();
 }
 
 void Scene::UpdateTransforms()
 {
-	for (Actor* actor : actors)
-	{
-		if (actor)
-		{
-			if (!actor->GetRoot()->HasParent())
-			{
-				actor->UpdateTransforms();
-			}
-		}
-	}
-
-	for (UIElement* element : uiElements)
-	{
-		if (element)
-		{
-			if (!element->GetRoot()->HasParent())
-			{
-				element->UpdateTransform();
-			}
-		}
-	}
+	actorsCollection.UpdateTransforms();
+	uiElementsCollection.UpdateTransforms();
 }
 
 void Scene::Update(float deltaTime)
 {
-	for (Actor* actor : actors)
-	{
-		if (actor)
-		{
-			actor->Update(deltaTime);
-			actor->UpdateComponents(deltaTime);
-		}
-	}
-
-	for (UIElement* uiElement : uiElements)
-	{
-		if (uiElement)
-		{
-			uiElement->Update(deltaTime);
-		}
-	}
+	actorsCollection.Update(deltaTime);
+	uiElementsCollection.Update(deltaTime);
 }
 
 void Scene::UpdateInputs(InputManager* inputManager)
 {
 	glm::vec2 mouse = inputManager->GetMousePosition();
 
-	for (UIElement* element : uiElements)
+	for (UIElement* element : uiElementsCollection.GetCollection())
 	{
 		if (Button* button = dynamic_cast<Button*>(element))
 		{
@@ -117,37 +71,8 @@ void Scene::UpdateInputs(InputManager* inputManager)
 
 void Scene::ProcessDestroy()
 {
-	for (Actor* actorToDestroy : actorsToDestroy)
-	{
-		if (actorToDestroy)
-		{
-			actorToDestroy->GetRoot()->DetachFromHierarchy();
-
-			actors.erase(std::remove(actors.begin(), actors.end(), actorToDestroy), actors.end());
-			delete actorToDestroy;
-		}
-	}
-
-	actorsToDestroy.clear();
-
-	for (Actor* actor : actors)
-	{
-		if (actor)
-		{
-			actor->ProcessComponentsDestroy();
-		}
-	}
-
-	for (UIElement* uiElementToDestroy : uiElementsToDestroy)
-	{
-		if (uiElementToDestroy)
-		{
-			uiElements.erase(std::remove(uiElements.begin(), uiElements.end(), uiElementToDestroy), uiElements.end());
-			delete uiElementToDestroy;
-		}
-	}
-
-	uiElementsToDestroy.clear();
+	actorsCollection.ProcessDestroy();
+	uiElementsCollection.ProcessDestroy();
 }
 
 void Scene::Unload()
@@ -155,34 +80,21 @@ void Scene::Unload()
 	pendingRequest.type = SceneRequestType::None;
 	pendingRequest.newSceneName = "";
 
-	for (Actor* actor : actors)
-	{
-		delete actor;
-	}
-
-	actors.clear();
-
-	for (UIElement* uiElement : uiElements)
-	{
-		delete uiElement;
-	}
-
-	uiElements.clear();
+	actorsCollection.Clear();
+	uiElementsCollection.Clear();
 
 	delete playerController;
 	playerController = nullptr;
-
-	isLoaded = false;
 }
 
 void Scene::RegisterToDestroy(Actor* actor)
 {
-	actorsToDestroy.push_back(actor);
+	actorsCollection.RegisterToDestroy(actor);
 }
 
 void Scene::RegisterToDestroy(UIElement* uiElement)
 {
-	uiElementsToDestroy.push_back(uiElement);
+	uiElementsCollection.RegisterToDestroy(uiElement);
 }
 
 void Scene::RequestSceneChange(std::string sceneName)
@@ -212,12 +124,8 @@ void Scene::InternalAddActor(Actor* actor, std::string name, glm::vec2 worldLoca
 	actor->SetWorldScale(worldScale);
 	
 	actor->SetScene(this);
-	actors.push_back(actor);
 
-	if (isLoaded)
-	{
-		actor->BeginPlay();
-	}
+	actorsCollection.Add(actor);
 }
 
 void Scene::InternalAddActor(Actor* actor, Actor* parent, std::string name, glm::vec2 localLocation, float localRotate, glm::vec2 localScale)
@@ -229,12 +137,8 @@ void Scene::InternalAddActor(Actor* actor, Actor* parent, std::string name, glm:
 	actor->SetLocalScale(localScale);
 
 	actor->SetScene(this);
-	actors.push_back(actor);
 
-	if (isLoaded)
-	{
-		actor->BeginPlay();
-	}
+	actorsCollection.Add(actor);
 }
 
 void Scene::InternalAddUIElement(UIElement* element, std::string name, glm::vec2 worldLocation, float worldRotate, glm::vec2 worldScale)
@@ -245,12 +149,8 @@ void Scene::InternalAddUIElement(UIElement* element, std::string name, glm::vec2
 	element->SetWorldScale(worldScale);
 
 	element->SetScene(this);
-	uiElements.push_back(element);
 
-	if (isLoaded)
-	{
-		element->BeginPlay();
-	}
+	uiElementsCollection.Add(element);
 }
 
 void Scene::InternalAddUIElement(UIElement* element, UIElement* parent, std::string name, glm::vec2 localLocation, float localRotate, glm::vec2 localScale)
@@ -262,10 +162,6 @@ void Scene::InternalAddUIElement(UIElement* element, UIElement* parent, std::str
 	element->SetLocalScale(localScale);
 
 	element->SetScene(this);
-	uiElements.push_back(element);
 
-	if (isLoaded)
-	{
-		element->BeginPlay();
-	}
+	uiElementsCollection.Add(element);
 }

@@ -11,6 +11,7 @@ class KillableEntity : public Actor
 {
 public:
 	KillableEntity(std::string textureName = "default", std::string shaderName = "default");
+
 	void SetupInputs(PlayerController* _playerController) override;
 
 	void OnClick();

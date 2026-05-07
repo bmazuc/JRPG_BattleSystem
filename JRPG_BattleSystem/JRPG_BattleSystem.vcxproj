@@ -140,6 +140,7 @@
     <ClCompile Include="Engine\source\Components\Rendering\SpriteRendererComponent.cpp" />
     <ClCompile Include="Engine\source\Core\Engine.cpp" />
     <ClCompile Include="Engine\source\Core\Inputs\InputManager.cpp" />
+    <ClCompile Include="Engine\source\Core\Random.cpp" />
     <ClCompile Include="Engine\source\Core\Resource\ResourceManager.cpp" />
     <ClCompile Include="Engine\source\Core\Window.cpp" />
     <ClCompile Include="Engine\source\Graphics\Font.cpp" />
@@ -151,10 +152,15 @@
     <ClCompile Include="Engine\source\Scene\PlayerController.cpp" />
     <ClCompile Include="Engine\source\Scene\Scene.cpp" />
     <ClCompile Include="Engine\source\Scene\SceneManager.cpp" />
+    <ClCompile Include="Engine\source\Scene\SceneObjectCollections\ActorCollection.cpp" />
+    <ClCompile Include="Engine\source\Scene\SceneObjectCollections\SceneObjectCollection.cpp" />
     <ClCompile Include="Engine\source\UI\Button.cpp" />
     <ClCompile Include="Engine\source\UI\Image.cpp" />
     <ClCompile Include="Engine\source\UI\Text.cpp" />
     <ClCompile Include="Engine\source\UI\UIElement.cpp" />
+    <ClCompile Include="Game\source\BattleScene\BattleScene.cpp" />
+    <ClCompile Include="Game\source\BattleScene\Enemy.cpp" />
+    <ClCompile Include="Game\source\BattleScene\EnemySpawner.cpp" />
     <ClCompile Include="Game\source\Common\UI\LoadSceneButton.cpp" />
     <ClCompile Include="Game\source\MainMenu\MainMenuScene.cpp" />
     <ClCompile Include="Game\source\TestScene\CrossButton.cpp" />
@@ -172,6 +178,7 @@
     <ClInclude Include="Engine\include\Core\Engine.h" />
     <ClInclude Include="Engine\include\Core\Inputs\InputManager.h" />
     <ClInclude Include="Engine\include\Core\Math\Transform2D.h" />
+    <ClInclude Include="Engine\include\Core\Random.h" />
     <ClInclude Include="Engine\include\Core\Resource\ResourceManager.h" />
     <ClInclude Include="Engine\include\Core\Window.h" />
     <ClInclude Include="Engine\include\Graphics\Font.h" />
@@ -183,10 +190,15 @@
     <ClInclude Include="Engine\include\Scene\PlayerController.h" />
     <ClInclude Include="Engine\include\Scene\Scene.h" />
     <ClInclude Include="Engine\include\Scene\SceneManager.h" />
+    <ClInclude Include="Engine\include\Scene\SceneObjectCollections\ActorCollection.h" />
+    <ClInclude Include="Engine\include\Scene\SceneObjectCollections\SceneObjectCollection.h" />
     <ClInclude Include="Engine\include\UI\Button.h" />
     <ClInclude Include="Engine\include\UI\Image.h" />
     <ClInclude Include="Engine\include\UI\Text.h" />
     <ClInclude Include="Engine\include\UI\UIElement.h" />
+    <ClInclude Include="Game\include\BattleScene\BattleScene.h" />
+    <ClInclude Include="Game\include\BattleScene\Enemy.h" />
+    <ClInclude Include="Game\include\BattleScene\EnemySpawner.h" />
     <ClInclude Include="Game\include\Common\UI\LoadSceneButton.h" />
     <ClInclude Include="Game\include\MainMenu\MainMenuScene.h" />
     <ClInclude Include="Game\include\TestScene\CrossButton.h" />

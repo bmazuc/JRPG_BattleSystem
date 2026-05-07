@@ -199,9 +199,9 @@ void Actor::InternalAddComponent(Component* component, std::string name, Compone
 	component->SetLocalScale(localScale);
 
 	components.emplace_back(component);
+}
 
-	if (scene && scene->IsLoaded())
-	{
-		component->BeginPlay();
-	}
+void Actor::DetachFromHierarchy()
+{
+	root->DetachFromHierarchy();
 }

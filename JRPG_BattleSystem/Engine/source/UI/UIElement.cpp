@@ -32,7 +32,7 @@ bool UIElement::IsAncestorOf(UIElement* element)
 	return false;
 }
 
-void UIElement::UpdateTransform()
+void UIElement::UpdateTransforms()
 {
 	if (isDirty)
 	{
@@ -56,7 +56,20 @@ void UIElement::UpdateTransform()
 
 	for (UIElement* child : children)
 	{
-		child->UpdateTransform();
+		child->UpdateTransforms();
+	}
+}
+
+void UIElement::DetachFromHierarchy()
+{
+	if (parent)
+	{
+		parent->RemoveChild(this);
+	}
+
+	for (UIElement* child : children)
+	{
+		child->SetParent(nullptr);
 	}
 }
 
@@ -70,7 +83,7 @@ void UIElement::SetParent(UIElement* _parent)
 			return;
 		}
 
-		GetRoot()->UpdateTransform();
+		GetRoot()->UpdateTransforms();
 
 		// Save current world
 		glm::vec2 worldPos = GetWorldPosition();
@@ -151,7 +164,7 @@ void UIElement::SetWorldPosition(glm::vec2 position)
 {
 	if (parent)
 	{
-		GetRoot()->UpdateTransform();
+		GetRoot()->UpdateTransforms();
 
 		glm::mat4 invParent = glm::inverse(parent->transform.world);
 		glm::vec4 local = invParent * glm::vec4(position, 0.0f, 1.0f);
@@ -168,7 +181,7 @@ void UIElement::SetWorldRotate(float rotate)
 {
 	if (parent)
 	{
-		GetRoot()->UpdateTransform();
+		GetRoot()->UpdateTransforms();
 
 		float parentRot = parent->GetWorldRotate();
 		transform.rotate = rotate - parentRot;
@@ -184,7 +197,7 @@ void UIElement::SetWorldScale(glm::vec2 scale)
 {
 	if (parent)
 	{
-		GetRoot()->UpdateTransform();
+		GetRoot()->UpdateTransforms();
 
 		glm::vec2 parentScale = parent->GetWorldScale();
 		if (parentScale.x == 0) parentScale.x = 0.0001f;

@@ -103,6 +103,27 @@
     <Filter Include="Source Files\Game\TestScene">
       <UniqueIdentifier>{ce24a32d-c676-4cb6-a272-3fc7aa963c08}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Game\BattleScene">
+      <UniqueIdentifier>{57fd752d-c607-47b4-b79a-a50686adea72}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\BattleScene">
+      <UniqueIdentifier>{b40526ab-107f-4083-93f2-af8e3f7b2b5c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\Common">
+      <UniqueIdentifier>{55bcb6ff-8cb9-4358-a927-362e56dcf977}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\Common\UI">
+      <UniqueIdentifier>{137c2193-7246-4695-9451-8792b38fe526}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Common">
+      <UniqueIdentifier>{33d0a172-71b4-45a4-8f73-5e9b91b4837a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Common\UI">
+      <UniqueIdentifier>{593dfc50-e00f-4791-a7c5-fab3fe74cc35}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Scene\NewFilter1">
+      <UniqueIdentifier>{3f79df71-e5b8-4d85-a193-e720db2e2613}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -171,9 +192,6 @@
     <ClCompile Include="Game\source\MainMenu\MainMenuScene.cpp">
       <Filter>Source Files\Game\MainMenu</Filter>
     </ClCompile>
-    <ClCompile Include="Game\source\Common\UI\LoadSceneButton.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Game\source\TestScene\CrossButton.cpp">
       <Filter>Source Files\Game\TestScene</Filter>
     </ClCompile>
@@ -188,6 +206,27 @@
     </ClCompile>
     <ClCompile Include="Game\source\TestScene\TestScene.cpp">
       <Filter>Source Files\Game\TestScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\source\BattleScene\BattleScene.cpp">
+      <Filter>Source Files\Game\BattleScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\source\BattleScene\Enemy.cpp">
+      <Filter>Source Files\Game\BattleScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\source\Common\UI\LoadSceneButton.cpp">
+      <Filter>Source Files\Game\Common\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\source\BattleScene\EnemySpawner.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\source\Core\Random.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\source\Scene\SceneObjectCollections\SceneObjectCollection.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\source\Scene\SceneObjectCollections\ActorCollection.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -260,9 +299,6 @@
     <ClInclude Include="Engine\include\Core\Delegate\Delegate.h">
       <Filter>Header Files\Engine\Core\Delegate</Filter>
     </ClInclude>
-    <ClInclude Include="Game\include\Common\UI\LoadSceneButton.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Game\include\TestScene\CrossButton.h">
       <Filter>Header Files\Game\TestScene</Filter>
     </ClInclude>
@@ -277,6 +313,27 @@
     </ClInclude>
     <ClInclude Include="Game\include\TestScene\TestScene.h">
       <Filter>Header Files\Game\TestScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\include\BattleScene\BattleScene.h">
+      <Filter>Header Files\Game\BattleScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\include\BattleScene\Enemy.h">
+      <Filter>Header Files\Game\BattleScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\include\Common\UI\LoadSceneButton.h">
+      <Filter>Header Files\Game\Common\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\include\BattleScene\EnemySpawner.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\include\Core\Random.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\include\Scene\SceneObjectCollections\SceneObjectCollection.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\include\Scene\SceneObjectCollections\ActorCollection.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

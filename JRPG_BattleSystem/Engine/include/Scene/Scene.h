@@ -6,6 +6,7 @@
 #include <glm/vec2.hpp>
 #include "Scene/Actor.h"
 #include "UI/UIElement.h"
+#include "SceneObjectCollections/ActorCollection.h"
 
 class CameraComponent;
 class Shader;
@@ -83,11 +84,11 @@ public:
 	// Set the camera used to compute the rendering view matrix
 	void SetActiveCamera(CameraComponent* camera) { activeCamera = camera; }
 	
-	std::vector<Actor*> GetActors() { return actors; }
-	const std::vector<Actor*> GetActors() const { return actors; }
+	std::vector<Actor*> GetActors() { return actorsCollection.GetCollection(); }
+	const std::vector<Actor*> GetActors() const { return actorsCollection.GetCollection(); }
 
-	std::vector<UIElement*> GetUIElements() { return uiElements; }
-	const std::vector<UIElement*> GetUIElements() const { return uiElements; }
+	std::vector<UIElement*> GetUIElements() { return uiElementsCollection.GetCollection(); }
+	const std::vector<UIElement*> GetUIElements() const { return uiElementsCollection.GetCollection(); }
 
 	/*
 	 *	Create and spawn an actor in the scene
@@ -120,20 +121,7 @@ public:
 	{
 		static_assert(std::is_base_of<Actor, T>::value, "T must inherit Actor");
 
-		for (Actor* actor : actors)
-		{
-			if (actor)
-			{
-				if (actor->GetName() == name)
-				{
-					if (T* casted = dynamic_cast<T*>(actor))
-					{
-						return casted;
-					}
-				}
-			}
-		}
-		return nullptr;
+		return actorsCollection.Get<T>(name);
 	}
 
 	/*
@@ -170,20 +158,7 @@ public:
 	{
 		static_assert(std::is_base_of<UIElement, T>::value, "T must inherit UIElement");
 
-		for (UIElement* element : uiElements)
-		{
-			if (element)
-			{
-				if (element->GetName() == name)
-				{
-					if (T* casted = dynamic_cast<T*>(element))
-					{
-						return casted;
-					}
-				}
-			}
-		}
-		return nullptr;
+		return uiElementsCollection.Get<T>(name);
 	}
 
 	/*
@@ -213,9 +188,6 @@ public:
 	 */ 
 	glm::vec2 ScreenToWorld(glm::vec2 screenPos);
 
-	// Are the scene already loaded ?
-	bool IsLoaded() const { return isLoaded; }
-
 private:
 	/*
 	 *	Add the actor to the list of actors and call its begin play if scene is already loaded.
@@ -230,23 +202,14 @@ private:
 	void InternalAddUIElement(UIElement* element, std::string name, glm::vec2 worldLocation, float worldRotate, glm::vec2 worldScale);
 	void InternalAddUIElement(UIElement* element, UIElement* parent, std::string name, glm::vec2 localLocation, float localRotate, glm::vec2 localScale);
 
-	// All actors living in the scene
-	std::vector<Actor*> actors;
-	// All actors marked for destruction
-	std::vector<Actor*> actorsToDestroy;
-
 	// Camera used to compute the rendering view matric
 	CameraComponent* activeCamera;
 
 	// The player controller associated to this scene
 	PlayerController* playerController;
-	// All UIElements living in the scene
-	std::vector<UIElement*> uiElements;
-	// All UIElements marked for destruction
-	std::vector<UIElement*> uiElementsToDestroy;
 
-	// Are the scene already loaded ?
-	bool isLoaded = false;
+	ActorCollection actorsCollection;
+	SceneObjectCollection<UIElement> uiElementsCollection;
 
 	SceneRequest pendingRequest;
 };

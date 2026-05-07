@@ -54,7 +54,6 @@ void TestScene::CreateScene()
 
 void TestScene::LoadAssets()
 {
-    ResourceManager::LoadPNGTexture("Assets/button.png", "button"); 
     ResourceManager::LoadPNGTexture("Assets/goblin.png", "goblin");
     ResourceManager::LoadPNGTexture("Assets/battleback1_0.png", "background");
 }

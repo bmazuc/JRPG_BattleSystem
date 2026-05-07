@@ -4,6 +4,7 @@
 #include "Scene/SceneManager.h"
 #include "Core/Resource/ResourceManager.h"
 #include "Core/Inputs/InputManager.h"
+#include "Core/Random.h"
 
 #include <glm/vec2.hpp>
 #include <glm/vec3.hpp>
@@ -16,6 +17,7 @@ bool Engine::Start(const EngineConfig& config)
         && InitOpenGL(config.swapInterval))
     {
         LoadDefaultResources();
+        Random::Init();
         sceneManager = new SceneManager();
         renderer = new Renderer();
         inputManager = new InputManager();

@@ -4,6 +4,7 @@
 #include "Core/Engine.h"
 #include "TestScene/TestScene.h"
 #include "MainMenu/MainMenuScene.h"
+#include "BattleScene/BattleScene.h"
 
 #ifdef _DEBUG
 #include <crtdbg.h>
@@ -27,6 +28,7 @@ int main()
         {
             sceneManager->AddScene<TestScene>("testScene");
             sceneManager->AddScene<MainMenuScene>("mainMenu");
+            sceneManager->AddScene<BattleScene>("battleScene");
             sceneManager->SetDefaultScene("mainMenu");
         }
         engine->Run();

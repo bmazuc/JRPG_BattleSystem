@@ -28,7 +28,8 @@ public:
 	 *	If marked dirty, update this element transform.
 	 *	Called UpdateTransform() on children.
 	 */
-	void UpdateTransform();
+	void UpdateTransforms();
+	void DetachFromHierarchy();
 
 	/*
 	 *	Mark a component for destroy

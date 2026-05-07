@@ -17,7 +17,7 @@ class Actor
 {
 public:
 	Actor();
-	~Actor();
+	virtual ~Actor();
 
 	/*
 	 *	Behavior called after scene loading
@@ -52,6 +52,7 @@ public:
 	 *	Update components transform.
 	 */
 	void UpdateTransforms();
+	void DetachFromHierarchy();
 	/*
 	 *	Called each components init behavior. Called after scene loading.
 	 */
