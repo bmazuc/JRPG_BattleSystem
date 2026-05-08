@@ -8,12 +8,7 @@ Actor::Actor()
 
 Actor::~Actor()
 {
-	for (Component* component : components)
-	{
-		delete component;
-	}
-
-	components.clear();
+	componentsCollection.Clear();
 }
 
 void Actor::AttachToActor(Actor* actor)
@@ -39,39 +34,17 @@ void Actor::UpdateTransforms()
 
 void Actor::ComponentsBeginPlay()
 {
-	for (Component* component : components)
-	{
-		if (component)
-		{
-			component->BeginPlay();
-		}
-	}
+	componentsCollection.BeginPlay();
 }
 
 void Actor::UpdateComponents(float deltaTime)
 {
-	for (Component* component : components)
-	{
-		if (component)
-		{
-			component->Update(deltaTime);
-		}
-	}
+	componentsCollection.Update(deltaTime);
 }
 
 void Actor::ProcessComponentsDestroy()
 {
-	for (Component* componentToDestroy : componentsToDestroy)
-	{
-		if (componentToDestroy)
-		{
-			componentToDestroy->DetachFromHierarchy();
-			components.erase(std::remove(components.begin(), components.end(), componentToDestroy), components.end());
-			delete componentToDestroy;
-		}
-	}
-
-	componentsToDestroy.clear();
+	componentsCollection.ProcessDestroy();
 }
 
 glm::vec2 Actor::GetLocalPosition() const
@@ -175,7 +148,7 @@ void Actor::Destroy(bool destroyChildren)
 
 void Actor::RegisterComponentsToDestroy(Component* component)
 {
-	componentsToDestroy.push_back(component);
+	componentsCollection.RegisterToDestroy(component);
 }
 
 Actor* Actor::GetParent()
@@ -186,19 +159,6 @@ Actor* Actor::GetParent()
 const Actor* Actor::GetParent() const
 { 
 	return root->HasParent() ? root->GetParent()->GetOwner() : nullptr; 
-}
-
-void Actor::InternalAddComponent(Component* component, std::string name, Component* parent, glm::vec2 localLocation, float localRotate, glm::vec2 localScale)
-{
-	component->SetOwner(this);
-
-	component->SetName(name);
-	component->SetParent(parent ? parent : root);
-	component->SetLocalPosition(localLocation);
-	component->SetLocalRotate(localRotate);
-	component->SetLocalScale(localScale);
-
-	components.emplace_back(component);
 }
 
 void Actor::DetachFromHierarchy()

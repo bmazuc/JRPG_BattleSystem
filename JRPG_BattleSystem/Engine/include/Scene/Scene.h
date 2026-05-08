@@ -14,6 +14,39 @@ class Texture;
 class PlayerController;
 class InputManager;
 
+struct SpawnInfo
+{
+public:
+	SpawnInfo(TransformSpace _transformSpace, glm::vec2 _location, float _rotate, glm::vec2 _scale)
+		: transformSpace(_transformSpace), location(_location), rotate(_rotate), scale(_scale) { }
+
+	virtual ~SpawnInfo() = 0;
+	glm::vec2 location = glm::vec2(0.0f, 0.0f);
+	float rotate = 0.0f;
+	glm::vec2 scale = glm::vec2(1.0f, 1.0f);
+	TransformSpace transformSpace = TransformSpace::World;
+};
+
+struct ActorSpawnInfo : SpawnInfo
+{
+public:
+	ActorSpawnInfo(Actor* _parent = nullptr, TransformSpace _transformSpace = TransformSpace::World, glm::vec2 _location = glm::vec2(0.0f, 0.0f), float _rotate = 0.0f, glm::vec2 _scale = glm::vec2(1.0f, 1.0f))
+		: parent(_parent), SpawnInfo(_transformSpace, _location, _rotate, _scale) {}
+	~ActorSpawnInfo() = default;
+
+	Actor* parent = nullptr;
+};
+
+struct UISpawnInfo : SpawnInfo
+{
+public:
+	UISpawnInfo(UIElement* _parent = nullptr, TransformSpace _transformSpace = TransformSpace::World, glm::vec2 _location = glm::vec2(0.0f, 0.0f), float _rotate = 0.0f, glm::vec2 _scale = glm::vec2(1.0f, 1.0f))
+		: parent(_parent), SpawnInfo(_transformSpace, _location, _rotate, _scale) {}
+	~UISpawnInfo() = default;
+
+	UIElement* parent = nullptr;
+};
+
 /*
  *	Request type that a scene can send.
  */
@@ -94,64 +127,86 @@ public:
 	 *	Create and spawn an actor in the scene
 	 */
 	template<typename T, typename... Args>
-	T* SpawnActor(std::string name, glm::vec2 worldLocation, float worldRotate, glm::vec2 worldScale, Args&&... args)
+	T* SpawnActor(std::string name, const ActorSpawnInfo& spawnInfo, Args&&... args)
 	{
 		static_assert(std::is_base_of<Actor, T>::value, "T must inherit Actor");
 
 		T* actor = new T(std::forward<Args>(args)...);
-		InternalAddActor(actor, name, worldLocation, worldRotate, worldScale);
-		return actor;
-	}
 
-	template<typename T, typename... Args>
-	T* SpawnActor(std::string name, Actor* parent, glm::vec2 localLocation, float localRotate, glm::vec2 localScale, Args&&... args)
-	{
-		static_assert(std::is_base_of<Actor, T>::value, "T must inherit Actor");
+		actor->SetName(name);
+		actor->AttachToActor(spawnInfo.parent);
+		actor->SetScene(this);
 
-		T* actor = new T(std::forward<Args>(args)...);
-		InternalAddActor(actor, parent, name, localLocation, localRotate, localScale);
+		if (spawnInfo.transformSpace == TransformSpace::World)
+		{
+			actor->SetWorldPosition(spawnInfo.location);
+			actor->SetWorldRotate(spawnInfo.rotate);
+			actor->SetWorldScale(spawnInfo.scale);
+		}
+		else
+		{
+			actor->SetLocalPosition(spawnInfo.location);
+			actor->SetLocalRotate(spawnInfo.rotate);
+			actor->SetLocalScale(spawnInfo.scale);
+		}
+
+		actorsCollection.Add(actor);
 		return actor;
 	}
 
 	/*
-	 *	Retrieve actor of given name and type from the scene
+	 *	Get the first actor of given name and type from the scene
 	 */
 	template<typename T>
 	T* GetActor(std::string name)
 	{
 		static_assert(std::is_base_of<Actor, T>::value, "T must inherit Actor");
-
 		return actorsCollection.Get<T>(name);
 	}
 
 	/*
-	 *	Create and add an UI element in the scene.
+	 *	Get the first actor of given type from the scene
 	 */
-	template<typename T, typename... Args>
-	T* CreateUIElement(std::string name, glm::vec2 worldLocation, float worldRotate, glm::vec2 worldScale, Args&&... args)
+	template<typename T>
+	T* GetActor()
 	{
-		static_assert(std::is_base_of<UIElement, T>::value, "T must inherit UIElement");
-
-		T* element = new T(std::forward<Args>(args)...);
-		InternalAddUIElement(element, name, worldLocation, worldRotate, worldScale);
-		return element;
+		static_assert(std::is_base_of<Actor, T>::value, "T must inherit Actor");
+		return actorsCollection.Get<T>();
 	}
 
 	/*
 	 *	Create and add an UI element in the scene.
 	 */
 	template<typename T, typename... Args>
-	T* CreateUIElement(std::string name, UIElement* parent, glm::vec2 localLocation, float localRotate, glm::vec2 localScale, Args&&... args)
+	T* CreateUIElement(std::string name, const UISpawnInfo& spawnInfo, Args&&... args)
 	{
 		static_assert(std::is_base_of<UIElement, T>::value, "T must inherit UIElement");
 
 		T* element = new T(std::forward<Args>(args)...);
-		InternalAddUIElement(element, parent, name, localLocation, localRotate, localScale);
+		element->SetName(name);
+		element->SetParent(spawnInfo.parent);
+		element->SetScene(this);
+
+		if (spawnInfo.transformSpace == TransformSpace::World)
+		{
+			element->SetWorldPosition(spawnInfo.location);
+			element->SetWorldRotate(spawnInfo.rotate);
+			element->SetWorldScale(spawnInfo.scale);
+		}
+		else
+		{
+			element->SetLocalPosition(spawnInfo.location);
+			element->SetLocalRotate(spawnInfo.rotate);
+			element->SetLocalScale(spawnInfo.scale);
+		}
+
+		uiElementsCollection.Add(element);
+
 		return element;
 	}
 
 	/*
-	 *	Retrieve UI element of given name and type from the scene
+	 *	Get the first UI element of given name and type from the scene
 	 */
 	template<typename T>
 	T* GetUIElement(std::string name)
@@ -159,6 +214,17 @@ public:
 		static_assert(std::is_base_of<UIElement, T>::value, "T must inherit UIElement");
 
 		return uiElementsCollection.Get<T>(name);
+	}
+
+	/*
+	 *	Get the first UI element of given type from the scene
+	 */
+	template<typename T>
+	T* GetUIElement()
+	{
+		static_assert(std::is_base_of<UIElement, T>::value, "T must inherit UIElement");
+
+		return uiElementsCollection.Get<T>();
 	}
 
 	/*
@@ -189,19 +255,6 @@ public:
 	glm::vec2 ScreenToWorld(glm::vec2 screenPos);
 
 private:
-	/*
-	 *	Add the actor to the list of actors and call its begin play if scene is already loaded.
-	 *	Also reduce the amount of code in .h
-	 */
-	void InternalAddActor(Actor* actor, std::string name, glm::vec2 worldLocation, float worldRotate, glm::vec2 worldScale);
-	void InternalAddActor(Actor* actor, Actor* parent, std::string name, glm::vec2 localLocation, float localRotate, glm::vec2 localScale);
-	/*
-	 *	Add the UI element to the list of UI elements and call its begin play if scene is already loaded.
-	 *	Also reduce the amount of code in .h
-	 */
-	void InternalAddUIElement(UIElement* element, std::string name, glm::vec2 worldLocation, float worldRotate, glm::vec2 worldScale);
-	void InternalAddUIElement(UIElement* element, UIElement* parent, std::string name, glm::vec2 localLocation, float localRotate, glm::vec2 localScale);
-
 	// Camera used to compute the rendering view matric
 	CameraComponent* activeCamera;
 

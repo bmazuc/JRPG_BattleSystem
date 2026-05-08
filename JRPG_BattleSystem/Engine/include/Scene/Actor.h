@@ -5,8 +5,8 @@
 #include <glm/vec2.hpp>
 #include <vector>
 #include <string>
+#include "Scene/SceneObjectCollections/SceneObjectCollection.h"
 
-class Component;
 class Scene;
 class PlayerController;
 
@@ -76,7 +76,17 @@ public:
 		static_assert(std::is_base_of<Component, T>::value, "T must inherit Component");
 
 		T* component = new T(std::forward<Args>(args)...);
-		InternalAddComponent(component, name, parent, localLocation, localRotate, localScale);
+		
+		component->SetOwner(this);
+
+		component->SetName(name);
+		component->SetParent(parent ? parent : root);
+		component->SetLocalPosition(localLocation);
+		component->SetLocalRotate(localRotate);
+		component->SetLocalScale(localScale);
+
+		componentsCollection.Add(component);
+
 		return component;
 	}
 
@@ -84,18 +94,22 @@ public:
 	 *	Get the first component of given name and type in this actor.
 	 */
 	template<typename T>
+	T* GetComponent(std::string name)
+	{
+		static_assert(std::is_base_of<Component, T>::value, "T must inherit Component");
+		return componentsCollection.Get<T>(name);
+	}
+
+	/*
+	 *	Get the first component of given type in this actor.
+	 */
+	template<typename T>
 	T* GetComponent()
 	{
-		for (auto& c : components) {
-			T* casted = dynamic_cast<T*>(c);
-
-			if (casted)
-				return casted;
-		}
-		return nullptr;
+		static_assert(std::is_base_of<Component, T>::value, "T must inherit Component");
+		return componentsCollection.Get<T>();
 	}
 	
-
 	/*
 	 *	Call by component destroy. Register this component inside a list of components to destroy.
 	 *	@param component the component to register
@@ -141,15 +155,8 @@ protected:
 	Scene* scene;
 
 private:
-	/*
-	 *	Add the component to the list of components and call its begin play if scene is already loaded.
-	 *	Also reduce the amount of code in .h
-	 */
-	void InternalAddComponent(Component* component, std::string name, Component* parent, glm::vec2 localLocation, float localRotate, glm::vec2 localScale);
-
 	Component* root;
-	std::vector<Component*> components;
-	std::vector<Component*> componentsToDestroy;
+	SceneObjectCollection<Component> componentsCollection;
 
 	// Are actor mark for destruction ?
 	bool isPendingDestroy = false;

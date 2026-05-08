@@ -11,27 +11,27 @@ void MainMenuScene::LoadAssets()
 
 void MainMenuScene::CreateScene()
 {
-    Text* text = CreateUIElement<Text>("Title", glm::vec2(320, 140), 0, glm::vec2(1, 1));
+    Text* text = CreateUIElement<Text>("Title", UISpawnInfo(nullptr, TransformSpace::World, glm::vec2(320, 140)));
     text->SetContent("JRPG_BattleSystem");
     text->SetSize(36);
 
     CreateLoadSceneButton(glm::vec2(320, 300), glm::vec2(75, 50),
         "battleScene",
-        "Battle", 24);
+        "Battle", 24.0f);
 
     CreateLoadSceneButton(glm::vec2(320, 400), glm::vec2(75, 50),
         "testScene",
-        "Test", 24);
+        "Test", 24.0f);
 }
 
-void MainMenuScene::CreateLoadSceneButton(glm::vec2 position, glm::vec2 buttonSize, std::string sceneToLoad, std::string content, int textSize)
+void MainMenuScene::CreateLoadSceneButton(glm::vec2 position, glm::vec2 buttonSize, std::string sceneToLoad, std::string content, float textSize)
 {
-    LoadSceneButton* button = CreateUIElement<LoadSceneButton>(sceneToLoad + "Button", position, 0, glm::vec2(1, 1));
+    LoadSceneButton* button = CreateUIElement<LoadSceneButton>(sceneToLoad + "Button", UISpawnInfo(nullptr, TransformSpace::World, position));
     button->GetMaterial()->SetTexture("button");
     button->SetSize(buttonSize);
     button->SetSceneToLoad(sceneToLoad);
 
-    Text* buttonText = CreateUIElement<Text>(sceneToLoad + "ButtonText", button, glm::vec2(0, 0), 0, glm::vec2(1, 1));
+    Text* buttonText = CreateUIElement<Text>(sceneToLoad + "ButtonText", UISpawnInfo(button, TransformSpace::Local));
     buttonText->SetContent(content);
     buttonText->SetSize(textSize);
 }

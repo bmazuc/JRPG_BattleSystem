@@ -96,7 +96,7 @@ public:
 	}
 
 	template<typename C>
-	const T* Get(std::string name) const 
+	const C* Get(std::string name) const 
 	{ 
 		for (T* object : sceneObjects)
 		{
@@ -115,7 +115,7 @@ public:
 	}
 
 	template<typename C>
-	T* Get(std::string name)
+	C* Get(std::string name)
 	{ 
 		for (T* object : sceneObjects)
 		{
@@ -127,6 +127,38 @@ public:
 					{
 						return casted;
 					}
+				}
+			}
+		}
+		return nullptr;
+	}
+
+	template<typename C>
+	C* Get()
+	{
+		for (T* object : sceneObjects)
+		{
+			if (object)
+			{
+				if (C* casted = dynamic_cast<C*>(object))
+				{
+					return casted;
+				}
+			}
+		}
+		return nullptr;
+	}
+
+	template<typename C>
+	const C* Get() const
+	{
+		for (T* object : sceneObjects)
+		{
+			if (object)
+			{
+				if (C* casted = dynamic_cast<C*>(object))
+				{
+					return casted;
 				}
 			}
 		}

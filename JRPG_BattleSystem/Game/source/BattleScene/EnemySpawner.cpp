@@ -16,15 +16,13 @@ void EnemySpawner::BeginPlay()
 
 void EnemySpawner::GenerateEnemies()
 {
-	for (int idx = 0; idx < groupSize; idx++)
+	for (unsigned int idx = 0; idx < groupSize; idx++)
 	{
 		const EnemyData& data = enemyDatas.size() > 0 ?
 			enemyDatas[Random::FromRange(0, (int)enemyDatas.size() - 1)] :
 			EnemyData();
 
-		Enemy* enemy = GetScene()->SpawnActor<Enemy>("Enemy" + std::to_string(idx),
-			glm::vec2(0, 0), 0, glm::vec2(1, 1),
-			data);
+		Enemy* enemy = GetScene()->SpawnActor<Enemy>("Enemy" + std::to_string(idx), ActorSpawnInfo(), data);
 		spawnedEnemies.push_back(enemy);
 	}
 

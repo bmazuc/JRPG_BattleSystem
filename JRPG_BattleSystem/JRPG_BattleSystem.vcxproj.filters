@@ -121,9 +121,6 @@
     <Filter Include="Source Files\Game\Common\UI">
       <UniqueIdentifier>{593dfc50-e00f-4791-a7c5-fab3fe74cc35}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Engine\Scene\NewFilter1">
-      <UniqueIdentifier>{3f79df71-e5b8-4d85-a193-e720db2e2613}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">

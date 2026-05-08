@@ -3,6 +3,12 @@
 #include <glm/vec2.hpp>
 #include <glm/mat4x4.hpp>
 
+enum class TransformSpace
+{
+	World,
+	Local
+};
+
 struct Transform2D
 {
 	glm::vec2 position = glm::vec2(0, 0);

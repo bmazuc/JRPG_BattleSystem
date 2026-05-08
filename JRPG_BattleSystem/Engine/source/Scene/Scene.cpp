@@ -16,6 +16,8 @@
 #include "Scene/Actor.h"
 #include "UI/UIElement.h"
 
+SpawnInfo::~SpawnInfo() {}
+
 void Scene::Load()
 {
 	CreateScene();
@@ -114,54 +116,4 @@ glm::vec2 Scene::ScreenToWorld(glm::vec2 screenPos)
 	}
 
 	return worldPos;
-}
-
-void Scene::InternalAddActor(Actor* actor, std::string name, glm::vec2 worldLocation, float worldRotate, glm::vec2 worldScale)
-{
-	actor->SetName(name);
-	actor->SetWorldPosition(worldLocation);
-	actor->SetWorldRotate(worldRotate);
-	actor->SetWorldScale(worldScale);
-	
-	actor->SetScene(this);
-
-	actorsCollection.Add(actor);
-}
-
-void Scene::InternalAddActor(Actor* actor, Actor* parent, std::string name, glm::vec2 localLocation, float localRotate, glm::vec2 localScale)
-{
-	actor->SetName(name);
-	actor->AttachToActor(parent);
-	actor->SetLocalPosition(localLocation);
-	actor->SetLocalRotate(localRotate);
-	actor->SetLocalScale(localScale);
-
-	actor->SetScene(this);
-
-	actorsCollection.Add(actor);
-}
-
-void Scene::InternalAddUIElement(UIElement* element, std::string name, glm::vec2 worldLocation, float worldRotate, glm::vec2 worldScale)
-{
-	element->SetName(name);
-	element->SetWorldPosition(worldLocation);
-	element->SetWorldRotate(worldRotate);
-	element->SetWorldScale(worldScale);
-
-	element->SetScene(this);
-
-	uiElementsCollection.Add(element);
-}
-
-void Scene::InternalAddUIElement(UIElement* element, UIElement* parent, std::string name, glm::vec2 localLocation, float localRotate, glm::vec2 localScale)
-{
-	element->SetName(name);
-	element->SetParent(parent);
-	element->SetLocalPosition(localLocation);
-	element->SetLocalRotate(localRotate);
-	element->SetLocalScale(localScale);
-
-	element->SetScene(this);
-
-	uiElementsCollection.Add(element);
 }
