@@ -26,14 +26,21 @@ public:
 	DelegateHandle Bind(std::function<ReturnType(Parameters...)> func)
 	{
 		DelegateFunction<ReturnType, Parameters...> delegateFunction = { nextId, func };
-		functions.push_back(delegateFunction);
+		if (isIterating)
+		{
+			pendingBindFunctionHandles.push_back(delegateFunction);		
+		}
+		else
+		{
+			functions.push_back(delegateFunction);
+		}
 		return nextId++;
 	}
 
 	// Register a function
 	void Unbind(DelegateHandle handle)
 	{
-		if (isCalling)
+		if (isIterating)
 		{
 			pendingUnbindFunctionHandles.push_back(handle);
 		}
@@ -46,19 +53,24 @@ public:
 	// Call all registered functions
 	void Call(Parameters... params)
 	{
-		isCalling = true;
+		isIterating = true;
 		for (auto& function : functions)
 		{
 			function.function(params...);
 		}
 
+		for (DelegateFunction<ReturnType, Parameters...>& function : pendingBindFunctionHandles)
+		{
+			functions.push_back(function);
+		}
+		pendingBindFunctionHandles.clear();
+
 		for (DelegateHandle& handle : pendingUnbindFunctionHandles)
 		{
 			InternalUnbind(handle);
 		}
-
 		pendingUnbindFunctionHandles.clear();
-		isCalling = false;
+		isIterating = false;
 	}
 
 	// Clear registered functions list
@@ -81,8 +93,11 @@ private:
 	std::vector<DelegateFunction<ReturnType, Parameters...>> functions;
 	DelegateHandle nextId = 0;
 	
-	// Are we calling the delegate functions ?
-	bool isCalling = false;
+	// Are we iterating the delegate functions list ?
+	bool isIterating = false;
+
+	// During call, register bind request handles to bind them after
+	std::vector<DelegateFunction<ReturnType, Parameters...>> pendingBindFunctionHandles;
 	// During call, register unbind request handles to clear them after
 	std::vector<DelegateHandle> pendingUnbindFunctionHandles;
 };
