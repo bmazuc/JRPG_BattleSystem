@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __TRANSFORM_2D_H_INCLUDED__
+#define __TRANSFORM_2D_H_INCLUDED__
 
 #include <glm/vec2.hpp>
 #include <glm/mat4x4.hpp>
@@ -17,3 +18,5 @@ struct Transform2D
 
 	glm::mat4 world;
 };
+
+#endif // __TRANSFORM_2D_H_INCLUDED__

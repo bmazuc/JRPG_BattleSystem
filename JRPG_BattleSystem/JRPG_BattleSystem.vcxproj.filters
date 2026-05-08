@@ -121,6 +121,12 @@
     <Filter Include="Source Files\Game\Common\UI">
       <UniqueIdentifier>{593dfc50-e00f-4791-a7c5-fab3fe74cc35}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Engine\Scene\SceneObjectCollections">
+      <UniqueIdentifier>{b926ffeb-38bb-428e-b5a3-02b92f23d9a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Scene\SceneObjectCollections">
+      <UniqueIdentifier>{e49dc5a7-b1e2-4eea-add4-2fb8e66c736a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -213,17 +219,17 @@
     <ClCompile Include="Game\source\Common\UI\LoadSceneButton.cpp">
       <Filter>Source Files\Game\Common\UI</Filter>
     </ClCompile>
-    <ClCompile Include="Game\source\BattleScene\EnemySpawner.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\source\Core\Random.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\source\Scene\SceneObjectCollections\SceneObjectCollection.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Engine\Scene\SceneObjectCollections</Filter>
     </ClCompile>
     <ClCompile Include="Engine\source\Scene\SceneObjectCollections\ActorCollection.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Engine\Scene\SceneObjectCollections</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\source\Core\Random.cpp">
+      <Filter>Source Files\Engine\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\source\BattleScene\EnemySpawner.cpp">
+      <Filter>Source Files\Game\BattleScene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -321,16 +327,16 @@
       <Filter>Header Files\Game\Common\UI</Filter>
     </ClInclude>
     <ClInclude Include="Game\include\BattleScene\EnemySpawner.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\include\Core\Random.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Game\BattleScene</Filter>
     </ClInclude>
     <ClInclude Include="Engine\include\Scene\SceneObjectCollections\SceneObjectCollection.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Engine\Scene\SceneObjectCollections</Filter>
     </ClInclude>
     <ClInclude Include="Engine\include\Scene\SceneObjectCollections\ActorCollection.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Engine\Scene\SceneObjectCollections</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\include\Core\Random.h">
+      <Filter>Header Files\Engine\Core</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

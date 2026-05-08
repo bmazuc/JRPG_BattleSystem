@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __ACTOR_COLLECTION_INCLUDED__
+#define __ACTOR_COLLECTION_INCLUDED__
 
 #include "SceneObjectCollection.h"
 #include "Scene/Actor.h"
@@ -26,3 +27,5 @@ private:
 
 	PlayerController* playerController;
 };
+
+#endif // __ACTOR_COLLECTION_INCLUDED__
