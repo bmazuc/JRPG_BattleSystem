@@ -127,6 +127,12 @@
     <Filter Include="Source Files\Engine\Scene\SceneObjectCollections">
       <UniqueIdentifier>{e49dc5a7-b1e2-4eea-add4-2fb8e66c736a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Engine\Scene\SceneGraph">
+      <UniqueIdentifier>{bfd618fb-fbac-4b8e-b9f9-381eb29940ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Scene\SceneGraph">
+      <UniqueIdentifier>{6c8c1833-c364-4c48-8b71-6755b41d3c75}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -230,6 +236,12 @@
     </ClCompile>
     <ClCompile Include="Game\source\BattleScene\EnemySpawner.cpp">
       <Filter>Source Files\Game\BattleScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\source\Scene\SceneGraph\SceneGraph.cpp">
+      <Filter>Source Files\Engine\Scene\SceneGraph</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\source\Scene\SceneGraph\SceneNode.cpp">
+      <Filter>Source Files\Engine\Scene\SceneGraph</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -337,6 +349,15 @@
     </ClInclude>
     <ClInclude Include="Engine\include\Core\Random.h">
       <Filter>Header Files\Engine\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\include\Scene\SceneGraph\ISceneNodeOwner.h">
+      <Filter>Header Files\Engine\Scene\SceneGraph</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\include\Scene\SceneGraph\SceneGraph.h">
+      <Filter>Header Files\Engine\Scene\SceneGraph</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\include\Scene\SceneGraph\SceneNode.h">
+      <Filter>Header Files\Engine\Scene\SceneGraph</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

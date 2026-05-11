@@ -1,8 +1,8 @@
 #ifndef __UI_ELEMENT_H_INCLUDED__
 #define __UI_ELEMENT_H_INCLUDED__
 
+#include "Scene/SceneGraph/ISceneNodeOwner.h"
 #include "Core/Math/Transform2D.h"
-#include <vector>
 #include <string>
 
 class Scene;
@@ -10,10 +10,11 @@ class Scene;
 /*
  *	Base class for UI element.
  */
-class UIElement
+class UIElement : public ISceneNodeOwner
 {
 public:
-	virtual ~UIElement();
+	UIElement();
+	virtual ~UIElement() {};
 
 	/*
 	 *	Behavior called after scene loading
@@ -24,11 +25,7 @@ public:
 	 */
 	virtual void Update(float deltaTime) {}
 
-	/*
-	 *	If marked dirty, update this element transform.
-	 *	Called UpdateTransform() on children.
-	 */
-	void UpdateTransforms();
+	void UpdateTransform();
 	void DetachFromHierarchy();
 
 	/*
@@ -37,64 +34,58 @@ public:
 	 */
 	void Destroy(bool destroyChildren = false);
 
-	void AddChild(UIElement* child);
-	void RemoveChild(UIElement* child);
+	SceneNode* GetSceneNode() { return &node; }
 
-	UIElement* GetParent() { return parent; }
-	const UIElement* GetParent() const { return parent; }
+	bool HasParent() { return node.HasParent(); }
+	UIElement* GetParent();
+	const UIElement* GetParent() const;
 	void SetParent(UIElement* _parent);
-	bool HasParent() const { return parent; }
+	std::vector<UIElement*> GetChildren();
 
 	/*
 	 *	Transform getter/setter
 	 */
 
-	glm::vec2 GetWorldPosition() const;
-	float GetWorldRotate() const;
-	glm::vec2 GetWorldScale() const;
+	Transform2D& GetTransform() { return node.GetTransform(); }
+	const Transform2D& GetTransform() const { return node.GetTransform(); }
+
+	glm::vec2 GetWorldPosition() const { return node.GetWorldPosition(); }
+	float GetWorldRotate() const { return node.GetWorldRotate(); }
+	glm::vec2 GetWorldScale() const { return node.GetWorldScale(); }
 
 	void SetWorldPosition(glm::vec2 position);
 	void SetWorldRotate(float rotate);
 	void SetWorldScale(glm::vec2 scale);
 
-	glm::vec2 GetLocalPosition() const;
-	float GetLocalRotate() const;
-	glm::vec2 GetLocalScale() const;
+	glm::vec2 GetLocalPosition() const { return node.GetLocalPosition(); }
+	float GetLocalRotate() const { return node.GetLocalRotate(); }
+	glm::vec2 GetLocalScale() const { return node.GetLocalScale(); }
 
 	void SetLocalPosition(glm::vec2 position);
 	void SetLocalRotate(float rotate);
 	void SetLocalScale(glm::vec2 scale);
 
-	glm::mat4 GetWorld() { return transform.world; }
+	glm::mat4 GetWorld() { return node.GetTransform().world; }
 
 	UIElement* GetRoot();
 	const UIElement* GetRoot() const;
 
 	Scene* GetScene() { return scene; }
 	const Scene* GetScene() const { return scene; }
-	void SetScene(Scene* _scene) { scene = _scene; }
+	void SetScene(Scene* newScene);
 
 	void SetName(std::string newName) { name = newName; };
 	std::string GetName() const { return name; }
 
 private:
-	// Mark this element as dirty
-	void SetDirty();
-	// Is this element an ancestor of the specified element ?
-	bool IsAncestorOf(UIElement* element);
-
 	// Name associated to this element. Useful to identify this element.
 	std::string name = "";
 
-	Transform2D transform;
+	SceneNode node;
 
 	// reference to the scene the element lives in
 	Scene* scene;
-	UIElement* parent = nullptr;
-	std::vector<UIElement*> children;
 
-	// Should this element update its transform ?
-	bool isDirty = true;
 	// Are element mark for destruction ?
 	bool isPendingDestroy = false;
 };

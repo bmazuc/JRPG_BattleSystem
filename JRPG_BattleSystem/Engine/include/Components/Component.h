@@ -1,8 +1,7 @@
 #ifndef __COMPONENT_H_INCLUDED__
 #define __COMPONENT_H_INCLUDED__
 
-#include "Core/Math/Transform2D.h"
-#include <vector>
+#include "Scene/SceneGraph/ISceneNodeOwner.h"
 #include <string>
 
 class Actor;
@@ -10,9 +9,10 @@ class Actor;
 /*
  *	An element that can be attached to an Actor.
  */
-class Component
+class Component : public ISceneNodeOwner
 {
 public:
+	Component();
 	virtual ~Component() {};
 
 	/*
@@ -24,11 +24,6 @@ public:
 	 *	Behavior called each frame
 	 */
 	virtual void Update(float deltaTime) {}
-	/*
-	 *	If marked dirty, update this component transform.
-	 *	Called UpdateTransform() on children.
-	 */
-	void UpdateTransform();
 
 	/*
 	 *	Mark a component for destroy
@@ -36,23 +31,34 @@ public:
 	 */
 	void Destroy();
 
+	bool HasParent() { return node.HasParent(); }
+	void SetParent(Component* component);
+	Component* GetParent();
+	const Component* GetParent() const;
+	std::vector<Component*> GetChildren();
+
+	SceneNode* GetSceneNode() { return &node; }
+
+	void UpdateTransform();
+	void DetachFromHierarchy();
+
 	/*
 	 *	Transform getter/setter
 	 */
+	Transform2D& GetTransform() { return node.GetTransform(); }
+	const Transform2D& GetTransform() const { return node.GetTransform(); }
 
-	Transform2D GetTransform() const { return transform; }
-
-	glm::vec2 GetWorldPosition() const;
-	float GetWorldRotate() const;
-	glm::vec2 GetWorldScale() const;
+	glm::vec2 GetWorldPosition() const { return node.GetWorldPosition(); }
+	float GetWorldRotate() const { return node.GetWorldRotate(); }
+	glm::vec2 GetWorldScale() const { return node.GetWorldScale(); }
 
 	void SetWorldPosition(glm::vec2 position);
 	void SetWorldRotate(float rotate);
 	void SetWorldScale(glm::vec2 scale);
 
-	glm::vec2 GetLocalPosition() const;
-	float GetLocalRotate() const;
-	glm::vec2 GetLocalScale() const;
+	glm::vec2 GetLocalPosition() const { return node.GetLocalPosition(); }
+	float GetLocalRotate() const { return node.GetLocalRotate(); }
+	glm::vec2 GetLocalScale() const { return node.GetLocalScale(); }
 
 	void SetLocalPosition(glm::vec2 position);
 	void SetLocalRotate(float rotate);
@@ -62,42 +68,18 @@ public:
 	const Actor* GetOwner() const { return owner; }
 	void SetOwner(Actor* _owner) { owner = _owner; }
 
-	Component* GetParent() { return parent; }
-	const Component* GetParent() const { return parent; }
-	void SetParent(Component* _parent);
-	// Does this component have a parent ?
-	bool HasParent() const { return parent; }
-
-	const std::vector<Component*> GetChildren() const { return children; }
-
-	// Detach all the children of this component from him and detach component from his parent.
-	void DetachFromHierarchy();
-
 	void SetName(std::string newName) { name = newName; };
 	std::string GetName() const { return name; }
 
 private:
-	void AddChild(Component* child);
-	void RemoveChild(Component* child);
-	// Is this component an ancestor of the specified component ?
-	bool IsAncestorOf(Component* component);
-	Component* GetRoot();
-
-	// Mark this component as dirty
-	void SetDirty();
-
 	// Name associated to this component. Useful to identify this component.
-	std::string name;
+	std::string name = "";
 
-	Transform2D transform;
+	SceneNode node;
 
 	// The actor owning this component.
-	Actor* owner;
+	Actor* owner = nullptr;
 
-	Component* parent;
-	std::vector<Component*> children;
-	// Should this component update its transform ?
-	bool isDirty = true;
 	// Are component marked for destruction ?
 	bool isPendingDestroy = false;
 };

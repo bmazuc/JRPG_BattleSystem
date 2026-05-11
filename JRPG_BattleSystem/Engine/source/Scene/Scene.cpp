@@ -36,8 +36,7 @@ void Scene::BeginPlay()
 
 void Scene::UpdateTransforms()
 {
-	actorsCollection.UpdateTransforms();
-	uiElementsCollection.UpdateTransforms();
+	graph.UpdateTransforms();
 }
 
 void Scene::Update(float deltaTime)

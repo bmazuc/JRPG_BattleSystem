@@ -38,20 +38,6 @@ public:
 		isIterating = false;
 	}
 
-	void UpdateTransforms()
-	{
-		for (T* object : sceneObjects)
-		{
-			if (object)
-			{
-				if (!object->GetRoot()->HasParent())
-				{
-					object->UpdateTransforms();
-				}
-			}
-		}
-	}
-
 	void Add(T* object)
 	{
 		if (isIterating)

@@ -7,6 +7,7 @@
 #include "Scene/Actor.h"
 #include "UI/UIElement.h"
 #include "SceneObjectCollections/ActorCollection.h"
+#include "SceneGraph/SceneGraph.h"
 
 class CameraComponent;
 class Shader;
@@ -123,6 +124,9 @@ public:
 	std::vector<UIElement*> GetUIElements() { return uiElementsCollection.GetCollection(); }
 	const std::vector<UIElement*> GetUIElements() const { return uiElementsCollection.GetCollection(); }
 
+	SceneGraph* GetSceneGraph() { return &graph; }
+	const SceneGraph* GetSceneGraph() const { return &graph; }
+
 	/*
 	 *	Create and spawn an actor in the scene
 	 */
@@ -186,7 +190,7 @@ public:
 		element->SetName(name);
 		element->SetParent(spawnInfo.parent);
 		element->SetScene(this);
-
+		
 		if (spawnInfo.transformSpace == TransformSpace::World)
 		{
 			element->SetWorldPosition(spawnInfo.location);
@@ -260,6 +264,8 @@ private:
 
 	// The player controller associated to this scene
 	PlayerController* playerController;
+	
+	SceneGraph graph;
 
 	ActorCollection actorsCollection;
 	SceneObjectCollection<UIElement> uiElementsCollection;

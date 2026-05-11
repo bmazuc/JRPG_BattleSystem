@@ -11,6 +11,21 @@ Actor::~Actor()
 	componentsCollection.Clear();
 }
 
+void Actor::SetScene(Scene* newScene)
+{
+	scene = newScene;
+	
+	if (scene)
+	{
+		SceneGraph* graph = scene->GetSceneGraph();
+		std::vector<Component*> components = componentsCollection.GetCollection();
+		for (Component* component : components)
+		{
+			graph->AddNode(component->GetSceneNode());
+		}
+	}
+}
+
 void Actor::AttachToActor(Actor* actor)
 {
 	if (actor)
@@ -164,4 +179,22 @@ const Actor* Actor::GetParent() const
 void Actor::DetachFromHierarchy()
 {
 	root->DetachFromHierarchy();
+}
+
+void Actor::InternalAddComponent(Component* component, std::string name, Component* parent, glm::vec2 localLocation, float localRotate, glm::vec2 localScale)
+{
+	component->SetOwner(this);
+
+	component->SetName(name);
+	component->SetParent(parent ? parent : root);
+	component->SetLocalPosition(localLocation);
+	component->SetLocalRotate(localRotate);
+	component->SetLocalScale(localScale);
+
+	if (scene)
+	{
+		scene->GetSceneGraph()->AddNode(component->GetSceneNode());
+	}
+
+	componentsCollection.Add(component);
 }

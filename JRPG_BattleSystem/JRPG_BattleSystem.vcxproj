@@ -151,6 +151,8 @@
     <ClCompile Include="Engine\source\Scene\Actor.cpp" />
     <ClCompile Include="Engine\source\Scene\PlayerController.cpp" />
     <ClCompile Include="Engine\source\Scene\Scene.cpp" />
+    <ClCompile Include="Engine\source\Scene\SceneGraph\SceneGraph.cpp" />
+    <ClCompile Include="Engine\source\Scene\SceneGraph\SceneNode.cpp" />
     <ClCompile Include="Engine\source\Scene\SceneManager.cpp" />
     <ClCompile Include="Engine\source\Scene\SceneObjectCollections\ActorCollection.cpp" />
     <ClCompile Include="Engine\source\Scene\SceneObjectCollections\SceneObjectCollection.cpp" />
@@ -189,6 +191,9 @@
     <ClInclude Include="Engine\include\Scene\Actor.h" />
     <ClInclude Include="Engine\include\Scene\PlayerController.h" />
     <ClInclude Include="Engine\include\Scene\Scene.h" />
+    <ClInclude Include="Engine\include\Scene\SceneGraph\ISceneNodeOwner.h" />
+    <ClInclude Include="Engine\include\Scene\SceneGraph\SceneGraph.h" />
+    <ClInclude Include="Engine\include\Scene\SceneGraph\SceneNode.h" />
     <ClInclude Include="Engine\include\Scene\SceneManager.h" />
     <ClInclude Include="Engine\include\Scene\SceneObjectCollections\ActorCollection.h" />
     <ClInclude Include="Engine\include\Scene\SceneObjectCollections\SceneObjectCollection.h" />

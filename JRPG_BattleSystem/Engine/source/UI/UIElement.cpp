@@ -4,253 +4,106 @@
 #include <glm/ext/matrix_transform.hpp>
 #include <SDL3/SDL.h>
 
-void UIElement::AddChild(UIElement* child)
+UIElement::UIElement()
 {
-	children.push_back(child);
+	node.SetOwner(this);
 }
 
-void UIElement::RemoveChild(UIElement* child)
-{
-	children.erase(std::remove(children.begin(), children.end(), child), children.end());
-}
-
-bool UIElement::IsAncestorOf(UIElement* element)
-{
-	if (this == element)
+void UIElement::SetScene(Scene* newScene)
+{ 
+	scene = newScene;
+	if (scene)
 	{
-		return true;
+		scene->GetSceneGraph()->AddNode(&node);
 	}
+}
 
-	for (UIElement* child : children)
+UIElement* UIElement::GetParent()
+{
+	SceneNode* parent = node.GetParent();
+	if (parent)
 	{
-		if (child->IsAncestorOf(element))
+		return dynamic_cast<UIElement*>(parent->GetOwner());
+	}
+	return nullptr;
+}
+
+const UIElement* UIElement::GetParent() const
+{
+	const SceneNode* parent = node.GetParent();
+	if (parent)
+	{
+		return dynamic_cast<const UIElement*>(parent->GetOwner());
+	}
+	return nullptr;
+}
+
+void UIElement::SetParent(UIElement* element)
+{
+	if (element)
+	{
+		node.SetParent(element->GetSceneNode());
+	}
+	else
+	{
+		node.SetParent(nullptr);
+	}
+}
+
+std::vector<UIElement*> UIElement::GetChildren()
+{
+	std::vector<SceneNode*> nodeChildren = node.GetChildren();
+	std::vector<UIElement*> children;
+
+	for (SceneNode* child : nodeChildren)
+	{
+		if (UIElement* component = dynamic_cast<UIElement*>(child->GetOwner()))
 		{
-			return true;
+			children.push_back(component);
 		}
 	}
 
-	return false;
+	return children;
 }
 
-void UIElement::UpdateTransforms()
+void UIElement::UpdateTransform()
 {
-	if (isDirty)
-	{
-		glm::mat4 m(1.0f);
-
-		m = glm::translate(m, glm::vec3(transform.position, 0.0f));
-		m = glm::rotate(m, glm::radians(transform.rotate), glm::vec3(0.0f, 0.0f, 1.0f));
-		m = glm::scale(m, glm::vec3(transform.scale, 1.0f));
-
-		if (parent)
-		{
-			transform.world = parent->transform.world * m;
-		}
-		else
-		{
-			transform.world = m;
-		}
-
-		isDirty = false;
-	}
-
-	for (UIElement* child : children)
-	{
-		child->UpdateTransforms();
-	}
+	node.UpdateTransform();
 }
 
 void UIElement::DetachFromHierarchy()
 {
-	if (parent)
-	{
-		parent->RemoveChild(this);
-	}
-
-	for (UIElement* child : children)
-	{
-		child->SetParent(nullptr);
-	}
-}
-
-void UIElement::SetParent(UIElement* _parent)
-{
-	if (parent != _parent)
-	{
-		if (_parent && _parent->IsAncestorOf(this))
-		{
-			SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Cannot attach parent to one of its children.");
-			return;
-		}
-
-		GetRoot()->UpdateTransforms();
-
-		// Save current world
-		glm::vec2 worldPos = GetWorldPosition();
-		float worldRot = GetWorldRotate();
-		glm::vec2 worldScale = GetWorldScale();
-
-		if (parent)
-		{
-			parent->RemoveChild(this);
-		}
-
-		parent = _parent;
-
-		if (parent)
-		{
-			parent->AddChild(this);
-		}
-
-		// Restore local
-		SetWorldPosition(worldPos);
-		SetWorldRotate(worldRot);
-		SetWorldScale(worldScale);
-	}
-}
-
-glm::vec2 UIElement::GetLocalPosition() const
-{ 
-	return transform.position;
-}
-
-float UIElement::GetLocalRotate() const
-{
-	return transform.rotate;
-}
-
-glm::vec2 UIElement::GetLocalScale() const
-{
-	return transform.scale;
+	node.DetachFromHierarchy();
 }
 
 void UIElement::SetLocalPosition(glm::vec2 position)
 {
-	transform.position = position;
-	SetDirty();
+	node.SetLocalPosition(position);
 }
 
 void UIElement::SetLocalRotate(float rotate)
 {
-	transform.rotate = rotate;
-	SetDirty();
+	node.SetLocalRotate(rotate);
 }
 
 void UIElement::SetLocalScale(glm::vec2 scale)
 {
-	transform.scale = scale;
-	SetDirty();
-}
-
-glm::vec2 UIElement::GetWorldPosition() const
-{
-	return glm::vec2(transform.world[3]);
-}
-
-float UIElement::GetWorldRotate() const
-{
-	return glm::degrees(atan2(transform.world[1][0], transform.world[0][0]));
-}
-
-glm::vec2 UIElement::GetWorldScale() const
-{
-	glm::vec2 scale;
-	scale.x = glm::length(glm::vec2(transform.world[0]));
-	scale.y = glm::length(glm::vec2(transform.world[1]));
-	return scale;
+	node.SetLocalScale(scale);
 }
 
 void UIElement::SetWorldPosition(glm::vec2 position)
 {
-	if (parent)
-	{
-		GetRoot()->UpdateTransforms();
-
-		glm::mat4 invParent = glm::inverse(parent->transform.world);
-		glm::vec4 local = invParent * glm::vec4(position, 0.0f, 1.0f);
-		transform.position = glm::vec2(local);
-	}
-	else
-	{
-		transform.position = position;
-	}
-	SetDirty();
+	node.SetWorldPosition(position);
 }
 
 void UIElement::SetWorldRotate(float rotate)
 {
-	if (parent)
-	{
-		GetRoot()->UpdateTransforms();
-
-		float parentRot = parent->GetWorldRotate();
-		transform.rotate = rotate - parentRot;
-	}
-	else
-	{
-		transform.rotate = rotate;
-	}
-	SetDirty();
+	node.SetWorldRotate(rotate);
 }
 
 void UIElement::SetWorldScale(glm::vec2 scale)
 {
-	if (parent)
-	{
-		GetRoot()->UpdateTransforms();
-
-		glm::vec2 parentScale = parent->GetWorldScale();
-		if (parentScale.x == 0) parentScale.x = 0.0001f;
-		if (parentScale.y == 0) parentScale.y = 0.0001f;
-		transform.scale = scale / parentScale;
-	}
-	else
-	{
-		transform.scale = scale;
-	}
-	SetDirty();
-}
-
-UIElement* UIElement::GetRoot()
-{
-	UIElement* current = this;
-
-	while (current->parent)
-	{
-		current = current->parent;
-	}
-
-	return current;
-}
-
-const UIElement* UIElement::GetRoot() const
-{
-	const UIElement* current = this;
-
-	while (current->parent)
-	{
-		current = current->parent;
-	}
-
-	return current;
-}
-
-void UIElement::SetDirty()
-{
-	isDirty = true;
-
-	for (UIElement* child : children)
-	{
-		child->SetDirty();
-	}
-}
-
-UIElement::~UIElement()
-{
-	for (UIElement* child : children)
-	{
-		child->SetParent(parent);
-	}
+	node.SetWorldScale(scale);
 }
 
 void UIElement::Destroy(bool destroyChildren)
@@ -265,6 +118,7 @@ void UIElement::Destroy(bool destroyChildren)
 
 		if (destroyChildren)
 		{
+			std::vector<UIElement*> children = GetChildren();
 			for (UIElement* child : children)
 			{
 				child->Destroy(true);

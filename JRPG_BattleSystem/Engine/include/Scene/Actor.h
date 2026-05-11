@@ -77,15 +77,7 @@ public:
 
 		T* component = new T(std::forward<Args>(args)...);
 		
-		component->SetOwner(this);
-
-		component->SetName(name);
-		component->SetParent(parent ? parent : root);
-		component->SetLocalPosition(localLocation);
-		component->SetLocalRotate(localRotate);
-		component->SetLocalScale(localScale);
-
-		componentsCollection.Add(component);
+		InternalAddComponent(component, name, parent, localLocation, localRotate, localScale);
 
 		return component;
 	}
@@ -125,7 +117,7 @@ public:
 	Scene* GetScene() { return scene; }
 	const Scene* GetScene() const { return scene; }
 
-	void SetScene(Scene* _scene) { scene = _scene; }
+	void SetScene(Scene* _scene);
 
 	/*
 	 *	Transform getter/setter
@@ -155,6 +147,8 @@ protected:
 	Scene* scene;
 
 private:
+	void InternalAddComponent(Component* component, std::string name, Component* parent, glm::vec2 localLocation, float localRotate, glm::vec2 localScale);
+
 	Component* root;
 	SceneObjectCollection<Component> componentsCollection;
 
