@@ -36,13 +36,13 @@ void BattleScene::CreateScene()
 	spawner->AddEnemyData(greenEnemy);
 
 	Actor* background = SpawnActor<Actor>("Background", ActorSpawnInfo(nullptr, TransformSpace::World, glm::vec2(320, 240)));
-	SpriteRendererComponent* backgroundSpriteRenderer = background->AddComponent<SpriteRendererComponent>("Sprite renderer", nullptr,
+	SpriteRendererComponent* backgroundSpriteRenderer = background->SpawnComponent<SpriteRendererComponent>("Sprite renderer", nullptr,
 		glm::vec2(0, 0), 0, glm::vec2(1, 1),
 		"background");
 	backgroundSpriteRenderer->SetSize(glm::vec2(640, 480));
 
 	Actor* cameraObject = SpawnActor<Actor>("MainCamera", ActorSpawnInfo());
-	CameraComponent* camera = cameraObject->AddComponent<CameraComponent>("Camera component", nullptr,
+	CameraComponent* camera = cameraObject->SpawnComponent<CameraComponent>("Camera component", nullptr,
 		glm::vec2(0, 0), 0, glm::vec2(1, 1));
 	SetActiveCamera(camera);
 

@@ -5,7 +5,7 @@
 #include <glm/vec2.hpp>
 #include <vector>
 #include <string>
-#include "Scene/SceneObjectCollections/SceneObjectCollection.h"
+#include "Scene/SceneObjectCollections/ComponentCollection.h"
 
 class Scene;
 class PlayerController;
@@ -62,6 +62,10 @@ public:
 	 */
 	void UpdateComponents(float deltaTime);
 	/*
+	 *	Destroy all pending component to add.
+	 */
+	void ProcessComponentsAdd();
+	/*
 	 *	Destroy each components marked for destruction.
 	 */
 	void ProcessComponentsDestroy();
@@ -71,14 +75,11 @@ public:
 	 *	New component parent will be actor root.
 	 */
 	template<typename T, typename... Args>
-	T* AddComponent(std::string name, Component* parent, glm::vec2 localLocation, float localRotate, glm::vec2 localScale, Args&&... args)
+	T* SpawnComponent(std::string name, Component* parent, glm::vec2 localLocation, float localRotate, glm::vec2 localScale, Args&&... args)
 	{
 		static_assert(std::is_base_of<Component, T>::value, "T must inherit Component");
-
 		T* component = new T(std::forward<Args>(args)...);
-		
-		InternalAddComponent(component, name, parent, localLocation, localRotate, localScale);
-
+		InternalSpawnComponent(component, name, parent, localLocation, localRotate, localScale);
 		return component;
 	}
 
@@ -147,10 +148,10 @@ protected:
 	Scene* scene;
 
 private:
-	void InternalAddComponent(Component* component, std::string name, Component* parent, glm::vec2 localLocation, float localRotate, glm::vec2 localScale);
+	void InternalSpawnComponent(Component* component, std::string name, Component* parent, glm::vec2 localLocation, float localRotate, glm::vec2 localScale);
 
 	Component* root;
-	SceneObjectCollection<Component> componentsCollection;
+	ComponentCollection componentsCollection;
 
 	// Are actor mark for destruction ?
 	bool isPendingDestroy = false;

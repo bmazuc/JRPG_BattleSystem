@@ -11,6 +11,7 @@ public:
 
 	void AddNode(SceneNode* node);
 	void RemoveNode(SceneNode* node);
+	void Clear();
 
 private:
 	std::vector<SceneNode*> nodes;

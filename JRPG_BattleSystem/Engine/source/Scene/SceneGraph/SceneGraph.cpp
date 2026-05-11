@@ -23,3 +23,8 @@ void SceneGraph::RemoveNode(SceneNode* node)
 {
 	nodes.erase(std::remove(nodes.begin(), nodes.end(), node), nodes.end());
 }
+
+void SceneGraph::Clear()
+{
+	nodes.clear();
+}

@@ -225,9 +225,6 @@
     <ClCompile Include="Game\source\Common\UI\LoadSceneButton.cpp">
       <Filter>Source Files\Game\Common\UI</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\source\Scene\SceneObjectCollections\SceneObjectCollection.cpp">
-      <Filter>Source Files\Engine\Scene\SceneObjectCollections</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\source\Scene\SceneObjectCollections\ActorCollection.cpp">
       <Filter>Source Files\Engine\Scene\SceneObjectCollections</Filter>
     </ClCompile>
@@ -242,6 +239,12 @@
     </ClCompile>
     <ClCompile Include="Engine\source\Scene\SceneGraph\SceneNode.cpp">
       <Filter>Source Files\Engine\Scene\SceneGraph</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\source\Scene\SceneObjectCollections\ComponentCollection.cpp">
+      <Filter>Source Files\Engine\Scene\SceneObjectCollections</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\source\Scene\SceneObjectCollections\UIElementCollection.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -341,9 +344,6 @@
     <ClInclude Include="Game\include\BattleScene\EnemySpawner.h">
       <Filter>Header Files\Game\BattleScene</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\include\Scene\SceneObjectCollections\SceneObjectCollection.h">
-      <Filter>Header Files\Engine\Scene\SceneObjectCollections</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\include\Scene\SceneObjectCollections\ActorCollection.h">
       <Filter>Header Files\Engine\Scene\SceneObjectCollections</Filter>
     </ClInclude>
@@ -358,6 +358,15 @@
     </ClInclude>
     <ClInclude Include="Engine\include\Scene\SceneGraph\SceneNode.h">
       <Filter>Header Files\Engine\Scene\SceneGraph</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\include\Scene\SceneObjectCollections\ObjectCollection.h">
+      <Filter>Header Files\Engine\Scene\SceneObjectCollections</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\include\Scene\SceneObjectCollections\ComponentCollection.h">
+      <Filter>Header Files\Engine\Scene\SceneObjectCollections</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\include\Scene\SceneObjectCollections\UIElementCollection.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -11,10 +11,7 @@ void SceneManager::Update(float deltaTime, InputManager* inputManager)
 {
 	if (activeScene)
 	{
-		activeScene->UpdateTransforms();
-		activeScene->UpdateInputs(inputManager);
-		activeScene->Update(deltaTime);
-		activeScene->ProcessDestroy();
+		activeScene->Update(deltaTime, inputManager);
 
 		if (activeScene->HasRequest())
 		{

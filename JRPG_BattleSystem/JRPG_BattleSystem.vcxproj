@@ -155,7 +155,8 @@
     <ClCompile Include="Engine\source\Scene\SceneGraph\SceneNode.cpp" />
     <ClCompile Include="Engine\source\Scene\SceneManager.cpp" />
     <ClCompile Include="Engine\source\Scene\SceneObjectCollections\ActorCollection.cpp" />
-    <ClCompile Include="Engine\source\Scene\SceneObjectCollections\SceneObjectCollection.cpp" />
+    <ClCompile Include="Engine\source\Scene\SceneObjectCollections\ComponentCollection.cpp" />
+    <ClCompile Include="Engine\source\Scene\SceneObjectCollections\UIElementCollection.cpp" />
     <ClCompile Include="Engine\source\UI\Button.cpp" />
     <ClCompile Include="Engine\source\UI\Image.cpp" />
     <ClCompile Include="Engine\source\UI\Text.cpp" />
@@ -196,7 +197,9 @@
     <ClInclude Include="Engine\include\Scene\SceneGraph\SceneNode.h" />
     <ClInclude Include="Engine\include\Scene\SceneManager.h" />
     <ClInclude Include="Engine\include\Scene\SceneObjectCollections\ActorCollection.h" />
-    <ClInclude Include="Engine\include\Scene\SceneObjectCollections\SceneObjectCollection.h" />
+    <ClInclude Include="Engine\include\Scene\SceneObjectCollections\ComponentCollection.h" />
+    <ClInclude Include="Engine\include\Scene\SceneObjectCollections\ObjectCollection.h" />
+    <ClInclude Include="Engine\include\Scene\SceneObjectCollections\UIElementCollection.h" />
     <ClInclude Include="Engine\include\UI\Button.h" />
     <ClInclude Include="Engine\include\UI\Image.h" />
     <ClInclude Include="Engine\include\UI\Text.h" />

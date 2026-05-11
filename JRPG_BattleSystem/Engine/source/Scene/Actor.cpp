@@ -3,7 +3,7 @@
 
 Actor::Actor()
 {
-	root = AddComponent<Component>(name + " root", nullptr, glm::vec2(0, 0), 0, glm::vec2(1,1));
+	root = SpawnComponent<Component>(name + " root", nullptr, glm::vec2(0, 0), 0, glm::vec2(1,1));
 }
 
 Actor::~Actor()
@@ -55,6 +55,11 @@ void Actor::ComponentsBeginPlay()
 void Actor::UpdateComponents(float deltaTime)
 {
 	componentsCollection.Update(deltaTime);
+}
+
+void Actor::ProcessComponentsAdd()
+{
+	componentsCollection.ProcessAdd();
 }
 
 void Actor::ProcessComponentsDestroy()
@@ -181,10 +186,9 @@ void Actor::DetachFromHierarchy()
 	root->DetachFromHierarchy();
 }
 
-void Actor::InternalAddComponent(Component* component, std::string name, Component* parent, glm::vec2 localLocation, float localRotate, glm::vec2 localScale)
+void Actor::InternalSpawnComponent(Component* component, std::string name, Component* parent, glm::vec2 localLocation, float localRotate, glm::vec2 localScale)
 {
 	component->SetOwner(this);
-
 	component->SetName(name);
 	component->SetParent(parent ? parent : root);
 	component->SetLocalPosition(localLocation);

@@ -21,7 +21,7 @@ void TestScene::CreateScene()
     enemySprite->SetZOrder(1);
 
     Actor* followEnemy = SpawnActor<Actor>("FollowEnemy", ActorSpawnInfo(enemy, TransformSpace::Local, glm::vec2(165, 0)));
-    SpriteRendererComponent* followEnemySpriteRenderer = followEnemy->AddComponent<SpriteRendererComponent>("Sprite renderer", nullptr,
+    SpriteRendererComponent* followEnemySpriteRenderer = followEnemy->SpawnComponent<SpriteRendererComponent>("Sprite renderer", nullptr,
         glm::vec2(0, 0), 0, glm::vec2(1,1),
         "goblin");
     followEnemySpriteRenderer->SetSize(glm::vec2(150, 153));
@@ -40,12 +40,12 @@ void TestScene::CreateScene()
     rotatingEnemySprite->GetMaterial()->SetColor(glm::vec3(1, 0, 0));
 
     Actor* cameraObject = SpawnActor<Actor>("MainCamera", ActorSpawnInfo());
-    CameraComponent* camera = cameraObject->AddComponent<CameraComponent>("Camera component", nullptr,
+    CameraComponent* camera = cameraObject->SpawnComponent<CameraComponent>("Camera component", nullptr,
         glm::vec2(0, 0), 0, glm::vec2(1, 1));
     SetActiveCamera(camera);
 
     Actor* background = SpawnActor<Actor>("Background", ActorSpawnInfo(nullptr, TransformSpace::World, glm::vec2(320, 240)));
-    SpriteRendererComponent* backgroundSpriteRenderer = background->AddComponent<SpriteRendererComponent>("Sprite renderer", nullptr,
+    SpriteRendererComponent* backgroundSpriteRenderer = background->SpawnComponent<SpriteRendererComponent>("Sprite renderer", nullptr,
         glm::vec2(0, 0), 0, glm::vec2(1, 1),
         "background");
     backgroundSpriteRenderer->SetSize(glm::vec2(640, 480));

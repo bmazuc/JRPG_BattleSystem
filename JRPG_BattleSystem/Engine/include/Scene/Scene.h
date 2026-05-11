@@ -7,6 +7,7 @@
 #include "Scene/Actor.h"
 #include "UI/UIElement.h"
 #include "SceneObjectCollections/ActorCollection.h"
+#include "SceneObjectCollections/UIElementCollection.h"
 #include "SceneGraph/SceneGraph.h"
 
 class CameraComponent;
@@ -97,21 +98,11 @@ public:
 	void BeginPlay();
 
 	/*
-	 *	Update the transforms of all UIElements and components.
-	 */
-	void UpdateTransforms();
-	/*
 	 *	Update all actors, UIElements, components.
 	 */
-	void Update(float deltaTime);
-	/*
-	*	Update player controller and UI inputs
-	*/
-	void UpdateInputs(InputManager* inputManager);
-	/*
-	 *	Process the destruction of actors, components and UI elements marked for destruction.
-	 */
-	void ProcessDestroy();
+	void Update(float deltaTime, InputManager* inputManager);
+
+	void UpdateUIInputs(InputManager* inputManager);
 
 	CameraComponent* GetActiveCamera() { return activeCamera; }
 	const CameraComponent* GetActiveCamera() const { return activeCamera; }
@@ -134,27 +125,8 @@ public:
 	T* SpawnActor(std::string name, const ActorSpawnInfo& spawnInfo, Args&&... args)
 	{
 		static_assert(std::is_base_of<Actor, T>::value, "T must inherit Actor");
-
 		T* actor = new T(std::forward<Args>(args)...);
-
-		actor->SetName(name);
-		actor->AttachToActor(spawnInfo.parent);
-		actor->SetScene(this);
-
-		if (spawnInfo.transformSpace == TransformSpace::World)
-		{
-			actor->SetWorldPosition(spawnInfo.location);
-			actor->SetWorldRotate(spawnInfo.rotate);
-			actor->SetWorldScale(spawnInfo.scale);
-		}
-		else
-		{
-			actor->SetLocalPosition(spawnInfo.location);
-			actor->SetLocalRotate(spawnInfo.rotate);
-			actor->SetLocalScale(spawnInfo.scale);
-		}
-
-		actorsCollection.Add(actor);
+		InternalSpawnActor(actor, name, spawnInfo);
 		return actor;
 	}
 
@@ -185,27 +157,8 @@ public:
 	T* CreateUIElement(std::string name, const UISpawnInfo& spawnInfo, Args&&... args)
 	{
 		static_assert(std::is_base_of<UIElement, T>::value, "T must inherit UIElement");
-
 		T* element = new T(std::forward<Args>(args)...);
-		element->SetName(name);
-		element->SetParent(spawnInfo.parent);
-		element->SetScene(this);
-		
-		if (spawnInfo.transformSpace == TransformSpace::World)
-		{
-			element->SetWorldPosition(spawnInfo.location);
-			element->SetWorldRotate(spawnInfo.rotate);
-			element->SetWorldScale(spawnInfo.scale);
-		}
-		else
-		{
-			element->SetLocalPosition(spawnInfo.location);
-			element->SetLocalRotate(spawnInfo.rotate);
-			element->SetLocalScale(spawnInfo.scale);
-		}
-
-		uiElementsCollection.Add(element);
-
+		InternalSpawnUIElement(element, name, spawnInfo);
 		return element;
 	}
 
@@ -216,7 +169,6 @@ public:
 	T* GetUIElement(std::string name)
 	{
 		static_assert(std::is_base_of<UIElement, T>::value, "T must inherit UIElement");
-
 		return uiElementsCollection.Get<T>(name);
 	}
 
@@ -227,7 +179,6 @@ public:
 	T* GetUIElement()
 	{
 		static_assert(std::is_base_of<UIElement, T>::value, "T must inherit UIElement");
-
 		return uiElementsCollection.Get<T>();
 	}
 
@@ -259,6 +210,9 @@ public:
 	glm::vec2 ScreenToWorld(glm::vec2 screenPos);
 
 private:
+	void InternalSpawnActor(Actor* actor, std::string name, const ActorSpawnInfo& spawnInfo);
+	void InternalSpawnUIElement(UIElement* element, std::string name, const UISpawnInfo& spawnInfo);
+
 	// Camera used to compute the rendering view matric
 	CameraComponent* activeCamera;
 
@@ -268,7 +222,7 @@ private:
 	SceneGraph graph;
 
 	ActorCollection actorsCollection;
-	SceneObjectCollection<UIElement> uiElementsCollection;
+	UIElementCollection uiElementsCollection;
 
 	SceneRequest pendingRequest;
 };
