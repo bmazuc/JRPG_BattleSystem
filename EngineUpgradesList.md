@@ -11,15 +11,13 @@ Some can be done later in the project. Others will be over-engineering for this 
   * Actor
   * Component
   * UIElement
+* Rework component
 
+  * ActorComponent who contains all logic (begin play, update, etc.)
 
-
-\#Component
-
-* Rename Component as ActorComponent (a virtual class virtual \~ActorComponent() = 0)
-
-  * ActorComponent will only contains logic behavior
-  * Add a SceneComponent who contains all world hierarchy behavior
+    * (a virtual class virtual \~ActorComponent() = 0)
+  * SceneComponent who contains all node logic
+* Add SceneSubsystem for object living in the scene without node (for example managers)
 
 
 
@@ -34,10 +32,29 @@ Some can be done later in the project. Others will be over-engineering for this 
 
   * Allow for batch rendering
   * Avoid dynamic casting for UI Rendering
+* Add visibility options
 
 
 
 \#Shaders
 
 * Add geometry shader handling.
+
+
+
+\#Audio
+
+* Add audio management
+
+
+
+\#Animation
+
+* add animations management
+
+
+
+\#UI
+
+* Add a UserWidget/Canvas system and remove BeginPlay/Update from UIElement to be closer of UE
 
