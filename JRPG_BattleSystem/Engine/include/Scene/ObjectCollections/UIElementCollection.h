@@ -4,6 +4,10 @@
 #include "ObjectCollection.h"
 #include "UI/UIElement.h"
 
+/**
+ * Collection specialized for UI elements.
+ * Handles UI lifecycle and input-driven updates.
+ */
 class UIElementCollection : public ObjectCollection<UIElement>
 {
 public:

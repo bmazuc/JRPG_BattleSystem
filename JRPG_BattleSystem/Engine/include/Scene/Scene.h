@@ -1,4 +1,4 @@
-#ifndef __SCENE_H_INCLUDED__
+﻿#ifndef __SCENE_H_INCLUDED__
 #define __SCENE_H_INCLUDED__
 
 #include <string>
@@ -6,9 +6,10 @@
 #include <glm/vec2.hpp>
 #include "Scene/Actor.h"
 #include "UI/UIElement.h"
-#include "SceneObjectCollections/ActorCollection.h"
-#include "SceneObjectCollections/UIElementCollection.h"
+#include "ObjectCollections/ActorCollection.h"
+#include "ObjectCollections/UIElementCollection.h"
 #include "SceneGraph/SceneGraph.h"
+#include "Scene/SpawnInfos.h"
 
 class CameraComponent;
 class Shader;
@@ -16,111 +17,112 @@ class Texture;
 class PlayerController;
 class InputManager;
 
-struct SpawnInfo
-{
-public:
-	SpawnInfo(TransformSpace _transformSpace, glm::vec2 _location, float _rotate, glm::vec2 _scale)
-		: transformSpace(_transformSpace), location(_location), rotate(_rotate), scale(_scale) { }
-
-	virtual ~SpawnInfo() = 0;
-	glm::vec2 location = glm::vec2(0.0f, 0.0f);
-	float rotate = 0.0f;
-	glm::vec2 scale = glm::vec2(1.0f, 1.0f);
-	TransformSpace transformSpace = TransformSpace::World;
-};
-
-struct ActorSpawnInfo : SpawnInfo
-{
-public:
-	ActorSpawnInfo(Actor* _parent = nullptr, TransformSpace _transformSpace = TransformSpace::World, glm::vec2 _location = glm::vec2(0.0f, 0.0f), float _rotate = 0.0f, glm::vec2 _scale = glm::vec2(1.0f, 1.0f))
-		: parent(_parent), SpawnInfo(_transformSpace, _location, _rotate, _scale) {}
-	~ActorSpawnInfo() = default;
-
-	Actor* parent = nullptr;
-};
-
-struct UISpawnInfo : SpawnInfo
-{
-public:
-	UISpawnInfo(UIElement* _parent = nullptr, TransformSpace _transformSpace = TransformSpace::World, glm::vec2 _location = glm::vec2(0.0f, 0.0f), float _rotate = 0.0f, glm::vec2 _scale = glm::vec2(1.0f, 1.0f))
-		: parent(_parent), SpawnInfo(_transformSpace, _location, _rotate, _scale) {}
-	~UISpawnInfo() = default;
-
-	UIElement* parent = nullptr;
-};
-
-/*
- *	Request type that a scene can send.
+/**
+ * Defines possible scene transition requests.
+ * Used by Scene to communicate with SceneManager without direct coupling.
  */
 enum class SceneRequestType
 {
-	None,
-	ChangeScene
+	None,		// No pending request
+	ChangeScene	// Request to switch to another scene
 };
 
-/*
- *	Represents a change scene request
+/**
+ * Represents a pending request made by a Scene.
+ * This is used to decouple Scene logic from SceneManager execution.
  */
 struct SceneRequest
 {
+	// Type of request (none, change scene, etc.)
 	SceneRequestType type = SceneRequestType::None;
+
+	// Target scene name (used when type == ChangeScene)
 	std::string newSceneName = "";
 };
 
-/*
- *	Represent a game level.
+/**
+ * A Scene represents a complete game level or gameplay context.
+ *
+ * It owns and manages:
+ * - Actors (game objects)
+ * - UI elements
+ * - Scene graph (transform hierarchy)
+ * - Active camera
+ * - Input processing
+ *
+ * It also handles lifecycle:
+ * Load → BeginPlay → Update → Unload
  */
 class Scene
 {
 public:
-	/*
-	 *	Should be override and fill with all calls to ResourceManager to load needed assets
+	/**
+	 * Override to load required assets (textures, shaders, etc.).
 	 */
 	virtual void LoadAssets() {}
-	/*
-	 *	Should be override and fill with all actors, components and UI elements creation and setup.
+
+	/**
+	 * Override to create and initialize all actors/UI.
 	 */
 	virtual void CreateScene() {}
 
-	/*
-	 *	Call CreateScene then set isLoaded to true.
+	/**
+	 * Initializes the scene:
+	 * - loads content
+	 * - builds objects
+	 * - prepares runtime state
 	 */
 	void Load();
 
-	/*
-	 *	Destroy all actors and UIElements living in the scene.
+	/**
+	 * Cleans all runtime objects from memory.
 	 */
 	void Unload();
 	
-	/*
-	 *	Initialize all actors, UIElements, components.
+	/**
+	 * Called once when the scene becomes active.
 	 */
 	void BeginPlay();
 
-	/*
-	 *	Update all actors, UIElements, components.
+	/**
+	 * Main update loop of the scene.
+	 *
+	 * Updates:
+	 * - actors
+	 * - components
+	 * - UI
+	 * - scene logic
 	 */
 	void Update(float deltaTime, InputManager* inputManager);
 
+	/**
+	 * Updates UI-specific input handling (hover, click, etc.).
+	 */
 	void UpdateUIInputs(InputManager* inputManager);
 
 	CameraComponent* GetActiveCamera() { return activeCamera; }
 	const CameraComponent* GetActiveCamera() const { return activeCamera; }
-	// Set the camera used to compute the rendering view matrix
+	
+	/**
+	 * Sets the camera used for rendering the world.
+	 */
 	void SetActiveCamera(CameraComponent* camera) { activeCamera = camera; }
 	
+	/**
+	 * Returns actor internal raw container.
+	 */
 	std::vector<Actor*> GetActors() { return actorsCollection.GetCollection(); }
 	const std::vector<Actor*> GetActors() const { return actorsCollection.GetCollection(); }
 
+	/**
+	 * Returns UI element internal raw container.
+	 */
 	std::vector<UIElement*> GetUIElements() { return uiElementsCollection.GetCollection(); }
 	const std::vector<UIElement*> GetUIElements() const { return uiElementsCollection.GetCollection(); }
 
 	SceneGraph* GetSceneGraph() { return &graph; }
 	const SceneGraph* GetSceneGraph() const { return &graph; }
 
-	/*
-	 *	Create and spawn an actor in the scene
-	 */
 	template<typename T, typename... Args>
 	T* SpawnActor(std::string name, const ActorSpawnInfo& spawnInfo, Args&&... args)
 	{
@@ -130,8 +132,8 @@ public:
 		return actor;
 	}
 
-	/*
-	 *	Get the first actor of given name and type from the scene
+	/**
+	 * Retrieves first actor by name and type.
 	 */
 	template<typename T>
 	T* GetActor(std::string name)
@@ -140,8 +142,15 @@ public:
 		return actorsCollection.Get<T>(name);
 	}
 
-	/*
-	 *	Get the first actor of given type from the scene
+	template<typename T>
+	const T* GetActor(std::string name) const
+	{
+		static_assert(std::is_base_of<Actor, T>::value, "T must inherit Actor");
+		return actorsCollection.Get<T>(name);
+	}
+
+	/**
+	 * Retrieves first actor matching type.
 	 */
 	template<typename T>
 	T* GetActor()
@@ -150,9 +159,13 @@ public:
 		return actorsCollection.Get<T>();
 	}
 
-	/*
-	 *	Create and add an UI element in the scene.
-	 */
+	template<typename T>
+	const T* GetActor() const
+	{
+		static_assert(std::is_base_of<Actor, T>::value, "T must inherit Actor");
+		return actorsCollection.Get<T>();
+	}
+
 	template<typename T, typename... Args>
 	T* CreateUIElement(std::string name, const UISpawnInfo& spawnInfo, Args&&... args)
 	{
@@ -162,9 +175,9 @@ public:
 		return element;
 	}
 
-	/*
-	 *	Get the first UI element of given name and type from the scene
-	 */
+	/**
+	* Retrieves first UI element by name and type.
+	*/
 	template<typename T>
 	T* GetUIElement(std::string name)
 	{
@@ -172,8 +185,15 @@ public:
 		return uiElementsCollection.Get<T>(name);
 	}
 
-	/*
-	 *	Get the first UI element of given type from the scene
+	template<typename T>
+	const T* GetUIElement(std::string name) const
+	{
+		static_assert(std::is_base_of<UIElement, T>::value, "T must inherit UIElement");
+		return uiElementsCollection.Get<T>(name);
+	}
+
+	/**
+	 * Retrieves first UI element matching type.
 	 */
 	template<typename T>
 	T* GetUIElement()
@@ -182,42 +202,42 @@ public:
 		return uiElementsCollection.Get<T>();
 	}
 
-	/*
-	 *	Call by actor destroy. Register this actor inside a list of actors to destroy.
-	 *	@param actor the actor to register
+	template<typename T>
+	const T* GetUIElement() const
+	{
+		static_assert(std::is_base_of<UIElement, T>::value, "T must inherit UIElement");
+		return uiElementsCollection.Get<T>();
+	}
+
+	/**
+	 * Destruction requests
 	 */
+
 	void RegisterToDestroy(Actor* actor);
-	/*
-	 *	Call by ui element destroy. Register this ui element inside a list of ui elements to destroy.
-	 *	@param uiElement the ui element to register
-	 */
 	void RegisterToDestroy(UIElement* uiElement);
 
-	/*
-	 *	Request a scene change.
-	 *	@param sceneName the next scene name
+	/**
+	 * Scene transitions
 	 */
+
 	void RequestSceneChange(std::string sceneName);
 	SceneRequest GetPendingRequest() { return pendingRequest; }
-	// Does the scene request a scene change ?
+	
+	/**
+	 * Return true if the scene request a scene change.
+	 */
 	bool HasRequest() const { return pendingRequest.type == SceneRequestType::ChangeScene; }
 
-	/* 
-	 *	Convert a screen position to a world position
-	 *	@param screenPos screen position to convert
-	 *	@return converted screen position in world position
-	 */ 
 	glm::vec2 ScreenToWorld(glm::vec2 screenPos);
 
 private:
 	void InternalSpawnActor(Actor* actor, std::string name, const ActorSpawnInfo& spawnInfo);
 	void InternalSpawnUIElement(UIElement* element, std::string name, const UISpawnInfo& spawnInfo);
 
-	// Camera used to compute the rendering view matric
+	// Camera used for rendering calculations
 	CameraComponent* activeCamera;
 
-	// The player controller associated to this scene
-	PlayerController* playerController;
+	PlayerController* playerController = nullptr;
 	
 	SceneGraph graph;
 

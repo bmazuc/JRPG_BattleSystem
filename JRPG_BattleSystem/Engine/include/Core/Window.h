@@ -4,74 +4,80 @@
 #include "SDL3/SDL.h"
 #include <glm/vec2.hpp>
 
-/*
- *	Contains SDL window creation parameters.
+/**
+ * Parameters used during SDL window creation.
  */
 struct SDLWindowConfig
 {
 public:
-	SDLWindowConfig() {}
+	SDLWindowConfig() = default;
 	SDLWindowConfig(const char* _title, glm::vec2 _resolution, SDL_WindowFlags _flags);
 	
 	// Window title
 	const char* title = "";
+
 	// Window resolution
 	glm::vec2 resolution = glm::vec2(640.0f, 480.0f);
-	/*
-	 *	The flags put on the window at creation.
-	 *	SDL_WINDOW_OPENGL is added at creation.
+
+	/**
+	 * SDL window creation flags.
+	 * SDL_WINDOW_OPENGL is automatically added.
 	 */
 	SDL_WindowFlags flags = 0;
 };
 
-/*
- *	Wrapper for SDL window and OpenGL context.
+/**
+ * Wrapper around an SDL window and OpenGL context.
  */
 class Window
 {
 public:
-	/*
-	 *	Create a sdl window with the specified dimensions and flags.
-	 *	@param config sdl window creation config parameters
-	 *	@return true on success or false on failure
+	/**
+	 * Creates the SDL window.
+	 * @param config Window creation configuration.
+	 * @return True on success, false otherwise.
 	 */
-	bool CreateSDLWindow(SDLWindowConfig config);
-	/*
-	 *	Create an OpenGL context for an OpenGL window, and make it current.
-	 *	Also set the vsync (swapInterval).
-	 *	@param swapInterval Swap interval for the current OpenGL context
-	 *	@return true on success or false on failure
+	bool CreateSDLWindow(const SDLWindowConfig& config);
+
+	/**
+	 * Creates and activates the OpenGL context.
+	 * Also configures the swap interval (VSync).
+	 * @param swapInterval OpenGL swap interval.
+	 * @return True on success, false otherwise.
 	 */
 	bool CreateOpenGLContext(int swapInterval);
 
 	~Window();
-	/*
-	 *	Swap buffer to display the current contents of buffer on screen.
-	 *	@return true on success or false on failure
-	 */ 
+
+	/**
+	 * Swaps the front and back rendering buffers.
+	 */
 	bool SwapBuffers();
-	/*
-	 *	Change the window size.
-	 *	@param size the new size the window should be
+
+	/**
+	 * Resizes the window.
 	 */
 	void Resize(glm::vec2 size);
 
 	SDL_Window* GetSDLWindow() { return window; }
 	const SDL_Window* GetSDLWindow() const { return window; }
-	/*
-	 *	@return the initial resolution set to the window
+	
+	/**
+	 * Returns the initial viewport resolution.
 	 */
 	glm::vec2 GetViewportBaseResolution() const { return viewportBaseResolution; }
-	/*
-	 *	@return the current resolution of the window
+	
+	/**
+	 * Returns the current window size.
 	 */
 	glm::vec2 GetSize() const;
 
 private: 
 	SDL_Window* window = nullptr;
-	SDL_GLContext glContext;
 
-	// the initial resolution set to the window
+	SDL_GLContext glContext = nullptr;
+
+	// Initial resolution used for viewport calculations.
 	glm::vec2 viewportBaseResolution;
 };
 

@@ -4,6 +4,10 @@
 #include "ObjectCollection.h"
 #include "Components/Component.h"
 
+/**
+ * Collection specialized for Component objects.
+ * Minimal extension of ObjectCollection, used mainly for lifecycle hooks.
+ */
 class ComponentCollection : public ObjectCollection<Component>
 {
 public:

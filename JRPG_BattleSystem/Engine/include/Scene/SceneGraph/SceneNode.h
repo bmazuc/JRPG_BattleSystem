@@ -6,30 +6,45 @@
 
 class ISceneNodeOwner;
 
+/**
+ * Node in a hierarchical transform tree.
+ * Each node can have a parent and multiple children.
+ * It stores local transform data and computes world transform based on hierarchy.
+ */
 class SceneNode
 {
 public:
-	/*
-	 *	If marked dirty, update this component transform.
-     *	Called UpdateTransform() on children.
+	/**
+	 * Recomputes world transform if the node is marked dirty.
+	 * Propagates update to children nodes.
 	 */
 	void UpdateTransform();
 
 	SceneNode* GetParent() { return parent; }
 	const SceneNode* GetParent() const { return parent; }
+
+	/**
+	 * Sets the parent of this node.
+	 */
 	void SetParent(SceneNode* _parent);
-	// Does this node have a parent ?
+
+	/**
+	 * Returns true if this node has a parent.
+	 */
 	bool HasParent() const { return parent; }
 
 	std::vector<SceneNode*> GetChildren() { return children; }
 	const std::vector<SceneNode*> GetChildren() const { return children; }
 
-	// Detach all the children of this node from het and detach node from his parent.
+	/**
+	 * Detaches this node from its parent and children and clears hierarchy links.
+	 */
 	void DetachFromHierarchy();
 
-	/*
-	 *	Transform getter/setter
+	/**
+	 * Transform accessors
 	 */
+
 	Transform2D& GetTransform() { return transform; }
 	const Transform2D& GetTransform() const { return transform; }
 
@@ -51,24 +66,41 @@ public:
 
 	ISceneNodeOwner* GetOwner() { return owner; }
 	const ISceneNodeOwner* GetOwner() const { return owner; }
+
 	void SetOwner(ISceneNodeOwner* newOwner) { owner = newOwner; }
 
 private:
+	/**
+	 * Adds a child node to this node.
+	 */
 	void AddChild(SceneNode* node);
+
+	/**
+	 * Removes a child node from this node.
+	 */
 	void RemoveChild(SceneNode* node);
-	// Is this node an ancestor of the specified SceneNode ?
+
+	/**
+	 * Returns true if this node is an ancestor of the given node.
+	 */
 	bool IsAncestorOf(SceneNode* node);
 
+	/**
+	 * Returns the root node of this hierarchy.
+	 */
 	SceneNode* GetRoot();
 
-	// Mark this component as dirty
+	/**
+	 * Marks this node as dirty, forcing transform recomputation.
+	 */
 	void SetDirty();
 
 	Transform2D transform;
 
-	SceneNode* parent;
+	SceneNode* parent = nullptr;
 	std::vector<SceneNode*> children;
-	// Should this component update its transform ?
+
+	// Indicates whether the world transform needs recomputation.
 	bool isDirty = true;
 
 	ISceneNodeOwner* owner;

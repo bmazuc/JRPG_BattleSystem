@@ -6,12 +6,23 @@
 
 class PlayerController;
 
+/**
+ * Specialized collection for Actor objects.
+ *
+ * Extends ObjectCollection with:
+ * - lifecycle integration (BeginPlay / Update)
+ * - component processing
+ * - player controller injection
+ */
 class ActorCollection : public ObjectCollection<Actor>
 {
 public:
 	void BeginPlay();
 	void Update(float deltaTime);
 
+	/**
+	 * Injects player controller into actors that need input.
+	 */
 	void SetupInputs(PlayerController* _playerController);
 
 	void SetPlayerController(PlayerController* newPlayerController) { playerController = newPlayerController; }

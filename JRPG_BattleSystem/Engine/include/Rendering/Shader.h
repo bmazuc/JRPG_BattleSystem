@@ -7,28 +7,32 @@
 #include <glm/vec4.hpp>
 #include <glm/mat4x4.hpp>
 
-/*
- *	OpenGL shader wrapper.
- *	Manage :
- *	- load and compilation (vertex + fragment)
- *	- OpenGL program use.
- *	- Uniforms sending
- * 
- *	Only vertex and fragment shaders are handle. Could be improve
- *  by adding geometry shader handling.
+/**
+ * Wrapper around an OpenGL shader program.
+ *
+ * Handles:
+ * - compilation (vertex + fragment shaders)
+ * - program linking
+ * - uniform updates
  */
 class Shader
 {
 public:
+	/**
+	 * Creates and compiles a shader program.
+	 *
+	 * @param vShaderFile Vertex shader source file.
+	 * @param fShaderFile Fragment shader source file.
+	 */
 	Shader(const char* vShaderFile, const char* fShaderFile);
 
-	/*
-	 *	Sets this shader as active for glew.
-	 */ 
+	/**
+	 * Activates this shader for rendering.
+	 */
 	void Use();
 
-	/*
-	 *	Uniforms setters
+	/**
+	 * Uniforms setters
 	 */
 
 	void SetFloat(const char* name, float value);
@@ -42,16 +46,17 @@ public:
 	void SetMatrix4(const char* name, const glm::mat4& matrix);
 
 private:
-	/*
-	 *	Compile and link the shaders.
+	/**
+	 * Compiles and links shader sources into a program.
 	 */
 	void Compile(const char* vertexSource, const char* fragmentSource);
-	/*
-	 *	Utility function for checking shader compilation / linking errors.
-	 */ 
+	
+	/**
+	 * Checks and logs shader compilation/linking errors.
+	 */
 	void CheckCompileErrors(unsigned int shader, std::string type);
 
-	unsigned int ID;
+	unsigned int ID = 0;
 };
 
 #endif // __SHADER_H_INCLUDED__

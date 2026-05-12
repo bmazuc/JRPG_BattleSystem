@@ -5,15 +5,14 @@
 
 #include <glm/vec2.hpp>
 
-/*
+/**
  *	Represents a camera viewpoint.
- *	
  */
 class CameraComponent : public Component
 {
 public:
 	float GetZoom() const { return zoom; }
-	void SetZoom(float _zoom) { zoom = _zoom; }
+	void SetZoom(float newZoom) { zoom = newZoom; }
 
 private:
 	float zoom = 1;

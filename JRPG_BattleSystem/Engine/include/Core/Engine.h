@@ -12,53 +12,54 @@
 class Renderer;
 class InputManager;
 
-/*
- *	Contains engine creation parameters.
+/**
+ * Configuration used during engine initialization.
  */
 struct EngineConfig
 {
 public:
 	EngineConfig() {}
 
-	/*
-	 *	Window creation parameter
+	/**
+	 * Window creation parameters.
 	 */
 	SDLWindowConfig windowConfig;
-	/*
-	 *	Swap interval for the current OpenGL context :
-	 *	0	: immediate updates, 
-	 *	1	: updates synchronized with the vertical retrace,
-	 *	-1	: adaptive vsync
+
+	/**
+	 * OpenGL swap interval:
+	 * 0  -> VSync disabled
+	 * 1  -> VSync enabled
+	 * -1 -> Adaptive VSync
 	 */
 	int swapInterval = 1;
 };
 
-/*
- *	Core Engine class. 
- *	Manager global lifetime :
- *	- Initialisation (SDL, OpenGL, resources)
- *	- Main loop (events, update, render)
- *	- Shutdown
- *	Centralise core systems : Window, Renderer, SceneManager
+/**
+ * Core engine class responsible for:
+ * - system initialization
+ * - main loop execution
+ * - rendering
+ * - scene management
+ * - shutdown and cleanup
  */
 class Engine
 {
 public:
-	/*
-	 *	Initialize the engine.
-	 * 
-	 *	@param config engine config parameters
-	 *	@return true on success or false on failure
+	/**
+	 * Initializes engine systems and resources.
+	 *
+	 * @param config Engine startup configuration.
+	 * @return True on success, false otherwise.
 	 */
 	bool Start(const EngineConfig& config);
 	
-	/*
-	 *	Launch the engine main loop
-	 */ 
+	/**
+	 * Starts the main engine loop.
+	 */
 	void Run();
 
-	/*
-	 *	Clean all resources, all objects created and stop engine
+	/**
+	 * Releases all engine resources and shuts down subsystems.
 	 */
 	void Shutdown();
 
@@ -66,48 +67,45 @@ public:
 	const SceneManager* GetSceneManager() const { return sceneManager; }
 
 private:
-	/*
-	 *	Initialize the SDL library
-	 *	@return true on success or false on failure
+	/**
+	 * Initializes the SDL library.
 	 */
 	bool InitSDL();
-	/*
-	 *	Create a window wrapping and creating the sdl window.
-	 *	@param config sdl window creation config parameters
-	 *	@return true on success or false on failure
+
+	/**
+	 * Creates the application window.
 	 */
-	bool CreateWindow(SDLWindowConfig config);
-	/*
-	 *	Initiliaze OpenGL + Glew + VSync (swapInterval)
-	 *	@param swapInterval Swap interval for the current OpenGL context
-	 *	@return true on success or false on failure
+	bool CreateWindow(const SDLWindowConfig& config);
+
+	/**
+	 * Initializes OpenGL, GLEW, and swap interval settings.
 	 */
 	bool InitOpenGL(int swapInterval);
 
-	/*
-	 *	Load the fallback resources
-	 */ 
+	/**
+	 * Loads fallback engine resources.
+	 */
 	void LoadDefaultResources();
-	/*
-	 *	Compute deltaTime between two frame.
-	 *	Clamp to avoid spikes (when using breakpoints for example)debug, breakpoints, etc.)
-	 *	@param lastTime time register at the previous frame.
-	 *	@return computation result
+
+	/**
+	 * Computes frame delta time.
+	 * Delta time is clamped to avoid large simulation jumps caused by breakpoints or frame stalls.
 	 */
 	float ComputeDeltaTime(std::chrono::high_resolution_clock::time_point& lastTime);
 
-	// Manage the different scenes (levels) of the game
+	// Manages scene lifetime and transitions.
 	SceneManager* sceneManager;
+
+	// Handles player input state.
 	InputManager* inputManager;
-	// Core rendering system base on OpenGL
+
+	// Core OpenGL rendering system.
 	Renderer* renderer;
-	// Wrapper for sdl window
+
+	// SDL window wrapper.
 	Window* window;
 
-	/*
-	 * Values used for clamping deltatime.
-	 * From what I've looked into, these are the values used by Unreal.
-	 */ 
+	// Delta time clamp range used to stabilize simulation updates. Values are the one that seems to be used in UE.
 	float minDeltaTime = 0.0005f;
 	float maxDeltaTime = 0.40f;
 };

@@ -1,4 +1,4 @@
-#include "Scene/SceneObjectCollections/ComponentCollection.h"
+#include "Scene/ObjectCollections/ComponentCollection.h"
 
 void ComponentCollection::BeginPlay()
 {

@@ -6,8 +6,8 @@
 
 class Actor;
 
-/*
- *	An element that can be attached to an Actor.
+/**
+ *	Base class for components that define reusable behavior that can be added to different types of actors.
  */
 class Component : public ISceneNodeOwner
 {
@@ -15,19 +15,18 @@ public:
 	Component();
 	virtual ~Component() {};
 
-	/*
-	 *	Behavior called after scene loading
+	/**
+	 * Called once when the scene starts or component is created.
 	 */
 	virtual void BeginPlay() {}
 
-	/*
-	 *	Behavior called each frame
+	/**
+	 * Called once per frame.
 	 */
 	virtual void Update(float deltaTime) {}
 
-	/*
-	 *	Mark a component for destroy
-	 *	Future upgrade : Add a destroy with a timer
+	/**
+	 * Mark a component for destruction.
 	 */
 	void Destroy();
 
@@ -42,9 +41,6 @@ public:
 	void UpdateTransform();
 	void DetachFromHierarchy();
 
-	/*
-	 *	Transform getter/setter
-	 */
 	Transform2D& GetTransform() { return node.GetTransform(); }
 	const Transform2D& GetTransform() const { return node.GetTransform(); }
 
@@ -66,21 +62,21 @@ public:
 
 	Actor* GetOwner() { return owner; }
 	const Actor* GetOwner() const { return owner; }
-	void SetOwner(Actor* _owner) { owner = _owner; }
+	void SetOwner(Actor* newOwner) { owner = newOwner; }
 
 	void SetName(std::string newName) { name = newName; };
 	std::string GetName() const { return name; }
 
 private:
-	// Name associated to this component. Useful to identify this component.
+	// Identifier used for lookup.
 	std::string name = "";
 
 	SceneNode node;
 
-	// The actor owning this component.
+	// Actor owning this component.
 	Actor* owner = nullptr;
 
-	// Are component marked for destruction ?
+	// Are this component marked for destruction ?
 	bool isPendingDestroy = false;
 };
 

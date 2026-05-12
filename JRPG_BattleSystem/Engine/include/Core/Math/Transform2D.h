@@ -10,12 +10,18 @@ enum class TransformSpace
 	Local
 };
 
+/**
+ * Represents a 2D transformation used for scene objects.
+ * Stores local transform data and a cached world matrix.
+ */
 struct Transform2D
 {
-	glm::vec2 position = glm::vec2(0, 0);
-	float rotate = 0;
-	glm::vec2 scale = glm::vec2(1, 1);
+public:
+	glm::vec2 position = glm::vec2(0.0f, 0.0f);
+	float rotate = 0.0f;
+	glm::vec2 scale = glm::vec2(1.0f, 1.0f);
 
+	// Cached world transformation matrix.
 	glm::mat4 world;
 };
 

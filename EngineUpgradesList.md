@@ -36,6 +36,13 @@ Some can be done later in the project. Others will be over-engineering for this 
 
 
 
+\#Inputs
+
+* Add keyboard inputs
+* Add controller inputs
+
+
+
 \#Shaders
 
 * Add geometry shader handling.

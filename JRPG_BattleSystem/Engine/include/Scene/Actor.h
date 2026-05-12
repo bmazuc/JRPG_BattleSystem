@@ -5,13 +5,19 @@
 #include <glm/vec2.hpp>
 #include <vector>
 #include <string>
-#include "Scene/SceneObjectCollections/ComponentCollection.h"
+#include "Scene/ObjectCollections/ComponentCollection.h"
 
 class Scene;
 class PlayerController;
 
-/*
- *	Base class for anything that has a position, rotation, and scale in the game world
+/**
+ * Base class for all objects living in a scene.
+ *
+ * An Actor represents an entity that:
+ * - has a transform hierarchy (via a root Component)
+ * - can own multiple Components
+ * - participates in scene lifecycle (BeginPlay / Update)
+ * - can be attached to other actors (hierarchy)
  */
 class Actor
 {
@@ -19,60 +25,54 @@ public:
 	Actor();
 	virtual ~Actor();
 
-	/*
-	 *	Behavior called after scene loading
+	/**
+	 * Called once when the scene starts or actor is spawned.
 	 */
 	virtual void BeginPlay() {}
-	/*
-	 *	Behavior called each frame
+	
+	/**
+	 * Called once per frame.
 	 */
 	virtual void Update(float deltaTime) {}
-	/*
-	 *	Mark an actor for destroy
-	 *	Future upgrade : Add a destroy with a timer
-	 */ 
+
+	/**
+	 * Marks this actor for destruction.
+	 * If destroyChildren is true, also destroys attached hierarchy.
+	 */
 	void Destroy(bool destroyChildren = false);
 
-	/*
-	 *	Call after scene loading. Allow to link inputs and behaviour for this actor.
+	/**
+	 * Called during initialization to bind input logic.
 	 */
 	virtual void SetupInputs(PlayerController* playerController) {}
 
-	/*
-	 *	Attach this actor root to another actor root.
-	 *	@param actor the parent actor
+	/**
+	 * Attaches this actor to another actor (hierarchy parenting).
 	 */
 	void AttachToActor(Actor* actor);
-	/*
-	 *	Detach this actor root from its parent.
+
+	/**
+	 * Detaches this actor from its parent.
 	 */
 	void Detach();
 
-	/*
-	 *	Update components transform.
+	/**
+	 * Updates transform hierarchy for this actor's root.
 	 */
 	void UpdateTransforms();
 	void DetachFromHierarchy();
-	/*
-	 *	Called each components init behavior. Called after scene loading.
+	
+	/**
+	 * Lifecycle hooks for components.
 	 */
+
 	void ComponentsBeginPlay();
-	/*
-	 *	Called each components update behavior. Called each frame.
-	 */
 	void UpdateComponents(float deltaTime);
-	/*
-	 *	Destroy all pending component to add.
-	 */
 	void ProcessComponentsAdd();
-	/*
-	 *	Destroy each components marked for destruction.
-	 */
 	void ProcessComponentsDestroy();
 
-	/*
-	 *	Create and add a component to this actor.
-	 *	New component parent will be actor root.
+	/**
+	 * Creates and attaches a component to this actor.
 	 */
 	template<typename T, typename... Args>
 	T* SpawnComponent(std::string name, Component* parent, glm::vec2 localLocation, float localRotate, glm::vec2 localScale, Args&&... args)
@@ -83,8 +83,8 @@ public:
 		return component;
 	}
 
-	/*
-	 *	Get the first component of given name and type in this actor.
+	/**
+	 * Retrieves first compoent by name and type.
 	 */
 	template<typename T>
 	T* GetComponent(std::string name)
@@ -93,8 +93,15 @@ public:
 		return componentsCollection.Get<T>(name);
 	}
 
-	/*
-	 *	Get the first component of given type in this actor.
+	template<typename T>
+	const T* GetComponent(std::string name) const
+	{
+		static_assert(std::is_base_of<Component, T>::value, "T must inherit Component");
+		return componentsCollection.Get<T>(name);
+	}
+
+	/**
+	 * Retrieves first component matching type.
 	 */
 	template<typename T>
 	T* GetComponent()
@@ -102,10 +109,16 @@ public:
 		static_assert(std::is_base_of<Component, T>::value, "T must inherit Component");
 		return componentsCollection.Get<T>();
 	}
+
+	template<typename T>
+	const T* GetComponent() const
+	{
+		static_assert(std::is_base_of<Component, T>::value, "T must inherit Component");
+		return componentsCollection.Get<T>();
+	}
 	
-	/*
-	 *	Call by component destroy. Register this component inside a list of components to destroy.
-	 *	@param component the component to register
+	/**
+	 * Registers a component for destruction.
 	 */
 	void RegisterComponentsToDestroy(Component* component);
 
@@ -118,10 +131,10 @@ public:
 	Scene* GetScene() { return scene; }
 	const Scene* GetScene() const { return scene; }
 
-	void SetScene(Scene* _scene);
+	void SetScene(Scene* newScene);
 
 	/*
-	 *	Transform getter/setter
+	 *	Transform accessor
 	 */
 
 	glm::vec2 GetWorldPosition() const;
@@ -144,7 +157,7 @@ public:
 	std::string GetName() const { return name; }
 
 protected:
-	// reference to the scene the actor lives in
+	// Optional identifier used for lookup.
 	Scene* scene;
 
 private:
@@ -156,7 +169,7 @@ private:
 	// Are actor mark for destruction ?
 	bool isPendingDestroy = false;
 
-	// Name associated to this actor. Useful to identify this actor.
+	// Identifier used for lookup.
 	std::string name = "";
 };
 

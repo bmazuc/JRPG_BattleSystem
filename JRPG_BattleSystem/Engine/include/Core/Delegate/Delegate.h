@@ -6,6 +6,9 @@
 
 using DelegateHandle = size_t;
 
+/**
+ * Internal delegate binding entry.
+ */
 template<typename ReturnType, typename... Parameters>
 struct DelegateFunction
 {
@@ -15,14 +18,17 @@ public:
 };
 
 /*
- *	Simple system of multicast callbacks.
- *	Should be upgrade by allowing to remove a specified function (handle system ?) ?
+ *	Multicast callbacks supporting deferred bind/unbind operations during iteration.
  */
 template<typename ReturnType, typename... Parameters>
 class Delegate
 {
 public:
-	// Register a function
+	/**
+	 * Registers a callback function.
+	 * If called during delegate execution, the binding is deferred until iteration completes.
+	 * @return Handle used to unbind the callback.
+	 */
 	DelegateHandle Bind(std::function<ReturnType(Parameters...)> func)
 	{
 		DelegateFunction<ReturnType, Parameters...> delegateFunction = { nextId, func };
@@ -37,7 +43,10 @@ public:
 		return nextId++;
 	}
 
-	// Register a function
+	/**
+	 * Unregisters a callback function.
+	 * If called during delegate execution, removal is deferred until iteration completes.
+	 */
 	void Unbind(DelegateHandle handle)
 	{
 		if (isIterating)
@@ -50,7 +59,10 @@ public:
 		}
 	}
 
-	// Call all registered functions
+	/**
+	 * Invokes all bound callbacks.
+	 * Bind/unbind requests made during iteration are deferred until invocation completes.
+	 */
 	void Call(Parameters... params)
 	{
 		isIterating = true;
@@ -73,7 +85,9 @@ public:
 		isIterating = false;
 	}
 
-	// Clear registered functions list
+	/**
+	 * Removes all registered callbacks.
+	 */
 	void Clear()
 	{
 		functions.clear();
@@ -89,16 +103,16 @@ private:
 		);
 	}
 
-	// List of all registered functions.
+	// Registered callback functions.
 	std::vector<DelegateFunction<ReturnType, Parameters...>> functions;
 	DelegateHandle nextId = 0;
 	
-	// Are we iterating the delegate functions list ?
+	// Prevents iterator invalidation during callback execution.
 	bool isIterating = false;
 
-	// During call, register bind request handles to bind them after
+	// Bind requests queued during iteration.
 	std::vector<DelegateFunction<ReturnType, Parameters...>> pendingBindFunctionHandles;
-	// During call, register unbind request handles to clear them after
+	// Unbind requests queued during iteration.
 	std::vector<DelegateHandle> pendingUnbindFunctionHandles;
 };
 

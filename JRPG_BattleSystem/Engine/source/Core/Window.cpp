@@ -7,12 +7,13 @@ SDLWindowConfig::SDLWindowConfig(const char* _title, glm::vec2 _resolution, SDL_
 {
 }
 
-bool Window::CreateSDLWindow(SDLWindowConfig config)
+bool Window::CreateSDLWindow(const SDLWindowConfig& config)
 {
-	config.flags |= SDL_WINDOW_OPENGL;
+	SDL_WindowFlags flags = config.flags;
+	flags |= SDL_WINDOW_OPENGL;
 
 	// Setup one SDL Window
-	window = SDL_CreateWindow(config.title, (int)config.resolution.x, (int)config.resolution.y, config.flags);
+	window = SDL_CreateWindow(config.title, (int)config.resolution.x, (int)config.resolution.y, flags);
 
 	if (!window)
 	{

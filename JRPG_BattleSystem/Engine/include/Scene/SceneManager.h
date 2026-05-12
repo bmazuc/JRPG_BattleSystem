@@ -9,23 +9,25 @@
 
 class InputManager;
 
-/*
- *	Manage the differents scenes (levels) of the game.
- *	Store the scenes, load and unload them, handle the scene
- *	transitions, handle active scene
+/**
+ * SceneManager is responsible for:
+ * - storing all available scenes
+ * - managing the active scene
+ * - handling scene transitions (load / unload)
  */
 class SceneManager
 {
 public:
 	~SceneManager();
-	/*
-	 *	Load the default scene.
+
+	/**
+	 * Load the default scene.
 	 */
 	void Init();
 
-	/*
-	 *  Create and register a scene.
-	 *  @param name the key used to register the shader
+	/**
+	 * Registers a new scene type.
+	 * The scene is created immediately and its assets are loaded.
 	 */
 	template<typename T, typename... Args>
 	void AddScene(std::string name, Args&&... args)
@@ -44,41 +46,45 @@ public:
 		scene->LoadAssets();
 	}
 
-	/*
-	 *	Set the scene load at engine start.
-	 *	@param name the key used to register the scene
+	/**
+	 * Defines which scene should be loaded at engine startup.
 	 */
 	void SetDefaultScene(std::string name) { defaultScene = name; }
-	/*
-	 *	Get the scene currently loaded.
+	
+	/**
+	 * Returns the currently active scene.
 	 */
 	Scene* GetActiveScene() { return activeScene; }
-	/*
-	 *	Get the scene currently loaded.
-	 */
 	const Scene* GetActiveScene() const { return activeScene; }
 
-	/*
-	 *	Update the active scene. Called each frame.
+	/**
+	 * Updates the active scene each frame.
+	 *
+	 * Handles:
+	 * - update logic
+	 * - input forwarding
+	 * - scene transition requests
 	 */
 	void Update(float deltaTime, InputManager* inputManager);
 
 private:
-	/*
-	 *	Create the scene associated to the key.
-	 *	@param name the key used to register the scene
+	/**
+	 * Loads a scene by name and makes it active.
 	 */
 	void LoadScene(std::string name);
-	/*
-	 *	Destroy the current scene.
+
+	/**
+	 * Unloads the currently active scene.
 	 */
 	void UnloadActiveScene();
 
-	// The scene load at engine start.
+	// Scene loaded at engine startup
 	std::string defaultScene;
 
-	// The scene currently loaded
+	// Currently active scene
 	Scene* activeScene;
+
+	// All registered scene
 	std::unordered_map<std::string, Scene*> scenes;
 };
 

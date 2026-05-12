@@ -3,17 +3,35 @@
 
 #include "Scene/SceneGraph/SceneNode.h"
 
+/**
+ * Scene graph responsible for managing all transform nodes.
+ * It acts as a central system to update hierarchical transforms (parent / child relationships) for the scene.
+ */
 class SceneGraph
 {
 public:
-	// Update nodes transforms
+	/**
+	 * Updates all node transforms in the graph.
+	 */
 	void UpdateTransforms();
 
+	/**
+	 * Registers a node into the scene graph.
+	 */
 	void AddNode(SceneNode* node);
+
+	/**
+	 * Removes a node from the scene graph.
+	 */
 	void RemoveNode(SceneNode* node);
+
+	/**
+	 * Clears all registered nodes.
+	 */
 	void Clear();
 
 private:
+	// All nodes managed by the graph.
 	std::vector<SceneNode*> nodes;
 };
 

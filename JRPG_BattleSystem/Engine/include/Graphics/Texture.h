@@ -4,42 +4,41 @@
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_opengl.h>
 
-/*
- *	Represent an OpenGL texture.
- *	Can be load from BMP or PNG.
+/**
+ * Wrapper around an OpenGL texture resource.
  */
 class Texture
 {
 public:
-	/*
-	 *  Load the texture from a BMP file.
-	 *  @param file texture file
+	/**
+	 * Loads a texture from a BMP file.
 	 */
 	void LoadBMP(const char* file);
-	/*
-	 *  Load the texture from a PNG file.
-	 *  @param file texture file
+
+	/**
+	 * Loads a texture from a PNG file.
 	 */
 	void LoadPNG(const char* file);
 
-	// Bind texture for rendering
+
+	/**
+	 * Binds the texture for rendering.
+	 */
 	void BindTexture();
 
 private:
-	/*
-	 *	Create the texture from a SDL surface ( A collection of pixels used in software blitting)
-	 *	@param surface the SDL surface
+	/**
+	 * Creates an OpenGL texture from an SDL surface.
 	 */
 	void CreateTexture(SDL_Surface* surface);
-	/*
-	 *	Convert a SDL format to an OpenGL format.
-	 *	@param format the SDL format
-	 *	@return OpenGL format
+
+	/**
+	 * Converts an SDL pixel format to its OpenGL equivalent.
 	 */
 	GLenum GetGLFormat(SDL_PixelFormat format);
 
-	// texture name for OpenGL
-	GLuint texture;
+	// OpenGL texture identifier.
+	GLuint texture = 0;
 };
 
 #endif // __TEXTURE_H_INCLUDED__

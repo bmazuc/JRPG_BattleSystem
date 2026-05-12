@@ -5,20 +5,45 @@
 #include "Core/Math/Transform2D.h"
 #include "Scene/SceneGraph/SceneNode.h"
 
+/**
+ * Interface defining ownership over a SceneNode.
+ * Used to abstract components and UI elements that participate in the scene graph hierarchy.
+ */
 class ISceneNodeOwner
 {
 public:
     virtual ~ISceneNodeOwner() = default;
 
+	/**
+	 * Returns the SceneNode owned by this object.
+	 */
 	virtual SceneNode* GetSceneNode() = 0;
 
+	/**
+	 * Returns true if the node has a parent in the hierarchy.
+	 */
 	virtual bool HasParent() = 0;
 
+	/**
+	 * Recomputes transform hierarchy (world transform update).
+	 */
 	virtual void UpdateTransform() = 0;
+	
+	/**
+	 * Detaches this node from its parent hierarchy.
+	 */
 	virtual void DetachFromHierarchy() = 0;
+
+	/**
+	 * Transform access
+	 */
 
 	virtual Transform2D& GetTransform() = 0;
 	virtual const Transform2D& GetTransform() const = 0;
+
+	/**
+	 * World-space transform
+	 */
 
 	virtual glm::vec2 GetWorldPosition() const = 0;
 	virtual float GetWorldRotate() const = 0;
@@ -27,6 +52,10 @@ public:
 	virtual void SetWorldPosition(glm::vec2 position) = 0;
 	virtual void SetWorldRotate(float rotate) = 0;
 	virtual void SetWorldScale(glm::vec2 scale) = 0;
+
+	/**
+	 * Local-space transform
+	 */
 
 	virtual glm::vec2 GetLocalPosition() const = 0;
 	virtual float GetLocalRotate() const = 0;

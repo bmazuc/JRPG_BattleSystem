@@ -3,15 +3,28 @@
 
 #include <random>
 
+/**
+ * Utility class providing random number generation helpers.
+ */
 class Random
 {
 public:
+	/**
+	 * Initializes the random number generator.
+	 */
 	static void Init();
 
+	/**
+	 * Returns a random integer within the specified range.
+	 */
 	static int FromRange(int min, int max);
+	/**
+	 * Returns a random float within the specified range.
+	 */
 	static float FromRange(float min, float max);
 
 private:
+	// Shared random number generator instance.
 	static std::mt19937 s_Generator;
 };
 

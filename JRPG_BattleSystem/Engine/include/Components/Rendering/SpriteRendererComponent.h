@@ -10,17 +10,15 @@
 class Material;
 
 /*
- *	A component allowing to render a sprite (2D graphic entity)
+ * Component responsible for rendering a 2D sprite.
  */
 class SpriteRendererComponent : public Component
 {
 public:
-	/*
-	 *	@param textureName the texture used by the material
-	 *	@param shaderName the shader used by the material
-	 *  @param color the color used by the material
+	/**
+	 * Creates a sprite renderer using the specified material settings.
 	 */
-	SpriteRendererComponent(std::string textureName = "default", std::string shaderName = "default", glm::vec3 color = glm::vec3(1, 1, 1));
+	SpriteRendererComponent(std::string textureName = "default", std::string shaderName = "default", glm::vec3 color = glm::vec3(1.0f, 1.0f, 1.0f));
 	~SpriteRendererComponent();
 
 	Material* GetMaterial() { return material; }
@@ -29,19 +27,13 @@ public:
 	glm::vec2 GetSize() const { return size; }
 	int GetZOrder() const { return zOrder; }
 
-	void SetSize(glm::vec2 _size) { size = _size; }
-	/*
-	 *	The zOrder decides what priority each sprite has to the renderer.
-	 *	The lower the number you give it, the further back the sprite appears.
-	 */
-	void SetZOrder(int _zOrder) { zOrder = _zOrder; }
+	void SetSize(glm::vec2 newSize) { size = newSize; }
+	void SetZOrder(int newZOrder) { zOrder = newZOrder; }
 	
 private:
-	glm::vec2 size = glm::vec2(1, 1);
-	/*
-	 *	The zOrder decides what priority each sprite has to the renderer.
-	 *	The lower the number you give it, the further back the sprite appears.
-	 */ 
+	glm::vec2 size = glm::vec2(1.0f, 1.0f);
+
+	// Lower z-order values are rendered behind higher ones.
 	int zOrder = 0;
 
 	Material* material;

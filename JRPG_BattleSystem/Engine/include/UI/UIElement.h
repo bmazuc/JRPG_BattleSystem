@@ -7,8 +7,16 @@
 
 class Scene;
 
-/*
- *	Base class for UI element.
+/**
+ * Base class for all UI elements in the engine.
+ *
+ * UIElement represents a 2D interface object that:
+ * - exists in the scene hierarchy
+ * - has a transform (position / rotation / scale)
+ * - can be parented to other UI elements
+ * - participates in update + rendering pipeline
+ *
+ * It is the UI equivalent of an Actor in world space.
  */
 class UIElement : public ISceneNodeOwner
 {
@@ -16,34 +24,49 @@ public:
 	UIElement();
 	virtual ~UIElement() {};
 
-	/*
-	 *	Behavior called after scene loading
+	/**
+	 * Called once when the scene starts or element is created.
 	 */
 	virtual void BeginPlay() {}
-	/*
-	 *	Behavior called each frame
+
+	/**
+	 * Called every frame for UI logic updates.
 	 */
 	virtual void Update(float deltaTime) {}
 
+	/**
+	 * Updates the transform hierarchy (world/local propagation).
+	 */
 	void UpdateTransform();
+
+	/**
+	 * Detaches this element from its parent in the UI hierarchy.
+	 */
 	void DetachFromHierarchy();
 
-	/*
-	 *	Mark a component for destroy
-	 *	Future upgrade : Add a destroy with a timer
+	/**
+	 * Marks this UI element for destruction.
+	 * If destroyChildren is true, also removes its children hierarchy.
 	 */
 	void Destroy(bool destroyChildren = false);
+
+	/**
+	 * Scene graph integration
+	 */
 
 	SceneNode* GetSceneNode() { return &node; }
 
 	bool HasParent() { return node.HasParent(); }
+
 	UIElement* GetParent();
 	const UIElement* GetParent() const;
-	void SetParent(UIElement* _parent);
+
+	void SetParent(UIElement* element);
+
 	std::vector<UIElement*> GetChildren();
 
 	/*
-	 *	Transform getter/setter
+	 *	Transform accessor
 	 */
 
 	Transform2D& GetTransform() { return node.GetTransform(); }
@@ -65,7 +88,14 @@ public:
 	void SetLocalRotate(float rotate);
 	void SetLocalScale(glm::vec2 scale);
 
+	/**
+	 * Returns world transform matrix (used for rendering).
+	 */
 	glm::mat4 GetWorld() { return node.GetTransform().world; }
+
+	/**
+	 * Hierarchy root access
+	 */
 
 	UIElement* GetRoot();
 	const UIElement* GetRoot() const;
@@ -77,16 +107,17 @@ public:
 	void SetName(std::string newName) { name = newName; };
 	std::string GetName() const { return name; }
 
+protected:
+	// Scene owning this UI element
+	Scene* scene;
+
 private:
-	// Name associated to this element. Useful to identify this element.
+	// Identifier used for lookup.
 	std::string name = "";
 
 	SceneNode node;
 
-	// reference to the scene the element lives in
-	Scene* scene;
-
-	// Are element mark for destruction ?
+	// Are this element mark for destruction ?
 	bool isPendingDestroy = false;
 };
 

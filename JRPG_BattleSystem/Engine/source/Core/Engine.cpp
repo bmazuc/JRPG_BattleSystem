@@ -106,7 +106,7 @@ bool Engine::InitSDL()
     return true;
 }
 
-bool Engine::CreateWindow(SDLWindowConfig config)
+bool Engine::CreateWindow(const SDLWindowConfig& config)
 {
     // Setup one SDL Window
     window = new Window();
