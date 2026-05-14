@@ -124,90 +124,46 @@ public:
 	const SceneGraph* GetSceneGraph() const { return &graph; }
 
 	template<typename T, typename... Args>
-	T* SpawnActor(std::string name, const ActorSpawnInfo& spawnInfo, Args&&... args)
-	{
-		static_assert(std::is_base_of<Actor, T>::value, "T must inherit Actor");
-		T* actor = new T(std::forward<Args>(args)...);
-		InternalSpawnActor(actor, name, spawnInfo);
-		return actor;
-	}
+	T* SpawnActor(std::string name, const ActorSpawnInfo& spawnInfo, Args&&... args);
 
 	/**
 	 * Retrieves first actor by name and type.
 	 */
 	template<typename T>
-	T* GetActor(std::string name)
-	{
-		static_assert(std::is_base_of<Actor, T>::value, "T must inherit Actor");
-		return actorsCollection.Get<T>(name);
-	}
+	T* GetActor(std::string name);
 
 	template<typename T>
-	const T* GetActor(std::string name) const
-	{
-		static_assert(std::is_base_of<Actor, T>::value, "T must inherit Actor");
-		return actorsCollection.Get<T>(name);
-	}
+	const T* GetActor(std::string name) const;
 
 	/**
 	 * Retrieves first actor matching type.
 	 */
 	template<typename T>
-	T* GetActor()
-	{
-		static_assert(std::is_base_of<Actor, T>::value, "T must inherit Actor");
-		return actorsCollection.Get<T>();
-	}
+	T* GetActor();
 
 	template<typename T>
-	const T* GetActor() const
-	{
-		static_assert(std::is_base_of<Actor, T>::value, "T must inherit Actor");
-		return actorsCollection.Get<T>();
-	}
+	const T* GetActor() const;
 
 	template<typename T, typename... Args>
-	T* CreateUIElement(std::string name, const UISpawnInfo& spawnInfo, Args&&... args)
-	{
-		static_assert(std::is_base_of<UIElement, T>::value, "T must inherit UIElement");
-		T* element = new T(std::forward<Args>(args)...);
-		InternalSpawnUIElement(element, name, spawnInfo);
-		return element;
-	}
+	T* CreateUIElement(std::string name, const UISpawnInfo& spawnInfo, Args&&... args);
 
 	/**
 	* Retrieves first UI element by name and type.
 	*/
 	template<typename T>
-	T* GetUIElement(std::string name)
-	{
-		static_assert(std::is_base_of<UIElement, T>::value, "T must inherit UIElement");
-		return uiElementsCollection.Get<T>(name);
-	}
+	T* GetUIElement(std::string name);
 
 	template<typename T>
-	const T* GetUIElement(std::string name) const
-	{
-		static_assert(std::is_base_of<UIElement, T>::value, "T must inherit UIElement");
-		return uiElementsCollection.Get<T>(name);
-	}
+	const T* GetUIElement(std::string name) const;
 
 	/**
 	 * Retrieves first UI element matching type.
 	 */
 	template<typename T>
-	T* GetUIElement()
-	{
-		static_assert(std::is_base_of<UIElement, T>::value, "T must inherit UIElement");
-		return uiElementsCollection.Get<T>();
-	}
+	T* GetUIElement();
 
 	template<typename T>
-	const T* GetUIElement() const
-	{
-		static_assert(std::is_base_of<UIElement, T>::value, "T must inherit UIElement");
-		return uiElementsCollection.Get<T>();
-	}
+	const T* GetUIElement() const;
 
 	/**
 	 * Destruction requests
@@ -246,5 +202,7 @@ private:
 
 	SceneRequest pendingRequest;
 };
+
+#include "Scene.inl"
 
 #endif // __SCENE_H_INCLUDED__

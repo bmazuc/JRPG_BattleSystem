@@ -2,20 +2,20 @@
 #define __COMPONENT_COLLECTION_H_INCLUDED__
 
 #include "ObjectCollection.h"
-#include "Components/Component.h"
+#include "Components/ActorComponent.h"
 
 /**
  * Collection specialized for Component objects.
  * Minimal extension of ObjectCollection, used mainly for lifecycle hooks.
  */
-class ComponentCollection : public ObjectCollection<Component>
+class ComponentCollection : public ObjectCollection<ActorComponent>
 {
 public:
 	void BeginPlay();
 	void Update(float deltaTime);
 
 private:
-	void InitObject(Component* actor) override;
+	void InitObject(ActorComponent* actor) override;
 };
 
 #endif // __COMPONENT_COLLECTION_H_INCLUDED__

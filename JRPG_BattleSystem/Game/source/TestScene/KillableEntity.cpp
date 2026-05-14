@@ -5,9 +5,7 @@
 
 KillableEntity::KillableEntity(std::string textureName, std::string shaderName)
 {
-    spriteRenderer = SpawnComponent<SpriteRendererComponent>("Sprite render", nullptr,
-        glm::vec2(0, 0), 0, glm::vec2(1, 1),
-        textureName, shaderName);
+    spriteRenderer = SpawnSceneComponent<SpriteRendererComponent>("Sprite render", SceneComponentSpawnInfo(), textureName, shaderName);
 }
 
 void KillableEntity::SetupInputs(PlayerController* _playerController)
@@ -28,7 +26,7 @@ void KillableEntity::OnClick()
         if (IsHovered(mousePos))
         {
             playerController->OnClick.Unbind(clickHandle);
-            Destroy();
+            MarkForDestruction();
         }
     }
 }

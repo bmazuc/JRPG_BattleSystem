@@ -1,14 +1,14 @@
 #ifndef __CAMERA_COMPONENT_H_INCLUDED__
 #define __CAMERA_COMPONENT_H_INCLUDED__
 
-#include "Components/Component.h"
+#include "Components/SceneComponent.h"
 
 #include <glm/vec2.hpp>
 
 /**
  *	Represents a camera viewpoint.
  */
-class CameraComponent : public Component
+class CameraComponent : public SceneComponent
 {
 public:
 	float GetZoom() const { return zoom; }

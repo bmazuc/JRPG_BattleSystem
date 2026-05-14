@@ -135,8 +135,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Engine\include\Components\SceneComponent.cpp" />
     <ClCompile Include="Engine\source\Components\Camera\CameraComponent.cpp" />
-    <ClCompile Include="Engine\source\Components\Component.cpp" />
+    <ClCompile Include="Engine\source\Components\ActorComponent.cpp" />
     <ClCompile Include="Engine\source\Components\Rendering\SpriteRendererComponent.cpp" />
     <ClCompile Include="Engine\source\Core\Engine.cpp" />
     <ClCompile Include="Engine\source\Core\Inputs\InputManager.cpp" />
@@ -149,6 +150,7 @@
     <ClCompile Include="Engine\source\Rendering\Renderer.cpp" />
     <ClCompile Include="Engine\source\Rendering\Shader.cpp" />
     <ClCompile Include="Engine\source\Scene\Actor.cpp" />
+    <ClCompile Include="Engine\source\Scene\Object.cpp" />
     <ClCompile Include="Engine\source\Scene\ObjectCollections\ActorCollection.cpp" />
     <ClCompile Include="Engine\source\Scene\ObjectCollections\ComponentCollection.cpp" />
     <ClCompile Include="Engine\source\Scene\ObjectCollections\UIElementCollection.cpp" />
@@ -170,13 +172,15 @@
     <ClCompile Include="Game\source\TestScene\KillableEntity.cpp" />
     <ClCompile Include="Game\source\TestScene\MovingEntity.cpp" />
     <ClCompile Include="Game\source\TestScene\RotatingEntity.cpp" />
+    <ClCompile Include="Game\source\TestScene\TestActorComponent.cpp" />
     <ClCompile Include="Game\source\TestScene\TestScene.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\include\Components\Camera\CameraComponent.h" />
-    <ClInclude Include="Engine\include\Components\Component.h" />
+    <ClInclude Include="Engine\include\Components\ActorComponent.h" />
     <ClInclude Include="Engine\include\Components\Rendering\SpriteRendererComponent.h" />
+    <ClInclude Include="Engine\include\Components\SceneComponent.h" />
     <ClInclude Include="Engine\include\Core\Delegate\Delegate.h" />
     <ClInclude Include="Engine\include\Core\Engine.h" />
     <ClInclude Include="Engine\include\Core\Inputs\InputManager.h" />
@@ -190,6 +194,7 @@
     <ClInclude Include="Engine\include\Rendering\Renderer.h" />
     <ClInclude Include="Engine\include\Rendering\Shader.h" />
     <ClInclude Include="Engine\include\Scene\Actor.h" />
+    <ClInclude Include="Engine\include\Scene\Object.h" />
     <ClInclude Include="Engine\include\Scene\ObjectCollections\ActorCollection.h" />
     <ClInclude Include="Engine\include\Scene\ObjectCollections\ComponentCollection.h" />
     <ClInclude Include="Engine\include\Scene\ObjectCollections\ObjectCollection.h" />
@@ -214,7 +219,12 @@
     <ClInclude Include="Game\include\TestScene\KillableEntity.h" />
     <ClInclude Include="Game\include\TestScene\MovingEntity.h" />
     <ClInclude Include="Game\include\TestScene\RotatingEntity.h" />
+    <ClInclude Include="Game\include\TestScene\TestActorComponent.h" />
     <ClInclude Include="Game\include\TestScene\TestScene.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Engine\include\Scene\Actor.inl" />
+    <None Include="Engine\include\Scene\Scene.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

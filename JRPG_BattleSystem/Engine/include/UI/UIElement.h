@@ -1,6 +1,7 @@
 #ifndef __UI_ELEMENT_H_INCLUDED__
 #define __UI_ELEMENT_H_INCLUDED__
 
+#include "Scene/Object.h"
 #include "Scene/SceneGraph/ISceneNodeOwner.h"
 #include "Core/Math/Transform2D.h"
 #include <string>
@@ -18,7 +19,7 @@ class Scene;
  *
  * It is the UI equivalent of an Actor in world space.
  */
-class UIElement : public ISceneNodeOwner
+class UIElement : public Object, public ISceneNodeOwner
 {
 public:
 	UIElement();
@@ -45,10 +46,15 @@ public:
 	void DetachFromHierarchy();
 
 	/**
+	 * Called before object destruction.
+	 */
+	void BeginDestroy() override;
+
+	/**
 	 * Marks this UI element for destruction.
 	 * If destroyChildren is true, also removes its children hierarchy.
 	 */
-	void Destroy(bool destroyChildren = false);
+	void MarkForDestruction(bool markChildren = false);
 
 	/**
 	 * Scene graph integration
@@ -104,21 +110,12 @@ public:
 	const Scene* GetScene() const { return scene; }
 	void SetScene(Scene* newScene);
 
-	void SetName(std::string newName) { name = newName; };
-	std::string GetName() const { return name; }
-
 protected:
 	// Scene owning this UI element
 	Scene* scene;
 
 private:
-	// Identifier used for lookup.
-	std::string name = "";
-
 	SceneNode node;
-
-	// Are this element mark for destruction ?
-	bool isPendingDestroy = false;
 };
 
 #endif // __UI_ELEMENT_H_INCLUDED__

@@ -1,7 +1,7 @@
 #ifndef __SPRITE_RENDERER_COMPONENT_H_INCLUDED__
 #define __SPRITE_RENDERER_COMPONENT_H_INCLUDED__
 
-#include "Components/Component.h"
+#include "Components/SceneComponent.h"
 #include "Rendering/Shader.h"
 #include <glm/vec2.hpp>
 #include <glm/vec3.hpp>
@@ -12,7 +12,7 @@ class Material;
 /*
  * Component responsible for rendering a 2D sprite.
  */
-class SpriteRendererComponent : public Component
+class SpriteRendererComponent : public SceneComponent
 {
 public:
 	/**

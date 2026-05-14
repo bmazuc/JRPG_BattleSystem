@@ -187,7 +187,7 @@ public:
 		{
 			if (objectToDestroy)
 			{
-				objectToDestroy->DetachFromHierarchy();
+				objectToDestroy->BeginDestroy();
 
 				objects.erase(std::remove(objects.begin(), objects.end(), objectToDestroy), objects.end());
 				delete objectToDestroy;

@@ -5,6 +5,7 @@
 
 class Actor;
 class UIElement;
+class SceneComponent;
 
 /**
  * Base data used to describe how an object should be spawned in a scene.
@@ -42,6 +43,23 @@ public:
 
 	// Optional parent actor for hierarchy attachment
 	Actor* parent = nullptr;
+};
+
+/**
+ * Spawn information specific to SceneComponent objects.
+ * Adds parent relationship support to define hierarchy at spawn time.
+ */
+struct SceneComponentSpawnInfo : SpawnInfo
+{
+public:
+	SceneComponentSpawnInfo(SceneComponent* _parent = nullptr, TransformSpace _transformSpace = TransformSpace::Local, glm::vec2 _location = glm::vec2(0.0f, 0.0f), float _rotate = 0.0f, glm::vec2 _scale = glm::vec2(1.0f, 1.0f))
+		: parent(_parent), SpawnInfo(_transformSpace, _location, _rotate, _scale) {
+	}
+
+	~SceneComponentSpawnInfo() = default;
+
+	// Optional parent SceneComponent for UI hierarchy
+	SceneComponent* parent = nullptr;
 };
 
 /**

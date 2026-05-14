@@ -1,11 +1,11 @@
 #ifndef __ACTOR_H_INCLUDED__
 #define __ACTOR_H_INCLUDED__
 
-#include "Components/Component.h"
+#include "Components/SceneComponent.h"
 #include <glm/vec2.hpp>
 #include <vector>
-#include <string>
 #include "Scene/ObjectCollections/ComponentCollection.h"
+#include "Scene/SpawnInfos.h"
 
 class Scene;
 class PlayerController;
@@ -19,7 +19,7 @@ class PlayerController;
  * - participates in scene lifecycle (BeginPlay / Update)
  * - can be attached to other actors (hierarchy)
  */
-class Actor
+class Actor : public Object
 {
 public:
 	Actor();
@@ -36,10 +36,15 @@ public:
 	virtual void Update(float deltaTime) {}
 
 	/**
+	 * Called before object destruction.
+	 */
+	void BeginDestroy() override;
+
+	/**
 	 * Marks this actor for destruction.
 	 * If destroyChildren is true, also destroys attached hierarchy.
 	 */
-	void Destroy(bool destroyChildren = false);
+	void MarkForDestruction(bool markChildren = false);
 
 	/**
 	 * Called during initialization to bind input logic.
@@ -72,58 +77,42 @@ public:
 	void ProcessComponentsDestroy();
 
 	/**
-	 * Creates and attaches a component to this actor.
+	 * Creates and attaches an actor component to this actor.
 	 */
 	template<typename T, typename... Args>
-	T* SpawnComponent(std::string name, Component* parent, glm::vec2 localLocation, float localRotate, glm::vec2 localScale, Args&&... args)
-	{
-		static_assert(std::is_base_of<Component, T>::value, "T must inherit Component");
-		T* component = new T(std::forward<Args>(args)...);
-		InternalSpawnComponent(component, name, parent, localLocation, localRotate, localScale);
-		return component;
-	}
+	T* CreateComponent(std::string name, Args&&... args);
+
+	/**
+	 * Creates and attaches a scene component to this actor.
+	 */
+	template<typename T, typename... Args>
+	T* SpawnSceneComponent(std::string name, const SceneComponentSpawnInfo& spawnInfo, Args&&... args);
 
 	/**
 	 * Retrieves first compoent by name and type.
 	 */
 	template<typename T>
-	T* GetComponent(std::string name)
-	{
-		static_assert(std::is_base_of<Component, T>::value, "T must inherit Component");
-		return componentsCollection.Get<T>(name);
-	}
+	T* GetComponent(std::string name);
 
 	template<typename T>
-	const T* GetComponent(std::string name) const
-	{
-		static_assert(std::is_base_of<Component, T>::value, "T must inherit Component");
-		return componentsCollection.Get<T>(name);
-	}
+	const T* GetComponent(std::string name) const;
 
 	/**
 	 * Retrieves first component matching type.
 	 */
 	template<typename T>
-	T* GetComponent()
-	{
-		static_assert(std::is_base_of<Component, T>::value, "T must inherit Component");
-		return componentsCollection.Get<T>();
-	}
+	T* GetComponent();
 
 	template<typename T>
-	const T* GetComponent() const
-	{
-		static_assert(std::is_base_of<Component, T>::value, "T must inherit Component");
-		return componentsCollection.Get<T>();
-	}
+	const T* GetComponent() const;
 	
 	/**
 	 * Registers a component for destruction.
 	 */
-	void RegisterComponentsToDestroy(Component* component);
+	void RegisterComponentsToDestroy(ActorComponent* component);
 
-	Component* GetRoot() { return root; }
-	const Component* GetRoot() const{ return root; }
+	SceneComponent* GetRoot() { return root; }
+	const SceneComponent* GetRoot() const{ return root; }
 
 	Actor* GetParent();
 	const Actor* GetParent() const;
@@ -153,24 +142,18 @@ public:
 	void SetLocalRotate(float rotate);
 	void SetLocalScale(glm::vec2 scale);
 
-	void SetName(std::string newName) { name = newName; };
-	std::string GetName() const { return name; }
-
 protected:
 	// Optional identifier used for lookup.
 	Scene* scene;
 
 private:
-	void InternalSpawnComponent(Component* component, std::string name, Component* parent, glm::vec2 localLocation, float localRotate, glm::vec2 localScale);
+	void InternalSpawnSceneComponent(SceneComponent* component, const SceneComponentSpawnInfo& spawnInfo);
+	void RegisterComponent(ActorComponent* component, std::string name);
 
-	Component* root;
+	SceneComponent* root;
 	ComponentCollection componentsCollection;
-
-	// Are actor mark for destruction ?
-	bool isPendingDestroy = false;
-
-	// Identifier used for lookup.
-	std::string name = "";
 };
+
+#include "Actor.inl"
 
 #endif // __ACTOR_H_INCLUDED__

@@ -3,8 +3,7 @@
 
 Enemy::Enemy(EnemyData data)
 {
-    spriteRenderer = SpawnComponent<SpriteRendererComponent>("Sprite render", nullptr, 
-        glm::vec2(0, 0), 0, glm::vec2(1, 1),
+    spriteRenderer = SpawnSceneComponent<SpriteRendererComponent>("Sprite render", SceneComponentSpawnInfo(),
         data.textureName, data.shaderName, data.color);
 
     spriteRenderer->SetSize(data.spriteSize);

@@ -5,9 +5,7 @@
 
 RotatingEntity::RotatingEntity(std::string textureName, std::string shaderName)
 {
-    spriteRenderer = SpawnComponent<SpriteRendererComponent>("Sprite render", nullptr,
-        glm::vec2(0, 0), 0, glm::vec2(1, 1),
-        textureName, shaderName);
+    spriteRenderer = SpawnSceneComponent<SpriteRendererComponent>("Sprite render", SceneComponentSpawnInfo(), textureName, shaderName);
 }
 
 void RotatingEntity::SetupInputs(PlayerController* _playerController)

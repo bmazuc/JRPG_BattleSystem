@@ -2,7 +2,7 @@
 
 void ComponentCollection::BeginPlay()
 {
-    Iterate([](Component* component)
+    Iterate([](ActorComponent* component)
         {
             component->BeginPlay();
         });
@@ -10,13 +10,13 @@ void ComponentCollection::BeginPlay()
 
 void ComponentCollection::Update(float deltaTime)
 {
-    Iterate([deltaTime](Component* component)
+    Iterate([deltaTime](ActorComponent* component)
         {
             component->Update(deltaTime);
         });
 }
 
-void ComponentCollection::InitObject(Component* component)
+void ComponentCollection::InitObject(ActorComponent* component)
 {
     component->BeginPlay();
 }

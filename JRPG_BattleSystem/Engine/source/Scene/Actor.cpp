@@ -3,7 +3,7 @@
 
 Actor::Actor()
 {
-	root = SpawnComponent<Component>(name + " root", nullptr, glm::vec2(0, 0), 0, glm::vec2(1,1));
+	root = SpawnSceneComponent<SceneComponent>(name + "Root", SceneComponentSpawnInfo());
 }
 
 Actor::~Actor()
@@ -18,10 +18,13 @@ void Actor::SetScene(Scene* newScene)
 	if (scene)
 	{
 		SceneGraph* graph = scene->GetSceneGraph();
-		std::vector<Component*> components = componentsCollection.GetCollection();
-		for (Component* component : components)
+		std::vector<ActorComponent*> components = componentsCollection.GetCollection();
+		for (ActorComponent* component : components)
 		{
-			graph->AddNode(component->GetSceneNode());
+			if (SceneComponent* sceneComponent = dynamic_cast<SceneComponent*>(component))
+			{
+				graph->AddNode(sceneComponent->GetSceneNode());
+			}
 		}
 	}
 }
@@ -145,28 +148,33 @@ void Actor::SetWorldScale(glm::vec2 scale)
 	}
 }
 
-void Actor::Destroy(bool destroyChildren)
+void Actor::BeginDestroy()
+{
+	DetachFromHierarchy();
+}
+
+void Actor::MarkForDestruction(bool markChildren)
 {
 	if (!isPendingDestroy)
 	{
 		isPendingDestroy = true;
 		scene->RegisterToDestroy(this);
 
-		if (destroyChildren)
+		if (markChildren)
 		{
-			std::vector<Component*> children = root->GetChildren();
-			for (Component* child : children)
+			std::vector<SceneComponent*> children = root->GetChildren();
+			for (SceneComponent* child : children)
 			{
 				if (child->GetOwner() != this)
 				{
-					child->GetOwner()->Destroy(true);
+					child->GetOwner()->MarkForDestruction(true);
 				}
 			}
 		}
 	}
 }
 
-void Actor::RegisterComponentsToDestroy(Component* component)
+void Actor::RegisterComponentsToDestroy(ActorComponent* component)
 {
 	componentsCollection.RegisterToDestroy(component);
 }
@@ -186,19 +194,33 @@ void Actor::DetachFromHierarchy()
 	root->DetachFromHierarchy();
 }
 
-void Actor::InternalSpawnComponent(Component* component, std::string name, Component* parent, glm::vec2 localLocation, float localRotate, glm::vec2 localScale)
+void Actor::InternalSpawnSceneComponent(SceneComponent* component, const SceneComponentSpawnInfo& spawnInfo)
 {
-	component->SetOwner(this);
-	component->SetName(name);
-	component->SetParent(parent ? parent : root);
-	component->SetLocalPosition(localLocation);
-	component->SetLocalRotate(localRotate);
-	component->SetLocalScale(localScale);
+	component->SetParent(spawnInfo.parent ? spawnInfo.parent : root);
+
+	if (spawnInfo.transformSpace == TransformSpace::World)
+	{
+		component->SetWorldPosition(spawnInfo.location);
+		component->SetWorldRotate(spawnInfo.rotate);
+		component->SetWorldScale(spawnInfo.scale);
+	}
+	else
+	{
+		component->SetLocalPosition(spawnInfo.location);
+		component->SetLocalRotate(spawnInfo.rotate);
+		component->SetLocalScale(spawnInfo.scale);
+	}
 
 	if (scene)
 	{
 		scene->GetSceneGraph()->AddNode(component->GetSceneNode());
 	}
+}
+
+void Actor::RegisterComponent(ActorComponent* component, std::string name)
+{
+	component->SetOwner(this);
+	component->SetName(name);
 
 	componentsCollection.Add(component);
 }

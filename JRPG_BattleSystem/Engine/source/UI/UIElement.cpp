@@ -106,7 +106,12 @@ void UIElement::SetWorldScale(glm::vec2 scale)
 	node.SetWorldScale(scale);
 }
 
-void UIElement::Destroy(bool destroyChildren)
+void UIElement::BeginDestroy()
+{
+	DetachFromHierarchy();
+}
+
+void UIElement::MarkForDestruction(bool markChildren)
 {
 	if (!isPendingDestroy)
 	{
@@ -116,12 +121,12 @@ void UIElement::Destroy(bool destroyChildren)
 			scene->RegisterToDestroy(this);
 		}
 
-		if (destroyChildren)
+		if (markChildren)
 		{
 			std::vector<UIElement*> children = GetChildren();
 			for (UIElement* child : children)
 			{
-				child->Destroy(true);
+				child->MarkForDestruction(true);
 			}
 		}
 	}

@@ -144,7 +144,7 @@
     <ClCompile Include="Engine\source\Graphics\Texture.cpp">
       <Filter>Source Files\Engine\Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\source\Components\Component.cpp">
+    <ClCompile Include="Engine\source\Components\ActorComponent.cpp">
       <Filter>Source Files\Engine\Components</Filter>
     </ClCompile>
     <ClCompile Include="Engine\source\Scene\Actor.cpp">
@@ -246,6 +246,15 @@
     <ClCompile Include="Engine\source\Scene\ObjectCollections\UIElementCollection.cpp">
       <Filter>Source Files\Engine\Scene\ObjectCollections</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\include\Components\SceneComponent.cpp">
+      <Filter>Source Files\Engine\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\source\Scene\Object.cpp">
+      <Filter>Source Files\Engine\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\source\TestScene\TestActorComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\include\Core\Engine.h">
@@ -254,7 +263,7 @@
     <ClInclude Include="Engine\include\Graphics\Texture.h">
       <Filter>Header Files\Engine\Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\include\Components\Component.h">
+    <ClInclude Include="Engine\include\Components\ActorComponent.h">
       <Filter>Header Files\Engine\Components</Filter>
     </ClInclude>
     <ClInclude Include="Engine\include\Scene\Actor.h">
@@ -371,5 +380,22 @@
     <ClInclude Include="Engine\include\Scene\ObjectCollections\UIElementCollection.h">
       <Filter>Header Files\Engine\Scene\ObjectCollections</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\include\Components\SceneComponent.h">
+      <Filter>Header Files\Engine\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\include\Scene\Object.h">
+      <Filter>Header Files\Engine\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\include\TestScene\TestActorComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Engine\include\Scene\Scene.inl">
+      <Filter>Header Files\Engine\Scene</Filter>
+    </None>
+    <None Include="Engine\include\Scene\Actor.inl">
+      <Filter>Header Files\Engine\Scene</Filter>
+    </None>
   </ItemGroup>
 </Project>

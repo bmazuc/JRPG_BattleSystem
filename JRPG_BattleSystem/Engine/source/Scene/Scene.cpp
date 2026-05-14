@@ -1,5 +1,5 @@
 #include "Scene/Scene.h"
-#include "Components/Component.h"
+#include "Components/ActorComponent.h"
 #include "Components/Camera/CameraComponent.h"
 #include "Components/Rendering/SpriteRendererComponent.h"
 #include "Rendering/Material.h"
