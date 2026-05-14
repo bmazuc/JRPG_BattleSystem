@@ -32,20 +32,7 @@ public:
 
 private:
 	void InitObject(Actor* actor) override;
-
-	void InternalBeginPlay(Actor* actor) override
-	{
-		ObjectCollection<Actor>::InternalBeginPlay(actor);
-		actor->ComponentsBeginPlay();
-		actor->SetupInputs(playerController);
-	}
-
-	void InternalUpdate(Actor* actor, float deltaTime)
-	{
-		ObjectCollection<Actor>::InternalUpdate(actor, deltaTime);
-		actor->UpdateComponents(deltaTime);
-	}
-
+	void BeginDestroyObject(Actor* actor) override;
 	PlayerController* playerController;
 };
 

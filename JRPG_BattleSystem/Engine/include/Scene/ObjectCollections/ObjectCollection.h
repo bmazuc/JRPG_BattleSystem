@@ -60,6 +60,7 @@ public:
 	{
 		for (T* object : objects)
 		{
+			BeginDestroyObject(object);
 			delete object;
 		}
 
@@ -187,7 +188,7 @@ public:
 		{
 			if (objectToDestroy)
 			{
-				objectToDestroy->BeginDestroy();
+				BeginDestroyObject(objectToDestroy);
 
 				objects.erase(std::remove(objects.begin(), objects.end(), objectToDestroy), objects.end());
 				delete objectToDestroy;
@@ -200,15 +201,7 @@ public:
 protected:
 	virtual void InitObject(T* object) {}
 
-	virtual void InternalBeginPlay(T* object)
-	{
-		object->BeginPlay();
-	}
-
-	virtual void InternalUpdate(T* object, float deltaTime)
-	{
-		object->Update(deltaTime);
-	}
+	virtual void BeginDestroyObject(T* object) {}
 
 	// Active objects in the collection
 	std::vector<T*> objects;

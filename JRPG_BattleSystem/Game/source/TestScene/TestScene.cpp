@@ -10,6 +10,7 @@
 #include "Rendering/Material.h"
 #include "TestScene/KillableEntity.h"
 #include "TestScene/TestActorComponent.h"
+#include "TestScene/TestSceneSubsystem.h"
 
 void TestScene::CreateScene()
 {
@@ -46,6 +47,8 @@ void TestScene::CreateScene()
     SpriteRendererComponent* backgroundSpriteRenderer = background->SpawnSceneComponent<SpriteRendererComponent>("Sprite renderer", SceneComponentSpawnInfo(), "background");
     backgroundSpriteRenderer->SetSize(glm::vec2(640, 480));
     background->CreateComponent<TestActorComponent>("Test");
+
+    AddSubsystem<TestSceneSubsystem>("subsystem");
 }
 
 void TestScene::LoadAssets()

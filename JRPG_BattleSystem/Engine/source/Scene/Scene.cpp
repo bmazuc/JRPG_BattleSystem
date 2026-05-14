@@ -31,6 +31,7 @@ void Scene::BeginPlay()
 
 	actorsCollection.BeginPlay();
 	uiElementsCollection.BeginPlay();
+	sceneSubsystemCollection.BeginPlay();
 
 	actorsCollection.SetupInputs(playerController);
 }
@@ -47,15 +48,18 @@ void Scene::Update(float deltaTime, InputManager* inputManager)
 	// Update objects
 	actorsCollection.Update(deltaTime);
 	uiElementsCollection.Update(deltaTime);
+	sceneSubsystemCollection.Update(deltaTime);
 
 	// Process destruction and adding
 	actorsCollection.ProcessDestroy();
 	actorsCollection.ProcessComponentsDestroy();
 	uiElementsCollection.ProcessDestroy();
+	sceneSubsystemCollection.ProcessDestroy();
 
 	actorsCollection.ProcessAdd();
 	actorsCollection.ProcessComponentsAdd();
 	uiElementsCollection.ProcessAdd();
+	sceneSubsystemCollection.ProcessAdd();
 }
 
 void Scene::UpdateUIInputs(InputManager* inputManager)
@@ -91,6 +95,7 @@ void Scene::Unload()
 
 	actorsCollection.Clear();
 	uiElementsCollection.Clear();
+	sceneSubsystemCollection.Clear();
 
 	delete playerController;
 	playerController = nullptr;

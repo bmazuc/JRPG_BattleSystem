@@ -11,7 +11,6 @@ Some can be done later in the project. Others will be over-engineering for this 
   * Actor
   * Component
   * UIElement
-* Add SceneSubsystem for object living in the scene without node (for example managers)
 
 
 

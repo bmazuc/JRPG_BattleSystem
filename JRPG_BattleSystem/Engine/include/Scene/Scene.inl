@@ -71,3 +71,47 @@ const T* Scene::GetUIElement() const
 	static_assert(std::is_base_of<UIElement, T>::value, "T must inherit UIElement");
 	return uiElementsCollection.Get<T>();
 }
+
+template<typename T, typename... Args>
+T* Scene::AddSubsystem(std::string name, Args&&... args)
+{
+	static_assert(std::is_base_of<SceneSubsystem, T>::value, "T must inherit SceneSubsystem");
+	T* subsystem = new T(std::forward<Args>(args)...);
+	subsystem->SetName(name);
+	sceneSubsystemCollection.Add(subsystem);
+	return subsystem;
+}
+
+/**
+ * Retrieves first subsystem by name and type.
+ */
+template<typename T>
+T* Scene::GetSubsystem(std::string name)
+{
+	static_assert(std::is_base_of<SceneSubsystem, T>::value, "T must inherit SceneSubsystem");
+	return sceneSubsystemCollection.Get<T>(name);
+}
+
+template<typename T>
+const T* Scene::GetSubsystem(std::string name) const
+{
+	static_assert(std::is_base_of<SceneSubsystem, T>::value, "T must inherit SceneSubsystem");
+	return sceneSubsystemCollection.Get<T>(name);
+}
+
+/**
+ * Retrieves first subsystem matching type.
+ */
+template<typename T>
+T* Scene::GetSubsystem() 
+{
+	static_assert(std::is_base_of<SceneSubsystem, T>::value, "T must inherit SceneSubsystem");
+	return sceneSubsystemCollection.Get<T>();
+}
+
+template<typename T>
+const T* Scene::GetSubsystem() const
+{
+	static_assert(std::is_base_of<SceneSubsystem, T>::value, "T must inherit SceneSubsystem");
+	return sceneSubsystemCollection.Get<T>();
+}

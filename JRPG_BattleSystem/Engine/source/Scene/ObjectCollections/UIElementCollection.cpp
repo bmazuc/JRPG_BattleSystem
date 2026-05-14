@@ -20,3 +20,8 @@ void UIElementCollection::InitObject(UIElement* element)
 {
     element->BeginPlay();
 }
+
+void UIElementCollection::BeginDestroyObject(UIElement* element)
+{
+    element->BeginDestroy();
+}

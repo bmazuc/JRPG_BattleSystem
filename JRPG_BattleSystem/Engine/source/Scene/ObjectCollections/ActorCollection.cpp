@@ -48,3 +48,8 @@ void ActorCollection::InitObject(Actor* actor)
     actor->BeginPlay();
     actor->SetupInputs(playerController);
 }
+
+void ActorCollection::BeginDestroyObject(Actor* actor)
+{
+    actor->BeginDestroy();
+}

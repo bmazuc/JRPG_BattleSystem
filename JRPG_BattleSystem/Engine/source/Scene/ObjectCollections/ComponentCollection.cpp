@@ -20,3 +20,8 @@ void ComponentCollection::InitObject(ActorComponent* component)
 {
     component->BeginPlay();
 }
+
+void ComponentCollection::BeginDestroyObject(ActorComponent* component)
+{
+    component->BeginDestroy();
+}

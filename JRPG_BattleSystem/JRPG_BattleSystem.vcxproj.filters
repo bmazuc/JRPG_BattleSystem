@@ -255,6 +255,15 @@
     <ClCompile Include="Game\source\TestScene\TestActorComponent.cpp">
       <Filter>Source Files\Game\TestScene</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\source\Scene\SceneSubsystem.cpp">
+      <Filter>Source Files\Engine\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\source\Scene\ObjectCollections\SceneSubsystemCollection.cpp">
+      <Filter>Source Files\Engine\Scene\ObjectCollections</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\source\TestScene\TestSceneSubsystem.cpp">
+      <Filter>Source Files\Game\TestScene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\include\Core\Engine.h">
@@ -387,6 +396,15 @@
       <Filter>Header Files\Engine\Scene</Filter>
     </ClInclude>
     <ClInclude Include="Game\include\TestScene\TestActorComponent.h">
+      <Filter>Header Files\Game\TestScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\include\Scene\SceneSubsystem.h">
+      <Filter>Header Files\Engine\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\include\Scene\ObjectCollections\SceneSubsystemCollection.h">
+      <Filter>Header Files\Engine\Scene\ObjectCollections</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\include\TestScene\TestSceneSubsystem.h">
       <Filter>Header Files\Game\TestScene</Filter>
     </ClInclude>
   </ItemGroup>

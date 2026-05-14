@@ -16,6 +16,7 @@ public:
 
 private:
 	void InitObject(UIElement* element) override;
+	void BeginDestroyObject(UIElement* element) override;
 };
 
 #endif // __UI_ELEMENT_COLLECTION_H_INCLUDED__

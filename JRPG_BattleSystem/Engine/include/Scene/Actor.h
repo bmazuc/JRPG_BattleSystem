@@ -143,7 +143,7 @@ public:
 	void SetLocalScale(glm::vec2 scale);
 
 protected:
-	// Optional identifier used for lookup.
+	// Scene owning this actor.
 	Scene* scene;
 
 private:

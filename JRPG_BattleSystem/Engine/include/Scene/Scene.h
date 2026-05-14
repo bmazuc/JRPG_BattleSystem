@@ -8,6 +8,7 @@
 #include "UI/UIElement.h"
 #include "ObjectCollections/ActorCollection.h"
 #include "ObjectCollections/UIElementCollection.h"
+#include "ObjectCollections/SceneSubsystemCollection.h"
 #include "SceneGraph/SceneGraph.h"
 #include "Scene/SpawnInfos.h"
 
@@ -120,6 +121,12 @@ public:
 	std::vector<UIElement*> GetUIElements() { return uiElementsCollection.GetCollection(); }
 	const std::vector<UIElement*> GetUIElements() const { return uiElementsCollection.GetCollection(); }
 
+	/**
+	 * Returns subsystems internal raw container.
+	 */
+	std::vector<SceneSubsystem*> GetSubsystems() { return sceneSubsystemCollection.GetCollection(); }
+	const std::vector<SceneSubsystem*> GetSubsystems() const { return sceneSubsystemCollection.GetCollection(); }
+
 	SceneGraph* GetSceneGraph() { return &graph; }
 	const SceneGraph* GetSceneGraph() const { return &graph; }
 
@@ -165,6 +172,27 @@ public:
 	template<typename T>
 	const T* GetUIElement() const;
 
+	template<typename T, typename... Args>
+	T* AddSubsystem(std::string name, Args&&... args);
+
+	/**
+	 * Retrieves first subsystem by name and type.
+	 */
+	template<typename T>
+	T* GetSubsystem(std::string name);
+
+	template<typename T>
+	const T* GetSubsystem(std::string name) const;
+
+	/**
+	 * Retrieves first subsystem matching type.
+	 */
+	template<typename T>
+	T* GetSubsystem();
+
+	template<typename T>
+	const T* GetSubsystem() const;
+
 	/**
 	 * Destruction requests
 	 */
@@ -199,7 +227,7 @@ private:
 
 	ActorCollection actorsCollection;
 	UIElementCollection uiElementsCollection;
-
+	SceneSubsystemCollection sceneSubsystemCollection;
 	SceneRequest pendingRequest;
 };
 

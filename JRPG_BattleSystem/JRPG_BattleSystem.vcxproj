@@ -153,12 +153,14 @@
     <ClCompile Include="Engine\source\Scene\Object.cpp" />
     <ClCompile Include="Engine\source\Scene\ObjectCollections\ActorCollection.cpp" />
     <ClCompile Include="Engine\source\Scene\ObjectCollections\ComponentCollection.cpp" />
+    <ClCompile Include="Engine\source\Scene\ObjectCollections\SceneSubsystemCollection.cpp" />
     <ClCompile Include="Engine\source\Scene\ObjectCollections\UIElementCollection.cpp" />
     <ClCompile Include="Engine\source\Scene\PlayerController.cpp" />
     <ClCompile Include="Engine\source\Scene\Scene.cpp" />
     <ClCompile Include="Engine\source\Scene\SceneGraph\SceneGraph.cpp" />
     <ClCompile Include="Engine\source\Scene\SceneGraph\SceneNode.cpp" />
     <ClCompile Include="Engine\source\Scene\SceneManager.cpp" />
+    <ClCompile Include="Engine\source\Scene\SceneSubsystem.cpp" />
     <ClCompile Include="Engine\source\UI\Button.cpp" />
     <ClCompile Include="Engine\source\UI\Image.cpp" />
     <ClCompile Include="Engine\source\UI\Text.cpp" />
@@ -174,6 +176,7 @@
     <ClCompile Include="Game\source\TestScene\RotatingEntity.cpp" />
     <ClCompile Include="Game\source\TestScene\TestActorComponent.cpp" />
     <ClCompile Include="Game\source\TestScene\TestScene.cpp" />
+    <ClCompile Include="Game\source\TestScene\TestSceneSubsystem.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -198,6 +201,7 @@
     <ClInclude Include="Engine\include\Scene\ObjectCollections\ActorCollection.h" />
     <ClInclude Include="Engine\include\Scene\ObjectCollections\ComponentCollection.h" />
     <ClInclude Include="Engine\include\Scene\ObjectCollections\ObjectCollection.h" />
+    <ClInclude Include="Engine\include\Scene\ObjectCollections\SceneSubsystemCollection.h" />
     <ClInclude Include="Engine\include\Scene\ObjectCollections\UIElementCollection.h" />
     <ClInclude Include="Engine\include\Scene\PlayerController.h" />
     <ClInclude Include="Engine\include\Scene\Scene.h" />
@@ -205,6 +209,7 @@
     <ClInclude Include="Engine\include\Scene\SceneGraph\SceneGraph.h" />
     <ClInclude Include="Engine\include\Scene\SceneGraph\SceneNode.h" />
     <ClInclude Include="Engine\include\Scene\SceneManager.h" />
+    <ClInclude Include="Engine\include\Scene\SceneSubsystem.h" />
     <ClInclude Include="Engine\include\Scene\SpawnInfos.h" />
     <ClInclude Include="Engine\include\UI\Button.h" />
     <ClInclude Include="Engine\include\UI\Image.h" />
@@ -221,6 +226,7 @@
     <ClInclude Include="Game\include\TestScene\RotatingEntity.h" />
     <ClInclude Include="Game\include\TestScene\TestActorComponent.h" />
     <ClInclude Include="Game\include\TestScene\TestScene.h" />
+    <ClInclude Include="Game\include\TestScene\TestSceneSubsystem.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\include\Scene\Actor.inl" />

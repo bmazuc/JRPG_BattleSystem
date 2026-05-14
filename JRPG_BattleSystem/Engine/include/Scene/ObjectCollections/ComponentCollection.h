@@ -16,6 +16,7 @@ public:
 
 private:
 	void InitObject(ActorComponent* actor) override;
+	void BeginDestroyObject(ActorComponent* component) override;
 };
 
 #endif // __COMPONENT_COLLECTION_H_INCLUDED__
