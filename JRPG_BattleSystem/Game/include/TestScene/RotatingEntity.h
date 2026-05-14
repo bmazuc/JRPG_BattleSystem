@@ -20,8 +20,6 @@ public:
 	void SetSpeed(float newSpeed) { speed = newSpeed; }
 
 private:
-	bool IsHovered(glm::vec2 mousePos);
-
 	SpriteRendererComponent* spriteRenderer;
 
 	PlayerController* playerController;

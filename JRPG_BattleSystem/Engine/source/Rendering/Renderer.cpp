@@ -117,6 +117,11 @@ void Renderer::RenderUI(Scene* scene, glm::vec2 windowSize)
     std::vector<UIElement*> uiElements = scene->GetUIElements();
     for (UIElement* element : uiElements)
     {
+        if (!element || !element->IsVisible())
+        {
+            continue;
+        }
+
         if (Image* image = dynamic_cast<Image*>(element))
         {
             glm::mat4 model = glm::scale(image->GetWorld(), glm::vec3(image->GetSize(), 1.0f));
@@ -140,7 +145,7 @@ void Renderer::Build(Scene* scene)
         {
             SpriteRendererComponent* spriteRenderer = gameObject->GetComponent<SpriteRendererComponent>();
 
-            if (spriteRenderer)
+            if (spriteRenderer && spriteRenderer->IsVisible())
             {
                 buckets[spriteRenderer->GetZOrder()].push_back(spriteRenderer);
             }

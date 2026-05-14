@@ -19,8 +19,6 @@ public:
 	SpriteRendererComponent* GetSpriteRenderer() { return spriteRenderer; }
 
 private:
-	bool IsHovered(glm::vec2 mousePos);
-
 	SpriteRendererComponent* spriteRenderer;
 
 	PlayerController* playerController;

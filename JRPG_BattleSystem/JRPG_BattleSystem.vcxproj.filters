@@ -253,7 +253,7 @@
       <Filter>Source Files\Engine\Scene</Filter>
     </ClCompile>
     <ClCompile Include="Game\source\TestScene\TestActorComponent.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Game\TestScene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -387,7 +387,7 @@
       <Filter>Header Files\Engine\Scene</Filter>
     </ClInclude>
     <ClInclude Include="Game\include\TestScene\TestActorComponent.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Game\TestScene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

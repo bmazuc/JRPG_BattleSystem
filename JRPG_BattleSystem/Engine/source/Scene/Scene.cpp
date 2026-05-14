@@ -64,7 +64,8 @@ void Scene::UpdateUIInputs(InputManager* inputManager)
 
 	for (UIElement* element : uiElementsCollection.GetCollection())
 	{
-		if (Button* button = dynamic_cast<Button*>(element))
+		Button* button = dynamic_cast<Button*>(element);
+		if (button && button->IsVisible())
 		{
 			bool hover = button->IsPointInside(mouse);
 

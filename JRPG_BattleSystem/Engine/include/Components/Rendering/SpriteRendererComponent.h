@@ -30,6 +30,14 @@ public:
 	void SetSize(glm::vec2 newSize) { size = newSize; }
 	void SetZOrder(int newZOrder) { zOrder = newZOrder; }
 	
+	void SetVisible(bool state) { isVisible = state; }
+	bool IsVisible() const { return isVisible; }
+
+	/**
+	 * Returns true is mouse currently hover this sprite.
+	 */
+	bool IsHovered(glm::vec2 mousePos);
+
 private:
 	glm::vec2 size = glm::vec2(1.0f, 1.0f);
 
@@ -37,6 +45,8 @@ private:
 	int zOrder = 0;
 
 	Material* material;
+
+	bool isVisible = true;
 };
 
 #endif // __SPRITE_RENDERER_COMPONENT_H_INCLUDED__

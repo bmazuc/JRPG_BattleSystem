@@ -110,12 +110,17 @@ public:
 	const Scene* GetScene() const { return scene; }
 	void SetScene(Scene* newScene);
 
+	void SetVisible(bool state) { isVisible = state; }
+	bool IsVisible() const { return isVisible; }
+
 protected:
 	// Scene owning this UI element
 	Scene* scene;
 
 private:
 	SceneNode node;
+
+	bool isVisible = true;
 };
 
 #endif // __UI_ELEMENT_H_INCLUDED__

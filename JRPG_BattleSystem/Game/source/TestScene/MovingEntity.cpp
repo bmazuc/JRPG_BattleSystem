@@ -23,29 +23,11 @@ void MovingEntity::OnClick()
     { 
         glm::vec2 mousePos = playerController->GetMousePosition();
 
-        if (IsHovered(mousePos))
+        if (spriteRenderer && spriteRenderer->IsHovered(mousePos))
         {
             isMoving = !isMoving;
         }
     }
-}
-
-bool MovingEntity::IsHovered(glm::vec2 mousePos)
-{
-    if (!spriteRenderer)
-    {
-        return false;
-    }
-
-    glm::vec2 mouseWorldPos = scene->ScreenToWorld(mousePos);
-
-    glm::vec2 bounds = (spriteRenderer->GetSize() * GetWorldScale()) / 2.0f;
-    glm::vec2 worldPos = spriteRenderer->GetWorldPosition();
-
-    return mouseWorldPos.x >= worldPos.x - bounds.x &&
-        mouseWorldPos.x <= worldPos.x + bounds.x &&
-        mouseWorldPos.y >= worldPos.y - bounds.y &&
-        mouseWorldPos.y <= worldPos.y + bounds.y;
 }
 
 void MovingEntity::Update(float deltaTime)

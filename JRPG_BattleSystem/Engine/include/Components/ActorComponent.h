@@ -11,6 +11,8 @@ class Actor;
 class ActorComponent : public Object
 {
 public:
+	virtual ~ActorComponent() = default;
+
 	/**
 	 * Called once when the scene starts or component is created.
 	 */

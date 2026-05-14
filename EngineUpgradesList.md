@@ -11,12 +11,6 @@ Some can be done later in the project. Others will be over-engineering for this 
   * Actor
   * Component
   * UIElement
-* Rework component
-
-  * ActorComponent who contains all logic (begin play, update, etc.)
-
-    * (a virtual class virtual \~ActorComponent() = 0)
-  * SceneComponent who contains all node logic
 * Add SceneSubsystem for object living in the scene without node (for example managers)
 
 
@@ -32,7 +26,6 @@ Some can be done later in the project. Others will be over-engineering for this 
 
   * Allow for batch rendering
   * Avoid dynamic casting for UI Rendering
-* Add visibility options
 
 
 
