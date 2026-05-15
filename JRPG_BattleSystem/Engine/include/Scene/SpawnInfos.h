@@ -4,7 +4,7 @@
 #include "Core/Math/Transform2D.h"
 
 class Actor;
-class UIElement;
+class Widget;
 class SceneComponent;
 
 /**
@@ -63,20 +63,20 @@ public:
 };
 
 /**
- * Spawn information specific to UI elements.
+ * Spawn information specific to widgets.
  * Allows UI hierarchy definition at creation time.
  */
 struct UISpawnInfo : SpawnInfo
 {
 public:
-	UISpawnInfo(UIElement* _parent = nullptr, TransformSpace _transformSpace = TransformSpace::World, glm::vec2 _location = glm::vec2(0.0f, 0.0f), float _rotate = 0.0f, glm::vec2 _scale = glm::vec2(1.0f, 1.0f))
+	UISpawnInfo(Widget* _parent = nullptr, TransformSpace _transformSpace = TransformSpace::World, glm::vec2 _location = glm::vec2(0.0f, 0.0f), float _rotate = 0.0f, glm::vec2 _scale = glm::vec2(1.0f, 1.0f))
 		: parent(_parent), SpawnInfo(_transformSpace, _location, _rotate, _scale) {
 	}
 
 	~UISpawnInfo() = default;
 
-	// Optional parent UI element for UI hierarchy
-	UIElement* parent = nullptr;
+	// Optional parent widget for UI hierarchy
+	Widget* parent = nullptr;
 };
 
 #endif // __SPAWN_INFO_H_INCLUDED__

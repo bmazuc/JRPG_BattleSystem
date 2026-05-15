@@ -9,31 +9,21 @@
 class Scene;
 
 /**
- * Base class for all UI elements in the engine.
+ * Base class for all UI element in the engine.
  *
- * UIElement represents a 2D interface object that:
+ * Widget represents a 2D interface object that:
  * - exists in the scene hierarchy
  * - has a transform (position / rotation / scale)
- * - can be parented to other UI elements
+ * - can be parented to other widgets
  * - participates in update + rendering pipeline
  *
  * It is the UI equivalent of an Actor in world space.
  */
-class UIElement : public Object, public ISceneNodeOwner
+class Widget : public Object, public ISceneNodeOwner
 {
 public:
-	UIElement();
-	virtual ~UIElement() {};
-
-	/**
-	 * Called once when the scene starts or element is created.
-	 */
-	virtual void BeginPlay() {}
-
-	/**
-	 * Called every frame for UI logic updates.
-	 */
-	virtual void Update(float deltaTime) {}
+	Widget();
+	virtual ~Widget() {};
 
 	/**
 	 * Updates the transform hierarchy (world/local propagation).
@@ -51,10 +41,10 @@ public:
 	void BeginDestroy() override;
 
 	/**
-	 * Marks this UI element for destruction.
-	 * If destroyChildren is true, also removes its children hierarchy.
+	 * Marks this widget for destruction.
+	 * Also marks its children hierarchy for destruction.
 	 */
-	void MarkForDestruction(bool markChildren = false);
+	void MarkForDestruction();
 
 	/**
 	 * Scene graph integration
@@ -64,12 +54,12 @@ public:
 
 	bool HasParent() { return node.HasParent(); }
 
-	UIElement* GetParent();
-	const UIElement* GetParent() const;
+	Widget* GetParent();
+	const Widget* GetParent() const;
 
-	void SetParent(UIElement* element);
+	void SetParent(Widget* element);
 
-	std::vector<UIElement*> GetChildren();
+	std::vector<Widget*> GetChildren();
 
 	/*
 	 *	Transform accessor
@@ -103,8 +93,8 @@ public:
 	 * Hierarchy root access
 	 */
 
-	UIElement* GetRoot();
-	const UIElement* GetRoot() const;
+	Widget* GetRoot();
+	const Widget* GetRoot() const;
 
 	Scene* GetScene() { return scene; }
 	const Scene* GetScene() const { return scene; }
@@ -114,7 +104,7 @@ public:
 	bool IsVisible() const { return isVisible; }
 
 protected:
-	// Scene owning this UI element
+	// Scene owning this widget
 	Scene* scene;
 
 private:

@@ -55,5 +55,5 @@ Some can be done later in the project. Others will be over-engineering for this 
 
 \#UI
 
-* Add a UserWidget/Canvas system and remove BeginPlay/Update from UIElement to be closer of UE
+* Differentiate "panel elements" that can have children et "leaf elements" that can't have children
 

@@ -13,8 +13,6 @@
 
 #include "Graphics/Texture.h"
 #include "Rendering/Shader.h"
-#include "Scene/Actor.h"
-#include "UI/UIElement.h"
 
 SpawnInfo::~SpawnInfo() {}
 
@@ -30,7 +28,7 @@ void Scene::BeginPlay()
 	graph.UpdateTransforms();
 
 	actorsCollection.BeginPlay();
-	uiElementsCollection.BeginPlay();
+	widgetsCollection.Construct();
 	sceneSubsystemCollection.BeginPlay();
 
 	actorsCollection.SetupInputs(playerController);
@@ -47,18 +45,18 @@ void Scene::Update(float deltaTime, InputManager* inputManager)
 
 	// Update objects
 	actorsCollection.Update(deltaTime);
-	uiElementsCollection.Update(deltaTime);
+	widgetsCollection.Update(deltaTime);
 	sceneSubsystemCollection.Update(deltaTime);
 
 	// Process destruction and adding
 	actorsCollection.ProcessDestroy();
 	actorsCollection.ProcessComponentsDestroy();
-	uiElementsCollection.ProcessDestroy();
+	widgetsCollection.ProcessDestroy();
 	sceneSubsystemCollection.ProcessDestroy();
 
 	actorsCollection.ProcessAdd();
 	actorsCollection.ProcessComponentsAdd();
-	uiElementsCollection.ProcessAdd();
+	widgetsCollection.ProcessAdd();
 	sceneSubsystemCollection.ProcessAdd();
 }
 
@@ -66,7 +64,7 @@ void Scene::UpdateUIInputs(InputManager* inputManager)
 {
 	glm::vec2 mouse = inputManager->GetMousePosition();
 
-	for (UIElement* element : uiElementsCollection.GetCollection())
+	for (Widget* element : widgetsCollection.GetCollection())
 	{
 		Button* button = dynamic_cast<Button*>(element);
 		if (button && button->IsVisible())
@@ -94,7 +92,7 @@ void Scene::Unload()
 	graph.Clear();
 
 	actorsCollection.Clear();
-	uiElementsCollection.Clear();
+	widgetsCollection.Clear();
 	sceneSubsystemCollection.Clear();
 
 	delete playerController;
@@ -106,9 +104,9 @@ void Scene::RegisterToDestroy(Actor* actor)
 	actorsCollection.RegisterToDestroy(actor);
 }
 
-void Scene::RegisterToDestroy(UIElement* uiElement)
+void Scene::RegisterToDestroy(Widget* widget)
 {
-	uiElementsCollection.RegisterToDestroy(uiElement);
+	widgetsCollection.RegisterToDestroy(widget);
 }
 
 void Scene::RequestSceneChange(std::string sceneName)
@@ -151,23 +149,23 @@ void Scene::InternalSpawnActor(Actor* actor,std::string name, const ActorSpawnIn
 	actorsCollection.Add(actor);
 }
 
-void Scene::InternalSpawnUIElement(UIElement* element, std::string name, const UISpawnInfo& spawnInfo)
+void Scene::InternalSpawnUserWidget(UserWidget* userWidget, std::string name, const UISpawnInfo& spawnInfo)
 {
-	element->SetName(name);
-	element->SetParent(spawnInfo.parent);
-	element->SetScene(this);
+	userWidget->SetName(name);
+	userWidget->SetParent(spawnInfo.parent);
+	userWidget->SetScene(this);
 
 	if (spawnInfo.transformSpace == TransformSpace::World)
 	{
-		element->SetWorldPosition(spawnInfo.location);
-		element->SetWorldRotate(spawnInfo.rotate);
-		element->SetWorldScale(spawnInfo.scale);
+		userWidget->SetWorldPosition(spawnInfo.location);
+		userWidget->SetWorldRotate(spawnInfo.rotate);
+		userWidget->SetWorldScale(spawnInfo.scale);
 	}
 	else
 	{
-		element->SetLocalPosition(spawnInfo.location);
-		element->SetLocalRotate(spawnInfo.rotate);
-		element->SetLocalScale(spawnInfo.scale);
+		userWidget->SetLocalPosition(spawnInfo.location);
+		userWidget->SetLocalRotate(spawnInfo.rotate);
+		userWidget->SetLocalScale(spawnInfo.scale);
 	}
-	uiElementsCollection.Add(element);
+	widgetsCollection.Add(userWidget);
 }

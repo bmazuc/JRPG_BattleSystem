@@ -41,7 +41,7 @@ public:
 	void RenderWorld(Scene* scene, glm::vec2 viewportBaseResolution);
 	
 	/**
-	 * Renders UI elements of a scene.
+	 * Renders widgets of a scene.
 	 *
 	 * @param scene Scene to render.
 	 * @param windowSize Current window resolution.

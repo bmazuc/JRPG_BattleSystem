@@ -154,7 +154,7 @@
     <ClCompile Include="Engine\source\Scene\ObjectCollections\ActorCollection.cpp" />
     <ClCompile Include="Engine\source\Scene\ObjectCollections\ComponentCollection.cpp" />
     <ClCompile Include="Engine\source\Scene\ObjectCollections\SceneSubsystemCollection.cpp" />
-    <ClCompile Include="Engine\source\Scene\ObjectCollections\UIElementCollection.cpp" />
+    <ClCompile Include="Engine\source\Scene\ObjectCollections\WidgetCollection.cpp" />
     <ClCompile Include="Engine\source\Scene\PlayerController.cpp" />
     <ClCompile Include="Engine\source\Scene\Scene.cpp" />
     <ClCompile Include="Engine\source\Scene\SceneGraph\SceneGraph.cpp" />
@@ -164,7 +164,8 @@
     <ClCompile Include="Engine\source\UI\Button.cpp" />
     <ClCompile Include="Engine\source\UI\Image.cpp" />
     <ClCompile Include="Engine\source\UI\Text.cpp" />
-    <ClCompile Include="Engine\source\UI\UIElement.cpp" />
+    <ClCompile Include="Engine\source\UI\Widget.cpp" />
+    <ClCompile Include="Engine\source\UI\UserWidget.cpp" />
     <ClCompile Include="Game\source\BattleScene\BattleScene.cpp" />
     <ClCompile Include="Game\source\BattleScene\Enemy.cpp" />
     <ClCompile Include="Game\source\BattleScene\EnemySpawner.cpp" />
@@ -202,7 +203,7 @@
     <ClInclude Include="Engine\include\Scene\ObjectCollections\ComponentCollection.h" />
     <ClInclude Include="Engine\include\Scene\ObjectCollections\ObjectCollection.h" />
     <ClInclude Include="Engine\include\Scene\ObjectCollections\SceneSubsystemCollection.h" />
-    <ClInclude Include="Engine\include\Scene\ObjectCollections\UIElementCollection.h" />
+    <ClInclude Include="Engine\include\Scene\ObjectCollections\WidgetCollection.h" />
     <ClInclude Include="Engine\include\Scene\PlayerController.h" />
     <ClInclude Include="Engine\include\Scene\Scene.h" />
     <ClInclude Include="Engine\include\Scene\SceneGraph\ISceneNodeOwner.h" />
@@ -214,7 +215,8 @@
     <ClInclude Include="Engine\include\UI\Button.h" />
     <ClInclude Include="Engine\include\UI\Image.h" />
     <ClInclude Include="Engine\include\UI\Text.h" />
-    <ClInclude Include="Engine\include\UI\UIElement.h" />
+    <ClInclude Include="Engine\include\UI\Widget.h" />
+    <ClInclude Include="Engine\include\UI\UserWidget.h" />
     <ClInclude Include="Game\include\BattleScene\BattleScene.h" />
     <ClInclude Include="Game\include\BattleScene\Enemy.h" />
     <ClInclude Include="Game\include\BattleScene\EnemySpawner.h" />
@@ -231,6 +233,7 @@
   <ItemGroup>
     <None Include="Engine\include\Scene\Actor.inl" />
     <None Include="Engine\include\Scene\Scene.inl" />
+    <None Include="Engine\include\UI\UserWidget.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

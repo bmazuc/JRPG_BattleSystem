@@ -2,5 +2,5 @@
 
 void CrossButton::OnClicked()
 {
-	MarkForDestruction(true);
+	MarkForDestruction();
 }

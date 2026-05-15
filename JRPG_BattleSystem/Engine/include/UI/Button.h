@@ -4,7 +4,7 @@
 #include "Image.h"
 
 /**
- * Interactive UI element based on Image.
+ * Interactive widget based on Image.
  *
  * Button extends Image with input interaction capabilities:
  * - hover detection

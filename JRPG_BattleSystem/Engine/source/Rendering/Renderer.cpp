@@ -1,7 +1,7 @@
 #include "Rendering/Renderer.h"
 #include "Scene/Scene.h"
 #include "Scene/Actor.h"
-#include "UI/UIElement.h"
+#include "UI/Widget.h"
 #include "Components/Camera/CameraComponent.h"
 
 #include <GL/glew.h>
@@ -114,20 +114,20 @@ void Renderer::RenderUI(Scene* scene, glm::vec2 windowSize)
 {
     glm::mat4 projection = glm::ortho(0.0f, windowSize.x, windowSize.y, 0.0f, -1.0f, 1.0f);
 
-    std::vector<UIElement*> uiElements = scene->GetUIElements();
-    for (UIElement* element : uiElements)
+    std::vector<Widget*> widgets = scene->GetWidgets();
+    for (Widget* widget : widgets)
     {
-        if (!element || !element->IsVisible())
+        if (!widget || !widget->IsVisible())
         {
             continue;
         }
 
-        if (Image* image = dynamic_cast<Image*>(element))
+        if (Image* image = dynamic_cast<Image*>(widget))
         {
             glm::mat4 model = glm::scale(image->GetWorld(), glm::vec3(image->GetSize(), 1.0f));
             RenderMaterial(image->GetMaterial(), glm::mat4(1.0f), model, projection);
         }
-        else if (Text* text = dynamic_cast<Text*>(element))
+        else if (Text* text = dynamic_cast<Text*>(widget))
         {
             RenderText(text, projection);
         }

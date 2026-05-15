@@ -5,18 +5,20 @@
 #include <vector>
 #include <glm/vec2.hpp>
 #include "Scene/Actor.h"
-#include "UI/UIElement.h"
+#include "UI/Widget.h"
 #include "ObjectCollections/ActorCollection.h"
-#include "ObjectCollections/UIElementCollection.h"
+#include "ObjectCollections/WidgetCollection.h"
 #include "ObjectCollections/SceneSubsystemCollection.h"
 #include "SceneGraph/SceneGraph.h"
 #include "Scene/SpawnInfos.h"
+#include "UI/UserWidget.h"
 
 class CameraComponent;
 class Shader;
 class Texture;
 class PlayerController;
 class InputManager;
+class UserWidget;
 
 /**
  * Defines possible scene transition requests.
@@ -46,7 +48,7 @@ struct SceneRequest
  *
  * It owns and manages:
  * - Actors (game objects)
- * - UI elements
+ * - widgets
  * - Scene graph (transform hierarchy)
  * - Active camera
  * - Input processing
@@ -116,10 +118,10 @@ public:
 	const std::vector<Actor*> GetActors() const { return actorsCollection.GetCollection(); }
 
 	/**
-	 * Returns UI element internal raw container.
+	 * Returns widget internal raw container.
 	 */
-	std::vector<UIElement*> GetUIElements() { return uiElementsCollection.GetCollection(); }
-	const std::vector<UIElement*> GetUIElements() const { return uiElementsCollection.GetCollection(); }
+	std::vector<Widget*> GetWidgets() { return widgetsCollection.GetCollection(); }
+	const std::vector<Widget*> GetWidgets() const { return widgetsCollection.GetCollection(); }
 
 	/**
 	 * Returns subsystems internal raw container.
@@ -152,25 +154,28 @@ public:
 	const T* GetActor() const;
 
 	template<typename T, typename... Args>
-	T* CreateUIElement(std::string name, const UISpawnInfo& spawnInfo, Args&&... args);
+	T* CreateUserWidget(std::string name, const UISpawnInfo& spawnInfo, Args&&... args);
 
 	/**
-	* Retrieves first UI element by name and type.
+	* Retrieves first widget by name and type.
 	*/
 	template<typename T>
-	T* GetUIElement(std::string name);
+	T* GetUserWidget(std::string name);
 
 	template<typename T>
-	const T* GetUIElement(std::string name) const;
+	const T* GetUserWidget(std::string name) const;
+
+	// Temp
+	void AddWidget(Widget* widget) { widgetsCollection.Add(widget); }
 
 	/**
-	 * Retrieves first UI element matching type.
+	 * Retrieves first widget matching type.
 	 */
 	template<typename T>
-	T* GetUIElement();
+	T* GetUserWidget();
 
 	template<typename T>
-	const T* GetUIElement() const;
+	const T* GetUserWidget() const;
 
 	template<typename T, typename... Args>
 	T* AddSubsystem(std::string name, Args&&... args);
@@ -198,7 +203,7 @@ public:
 	 */
 
 	void RegisterToDestroy(Actor* actor);
-	void RegisterToDestroy(UIElement* uiElement);
+	void RegisterToDestroy(Widget* widget);
 
 	/**
 	 * Scene transitions
@@ -216,7 +221,7 @@ public:
 
 private:
 	void InternalSpawnActor(Actor* actor, std::string name, const ActorSpawnInfo& spawnInfo);
-	void InternalSpawnUIElement(UIElement* element, std::string name, const UISpawnInfo& spawnInfo);
+	void InternalSpawnUserWidget(UserWidget* userWidget, std::string name, const UISpawnInfo& spawnInfo);
 
 	// Camera used for rendering calculations
 	CameraComponent* activeCamera;
@@ -226,7 +231,7 @@ private:
 	SceneGraph graph;
 
 	ActorCollection actorsCollection;
-	UIElementCollection uiElementsCollection;
+	WidgetCollection widgetsCollection;
 	SceneSubsystemCollection sceneSubsystemCollection;
 	SceneRequest pendingRequest;
 };

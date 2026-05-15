@@ -7,7 +7,7 @@
 
 /**
  * Interface defining ownership over a SceneNode.
- * Used to abstract components and UI elements that participate in the scene graph hierarchy.
+ * Used to abstract components and widgets that participate in the scene graph hierarchy.
  */
 class ISceneNodeOwner
 {

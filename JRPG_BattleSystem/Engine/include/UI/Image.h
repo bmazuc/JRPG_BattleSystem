@@ -1,7 +1,7 @@
 #ifndef __IMAGE_H_INCLUDED__
 #define __IMAGE_H_INCLUDED__
 
-#include "UIElement.h"
+#include "Widget.h"
 
 #include "Graphics/Texture.h"
 #include "Rendering/Shader.h"
@@ -12,14 +12,14 @@
 class Material;
 
 /**
- * UI element that displays a textured quad.
+ * Widget that displays a textured quad.
  *
  * Image is a basic visual building block for UI:
  * - renders a texture using a material
  * - supports scaling via size
  * - used as base for interactive widgets (e.g. Button)
  */
-class Image : public UIElement
+class Image : public Widget
 {
 public:
 	Image(std::string textureName = "default", std::string shaderName = "default", glm::vec3 color = glm::vec3(1.0f, 1.0f, 1.0f));

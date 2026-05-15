@@ -69,6 +69,12 @@ public:
 
 	void SetOwner(ISceneNodeOwner* newOwner) { owner = newOwner; }
 
+	/**
+	 * Returns the root node of this hierarchy.
+	 */
+	SceneNode* GetRoot();
+	const SceneNode* GetRoot() const;
+
 private:
 	/**
 	 * Adds a child node to this node.
@@ -84,11 +90,6 @@ private:
 	 * Returns true if this node is an ancestor of the given node.
 	 */
 	bool IsAncestorOf(SceneNode* node);
-
-	/**
-	 * Returns the root node of this hierarchy.
-	 */
-	SceneNode* GetRoot();
 
 	/**
 	 * Marks this node as dirty, forcing transform recomputation.

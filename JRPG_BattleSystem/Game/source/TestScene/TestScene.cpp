@@ -57,35 +57,37 @@ void TestScene::LoadAssets()
 
 void TestScene::CreateUI()
 {
-    Text* goblinText = CreateUIElement<Text>("GoblinText", UISpawnInfo(nullptr, TransformSpace::World, glm::vec2(320, 50)));
+    UserWidget* userWidget = CreateUserWidget<UserWidget>("UserWidget", UISpawnInfo());
+
+    Text* goblinText = userWidget->CreateWidget<Text>("GoblinText", UISpawnInfo(nullptr, TransformSpace::World, glm::vec2(320, 50)));
     goblinText->SetContent("Click on the middle goblin to make them move or stop.");
     goblinText->SetColor(glm::vec3(1, 0, 0));
     goblinText->SetSize(24);
 
-    Text* goblinText2 = CreateUIElement<Text>("GoblinText2", UISpawnInfo(nullptr, TransformSpace::World, glm::vec2(320, 75)));
+    Text* goblinText2 = userWidget->CreateWidget<Text>("GoblinText2", UISpawnInfo(nullptr, TransformSpace::World, glm::vec2(320, 75)));
     goblinText2->SetContent("Click on the red goblin to make him rotate or stop.");
     goblinText2->SetColor(glm::vec3(1, 0, 0));
     goblinText2->SetSize(24);
 
-    Text* crossText = CreateUIElement<Text>("CrossText", UISpawnInfo(nullptr, TransformSpace::World, glm::vec2(320, 100)));
+    Text* crossText = userWidget->CreateWidget<Text>("CrossText", UISpawnInfo(nullptr, TransformSpace::World, glm::vec2(320, 100)));
     crossText->SetContent("Click on the cross to destroy its button.");
     crossText->SetColor(glm::vec3(1, 0, 0));
     crossText->SetSize(24);
 
-    LoadSceneButton* mainMenuButton = CreateUIElement<LoadSceneButton>("MainMenuButton", UISpawnInfo(nullptr, TransformSpace::World, glm::vec2(320, 390)));
+    LoadSceneButton* mainMenuButton = userWidget->CreateWidget<LoadSceneButton>("MainMenuButton", UISpawnInfo(nullptr, TransformSpace::World, glm::vec2(320, 390)));
     mainMenuButton->GetMaterial()->SetTexture("button");
     mainMenuButton->SetSize(glm::vec2(150, 50));
     mainMenuButton->SetSceneToLoad("mainMenu");
 
-    Text* mainMenuButtonText = CreateUIElement<Text>("MainMenuButtonText", UISpawnInfo(mainMenuButton, TransformSpace::Local));
+    Text* mainMenuButtonText = userWidget->CreateWidget<Text>("MainMenuButtonText", UISpawnInfo(mainMenuButton, TransformSpace::Local));
     mainMenuButtonText->SetContent("Main Menu");
     mainMenuButtonText->SetSize(24);
 
-    CrossButton* crossButton = CreateUIElement<CrossButton>("CrossButton", UISpawnInfo(nullptr, TransformSpace::World, glm::vec2(40, 440)));
+    CrossButton* crossButton = userWidget->CreateWidget<CrossButton>("CrossButton", UISpawnInfo(nullptr, TransformSpace::World, glm::vec2(40, 440)));
     crossButton->GetMaterial()->SetTexture("button");
     crossButton->SetSize(glm::vec2(30, 30));
 
-    Text* crossButtonText = CreateUIElement<Text>("CrossButtonText", UISpawnInfo(crossButton, TransformSpace::Local));
+    Text* crossButtonText = userWidget->CreateWidget<Text>("CrossButtonText", UISpawnInfo(crossButton, TransformSpace::Local));
     crossButtonText->SetContent("X");
     crossButtonText->SetSize(24);
 }

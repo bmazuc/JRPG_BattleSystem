@@ -1,7 +1,7 @@
 #ifndef __TEXT_H_INCLUDED__
 #define __TEXT_H_INCLUDED__
 
-#include "UIElement.h"
+#include "Widget.h"
 
 #include "Graphics/Font.h"
 #include <string>
@@ -19,12 +19,12 @@ enum class TextScaleMode
 };
 
 /**
- * UI element responsible for rendering text.
+ * Widget responsible for rendering text.
  *
  * Text is rendered using a font atlas (glyph-based rendering)
  * and supports color, scaling, and alignment options.
  */
-class Text : public UIElement
+class Text : public Widget
 {
 public:
     Text(std::string fontName = "default", bool isCenterX = true, glm::vec3 _color = glm::vec3(1.0f, 1.0f, 1.0f));

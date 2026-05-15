@@ -43,12 +43,14 @@ void BattleScene::CreateScene()
 	CameraComponent* camera = cameraObject->SpawnSceneComponent<CameraComponent>("Camera component", SceneComponentSpawnInfo());
 	SetActiveCamera(camera);
 
-	LoadSceneButton* mainMenuButton = CreateUIElement<LoadSceneButton>("MainMenuButton", UISpawnInfo(nullptr, TransformSpace::World, glm::vec2(320, 390)));
+	UserWidget* userWidget = CreateUserWidget<UserWidget>("UserWidget", UISpawnInfo());
+
+	LoadSceneButton* mainMenuButton = userWidget->CreateWidget<LoadSceneButton>("MainMenuButton", UISpawnInfo(nullptr, TransformSpace::World, glm::vec2(320, 390)));
 	mainMenuButton->GetMaterial()->SetTexture("button");
 	mainMenuButton->SetSize(glm::vec2(150, 50));
 	mainMenuButton->SetSceneToLoad("mainMenu");
 
-	Text* mainMenuButtonText = CreateUIElement<Text>("MainMenuButtonText", UISpawnInfo(mainMenuButton, TransformSpace::Local));
+	Text* mainMenuButtonText = userWidget->CreateWidget<Text>("MainMenuButtonText", UISpawnInfo(mainMenuButton, TransformSpace::Local));
 	mainMenuButtonText->SetContent("Main Menu");
 	mainMenuButtonText->SetSize(24);
 }

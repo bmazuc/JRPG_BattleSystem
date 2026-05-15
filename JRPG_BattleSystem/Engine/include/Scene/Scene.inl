@@ -36,40 +36,40 @@ const T* Scene::GetActor() const
 }
 
 template<typename T, typename... Args>
-T* Scene::CreateUIElement(std::string name, const UISpawnInfo& spawnInfo, Args&&... args)
+T* Scene::CreateUserWidget(std::string name, const UISpawnInfo& spawnInfo, Args&&... args)
 {
-	static_assert(std::is_base_of<UIElement, T>::value, "T must inherit UIElement");
+	static_assert(std::is_base_of<UserWidget, T>::value, "T must inherit UserWidget");
 	T* element = new T(std::forward<Args>(args)...);
-	InternalSpawnUIElement(element, name, spawnInfo);
+	InternalSpawnUserWidget(element, name, spawnInfo);
 	return element;
 }
 
 template<typename T>
-T* Scene::GetUIElement(std::string name)
+T* Scene::GetUserWidget(std::string name)
 {
-	static_assert(std::is_base_of<UIElement, T>::value, "T must inherit UIElement");
-	return uiElementsCollection.Get<T>(name);
+	static_assert(std::is_base_of<UserWidget, T>::value, "T must inherit UserWidget");
+	return widgetsCollection.Get<T>(name);
 }
 
 template<typename T>
-const T* Scene::GetUIElement(std::string name) const
+const T* Scene::GetUserWidget(std::string name) const
 {
-	static_assert(std::is_base_of<UIElement, T>::value, "T must inherit UIElement");
-	return uiElementsCollection.Get<T>(name);
+	static_assert(std::is_base_of<UserWidget, T>::value, "T must inherit UserWidget");
+	return widgetsCollection.Get<T>(name);
 }
 
 template<typename T>
-T* Scene::GetUIElement()
+T* Scene::GetUserWidget()
 {
-	static_assert(std::is_base_of<UIElement, T>::value, "T must inherit UIElement");
-	return uiElementsCollection.Get<T>();
+	static_assert(std::is_base_of<UserWidget, T>::value, "T must inherit UserWidget");
+	return widgetsCollection.Get<T>();
 }
 
 template<typename T>
-const T* Scene::GetUIElement() const
+const T* Scene::GetUserWidget() const
 {
-	static_assert(std::is_base_of<UIElement, T>::value, "T must inherit UIElement");
-	return uiElementsCollection.Get<T>();
+	static_assert(std::is_base_of<UserWidget, T>::value, "T must inherit UserWidget");
+	return widgetsCollection.Get<T>();
 }
 
 template<typename T, typename... Args>

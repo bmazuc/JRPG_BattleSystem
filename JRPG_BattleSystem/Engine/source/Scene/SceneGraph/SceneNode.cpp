@@ -107,6 +107,18 @@ SceneNode* SceneNode::GetRoot()
 	return current;
 }
 
+const SceneNode* SceneNode::GetRoot() const
+{
+	const SceneNode* current = this;
+
+	while (current->parent)
+	{
+		current = current->parent;
+	}
+
+	return current;
+}
+
 void SceneNode::SetDirty()
 {
 	isDirty = true;
@@ -124,7 +136,8 @@ void SceneNode::DetachFromHierarchy()
 		parent->RemoveChild(this);
 	}
 
-	for (SceneNode* child : children)
+	std::vector<SceneNode*> pendingChildren = children;
+	for (SceneNode* child : pendingChildren)
 	{
 		child->SetParent(nullptr);
 	}
