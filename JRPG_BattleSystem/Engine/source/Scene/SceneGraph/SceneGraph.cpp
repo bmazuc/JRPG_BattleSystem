@@ -6,10 +6,7 @@ void SceneGraph::UpdateTransforms()
 	{
 		if (node)
 		{
-			if (!node->HasParent())
-			{
-				node->UpdateTransform();
-			}
+			node->UpdateTransform();
 		}
 	}
 }

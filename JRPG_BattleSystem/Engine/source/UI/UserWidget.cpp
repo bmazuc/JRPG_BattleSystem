@@ -18,8 +18,9 @@ void UserWidget::InternalSpawnWidget(Widget* widget, std::string name, const UIS
 			SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Try to add widget with a parent from another UserWidget.");
 		}
 	}
-	widget->SetParent(parent);
+
 	widget->SetScene(scene);
+	widget->SetParent(parent);
 
 	if (spawnInfo.transformSpace == TransformSpace::World)
 	{

@@ -11,14 +11,14 @@ Widget::Widget()
 
 void Widget::SetScene(Scene* newScene)
 { 
-	if (scene)
-	{
-		scene->GetSceneGraph()->RemoveNode(&node);
-	}
 	scene = newScene;
+
 	if (scene)
 	{
-		scene->GetSceneGraph()->AddNode(&node);
+		if (!GetParent())
+		{
+			scene->GetSceneGraph()->AddNode(GetSceneNode());
+		}
 	}
 }
 
@@ -44,14 +44,16 @@ const Widget* Widget::GetParent() const
 
 void Widget::SetParent(Widget* element)
 {
-	if (element)
+	if (!GetParent() && element)
 	{
-		node.SetParent(element->GetSceneNode());
+		scene->GetSceneGraph()->RemoveNode(GetSceneNode());
 	}
-	else
+	else if (GetParent() && !element)
 	{
-		node.SetParent(nullptr);
+		scene->GetSceneGraph()->AddNode(GetSceneNode());
 	}
+
+	node.SetParent(element ? element->GetSceneNode() : nullptr);
 }
 
 std::vector<Widget*> Widget::GetChildren()

@@ -31,7 +31,7 @@ public:
 	void Clear();
 
 private:
-	// All nodes managed by the graph.
+	// All root nodes managed by the graph.
 	std::vector<SceneNode*> nodes;
 };
 

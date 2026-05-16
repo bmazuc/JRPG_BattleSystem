@@ -17,24 +17,25 @@ void Actor::SetScene(Scene* newScene)
 	
 	if (scene)
 	{
-		SceneGraph* graph = scene->GetSceneGraph();
-		std::vector<ActorComponent*> components = componentsCollection.GetCollection();
-		for (ActorComponent* component : components)
+		if (!root->GetParent())
 		{
-			if (SceneComponent* sceneComponent = dynamic_cast<SceneComponent*>(component))
-			{
-				graph->AddNode(sceneComponent->GetSceneNode());
-			}
+			scene->GetSceneGraph()->AddNode(root->GetSceneNode());
 		}
 	}
 }
 
 void Actor::AttachToActor(Actor* actor)
 {
-	if (actor)
+	if (!root->GetParent() && actor)
 	{
-		root->SetParent(actor->GetRoot());
+		scene->GetSceneGraph()->RemoveNode(root->GetSceneNode());
 	}
+	else if (root->GetParent() && !actor)
+	{
+		scene->GetSceneGraph()->AddNode(root->GetSceneNode());
+	}
+
+	root->SetParent(actor ? actor->GetRoot() : nullptr);
 }
 
 void Actor::Detach()
@@ -209,11 +210,6 @@ void Actor::InternalSpawnSceneComponent(SceneComponent* component, const SceneCo
 		component->SetLocalPosition(spawnInfo.location);
 		component->SetLocalRotate(spawnInfo.rotate);
 		component->SetLocalScale(spawnInfo.scale);
-	}
-
-	if (scene)
-	{
-		scene->GetSceneGraph()->AddNode(component->GetSceneNode());
 	}
 }
 

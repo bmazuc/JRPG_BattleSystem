@@ -131,8 +131,8 @@ glm::vec2 Scene::ScreenToWorld(glm::vec2 screenPos)
 void Scene::InternalSpawnActor(Actor* actor,std::string name, const ActorSpawnInfo& spawnInfo)
 {
 	actor->SetName(name);
-	actor->AttachToActor(spawnInfo.parent);
 	actor->SetScene(this);
+	actor->AttachToActor(spawnInfo.parent);
 
 	if (spawnInfo.transformSpace == TransformSpace::World)
 	{
@@ -152,8 +152,8 @@ void Scene::InternalSpawnActor(Actor* actor,std::string name, const ActorSpawnIn
 void Scene::InternalSpawnUserWidget(UserWidget* userWidget, std::string name, const UISpawnInfo& spawnInfo)
 {
 	userWidget->SetName(name);
-	userWidget->SetParent(spawnInfo.parent);
 	userWidget->SetScene(this);
+	userWidget->SetParent(spawnInfo.parent);
 
 	if (spawnInfo.transformSpace == TransformSpace::World)
 	{
