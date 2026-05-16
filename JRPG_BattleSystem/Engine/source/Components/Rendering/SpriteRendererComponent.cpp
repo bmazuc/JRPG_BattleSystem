@@ -35,5 +35,8 @@ bool SpriteRendererComponent::IsHovered(glm::vec2 mousePos)
 
 void SpriteRendererComponent::AddToRenderQueue(RenderQueue& queue)
 {
-	queue.AddItem(new RenderTextureItem(GetTransform().world, size, material), zOrder);
+	if (isVisible)
+	{
+		queue.AddItem(new RenderTextureItem(GetTransform().world, size, material), zOrder);
+	}
 }

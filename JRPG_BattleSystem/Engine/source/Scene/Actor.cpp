@@ -193,6 +193,7 @@ const Actor* Actor::GetParent() const
 void Actor::DetachFromHierarchy()
 {
 	root->DetachFromHierarchy();
+	scene->GetSceneGraph()->RemoveNode(root->GetSceneNode());
 }
 
 void Actor::InternalSpawnSceneComponent(SceneComponent* component, const SceneComponentSpawnInfo& spawnInfo)
@@ -218,5 +219,5 @@ void Actor::RegisterComponent(ActorComponent* component, std::string name)
 	component->SetOwner(this);
 	component->SetName(name);
 
-	componentsCollection.Add(component);
+	componentsCollection.Add(component, scene ? scene->IsRuntime() : false);
 }

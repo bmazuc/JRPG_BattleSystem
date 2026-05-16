@@ -78,7 +78,7 @@ T* Scene::AddSubsystem(std::string name, Args&&... args)
 	static_assert(std::is_base_of<SceneSubsystem, T>::value, "T must inherit SceneSubsystem");
 	T* subsystem = new T(std::forward<Args>(args)...);
 	subsystem->SetName(name);
-	sceneSubsystemCollection.Add(subsystem);
+	sceneSubsystemCollection.Add(subsystem, isRuntime);
 	return subsystem;
 }
 

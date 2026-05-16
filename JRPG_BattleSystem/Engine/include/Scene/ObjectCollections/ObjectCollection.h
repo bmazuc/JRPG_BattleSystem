@@ -40,9 +40,9 @@ public:
 	 * Adds an object to the collection.
 	 * If iteration is in progress, defers insertion to avoid invalidation.
 	 */
-	void Add(T* object)
+	void Add(T* object, bool isRuntime)
 	{
-		if (isIterating)
+		if (isIterating || isRuntime)
 		{
 			pendingAddObjects.push_back(object);
 		}
@@ -159,8 +159,8 @@ public:
 	std::vector<T*>& GetCollection() { return objects; }
 
 	/**
- * Processes pending additions after iteration.
- */
+	 * Processes pending additions after iteration.
+	 */
 	void ProcessAdd()
 	{
 		while (pendingAddObjects.size() > 0)

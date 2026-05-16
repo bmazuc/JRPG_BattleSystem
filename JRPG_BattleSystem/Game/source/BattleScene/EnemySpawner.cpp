@@ -6,16 +6,12 @@
 EnemySpawner::~EnemySpawner()
 {
 	enemyDatas.clear();
-	spawnedEnemies.clear();
 }
 
-void EnemySpawner::BeginPlay()
+std::vector<Enemy*> EnemySpawner::GenerateEnemies()
 {
-	GenerateEnemies();
-}
+	std::vector<Enemy*> spawnedEnemies;
 
-void EnemySpawner::GenerateEnemies()
-{
 	for (unsigned int idx = 0; idx < groupSize; idx++)
 	{
 		const EnemyData& data = enemyDatas.size() > 0 ?
@@ -26,10 +22,12 @@ void EnemySpawner::GenerateEnemies()
 		spawnedEnemies.push_back(enemy);
 	}
 
-	PositionEnemies();
+	PositionEnemies(spawnedEnemies);
+
+	return spawnedEnemies;
 }
 
-void EnemySpawner::PositionEnemies()
+void EnemySpawner::PositionEnemies(std::vector<Enemy*>& spawnedEnemies)
 {
 	// Compute total width
 	float totalWidth = 0;

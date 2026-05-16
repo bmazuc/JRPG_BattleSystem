@@ -97,12 +97,6 @@
     <Filter Include="Header Files\Engine\Core\Delegate">
       <UniqueIdentifier>{827786cf-7c0b-46d7-a5f9-292020c53144}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Game\TestScene">
-      <UniqueIdentifier>{4d94a0a8-cf01-49de-a506-a44c140a6f46}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Game\TestScene">
-      <UniqueIdentifier>{ce24a32d-c676-4cb6-a272-3fc7aa963c08}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Game\BattleScene">
       <UniqueIdentifier>{57fd752d-c607-47b4-b79a-a50686adea72}</UniqueIdentifier>
     </Filter>
@@ -201,21 +195,6 @@
     <ClCompile Include="Game\source\MainMenu\MainMenuScene.cpp">
       <Filter>Source Files\Game\MainMenu</Filter>
     </ClCompile>
-    <ClCompile Include="Game\source\TestScene\CrossButton.cpp">
-      <Filter>Source Files\Game\TestScene</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\source\TestScene\KillableEntity.cpp">
-      <Filter>Source Files\Game\TestScene</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\source\TestScene\MovingEntity.cpp">
-      <Filter>Source Files\Game\TestScene</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\source\TestScene\RotatingEntity.cpp">
-      <Filter>Source Files\Game\TestScene</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\source\TestScene\TestScene.cpp">
-      <Filter>Source Files\Game\TestScene</Filter>
-    </ClCompile>
     <ClCompile Include="Game\source\BattleScene\BattleScene.cpp">
       <Filter>Source Files\Game\BattleScene</Filter>
     </ClCompile>
@@ -252,19 +231,16 @@
     <ClCompile Include="Engine\source\Scene\Object.cpp">
       <Filter>Source Files\Engine\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Game\source\TestScene\TestActorComponent.cpp">
-      <Filter>Source Files\Game\TestScene</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\source\Scene\SceneSubsystem.cpp">
       <Filter>Source Files\Engine\Scene</Filter>
     </ClCompile>
     <ClCompile Include="Engine\source\Scene\ObjectCollections\SceneSubsystemCollection.cpp">
       <Filter>Source Files\Engine\Scene\ObjectCollections</Filter>
     </ClCompile>
-    <ClCompile Include="Game\source\TestScene\TestSceneSubsystem.cpp">
-      <Filter>Source Files\Game\TestScene</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\source\UI\UserWidget.cpp">
+      <Filter>Source Files\Engine\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\include\BattleScene\BattleManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -338,21 +314,6 @@
     <ClInclude Include="Engine\include\Core\Delegate\Delegate.h">
       <Filter>Header Files\Engine\Core\Delegate</Filter>
     </ClInclude>
-    <ClInclude Include="Game\include\TestScene\CrossButton.h">
-      <Filter>Header Files\Game\TestScene</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\include\TestScene\KillableEntity.h">
-      <Filter>Header Files\Game\TestScene</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\include\TestScene\MovingEntity.h">
-      <Filter>Header Files\Game\TestScene</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\include\TestScene\RotatingEntity.h">
-      <Filter>Header Files\Game\TestScene</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\include\TestScene\TestScene.h">
-      <Filter>Header Files\Game\TestScene</Filter>
-    </ClInclude>
     <ClInclude Include="Game\include\BattleScene\BattleScene.h">
       <Filter>Header Files\Game\BattleScene</Filter>
     </ClInclude>
@@ -398,25 +359,22 @@
     <ClInclude Include="Engine\include\Scene\Object.h">
       <Filter>Header Files\Engine\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="Game\include\TestScene\TestActorComponent.h">
-      <Filter>Header Files\Game\TestScene</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\include\Scene\SceneSubsystem.h">
       <Filter>Header Files\Engine\Scene</Filter>
     </ClInclude>
     <ClInclude Include="Engine\include\Scene\ObjectCollections\SceneSubsystemCollection.h">
       <Filter>Header Files\Engine\Scene\ObjectCollections</Filter>
     </ClInclude>
-    <ClInclude Include="Game\include\TestScene\TestSceneSubsystem.h">
-      <Filter>Header Files\Game\TestScene</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\include\UI\UserWidget.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Engine\include\Rendering\IRenderable.h">
+      <Filter>Header Files\Engine\Rendering</Filter>
     </ClInclude>
     <ClInclude Include="Engine\include\Rendering\RenderQueue.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Engine\Rendering</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\include\Rendering\IRenderable.h">
+    <ClInclude Include="Engine\include\UI\UserWidget.h">
+      <Filter>Header Files\Engine\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\include\BattleScene\BattleManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

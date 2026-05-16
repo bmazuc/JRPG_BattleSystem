@@ -166,7 +166,7 @@ public:
 	const T* GetUserWidget(std::string name) const;
 
 	// Temp
-	void AddWidget(Widget* widget) { widgetsCollection.Add(widget); }
+	void AddWidget(Widget* widget) { widgetsCollection.Add(widget, isRuntime); }
 
 	/**
 	 * Retrieves first widget matching type.
@@ -224,9 +224,13 @@ public:
 		graph.BuildRenderQueue(queue);
 	}
 
+	bool IsRuntime() { return isRuntime; }
+
 private:
 	void InternalSpawnActor(Actor* actor, std::string name, const ActorSpawnInfo& spawnInfo);
 	void InternalSpawnUserWidget(UserWidget* userWidget, std::string name, const UISpawnInfo& spawnInfo);
+
+	bool isRuntime = false;
 
 	// Camera used for rendering calculations
 	CameraComponent* activeCamera;

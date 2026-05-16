@@ -80,6 +80,7 @@ void Widget::UpdateTransform()
 void Widget::DetachFromHierarchy()
 {
 	node.DetachFromHierarchy();
+	scene->GetSceneGraph()->RemoveNode(&node);
 }
 
 void Widget::SetLocalPosition(glm::vec2 position)

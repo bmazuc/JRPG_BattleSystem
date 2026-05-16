@@ -6,6 +6,7 @@
 #include "UI/Text.h"
 #include "Core/Resource/ResourceManager.h"
 #include "Rendering/Material.h"
+#include "BattleScene/BattleManager.h"
 
 void BattleScene::LoadAssets()
 {
@@ -15,7 +16,10 @@ void BattleScene::LoadAssets()
 
 void BattleScene::CreateScene()
 {
+	BattleManager* battleManager = AddSubsystem<BattleManager>("battleManager");
+
 	EnemySpawner* spawner = SpawnActor<EnemySpawner>("EnemySpawner", ActorSpawnInfo(nullptr, TransformSpace::World, glm::vec2(320, 240)));
+	battleManager->SetEnemySpawner(spawner);
 
 	EnemyData redEnemy;
 	redEnemy.textureName = "goblin";

@@ -166,18 +166,12 @@
     <ClCompile Include="Engine\source\UI\Text.cpp" />
     <ClCompile Include="Engine\source\UI\Widget.cpp" />
     <ClCompile Include="Engine\source\UI\UserWidget.cpp" />
+    <ClCompile Include="Game\include\BattleScene\BattleManager.cpp" />
     <ClCompile Include="Game\source\BattleScene\BattleScene.cpp" />
     <ClCompile Include="Game\source\BattleScene\Enemy.cpp" />
     <ClCompile Include="Game\source\BattleScene\EnemySpawner.cpp" />
     <ClCompile Include="Game\source\Common\UI\LoadSceneButton.cpp" />
     <ClCompile Include="Game\source\MainMenu\MainMenuScene.cpp" />
-    <ClCompile Include="Game\source\TestScene\CrossButton.cpp" />
-    <ClCompile Include="Game\source\TestScene\KillableEntity.cpp" />
-    <ClCompile Include="Game\source\TestScene\MovingEntity.cpp" />
-    <ClCompile Include="Game\source\TestScene\RotatingEntity.cpp" />
-    <ClCompile Include="Game\source\TestScene\TestActorComponent.cpp" />
-    <ClCompile Include="Game\source\TestScene\TestScene.cpp" />
-    <ClCompile Include="Game\source\TestScene\TestSceneSubsystem.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -219,18 +213,12 @@
     <ClInclude Include="Engine\include\UI\Text.h" />
     <ClInclude Include="Engine\include\UI\Widget.h" />
     <ClInclude Include="Engine\include\UI\UserWidget.h" />
+    <ClInclude Include="Game\include\BattleScene\BattleManager.h" />
     <ClInclude Include="Game\include\BattleScene\BattleScene.h" />
     <ClInclude Include="Game\include\BattleScene\Enemy.h" />
     <ClInclude Include="Game\include\BattleScene\EnemySpawner.h" />
     <ClInclude Include="Game\include\Common\UI\LoadSceneButton.h" />
     <ClInclude Include="Game\include\MainMenu\MainMenuScene.h" />
-    <ClInclude Include="Game\include\TestScene\CrossButton.h" />
-    <ClInclude Include="Game\include\TestScene\KillableEntity.h" />
-    <ClInclude Include="Game\include\TestScene\MovingEntity.h" />
-    <ClInclude Include="Game\include\TestScene\RotatingEntity.h" />
-    <ClInclude Include="Game\include\TestScene\TestActorComponent.h" />
-    <ClInclude Include="Game\include\TestScene\TestScene.h" />
-    <ClInclude Include="Game\include\TestScene\TestSceneSubsystem.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\include\Scene\Actor.inl" />

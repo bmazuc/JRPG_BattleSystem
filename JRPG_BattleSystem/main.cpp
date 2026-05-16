@@ -2,7 +2,6 @@
 //
 
 #include "Core/Engine.h"
-#include "TestScene/TestScene.h"
 #include "MainMenu/MainMenuScene.h"
 #include "BattleScene/BattleScene.h"
 
@@ -26,7 +25,6 @@ int main()
     {
         if (SceneManager* sceneManager = engine->GetSceneManager())
         {
-            sceneManager->AddScene<TestScene>("testScene");
             sceneManager->AddScene<MainMenuScene>("mainMenu");
             sceneManager->AddScene<BattleScene>("battleScene");
             sceneManager->SetDefaultScene("mainMenu");

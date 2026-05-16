@@ -20,10 +20,6 @@ void MainMenuScene::CreateScene()
     CreateLoadSceneButton(glm::vec2(320, 300), glm::vec2(75, 50),
         "battleScene",
         "Battle", 24.0f);
-
-    CreateLoadSceneButton(glm::vec2(320, 400), glm::vec2(75, 50),
-        "testScene",
-        "Test", 24.0f);
 }
 
 void MainMenuScene::CreateLoadSceneButton(glm::vec2 position, glm::vec2 buttonSize, std::string sceneToLoad, std::string content, float textSize)

@@ -19,6 +19,7 @@ SpawnInfo::~SpawnInfo() {}
 void Scene::Load()
 {
 	CreateScene();
+	isRuntime = true;
 }
 
 void Scene::BeginPlay()
@@ -97,6 +98,8 @@ void Scene::Unload()
 
 	delete playerController;
 	playerController = nullptr;
+
+	isRuntime = false;
 }
 
 void Scene::RegisterToDestroy(Actor* actor)
@@ -146,7 +149,7 @@ void Scene::InternalSpawnActor(Actor* actor,std::string name, const ActorSpawnIn
 		actor->SetLocalRotate(spawnInfo.rotate);
 		actor->SetLocalScale(spawnInfo.scale);
 	}
-	actorsCollection.Add(actor);
+	actorsCollection.Add(actor, isRuntime);
 }
 
 void Scene::InternalSpawnUserWidget(UserWidget* userWidget, std::string name, const UISpawnInfo& spawnInfo)
@@ -167,5 +170,5 @@ void Scene::InternalSpawnUserWidget(UserWidget* userWidget, std::string name, co
 		userWidget->SetLocalRotate(spawnInfo.rotate);
 		userWidget->SetLocalScale(spawnInfo.scale);
 	}
-	widgetsCollection.Add(userWidget);
+	widgetsCollection.Add(userWidget, isRuntime);
 }
