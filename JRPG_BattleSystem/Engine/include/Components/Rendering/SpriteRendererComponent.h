@@ -3,6 +3,8 @@
 
 #include "Components/SceneComponent.h"
 #include "Rendering/Shader.h"
+#include "Rendering/IRenderable.h"
+
 #include <glm/vec2.hpp>
 #include <glm/vec3.hpp>
 #include <string>
@@ -12,7 +14,7 @@ class Material;
 /*
  * Component responsible for rendering a 2D sprite.
  */
-class SpriteRendererComponent : public SceneComponent
+class SpriteRendererComponent : public SceneComponent, public IRenderable
 {
 public:
 	/**
@@ -37,6 +39,8 @@ public:
 	 * Returns true is mouse currently hover this sprite.
 	 */
 	bool IsHovered(glm::vec2 mousePos);
+
+	void AddToRenderQueue(RenderQueue& queue) override;
 
 private:
 	glm::vec2 size = glm::vec2(1.0f, 1.0f);

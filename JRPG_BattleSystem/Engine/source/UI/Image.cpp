@@ -12,3 +12,8 @@ Image::~Image()
 	delete material;
 	material = nullptr;
 }
+
+void Image::AddToRenderQueue(RenderQueue& queue)
+{
+	queue.AddUIItem(new RenderTextureItem(GetTransform().world, size, material));
+}

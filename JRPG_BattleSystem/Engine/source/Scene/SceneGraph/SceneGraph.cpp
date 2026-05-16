@@ -11,6 +11,17 @@ void SceneGraph::UpdateTransforms()
 	}
 }
 
+void SceneGraph::BuildRenderQueue(RenderQueue& queue)
+{
+	for (SceneNode* node : nodes)
+	{
+		if (node)
+		{
+			node->BuildRenderQueue(queue);
+		}
+	}
+}
+
 void SceneGraph::AddNode(SceneNode* node)
 {
 	nodes.push_back(node);

@@ -413,6 +413,12 @@
     <ClInclude Include="Engine\include\UI\UserWidget.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\include\Rendering\RenderQueue.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\include\Rendering\IRenderable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\include\Scene\Scene.inl">

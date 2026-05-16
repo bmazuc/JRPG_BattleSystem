@@ -1,0 +1,89 @@
+#pragma once
+
+#include <map>
+#include <glm/vec2.hpp>
+#include <glm/vec3.hpp>
+#include <glm/mat4x4.hpp>
+#include <string>
+
+class Material;
+class Font;
+enum class TextScaleMode;
+
+struct RenderItem
+{
+public:
+	RenderItem(glm::mat4 _world) 
+		: world(_world) {}
+
+	virtual ~RenderItem() = default;
+
+	glm::mat4 world;
+	
+};
+
+struct RenderTextureItem : public RenderItem
+{
+public:
+	RenderTextureItem(glm::mat4 _world, glm::vec2 _size, Material* _material) 
+		: RenderItem(_world), size(_size), material(_material) {}
+
+	glm::vec2 size;
+	Material* material;
+};
+
+struct RenderTextItem : public RenderItem
+{
+public:
+	RenderTextItem(glm::mat4 _world, float _size, std::string _content, Font* _font, glm::vec3 _color, TextScaleMode _scaleMode, bool _isCenterX)
+		: RenderItem(_world), size(_size), content(_content), font(_font), color(_color), scaleMode(_scaleMode), isCenterX(_isCenterX) {}
+
+	Font* font;
+	glm::vec3 color;
+
+	TextScaleMode scaleMode;
+	std::string content;
+
+	float size;
+	bool isCenterX;
+};
+
+using RenderBucket = std::map<int, std::vector<RenderItem*>>;
+
+struct RenderQueue
+{
+public:
+	void AddItem(RenderItem* item, int zOrder)
+	{
+		worldBuckets[zOrder].push_back(item);
+	}
+
+	void AddUIItem(RenderItem* item)
+	{
+		uiItems.push_back(item);
+	}
+
+	void Clear()
+	{
+		for (auto it = worldBuckets.begin(); it != worldBuckets.end(); ++it)
+		{
+			std::vector<RenderItem*>& items = it->second;
+			for (RenderItem* item : items)
+			{
+				delete item;
+				item = nullptr;
+			}
+		}
+
+		for (RenderItem* item : uiItems)
+		{
+			delete item;
+			item = nullptr;
+		}
+	}
+
+	// Render buckets grouped by z-order (used for ordering sprites).
+	RenderBucket worldBuckets;
+
+	std::vector<RenderItem*> uiItems;
+};

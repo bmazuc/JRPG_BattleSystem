@@ -2,6 +2,8 @@
 #define __SCENE_NODE_H_INCLUDED__
 
 #include "Core/Math/Transform2D.h"
+#include "Rendering/RenderQueue.h"
+
 #include <vector>
 
 class ISceneNodeOwner;
@@ -19,6 +21,8 @@ public:
 	 * Propagates update to children nodes.
 	 */
 	void UpdateTransform();
+
+	void BuildRenderQueue(RenderQueue& queue);
 
 	SceneNode* GetParent() { return parent; }
 	const SceneNode* GetParent() const { return parent; }

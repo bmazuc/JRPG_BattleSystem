@@ -1,4 +1,6 @@
 #include "Scene/SceneGraph/SceneNode.h"
+#include "Rendering/IRenderable.h"
+#include "Scene/SceneGraph/ISceneNodeOwner.h"
 
 #include <glm/ext/matrix_transform.hpp>
 #include <SDL3/SDL.h>
@@ -28,6 +30,22 @@ void SceneNode::UpdateTransform()
 	for (SceneNode* child : children)
 	{
 		child->UpdateTransform();
+	}
+}
+
+void SceneNode::BuildRenderQueue(RenderQueue& queue)
+{
+	if (IRenderable* renderable = dynamic_cast<IRenderable*>(GetOwner()))
+	{
+		renderable->AddToRenderQueue(queue);
+	}
+
+	for (SceneNode* child : children)
+	{
+		if (child)
+		{
+			child->BuildRenderQueue(queue);
+		}
 	}
 }
 

@@ -2,6 +2,7 @@
 #define __SCENE_GRAPH_H_INCLUDED__
 
 #include "Scene/SceneGraph/SceneNode.h"
+#include "Rendering/RenderQueue.h"
 
 /**
  * Scene graph responsible for managing all transform nodes.
@@ -14,6 +15,8 @@ public:
 	 * Updates all node transforms in the graph.
 	 */
 	void UpdateTransforms();
+
+	void BuildRenderQueue(RenderQueue& queue);
 
 	/**
 	 * Registers a node into the scene graph.

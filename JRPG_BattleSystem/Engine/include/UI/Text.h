@@ -2,7 +2,7 @@
 #define __TEXT_H_INCLUDED__
 
 #include "Widget.h"
-
+#include "Rendering/IRenderable.h"
 #include "Graphics/Font.h"
 #include <string>
 
@@ -24,7 +24,7 @@ enum class TextScaleMode
  * Text is rendered using a font atlas (glyph-based rendering)
  * and supports color, scaling, and alignment options.
  */
-class Text : public Widget
+class Text : public Widget, public IRenderable
 {
 public:
     Text(std::string fontName = "default", bool isCenterX = true, glm::vec3 _color = glm::vec3(1.0f, 1.0f, 1.0f));
@@ -52,6 +52,8 @@ public:
 
     bool IsCenterX() const { return isCenterX; }
     TextScaleMode GetScaleMode() { return scaleMode; }
+
+    void AddToRenderQueue(RenderQueue& queue) override;
 
 private:
     std::string content;

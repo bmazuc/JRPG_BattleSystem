@@ -49,8 +49,7 @@ void Engine::Run()
 
         if (Scene* scene = sceneManager->GetActiveScene())
         {
-            renderer->RenderWorld(scene, window->GetViewportBaseResolution());
-            renderer->RenderUI(scene, window->GetSize());
+            renderer->RenderScene(scene, window->GetViewportBaseResolution(), window->GetSize());
         }
 
         window->SwapBuffers();

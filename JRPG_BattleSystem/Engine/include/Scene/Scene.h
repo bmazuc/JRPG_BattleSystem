@@ -219,6 +219,11 @@ public:
 
 	glm::vec2 ScreenToWorld(glm::vec2 screenPos);
 
+	void BuildRenderQueue(RenderQueue& queue)
+	{
+		graph.BuildRenderQueue(queue);
+	}
+
 private:
 	void InternalSpawnActor(Actor* actor, std::string name, const ActorSpawnInfo& spawnInfo);
 	void InternalSpawnUserWidget(UserWidget* userWidget, std::string name, const UISpawnInfo& spawnInfo);

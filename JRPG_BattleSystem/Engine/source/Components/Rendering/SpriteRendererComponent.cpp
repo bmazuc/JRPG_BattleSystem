@@ -32,3 +32,8 @@ bool SpriteRendererComponent::IsHovered(glm::vec2 mousePos)
 		mouseWorldPos.y >= worldPos.y - bounds.y &&
 		mouseWorldPos.y <= worldPos.y + bounds.y;
 }
+
+void SpriteRendererComponent::AddToRenderQueue(RenderQueue& queue)
+{
+	queue.AddItem(new RenderTextureItem(GetTransform().world, size, material), zOrder);
+}

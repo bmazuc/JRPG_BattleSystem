@@ -194,8 +194,10 @@
     <ClInclude Include="Engine\include\Core\Window.h" />
     <ClInclude Include="Engine\include\Graphics\Font.h" />
     <ClInclude Include="Engine\include\Graphics\Texture.h" />
+    <ClInclude Include="Engine\include\Rendering\IRenderable.h" />
     <ClInclude Include="Engine\include\Rendering\Material.h" />
     <ClInclude Include="Engine\include\Rendering\Renderer.h" />
+    <ClInclude Include="Engine\include\Rendering\RenderQueue.h" />
     <ClInclude Include="Engine\include\Rendering\Shader.h" />
     <ClInclude Include="Engine\include\Scene\Actor.h" />
     <ClInclude Include="Engine\include\Scene\Object.h" />

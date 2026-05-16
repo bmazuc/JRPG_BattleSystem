@@ -11,3 +11,10 @@ void Text::SetFont(std::string fontName)
 {
 	font = &ResourceManager::GetFont(fontName);
 }
+
+void Text::AddToRenderQueue(RenderQueue& queue)
+{
+	queue.AddUIItem(new RenderTextItem(
+		GetTransform().world, size, content, font, color, scaleMode, isCenterX
+	));
+}

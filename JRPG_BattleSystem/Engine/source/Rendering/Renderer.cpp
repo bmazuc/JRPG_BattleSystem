@@ -17,11 +17,6 @@
 #include "UI/Text.h"
 #include "Core/Resource/ResourceManager.h"
 
-Renderer::~Renderer()
-{
-    buckets.clear();
-}
-
 void Renderer::Init()
 {
     InitRenderData();
@@ -74,16 +69,24 @@ void Renderer::InitRenderData()
     glBindVertexArray(0);
 }
 
-void Renderer::RenderWorld(Scene* scene, glm::vec2 viewportBaseResolution)
+void Renderer::RenderScene(Scene* scene, glm::vec2 viewportBaseResolution, glm::vec2 windowSize)
+{
+    RenderQueue queue;
+    scene->BuildRenderQueue(queue);
+
+    RenderWorld(queue.worldBuckets, scene->GetActiveCamera(), viewportBaseResolution);
+    RenderUI(queue.uiItems, windowSize);
+
+    queue.Clear();
+}
+
+void Renderer::RenderWorld(RenderBucket& buckets, CameraComponent* camera, glm::vec2 viewportBaseResolution)
 {
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
-    CameraComponent* camera = scene->GetActiveCamera();
     if (camera)
     {
-        Build(scene);
-
         glm::mat4 view = glm::mat4(1.0f);
         view = glm::scale(view, glm::vec3(camera->GetZoom(), camera->GetZoom(), 1.0f));
         view = glm::rotate(view, glm::radians(-camera->GetWorldRotate()), glm::vec3(0.0f, 0.0f, 1.0f));
@@ -94,86 +97,59 @@ void Renderer::RenderWorld(Scene* scene, glm::vec2 viewportBaseResolution)
         for (auto it = buckets.begin(); it != buckets.end(); ++it)
         {
             int zOrder = it->first;
-            std::vector<SpriteRendererComponent*>& spriteRenderers = it->second;
+            std::vector<RenderItem*>& items = it->second;
 
-            for (SpriteRendererComponent* spriteRenderer : spriteRenderers)
-            {
-                if (!spriteRenderer)
+            for (RenderItem* item : items)
+            { 
+                if (RenderTextureItem* textureItem = dynamic_cast<RenderTextureItem*>(item))
                 {
-                    continue;
+                    RenderMaterial(textureItem, view, projection);
                 }
-                
-                glm::mat4 model = glm::scale(spriteRenderer->GetTransform().world, glm::vec3(spriteRenderer->GetSize(), 1.0f));
-                RenderMaterial(spriteRenderer->GetMaterial(), view, model, projection);
             }
         }
     }
 }
 
-void Renderer::RenderUI(Scene* scene, glm::vec2 windowSize)
+void Renderer::RenderUI(std::vector<RenderItem*>& uiItems, glm::vec2 windowSize)
 {
     glm::mat4 projection = glm::ortho(0.0f, windowSize.x, windowSize.y, 0.0f, -1.0f, 1.0f);
 
-    std::vector<Widget*> widgets = scene->GetWidgets();
-    for (Widget* widget : widgets)
+    for (RenderItem* item : uiItems)
     {
-        if (!widget || !widget->IsVisible())
+        if (RenderTextureItem* textureItem = dynamic_cast<RenderTextureItem*>(item))
         {
-            continue;
+            RenderMaterial(textureItem, glm::mat4(1.0f), projection);
         }
-
-        if (Image* image = dynamic_cast<Image*>(widget))
+        else if (RenderTextItem* textItem = dynamic_cast<RenderTextItem*>(item))
         {
-            glm::mat4 model = glm::scale(image->GetWorld(), glm::vec3(image->GetSize(), 1.0f));
-            RenderMaterial(image->GetMaterial(), glm::mat4(1.0f), model, projection);
-        }
-        else if (Text* text = dynamic_cast<Text*>(widget))
-        {
-            RenderText(text, projection);
+            RenderText(textItem, projection);
         }
     }
 }
 
-void Renderer::Build(Scene* scene)
+void Renderer::RenderMaterial(RenderTextureItem* item, glm::mat4 view, glm::mat4 projection)
 {
-    buckets.clear();
-
-    std::vector<Actor*> gameObjects = scene->GetActors();
-    for (Actor* gameObject : gameObjects)
-    {
-        if (gameObject)
-        {
-            SpriteRendererComponent* spriteRenderer = gameObject->GetComponent<SpriteRendererComponent>();
-
-            if (spriteRenderer && spriteRenderer->IsVisible())
-            {
-                buckets[spriteRenderer->GetZOrder()].push_back(spriteRenderer);
-            }
-        }
-    }
-}
-
-void Renderer::RenderMaterial(Material* material, glm::mat4 view, glm::mat4 model, glm::mat4 projection)
-{
-    if (!material)
+    if (!item->material)
     {
         return;
     }
 
-    Shader* shader = material->GetShader();
+    Shader* shader = item->material->GetShader();
     if (!shader)
     {
         return;
     }
+
+    glm::mat4 model = glm::scale(item->world, glm::vec3(item->size, 1.0f));
 
     shader->Use();
     shader->SetInteger("image", 0);
     shader->SetMatrix4("view", view);
     shader->SetMatrix4("model", model);
     shader->SetMatrix4("projection", projection);
-    shader->SetVector3f("spriteColor", material->GetColor());
+    shader->SetVector3f("spriteColor", item->material->GetColor());
 
-    DrawTexture(material->GetTexture());
+    DrawTexture(item->material->GetTexture());
 }
 
 void Renderer::DrawTexture(Texture* texture)
@@ -189,9 +165,9 @@ void Renderer::DrawTexture(Texture* texture)
     }
 }
 
-void Renderer::RenderText(Text* text, glm::mat4 projection)
+void Renderer::RenderText(RenderTextItem* item, glm::mat4 projection)
 {
-    Font* font = text->GetFont();
+    Font* font = item->font;
     if (!font)
     {
         return;
@@ -200,12 +176,12 @@ void Renderer::RenderText(Text* text, glm::mat4 projection)
     textShader->Use();
 
     textShader->SetMatrix4("projection", projection);
-    textShader->SetVector3f("textColor", text->GetColor());
+    textShader->SetVector3f("textColor", item->color);
 
     glActiveTexture(GL_TEXTURE0);
     glBindVertexArray(textVAO);
 
-    glm::vec2 position = text->GetWorldPosition();
+    glm::vec2 position = glm::vec2(item->world[3]);
     float x = position.x;
     float y = position.y;
 
@@ -215,18 +191,20 @@ void Renderer::RenderText(Text* text, glm::mat4 projection)
         fontSize = 0.01f;
     }
 
-    glm::vec2 scale = text->GetWorldScale();
+    glm::vec2 scale;
+    scale.x = glm::length(glm::vec2(item->world[0]));
+    scale.y = glm::length(glm::vec2(item->world[1]));
 
-    if (text->GetScaleMode() == TextScaleMode::Uniform)
+    if (item->scaleMode == TextScaleMode::Uniform)
     {
         float uniformScale = std::min(scale.x, scale.y);
         scale = glm::vec2(uniformScale, uniformScale);
     }
     
-    glm::vec2 finalScale = scale * (text->GetSize()/ fontSize);
+    glm::vec2 finalScale = scale * (item->size/ fontSize);
 
-    std::string content = text->GetContent();
-    if (text->IsCenterX())
+    std::string content = item->content;
+    if (item->isCenterX)
     {
         float totalWidth = 0.0f;
 
