@@ -1,25 +1,25 @@
 #ifndef __UI_ELEMENT_H_INCLUDED__
 #define __UI_ELEMENT_H_INCLUDED__
 
-#include "Scene/Object.h"
-#include "Scene/SceneGraph/ISceneNodeOwner.h"
+#include "World/Object.h"
+#include "World/SpatialGraph/ISpatialNodeOwner.h"
 #include "Core/Math/Transform2D.h"
 #include <string>
 
-class Scene;
+class UISystem;
 
 /**
  * Base class for all UI element in the engine.
  *
  * Widget represents a 2D interface object that:
- * - exists in the scene hierarchy
+ * - exists in the level hierarchy
  * - has a transform (position / rotation / scale)
  * - can be parented to other widgets
  * - participates in update + rendering pipeline
  *
  * It is the UI equivalent of an Actor in world space.
  */
-class Widget : public Object, public ISceneNodeOwner
+class Widget : public Object, public ISpatialNodeOwner
 {
 public:
 	Widget();
@@ -47,10 +47,10 @@ public:
 	void MarkForDestruction();
 
 	/**
-	 * Scene graph integration
+	 * Level graph integration
 	 */
 
-	SceneNode* GetSceneNode() { return &node; }
+	SpatialNode* GetSceneNode() { return &node; }
 
 	bool HasParent() { return node.HasParent(); }
 
@@ -96,19 +96,18 @@ public:
 	Widget* GetRoot();
 	const Widget* GetRoot() const;
 
-	Scene* GetScene() { return scene; }
-	const Scene* GetScene() const { return scene; }
-	void SetScene(Scene* newScene);
+	UISystem* GetUISystem() { return uiSystem; }
+	const UISystem* GetUISystem() const { return uiSystem; }
+	void SetUISystem(UISystem* newUISystem);
 
 	void SetVisible(bool state) { isVisible = state; }
 	bool IsVisible() const { return isVisible; }
 
 protected:
-	// Scene owning this widget
-	Scene* scene;
+	UISystem* uiSystem;
 
 private:
-	SceneNode node;
+	SpatialNode node;
 
 	bool isVisible = true;
 };

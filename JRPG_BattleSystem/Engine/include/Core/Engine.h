@@ -1,7 +1,7 @@
 #ifndef __ENGINE_H_INCLUDED__
 #define __ENGINE_H_INCLUDED__
 
-#include "Scene/SceneManager.h"
+#include "World/World.h"
 #include "Core/Window.h"
 
 #include <GL/glew.h>
@@ -39,7 +39,7 @@ public:
  * - system initialization
  * - main loop execution
  * - rendering
- * - scene management
+ * - level management
  * - shutdown and cleanup
  */
 class Engine
@@ -63,8 +63,8 @@ public:
 	 */
 	void Shutdown();
 
-	SceneManager* GetSceneManager() { return sceneManager; }
-	const SceneManager* GetSceneManager() const { return sceneManager; }
+	World* GetWorld() { return world; }
+	const World* GetWorld() const { return world; }
 
 private:
 	/**
@@ -93,8 +93,8 @@ private:
 	 */
 	float ComputeDeltaTime(std::chrono::high_resolution_clock::time_point& lastTime);
 
-	// Manages scene lifetime and transitions.
-	SceneManager* sceneManager;
+	// Manages level lifetime and transitions.
+	World* world;
 
 	// Handles player input state.
 	InputManager* inputManager;

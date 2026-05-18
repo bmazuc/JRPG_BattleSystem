@@ -1,7 +1,7 @@
 #ifndef __COMPONENT_H_INCLUDED__
 #define __COMPONENT_H_INCLUDED__
 
-#include "Scene/Object.h"
+#include "World/Object.h"
 
 class Actor;
 
@@ -14,7 +14,7 @@ public:
 	virtual ~ActorComponent() = default;
 
 	/**
-	 * Called once when the scene starts or component is created.
+	 * Called once when the level starts or component is created.
 	 */
 	virtual void BeginPlay() {}
 

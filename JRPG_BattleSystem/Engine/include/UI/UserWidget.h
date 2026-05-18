@@ -2,7 +2,7 @@
 #define __USER_WIDGET_H_INCLUDED__
 
 #include "Widget.h"
-#include "Scene/SpawnInfos.h"
+#include "World/SpawnInfos.h"
 
 /**
  * Base class for interactive/custom UI widgets.
@@ -18,7 +18,7 @@ class UserWidget : public Widget
 {
 public:
 	/**
-	 * Called once when the scene starts or widget is created.
+	 * Called once when the level starts or widget is created.
 	 */
 	virtual void Construct() {}
 

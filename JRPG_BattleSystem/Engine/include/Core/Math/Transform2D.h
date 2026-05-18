@@ -11,7 +11,7 @@ enum class TransformSpace
 };
 
 /**
- * Represents a 2D transformation used for scene objects.
+ * Represents a 2D transformation used for level objects.
  * Stores local transform data and a cached world matrix.
  */
 struct Transform2D

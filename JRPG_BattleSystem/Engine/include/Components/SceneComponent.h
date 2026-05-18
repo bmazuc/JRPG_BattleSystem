@@ -2,12 +2,12 @@
 #define __SCENE_COMPONENT_H_INCLUDED__
 
 #include "ActorComponent.h"
-#include "Scene/SceneGraph/ISceneNodeOwner.h"
+#include "World/SpatialGraph/ISpatialNodeOwner.h"
 
 /**
  * Component that has a transform and supports attachment.
  */
-class SceneComponent : public ActorComponent, public ISceneNodeOwner
+class SceneComponent : public ActorComponent, public ISpatialNodeOwner
 {
 public:
 	SceneComponent();
@@ -23,7 +23,7 @@ public:
 	const SceneComponent* GetParent() const;
 	std::vector<SceneComponent*> GetChildren();
 
-	SceneNode* GetSceneNode() { return &node; }
+	SpatialNode* GetSceneNode() { return &node; }
 
 	void UpdateTransform();
 	void DetachFromHierarchy();
@@ -48,7 +48,7 @@ public:
 	void SetLocalScale(glm::vec2 scale);
 
 private:
-	SceneNode node;
+	SpatialNode node;
 };
 
 #endif // __SCENE_COMPONENT_H_INCLUDED__

@@ -1,7 +1,7 @@
 #include "Core/Engine.h"
 
 #include "Rendering/Renderer.h"
-#include "Scene/SceneManager.h"
+#include "World/World.h"
 #include "Core/Resource/ResourceManager.h"
 #include "Core/Inputs/InputManager.h"
 #include "Core/Random.h"
@@ -18,7 +18,7 @@ bool Engine::Start(const EngineConfig& config)
     {
         LoadDefaultResources();
         Random::Init();
-        sceneManager = new SceneManager();
+        world = new World();
         renderer = new Renderer();
         inputManager = new InputManager();
         return true;
@@ -29,7 +29,7 @@ bool Engine::Start(const EngineConfig& config)
 
 void Engine::Run()
 {
-    sceneManager->Init();
+    world->Init();
     renderer->Init();
 
     std::chrono::steady_clock::time_point lastTime = std::chrono::high_resolution_clock::now();
@@ -45,12 +45,8 @@ void Engine::Run()
 
         float deltaTime = ComputeDeltaTime(lastTime);
    
-        sceneManager->Update(deltaTime, inputManager);
-
-        if (Scene* scene = sceneManager->GetActiveScene())
-        {
-            renderer->RenderScene(scene, window->GetViewportBaseResolution(), window->GetSize());
-        }
+        world->Update(deltaTime, inputManager);
+        renderer->RenderWorld(world, window->GetViewportBaseResolution(), window->GetSize());
 
         window->SwapBuffers();
     }
@@ -63,8 +59,8 @@ void Engine::Shutdown()
     delete inputManager;
     inputManager = nullptr;
 
-    delete sceneManager;
-    sceneManager = nullptr;
+    delete world;
+    world = nullptr;
 
     delete renderer;
     renderer = nullptr;

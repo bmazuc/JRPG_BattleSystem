@@ -40,12 +40,6 @@
     <Filter Include="Source Files\Engine\Components">
       <UniqueIdentifier>{fe0ec89a-f8b5-45e1-bb73-4eca64966b7a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Engine\Scene">
-      <UniqueIdentifier>{e61a6fbc-3ce3-4b2b-ba3f-f383ba0b01f4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Engine\Scene">
-      <UniqueIdentifier>{9f50b888-8a21-4c7a-b66c-bf2d86d81e83}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Engine\UI">
       <UniqueIdentifier>{a4ecd94d-c147-44f9-9ef1-bb46ace8380d}</UniqueIdentifier>
     </Filter>
@@ -97,12 +91,6 @@
     <Filter Include="Header Files\Engine\Core\Delegate">
       <UniqueIdentifier>{827786cf-7c0b-46d7-a5f9-292020c53144}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Game\BattleScene">
-      <UniqueIdentifier>{57fd752d-c607-47b4-b79a-a50686adea72}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Game\BattleScene">
-      <UniqueIdentifier>{b40526ab-107f-4083-93f2-af8e3f7b2b5c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Game\Common">
       <UniqueIdentifier>{55bcb6ff-8cb9-4358-a927-362e56dcf977}</UniqueIdentifier>
     </Filter>
@@ -115,17 +103,35 @@
     <Filter Include="Source Files\Game\Common\UI">
       <UniqueIdentifier>{593dfc50-e00f-4791-a7c5-fab3fe74cc35}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Engine\Scene\SceneGraph">
-      <UniqueIdentifier>{bfd618fb-fbac-4b8e-b9f9-381eb29940ad}</UniqueIdentifier>
+    <Filter Include="Header Files\Engine\World">
+      <UniqueIdentifier>{dfe76246-e3e3-4d7c-a308-8d6ac3bd59ed}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Engine\Scene\SceneGraph">
-      <UniqueIdentifier>{6c8c1833-c364-4c48-8b71-6755b41d3c75}</UniqueIdentifier>
+    <Filter Include="Header Files\Engine\World\Systems">
+      <UniqueIdentifier>{36f4cdd2-8ddd-4a36-b764-0eedf2a63942}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Engine\Scene\ObjectCollections">
-      <UniqueIdentifier>{b926ffeb-38bb-428e-b5a3-02b92f23d9a9}</UniqueIdentifier>
+    <Filter Include="Header Files\Engine\World\ObjectCollections">
+      <UniqueIdentifier>{e7a88bfb-4fd8-47da-9b72-05216bedb7a5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Engine\Scene\ObjectCollections">
-      <UniqueIdentifier>{e49dc5a7-b1e2-4eea-add4-2fb8e66c736a}</UniqueIdentifier>
+    <Filter Include="Source Files\Engine\World">
+      <UniqueIdentifier>{75211518-ec7e-46e4-9d01-019e5ae4f27d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\World\Systems">
+      <UniqueIdentifier>{e56c951e-a800-4583-b5ed-cf7587326b23}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\World\ObjectCollections">
+      <UniqueIdentifier>{3527ea82-aed7-4d9c-98fb-08b04421c032}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\World\SpatialGraph">
+      <UniqueIdentifier>{dcf2018d-382c-4a5c-ab46-8c081d6d8cdf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\World\SpatialGraph">
+      <UniqueIdentifier>{f006d430-4b50-468e-86ae-9c4fb43ba4b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\BattleLevel">
+      <UniqueIdentifier>{57fd752d-c607-47b4-b79a-a50686adea72}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\BattleLevel">
+      <UniqueIdentifier>{b40526ab-107f-4083-93f2-af8e3f7b2b5c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -141,12 +147,6 @@
     <ClCompile Include="Engine\source\Components\ActorComponent.cpp">
       <Filter>Source Files\Engine\Components</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\source\Scene\Actor.cpp">
-      <Filter>Source Files\Engine\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\source\Scene\Scene.cpp">
-      <Filter>Source Files\Engine\Scene</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\source\UI\Widget.cpp">
       <Filter>Source Files\Engine\UI</Filter>
     </ClCompile>
@@ -155,9 +155,6 @@
     </ClCompile>
     <ClCompile Include="Engine\source\UI\Text.cpp">
       <Filter>Source Files\Engine\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\source\Scene\SceneManager.cpp">
-      <Filter>Source Files\Engine\Scene</Filter>
     </ClCompile>
     <ClCompile Include="Engine\source\Components\Rendering\SpriteRendererComponent.cpp">
       <Filter>Source Files\Engine\Components\Rendering</Filter>
@@ -183,65 +180,71 @@
     <ClCompile Include="Engine\source\UI\Button.cpp">
       <Filter>Source Files\Engine\UI</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\source\Scene\PlayerController.cpp">
-      <Filter>Source Files\Engine\Scene</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\source\Core\Inputs\InputManager.cpp">
       <Filter>Source Files\Engine\Core\Inputs</Filter>
     </ClCompile>
     <ClCompile Include="Engine\source\UI\Image.cpp">
       <Filter>Source Files\Engine\UI</Filter>
     </ClCompile>
-    <ClCompile Include="Game\source\MainMenu\MainMenuScene.cpp">
+    <ClCompile Include="Game\source\MainMenu\MainMenuLevel.cpp">
       <Filter>Source Files\Game\MainMenu</Filter>
     </ClCompile>
-    <ClCompile Include="Game\source\BattleScene\BattleScene.cpp">
-      <Filter>Source Files\Game\BattleScene</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\source\BattleScene\Enemy.cpp">
-      <Filter>Source Files\Game\BattleScene</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\source\Common\UI\LoadSceneButton.cpp">
+    <ClCompile Include="Game\source\Common\UI\LoadLevelButton.cpp">
       <Filter>Source Files\Game\Common\UI</Filter>
     </ClCompile>
     <ClCompile Include="Engine\source\Core\Random.cpp">
       <Filter>Source Files\Engine\Core</Filter>
     </ClCompile>
-    <ClCompile Include="Game\source\BattleScene\EnemySpawner.cpp">
-      <Filter>Source Files\Game\BattleScene</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\source\Scene\SceneGraph\SceneGraph.cpp">
-      <Filter>Source Files\Engine\Scene\SceneGraph</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\source\Scene\SceneGraph\SceneNode.cpp">
-      <Filter>Source Files\Engine\Scene\SceneGraph</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\source\Scene\ObjectCollections\ActorCollection.cpp">
-      <Filter>Source Files\Engine\Scene\ObjectCollections</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\source\Scene\ObjectCollections\ComponentCollection.cpp">
-      <Filter>Source Files\Engine\Scene\ObjectCollections</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\source\Scene\ObjectCollections\WidgetCollection.cpp">
-      <Filter>Source Files\Engine\Scene\ObjectCollections</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\include\Components\SceneComponent.cpp">
       <Filter>Source Files\Engine\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\source\Scene\Object.cpp">
-      <Filter>Source Files\Engine\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\source\Scene\SceneSubsystem.cpp">
-      <Filter>Source Files\Engine\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\source\Scene\ObjectCollections\SceneSubsystemCollection.cpp">
-      <Filter>Source Files\Engine\Scene\ObjectCollections</Filter>
     </ClCompile>
     <ClCompile Include="Engine\source\UI\UserWidget.cpp">
       <Filter>Source Files\Engine\UI</Filter>
     </ClCompile>
-    <ClCompile Include="Game\include\BattleScene\BattleManager.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Engine\source\World\Actor.cpp">
+      <Filter>Source Files\Engine\World</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\source\World\Level.cpp">
+      <Filter>Source Files\Engine\World</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\source\World\PlayerController.cpp">
+      <Filter>Source Files\Engine\World</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\source\World\World.cpp">
+      <Filter>Source Files\Engine\World</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\source\World\Systems\UISystem.cpp">
+      <Filter>Source Files\Engine\World\Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\source\World\ObjectCollections\ActorCollection.cpp">
+      <Filter>Source Files\Engine\World\ObjectCollections</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\source\World\ObjectCollections\ComponentCollection.cpp">
+      <Filter>Source Files\Engine\World\ObjectCollections</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\source\World\ObjectCollections\LevelSubsystemCollection.cpp">
+      <Filter>Source Files\Engine\World\ObjectCollections</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\source\World\ObjectCollections\WidgetCollection.cpp">
+      <Filter>Source Files\Engine\World\ObjectCollections</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\source\World\SpatialGraph\SceneGraph.cpp">
+      <Filter>Source Files\Engine\World\SpatialGraph</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\source\World\SpatialGraph\SceneNode.cpp">
+      <Filter>Source Files\Engine\World\SpatialGraph</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\include\BattleLevel\BattleManager.cpp">
+      <Filter>Header Files\Game\BattleLevel</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\source\BattleLevel\BattleLevel.cpp">
+      <Filter>Source Files\Game\BattleLevel</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\source\BattleLevel\Enemy.cpp">
+      <Filter>Source Files\Game\BattleLevel</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\source\BattleLevel\EnemySpawner.cpp">
+      <Filter>Source Files\Game\BattleLevel</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -254,12 +257,6 @@
     <ClInclude Include="Engine\include\Components\ActorComponent.h">
       <Filter>Header Files\Engine\Components</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\include\Scene\Actor.h">
-      <Filter>Header Files\Engine\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\include\Scene\Scene.h">
-      <Filter>Header Files\Engine\Scene</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\include\UI\Image.h">
       <Filter>Header Files\Engine\UI</Filter>
     </ClInclude>
@@ -271,9 +268,6 @@
     </ClInclude>
     <ClInclude Include="Engine\include\UI\Text.h">
       <Filter>Header Files\Engine\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\include\Scene\SceneManager.h">
-      <Filter>Header Files\Engine\Scene</Filter>
     </ClInclude>
     <ClInclude Include="Engine\include\Components\Camera\CameraComponent.h">
       <Filter>Header Files\Engine\Components\Camera</Filter>
@@ -299,71 +293,26 @@
     <ClInclude Include="Engine\include\Core\Window.h">
       <Filter>Header Files\Engine\Core</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\include\Scene\PlayerController.h">
-      <Filter>Header Files\Engine\Scene</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\include\UI\Button.h">
       <Filter>Header Files\Engine\UI</Filter>
     </ClInclude>
     <ClInclude Include="Engine\include\Core\Inputs\InputManager.h">
       <Filter>Header Files\Engine\Core\Inputs</Filter>
     </ClInclude>
-    <ClInclude Include="Game\include\MainMenu\MainMenuScene.h">
+    <ClInclude Include="Game\include\MainMenu\MainMenuLevel.h">
       <Filter>Header Files\Game\MainMenu</Filter>
     </ClInclude>
     <ClInclude Include="Engine\include\Core\Delegate\Delegate.h">
       <Filter>Header Files\Engine\Core\Delegate</Filter>
     </ClInclude>
-    <ClInclude Include="Game\include\BattleScene\BattleScene.h">
-      <Filter>Header Files\Game\BattleScene</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\include\BattleScene\Enemy.h">
-      <Filter>Header Files\Game\BattleScene</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\include\Common\UI\LoadSceneButton.h">
+    <ClInclude Include="Game\include\Common\UI\LoadLevelButton.h">
       <Filter>Header Files\Game\Common\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\include\BattleScene\EnemySpawner.h">
-      <Filter>Header Files\Game\BattleScene</Filter>
     </ClInclude>
     <ClInclude Include="Engine\include\Core\Random.h">
       <Filter>Header Files\Engine\Core</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\include\Scene\SceneGraph\ISceneNodeOwner.h">
-      <Filter>Header Files\Engine\Scene\SceneGraph</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\include\Scene\SceneGraph\SceneGraph.h">
-      <Filter>Header Files\Engine\Scene\SceneGraph</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\include\Scene\SceneGraph\SceneNode.h">
-      <Filter>Header Files\Engine\Scene\SceneGraph</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\include\Scene\SpawnInfos.h">
-      <Filter>Header Files\Engine\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\include\Scene\ObjectCollections\ActorCollection.h">
-      <Filter>Header Files\Engine\Scene\ObjectCollections</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\include\Scene\ObjectCollections\ComponentCollection.h">
-      <Filter>Header Files\Engine\Scene\ObjectCollections</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\include\Scene\ObjectCollections\ObjectCollection.h">
-      <Filter>Header Files\Engine\Scene\ObjectCollections</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\include\Scene\ObjectCollections\WidgetCollection.h">
-      <Filter>Header Files\Engine\Scene\ObjectCollections</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\include\Components\SceneComponent.h">
       <Filter>Header Files\Engine\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\include\Scene\Object.h">
-      <Filter>Header Files\Engine\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\include\Scene\SceneSubsystem.h">
-      <Filter>Header Files\Engine\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\include\Scene\ObjectCollections\SceneSubsystemCollection.h">
-      <Filter>Header Files\Engine\Scene\ObjectCollections</Filter>
     </ClInclude>
     <ClInclude Include="Engine\include\Rendering\IRenderable.h">
       <Filter>Header Files\Engine\Rendering</Filter>
@@ -374,19 +323,79 @@
     <ClInclude Include="Engine\include\UI\UserWidget.h">
       <Filter>Header Files\Engine\UI</Filter>
     </ClInclude>
-    <ClInclude Include="Game\include\BattleScene\BattleManager.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Engine\include\World\Actor.h">
+      <Filter>Header Files\Engine\World</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\include\World\Level.h">
+      <Filter>Header Files\Engine\World</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\include\World\Object.h">
+      <Filter>Header Files\Engine\World</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\include\World\PlayerController.h">
+      <Filter>Header Files\Engine\World</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\include\World\LevelSubsystem.h">
+      <Filter>Header Files\Engine\World</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\include\World\SpawnInfos.h">
+      <Filter>Header Files\Engine\World</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\include\World\World.h">
+      <Filter>Header Files\Engine\World</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\include\World\Systems\UISystem.h">
+      <Filter>Header Files\Engine\World\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\include\World\ObjectCollections\ActorCollection.h">
+      <Filter>Header Files\Engine\World\ObjectCollections</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\include\World\ObjectCollections\ComponentCollection.h">
+      <Filter>Header Files\Engine\World\ObjectCollections</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\include\World\ObjectCollections\ObjectCollection.h">
+      <Filter>Header Files\Engine\World\ObjectCollections</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\include\World\ObjectCollections\LevelSubsystemCollection.h">
+      <Filter>Header Files\Engine\World\ObjectCollections</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\include\World\ObjectCollections\WidgetCollection.h">
+      <Filter>Header Files\Engine\World\ObjectCollections</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\include\World\SpatialGraph\ISpatialNodeOwner.h">
+      <Filter>Header Files\Engine\World\SpatialGraph</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\include\World\SpatialGraph\SpatialGraph.h">
+      <Filter>Header Files\Engine\World\SpatialGraph</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\include\World\SpatialGraph\SpatialNode.h">
+      <Filter>Header Files\Engine\World\SpatialGraph</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\include\BattleLevel\BattleLevel.h">
+      <Filter>Header Files\Game\BattleLevel</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\include\BattleLevel\BattleManager.h">
+      <Filter>Header Files\Game\BattleLevel</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\include\BattleLevel\Enemy.h">
+      <Filter>Header Files\Game\BattleLevel</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\include\BattleLevel\EnemySpawner.h">
+      <Filter>Header Files\Game\BattleLevel</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Engine\include\Scene\Scene.inl">
-      <Filter>Header Files\Engine\Scene</Filter>
-    </None>
-    <None Include="Engine\include\Scene\Actor.inl">
-      <Filter>Header Files\Engine\Scene</Filter>
-    </None>
     <None Include="Engine\include\UI\UserWidget.inl">
       <Filter>Header Files\Engine\UI</Filter>
+    </None>
+    <None Include="Engine\include\World\Actor.inl">
+      <Filter>Header Files\Engine\World</Filter>
+    </None>
+    <None Include="Engine\include\World\Level.inl">
+      <Filter>Header Files\Engine\World</Filter>
+    </None>
+    <None Include="Engine\include\World\Systems\UISystem.inl">
+      <Filter>Header Files\Engine\World\Systems</Filter>
     </None>
   </ItemGroup>
 </Project>

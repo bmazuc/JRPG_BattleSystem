@@ -4,6 +4,20 @@ Some can be done later in the project. Others will be over-engineering for this 
 
 
 
+\#Persistance
+
+* Add object living through levels
+
+  * WorldSubsystems
+  * Persistent UI
+
+    * Add another widget collection and scene graph inside UISystem
+
+      * Prevent Persistant and level UI to be hierarchicaly linked
+    * Add UILayer (Persistant and Level) inside SpawnOptions
+
+
+
 \#Scene
 
 * Add destroy with timer for :

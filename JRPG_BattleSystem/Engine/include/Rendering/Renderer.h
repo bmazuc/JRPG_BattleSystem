@@ -2,12 +2,12 @@
 #define __RENDERER_H_INCLUDED__
 
 class CameraComponent;
-class Scene;
 class Texture;
 class Image;
 class Material;
 class Text;
 class Shader;
+class World;
 
 #include "RenderQueue.h"
 
@@ -32,7 +32,7 @@ public:
 	 */
 	void Init();
 
-	void RenderScene(Scene* scene, glm::vec2 viewportBaseResolution, glm::vec2 windowSize);
+	void RenderWorld(World* world, glm::vec2 viewportBaseResolution, glm::vec2 windowSize);
 	
 private:
 	/**
@@ -40,7 +40,7 @@ private:
 	 */
 	void InitRenderData();
 
-	void RenderWorld(RenderBucket& buckets, CameraComponent* camera, glm::vec2 viewportBaseResolution);
+	void RenderScene(RenderBucket& buckets, CameraComponent* camera, glm::vec2 viewportBaseResolution);
 	void RenderUI(std::vector<RenderItem*>& uiItems, glm::vec2 windowSize);
 
 	/**

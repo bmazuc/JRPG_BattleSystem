@@ -1,6 +1,5 @@
 #include "Rendering/Renderer.h"
-#include "Scene/Scene.h"
-#include "Scene/Actor.h"
+#include "World/Actor.h"
 #include "UI/Widget.h"
 #include "Components/Camera/CameraComponent.h"
 
@@ -16,6 +15,8 @@
 #include "Graphics/Font.h"
 #include "UI/Text.h"
 #include "Core/Resource/ResourceManager.h"
+
+#include "World/World.h"
 
 void Renderer::Init()
 {
@@ -69,18 +70,18 @@ void Renderer::InitRenderData()
     glBindVertexArray(0);
 }
 
-void Renderer::RenderScene(Scene* scene, glm::vec2 viewportBaseResolution, glm::vec2 windowSize)
+void Renderer::RenderWorld(World* world, glm::vec2 viewportBaseResolution, glm::vec2 windowSize)
 {
     RenderQueue queue;
-    scene->BuildRenderQueue(queue);
+    world->BuildRenderQueue(queue);
 
-    RenderWorld(queue.worldBuckets, scene->GetActiveCamera(), viewportBaseResolution);
+    RenderScene(queue.worldBuckets, world->GetActiveLevel()->GetActiveCamera(), viewportBaseResolution);
     RenderUI(queue.uiItems, windowSize);
 
     queue.Clear();
 }
 
-void Renderer::RenderWorld(RenderBucket& buckets, CameraComponent* camera, glm::vec2 viewportBaseResolution)
+void Renderer::RenderScene(RenderBucket& buckets, CameraComponent* camera, glm::vec2 viewportBaseResolution)
 {
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);

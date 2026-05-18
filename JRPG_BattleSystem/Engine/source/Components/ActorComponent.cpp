@@ -1,5 +1,5 @@
 #include "Components/ActorComponent.h"
-#include "Scene/Actor.h"
+#include "World/Actor.h"
 
 #include <glm/ext/matrix_transform.hpp>
 #include <SDL3/SDL.h>

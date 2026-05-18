@@ -2,8 +2,8 @@
 //
 
 #include "Core/Engine.h"
-#include "MainMenu/MainMenuScene.h"
-#include "BattleScene/BattleScene.h"
+#include "MainMenu/MainMenuLevel.h"
+#include "BattleLevel/BattleLevel.h"
 
 #ifdef _DEBUG
 #include <crtdbg.h>
@@ -23,11 +23,11 @@ int main()
 
     if (engine->Start(config))
     {
-        if (SceneManager* sceneManager = engine->GetSceneManager())
+        if (World* world = engine->GetWorld())
         {
-            sceneManager->AddScene<MainMenuScene>("mainMenu");
-            sceneManager->AddScene<BattleScene>("battleScene");
-            sceneManager->SetDefaultScene("mainMenu");
+            world->AddLevel<MainMenuLevel>("mainMenu");
+            world->AddLevel<BattleLevel>("battleLevel");
+            world->SetDefaultLevel("mainMenu");
         }
         engine->Run();
     }

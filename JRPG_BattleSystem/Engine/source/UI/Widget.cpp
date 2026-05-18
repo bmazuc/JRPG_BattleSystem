@@ -1,5 +1,5 @@
 #include "UI/Widget.h"
-#include "Scene/Scene.h"
+#include "World/Systems/UISystem.h"
 
 #include <glm/ext/matrix_transform.hpp>
 #include <SDL3/SDL.h>
@@ -9,22 +9,22 @@ Widget::Widget()
 	node.SetOwner(this);
 }
 
-void Widget::SetScene(Scene* newScene)
+void Widget::SetUISystem(UISystem* newUISystem)
 { 
-	scene = newScene;
+	uiSystem = newUISystem;
 
-	if (scene)
+	if (uiSystem)
 	{
 		if (!GetParent())
 		{
-			scene->GetSceneGraph()->AddNode(GetSceneNode());
+			uiSystem->GetUIGraph()->AddNode(GetSceneNode());
 		}
 	}
 }
 
 Widget* Widget::GetParent()
 {
-	SceneNode* parent = node.GetParent();
+	SpatialNode* parent = node.GetParent();
 	if (parent)
 	{
 		return dynamic_cast<Widget*>(parent->GetOwner());
@@ -34,7 +34,7 @@ Widget* Widget::GetParent()
 
 const Widget* Widget::GetParent() const
 {
-	const SceneNode* parent = node.GetParent();
+	const SpatialNode* parent = node.GetParent();
 	if (parent)
 	{
 		return dynamic_cast<const Widget*>(parent->GetOwner());
@@ -46,11 +46,11 @@ void Widget::SetParent(Widget* element)
 {
 	if (!GetParent() && element)
 	{
-		scene->GetSceneGraph()->RemoveNode(GetSceneNode());
+		uiSystem->GetUIGraph()->RemoveNode(GetSceneNode());
 	}
 	else if (GetParent() && !element)
 	{
-		scene->GetSceneGraph()->AddNode(GetSceneNode());
+		uiSystem->GetUIGraph()->AddNode(GetSceneNode());
 	}
 
 	node.SetParent(element ? element->GetSceneNode() : nullptr);
@@ -58,10 +58,10 @@ void Widget::SetParent(Widget* element)
 
 std::vector<Widget*> Widget::GetChildren()
 {
-	std::vector<SceneNode*> nodeChildren = node.GetChildren();
+	std::vector<SpatialNode*> nodeChildren = node.GetChildren();
 	std::vector<Widget*> children;
 
-	for (SceneNode* child : nodeChildren)
+	for (SpatialNode* child : nodeChildren)
 	{
 		if (Widget* component = dynamic_cast<Widget*>(child->GetOwner()))
 		{
@@ -80,7 +80,7 @@ void Widget::UpdateTransform()
 void Widget::DetachFromHierarchy()
 {
 	node.DetachFromHierarchy();
-	scene->GetSceneGraph()->RemoveNode(&node);
+	uiSystem->GetUIGraph()->RemoveNode(&node);
 }
 
 void Widget::SetLocalPosition(glm::vec2 position)
@@ -123,9 +123,9 @@ void Widget::MarkForDestruction()
 	if (!isPendingDestroy)
 	{
 		isPendingDestroy = true;
-		if (scene)
+		if (uiSystem)
 		{
-			scene->RegisterToDestroy(this);
+			uiSystem->RegisterToDestroy(this);
 		}
 
 		std::vector<Widget*> children = GetChildren();
@@ -138,12 +138,12 @@ void Widget::MarkForDestruction()
 
 Widget* Widget::GetRoot()
 {
-	SceneNode* root = node.GetRoot();
+	SpatialNode* root = node.GetRoot();
 	return root ? dynamic_cast<Widget*>(root->GetOwner()) : nullptr;
 }
 
 const Widget* Widget::GetRoot() const
 {
-	const SceneNode* root = node.GetRoot();
+	const SpatialNode* root = node.GetRoot();
 	return root ? dynamic_cast<const Widget*>(root->GetOwner()) : nullptr;
 }

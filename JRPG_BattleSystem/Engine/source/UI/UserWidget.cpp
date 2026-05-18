@@ -1,5 +1,6 @@
 #include "UI/UserWidget.h"
-#include "Scene/Scene.h"
+#include "World/Systems/UISystem.h"
+
 #include <SDL3/SDL.h>
 
 void UserWidget::InternalSpawnWidget(Widget* widget, std::string name, const UISpawnInfo& spawnInfo)
@@ -19,7 +20,7 @@ void UserWidget::InternalSpawnWidget(Widget* widget, std::string name, const UIS
 		}
 	}
 
-	widget->SetScene(scene);
+	widget->SetUISystem(uiSystem);
 	widget->SetParent(parent);
 
 	if (spawnInfo.transformSpace == TransformSpace::World)
@@ -35,5 +36,5 @@ void UserWidget::InternalSpawnWidget(Widget* widget, std::string name, const UIS
 		widget->SetLocalScale(spawnInfo.scale);
 	}
 
-	scene->AddWidget(widget);
+	uiSystem->AddWidget(widget);
 }

@@ -12,7 +12,7 @@ void SceneComponent::BeginDestroy()
 
 SceneComponent* SceneComponent::GetParent()
 {
-	SceneNode* parent = node.GetParent();
+	SpatialNode* parent = node.GetParent();
 	if (parent)
 	{
 		return dynamic_cast<SceneComponent*>(parent->GetOwner());
@@ -22,7 +22,7 @@ SceneComponent* SceneComponent::GetParent()
 
 const SceneComponent* SceneComponent::GetParent() const
 {
-	const SceneNode* parent = node.GetParent();
+	const SpatialNode* parent = node.GetParent();
 	if (parent)
 	{
 		return dynamic_cast<const SceneComponent*>(parent->GetOwner());
@@ -44,10 +44,10 @@ void SceneComponent::SetParent(SceneComponent* component)
 
 std::vector<SceneComponent*> SceneComponent::GetChildren()
 {
-	std::vector<SceneNode*> nodeChildren = node.GetChildren();
+	std::vector<SpatialNode*> nodeChildren = node.GetChildren();
 	std::vector<SceneComponent*> children;
 
-	for (SceneNode* child : nodeChildren)
+	for (SpatialNode* child : nodeChildren)
 	{
 		if (SceneComponent* component = dynamic_cast<SceneComponent*>(child->GetOwner()))
 		{

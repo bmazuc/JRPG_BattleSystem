@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __RENDER_QUEUE_H_INCLUDED__
+#define __RENDER_QUEUE_H_INCLUDED__
 
 #include <map>
 #include <glm/vec2.hpp>
@@ -87,3 +88,5 @@ public:
 
 	std::vector<RenderItem*> uiItems;
 };
+
+#endif // __RENDER_QUEUE_H_INCLUDED__
