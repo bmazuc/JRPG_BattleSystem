@@ -23,5 +23,5 @@ void ComponentCollection::InitObject(ActorComponent* component)
 
 void ComponentCollection::BeginDestroyObject(ActorComponent* component)
 {
-    component->BeginDestroy();
+    component->NativeBeginDestroy();
 }

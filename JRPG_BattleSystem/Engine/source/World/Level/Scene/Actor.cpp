@@ -149,9 +149,10 @@ void Actor::SetWorldScale(glm::vec2 scale)
 	}
 }
 
-void Actor::BeginDestroy()
+void Actor::NativeBeginDestroy()
 {
 	DetachFromHierarchy();
+	BeginDestroy();
 }
 
 void Actor::MarkForDestruction(bool markChildren)

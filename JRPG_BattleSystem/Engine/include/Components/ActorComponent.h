@@ -23,6 +23,8 @@ public:
 	 */
 	virtual void Update(float deltaTime) {}
 
+	virtual void NativeBeginDestroy();
+
 	/**
 	 * Mark a component for destruction.
 	 */

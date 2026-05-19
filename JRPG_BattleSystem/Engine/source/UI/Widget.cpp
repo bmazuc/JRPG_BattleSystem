@@ -113,9 +113,10 @@ void Widget::SetWorldScale(glm::vec2 scale)
 	node.SetWorldScale(scale);
 }
 
-void Widget::BeginDestroy()
+void Widget::NativeBeginDestroy()
 {
 	DetachFromHierarchy();
+	BeginDestroy();
 }
 
 void Widget::MarkForDestruction()

@@ -38,7 +38,7 @@ public:
 	/**
 	 * Called before object destruction.
 	 */
-	void BeginDestroy() override;
+	void NativeBeginDestroy();
 
 	/**
 	 * Marks this actor for destruction.

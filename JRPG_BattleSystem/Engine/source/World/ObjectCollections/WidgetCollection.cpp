@@ -33,5 +33,5 @@ void WidgetCollection::InitObject(Widget* widget)
 
 void WidgetCollection::BeginDestroyObject(Widget* widget)
 {
-    widget->BeginDestroy();
+    widget->NativeBeginDestroy();
 }

@@ -5,9 +5,10 @@ SceneComponent::SceneComponent()
 	node.SetOwner(this);
 }
 
-void SceneComponent::BeginDestroy()
+void SceneComponent::NativeBeginDestroy()
 {
 	DetachFromHierarchy();
+	ActorComponent::NativeBeginDestroy();
 }
 
 SceneComponent* SceneComponent::GetParent()

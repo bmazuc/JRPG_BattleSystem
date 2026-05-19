@@ -51,5 +51,5 @@ void ActorCollection::InitObject(Actor* actor)
 
 void ActorCollection::BeginDestroyObject(Actor* actor)
 {
-    actor->BeginDestroy();
+    actor->NativeBeginDestroy();
 }

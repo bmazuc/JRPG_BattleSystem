@@ -15,7 +15,7 @@ public:
 	/**
 	 * Called before object destruction.
 	 */
-	void BeginDestroy() override;
+	void NativeBeginDestroy() final;
 
 	bool HasParent() { return node.HasParent(); }
 	void SetParent(SceneComponent* component);
