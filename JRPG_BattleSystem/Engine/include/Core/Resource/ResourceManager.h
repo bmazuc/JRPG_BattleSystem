@@ -1,12 +1,14 @@
 #ifndef __RESOURCE_MANAGER_H_INCLUDED__
 #define __RESOURCE_MANAGER_H_INCLUDED__
 
-#include "Graphics/Texture.h"
-#include "Rendering/Shader.h"
-#include "Graphics/Font.h"
-
 #include <map>
 #include <string>
+#include <ft2build.h>
+#include FT_FREETYPE_H
+
+class Texture;
+class Shader;
+class Font;
 
 /**
  * Static resource manager responsible for loading and caching assets.

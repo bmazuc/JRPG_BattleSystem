@@ -6,6 +6,7 @@
 #include "Core/Resource/ResourceManager.h"
 #include "Graphics/Font.h"
 #include "Rendering/Material.h"
+#include "Graphics/Texture.h"
 #include "Rendering/Shader.h"
 #include "UI/Text.h"
 #include "World/World.h"

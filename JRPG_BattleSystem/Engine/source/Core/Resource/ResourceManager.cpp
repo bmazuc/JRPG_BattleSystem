@@ -1,5 +1,9 @@
 ﻿#include "Core/Resource/ResourceManager.h"
 
+#include "Graphics/Texture.h"
+#include "Rendering/Shader.h"
+#include "Graphics/Font.h"
+
 #include <stdexcept>
 
 std::map<std::string, Shader*> ResourceManager::shaders;
