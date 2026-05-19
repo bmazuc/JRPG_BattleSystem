@@ -234,10 +234,10 @@
     <ClCompile Include="Engine\source\World\ObjectCollections\WidgetCollection.cpp">
       <Filter>Source Files\Engine\World\ObjectCollections</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\source\World\SpatialGraph\SceneGraph.cpp">
+    <ClCompile Include="Engine\source\World\SpatialGraph\SpatialGraph.cpp">
       <Filter>Source Files\Engine\World\SpatialGraph</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\source\World\SpatialGraph\SceneNode.cpp">
+    <ClCompile Include="Engine\source\World\SpatialGraph\SpatialNode.cpp">
       <Filter>Source Files\Engine\World\SpatialGraph</Filter>
     </ClCompile>
     <ClCompile Include="Game\include\BattleLevel\BattleManager.cpp">
@@ -408,9 +408,6 @@
     </None>
     <None Include="Engine\include\World\Systems\UISystem.inl">
       <Filter>Header Files\Engine\World\Systems</Filter>
-    </None>
-    <None Include="Engine\include\World\Scene.inl">
-      <Filter>Header Files\Engine\World</Filter>
     </None>
     <None Include="Engine\include\World\Level\Level.inl">
       <Filter>Header Files\Engine\World\Level</Filter>

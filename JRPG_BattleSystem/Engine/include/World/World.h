@@ -1,5 +1,5 @@
-#ifndef __SCENE_MANAGER_H_INCLUDED__
-#define __SCENE_MANAGER_H_INCLUDED__
+#ifndef __WORLD_H_INCLUDED__
+#define __WORLD_H_INCLUDED__
 
 #include "World/Level/Level.h"
 #include "World/Systems/UISystem.h"
@@ -125,4 +125,4 @@ private:
 };
 
 
-#endif // __SCENE_MANAGER_H_INCLUDED__
+#endif // __WORLD_H_INCLUDED__

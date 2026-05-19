@@ -162,8 +162,8 @@
     <ClCompile Include="Engine\source\World\ObjectCollections\LevelSubsystemCollection.cpp" />
     <ClCompile Include="Engine\source\World\ObjectCollections\WidgetCollection.cpp" />
     <ClCompile Include="Engine\source\World\PlayerController.cpp" />
-    <ClCompile Include="Engine\source\World\SpatialGraph\SceneGraph.cpp" />
-    <ClCompile Include="Engine\source\World\SpatialGraph\SceneNode.cpp" />
+    <ClCompile Include="Engine\source\World\SpatialGraph\SpatialGraph.cpp" />
+    <ClCompile Include="Engine\source\World\SpatialGraph\SpatialNode.cpp" />
     <ClCompile Include="Engine\source\World\Systems\UISystem.cpp" />
     <ClCompile Include="Engine\source\World\World.cpp" />
     <ClCompile Include="Game\include\BattleLevel\BattleManager.cpp" />
@@ -227,7 +227,6 @@
     <None Include="Engine\include\World\Level\Level.inl" />
     <None Include="Engine\include\World\Level\Scene\Actor.inl" />
     <None Include="Engine\include\World\Level\Scene\Scene.inl" />
-    <None Include="Engine\include\World\Scene.inl" />
     <None Include="Engine\include\World\Systems\UISystem.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
