@@ -1,4 +1,4 @@
-#include "World/SceneGraph/SpatialGraph.h"
+#include "World/SpatialGraph/SpatialGraph.h"
 
 void SpatialGraph::UpdateTransforms()
 {

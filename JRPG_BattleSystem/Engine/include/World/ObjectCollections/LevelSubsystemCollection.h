@@ -2,7 +2,7 @@
 #define __LEVEL_SUBSYSTEM_COLLECTION_H_INCLUDED__
 
 #include "ObjectCollection.h"
-#include "World/LevelSubsystem.h"
+#include "World/Level/LevelSubsystem.h"
 
 /**
  * Collection specialized for LevelSubsystem.

@@ -133,6 +133,18 @@
     <Filter Include="Source Files\Game\BattleLevel">
       <UniqueIdentifier>{b40526ab-107f-4083-93f2-af8e3f7b2b5c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Engine\World\Level">
+      <UniqueIdentifier>{17c64175-12bc-454a-b4b8-5cbe75224d5c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\World\Level\Scene">
+      <UniqueIdentifier>{3ac6b553-5479-4b7c-a870-df9eefd303ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\World\Level">
+      <UniqueIdentifier>{29569dc9-e470-4f19-806b-adcc2685efb4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\World\Level\Scene">
+      <UniqueIdentifier>{1462d54a-aa31-47e0-ae1b-56e15cb64c61}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -201,12 +213,6 @@
     <ClCompile Include="Engine\source\UI\UserWidget.cpp">
       <Filter>Source Files\Engine\UI</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\source\World\Actor.cpp">
-      <Filter>Source Files\Engine\World</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\source\World\Level.cpp">
-      <Filter>Source Files\Engine\World</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\source\World\PlayerController.cpp">
       <Filter>Source Files\Engine\World</Filter>
     </ClCompile>
@@ -245,6 +251,15 @@
     </ClCompile>
     <ClCompile Include="Game\source\BattleLevel\EnemySpawner.cpp">
       <Filter>Source Files\Game\BattleLevel</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\source\World\Level\Scene\Actor.cpp">
+      <Filter>Source Files\Engine\World\Level\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\source\World\Level\Scene\Scene.cpp">
+      <Filter>Source Files\Engine\World\Level\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\source\World\Level\Level.cpp">
+      <Filter>Source Files\Engine\World\Level</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -323,19 +338,10 @@
     <ClInclude Include="Engine\include\UI\UserWidget.h">
       <Filter>Header Files\Engine\UI</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\include\World\Actor.h">
-      <Filter>Header Files\Engine\World</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\include\World\Level.h">
-      <Filter>Header Files\Engine\World</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\include\World\Object.h">
       <Filter>Header Files\Engine\World</Filter>
     </ClInclude>
     <ClInclude Include="Engine\include\World\PlayerController.h">
-      <Filter>Header Files\Engine\World</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\include\World\LevelSubsystem.h">
       <Filter>Header Files\Engine\World</Filter>
     </ClInclude>
     <ClInclude Include="Engine\include\World\SpawnInfos.h">
@@ -383,19 +389,37 @@
     <ClInclude Include="Game\include\BattleLevel\EnemySpawner.h">
       <Filter>Header Files\Game\BattleLevel</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\include\World\Level\Level.h">
+      <Filter>Header Files\Engine\World\Level</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\include\World\Level\LevelSubsystem.h">
+      <Filter>Header Files\Engine\World\Level</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\include\World\Level\Scene\Actor.h">
+      <Filter>Header Files\Engine\World\Level\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\include\World\Level\Scene\Scene.h">
+      <Filter>Header Files\Engine\World\Level\Scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\include\UI\UserWidget.inl">
       <Filter>Header Files\Engine\UI</Filter>
     </None>
-    <None Include="Engine\include\World\Actor.inl">
-      <Filter>Header Files\Engine\World</Filter>
-    </None>
-    <None Include="Engine\include\World\Level.inl">
-      <Filter>Header Files\Engine\World</Filter>
-    </None>
     <None Include="Engine\include\World\Systems\UISystem.inl">
       <Filter>Header Files\Engine\World\Systems</Filter>
+    </None>
+    <None Include="Engine\include\World\Scene.inl">
+      <Filter>Header Files\Engine\World</Filter>
+    </None>
+    <None Include="Engine\include\World\Level\Level.inl">
+      <Filter>Header Files\Engine\World\Level</Filter>
+    </None>
+    <None Include="Engine\include\World\Level\Scene\Actor.inl">
+      <Filter>Header Files\Engine\World\Level\Scene</Filter>
+    </None>
+    <None Include="Engine\include\World\Level\Scene\Scene.inl">
+      <Filter>Header Files\Engine\World\Level\Scene</Filter>
     </None>
   </ItemGroup>
 </Project>

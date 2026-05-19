@@ -1,7 +1,7 @@
 #ifndef __ENEMY_H_INCLUDED__
 #define __ENEMY_H_INCLUDED__
 
-#include "World/Actor.h"
+#include "World/Level/Scene/Actor.h"
 #include <string>
 #include <glm/vec3.hpp>
 #include "Core/Delegate/Delegate.h"

@@ -1,8 +1,5 @@
 #include "Components/ActorComponent.h"
-#include "World/Actor.h"
-
-#include <glm/ext/matrix_transform.hpp>
-#include <SDL3/SDL.h>
+#include "World/Level/Scene/Actor.h"
 
 void ActorComponent::MarkForDestruction()
 { 

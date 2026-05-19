@@ -1,18 +1,15 @@
-﻿#ifndef __SCENE_H_INCLUDED__
-#define __SCENE_H_INCLUDED__
+﻿#ifndef __LEVEL_H_INCLUDED__
+#define __LEVEL_H_INCLUDED__
 
 #include <string>
 #include <vector>
 #include <glm/vec2.hpp>
-#include "World/Actor.h"
+#include "World/Level/Scene/Actor.h"
 #include "UI/Widget.h"
-#include "ObjectCollections/ActorCollection.h"
-#include "ObjectCollections/LevelSubsystemCollection.h"
-#include "SpatialGraph/SpatialGraph.h"
+#include "World/ObjectCollections/LevelSubsystemCollection.h"
 #include "World/SpawnInfos.h"
-#include "UI/UserWidget.h"
+#include "World/Level/Scene/Scene.h"
 
-class CameraComponent;
 class Shader;
 class Texture;
 class PlayerController;
@@ -68,49 +65,14 @@ public:
 	void Update(float deltaTime);
 	void FlushPendingDestroys();
 
-	CameraComponent* GetActiveCamera() { return activeCamera; }
-	const CameraComponent* GetActiveCamera() const { return activeCamera; }
-	
-	/**
-	 * Sets the camera used for rendering the world.
-	 */
-	void SetActiveCamera(CameraComponent* camera) { activeCamera = camera; }
-	
-	/**
-	 * Returns actor internal raw container.
-	 */
-	std::vector<Actor*> GetActors() { return actorsCollection.GetCollection(); }
-	const std::vector<Actor*> GetActors() const { return actorsCollection.GetCollection(); }
+	Scene* GetScene() { return &scene; }
+	const Scene* GetScene() const { return &scene; }
 
 	/**
 	 * Returns subsystems internal raw container.
 	 */
 	std::vector<LevelSubsystem*> GetSubsystems() { return sceneSubsystemCollection.GetCollection(); }
 	const std::vector<LevelSubsystem*> GetSubsystems() const { return sceneSubsystemCollection.GetCollection(); }
-
-	SpatialGraph* GetSceneGraph() { return &graph; }
-	const SpatialGraph* GetSceneGraph() const { return &graph; }
-
-	template<typename T, typename... Args>
-	T* SpawnActor(std::string name, const ActorSpawnInfo& spawnInfo, Args&&... args);
-
-	/**
-	 * Retrieves first actor by name and type.
-	 */
-	template<typename T>
-	T* GetActor(std::string name);
-
-	template<typename T>
-	const T* GetActor(std::string name) const;
-
-	/**
-	 * Retrieves first actor matching type.
-	 */
-	template<typename T>
-	T* GetActor();
-
-	template<typename T>
-	const T* GetActor() const;
 
 	template<typename T, typename... Args>
 	T* AddSubsystem(std::string name, Args&&... args);
@@ -133,18 +95,7 @@ public:
 	template<typename T>
 	const T* GetSubsystem() const;
 
-	/**
-	 * Destruction requests
-	 */
-
-	void RegisterToDestroy(Actor* actor);
-
-	glm::vec2 ScreenToWorld(glm::vec2 screenPos);
-
-	void BuildRenderQueue(RenderQueue& queue)
-	{
-		graph.BuildRenderQueue(queue);
-	}
+	void BuildRenderQueue(RenderQueue& queue);
 
 	void SetWorld(World* newWorld) { world = newWorld; }
 
@@ -152,19 +103,13 @@ protected:
 	World* world;
 
 private:
-	void InternalSpawnActor(Actor* actor, std::string name, const ActorSpawnInfo& spawnInfo);
-
-	// Camera used for rendering calculations
-	CameraComponent* activeCamera;
+	Scene scene;
 
 	PlayerController* playerController = nullptr;
-	
-	SpatialGraph graph;
 
-	ActorCollection actorsCollection;
 	LevelSubsystemCollection sceneSubsystemCollection;
 };
 
 #include "Level.inl"
 
-#endif // __SCENE_H_INCLUDED__
+#endif // __LEVEL_H_INCLUDED__

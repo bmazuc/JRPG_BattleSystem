@@ -7,7 +7,7 @@
 #include "World/ObjectCollections/ComponentCollection.h"
 #include "World/SpawnInfos.h"
 
-class Level;
+class Scene;
 class PlayerController;
 
 /**
@@ -117,10 +117,10 @@ public:
 	Actor* GetParent();
 	const Actor* GetParent() const;
 
-	Level* GetLevel() { return level; }
-	const Level* GetLevel() const { return level; }
+	Scene* GetScene() { return scene; }
+	const Scene* GetScene() const { return scene; }
 
-	void SetLevel(Level* newLevel);
+	void SetScene(Scene* newScene);
 
 	/*
 	 *	Transform accessor
@@ -143,8 +143,8 @@ public:
 	void SetLocalScale(glm::vec2 scale);
 
 protected:
-	// Level owning this actor.
-	Level* level;
+	// Scene owning this actor.
+	Scene* scene;
 
 private:
 	void InternalSpawnSceneComponent(SceneComponent* component, const SceneComponentSpawnInfo& spawnInfo);

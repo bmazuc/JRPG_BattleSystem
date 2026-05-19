@@ -1,7 +1,7 @@
 #ifndef __BATTLE_LEVEL_H_INCLUDED__
 #define __BATTLE_LEVEL_H_INCLUDED__
 
-#include "World/Level.h"
+#include "World/Level/Level.h"
 
 class BattleLevel : public Level
 {

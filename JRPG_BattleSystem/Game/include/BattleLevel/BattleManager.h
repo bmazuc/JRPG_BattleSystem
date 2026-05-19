@@ -1,7 +1,7 @@
 #ifndef __BATTLE_MANAGER_H_INCLUDED__
 #define __BATTLE_MANAGER_H_INCLUDED__
 
-#include "World\LevelSubsystem.h"
+#include "World/Level/LevelSubsystem.h"
 
 class EnemySpawner;
 
@@ -17,7 +17,7 @@ private:
 	void OnEnemyDeath();
 
 	EnemySpawner* enemySpawner;
-	unsigned int aliveEnemiesCount = 0;
+	size_t aliveEnemiesCount = 0;
 };
 
 #endif // __BATTLE_MANAGER_H_INCLUDED__

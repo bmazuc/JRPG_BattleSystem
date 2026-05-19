@@ -30,10 +30,10 @@ public:
 	void SetName(std::string newName) { name = newName; };
 	std::string GetName() const { return name; }
 
-	Level* GetLevel() { return level; }
-	const Level* GetLevel() const { return level; }
+	Level* GetScene() { return level; }
+	const Level* GetScene() const { return level; }
 
-	void SetLevel(Level* newScene) { level = newScene; }
+	void SetScene(Level* newScene) { level = newScene; }
 
 protected:
 	// Level owning this actor.

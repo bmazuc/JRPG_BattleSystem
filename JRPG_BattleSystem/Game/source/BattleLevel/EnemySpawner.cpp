@@ -1,6 +1,6 @@
 #include "BattleLevel/EnemySpawner.h"
 #include "Core/Random.h"
-#include "World/Level.h"
+#include "World/Level/Level.h"
 #include "Components/Rendering/SpriteRendererComponent.h"
 
 EnemySpawner::~EnemySpawner()
@@ -18,7 +18,7 @@ std::vector<Enemy*> EnemySpawner::GenerateEnemies()
 			enemyDatas[Random::FromRange(0, (int)enemyDatas.size() - 1)] :
 			EnemyData();
 
-		Enemy* enemy = GetLevel()->SpawnActor<Enemy>("Enemy" + std::to_string(idx), ActorSpawnInfo(), data);
+		Enemy* enemy = GetScene()->SpawnActor<Enemy>("Enemy" + std::to_string(idx), ActorSpawnInfo(), data);
 		spawnedEnemies.push_back(enemy);
 	}
 

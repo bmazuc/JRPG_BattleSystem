@@ -1,5 +1,5 @@
-#include "World/Actor.h"
-#include "World/Level.h"
+#include "World/Level/Scene/Actor.h"
+#include "World/Level/Scene/Scene.h"
 
 Actor::Actor()
 {
@@ -11,15 +11,15 @@ Actor::~Actor()
 	componentsCollection.Clear();
 }
 
-void Actor::SetLevel(Level* newLevel)
+void Actor::SetScene(Scene* newScene)
 {
-	level = newLevel;
+	scene = newScene;
 	
-	if (level)
+	if (scene)
 	{
 		if (!root->GetParent())
 		{
-			level->GetSceneGraph()->AddNode(root->GetSceneNode());
+			scene->GetSceneGraph()->AddNode(root->GetSceneNode());
 		}
 	}
 }
@@ -28,11 +28,11 @@ void Actor::AttachToActor(Actor* actor)
 {
 	if (!root->GetParent() && actor)
 	{
-		level->GetSceneGraph()->RemoveNode(root->GetSceneNode());
+		scene->GetSceneGraph()->RemoveNode(root->GetSceneNode());
 	}
 	else if (root->GetParent() && !actor)
 	{
-		level->GetSceneGraph()->AddNode(root->GetSceneNode());
+		scene->GetSceneGraph()->AddNode(root->GetSceneNode());
 	}
 
 	root->SetParent(actor ? actor->GetRoot() : nullptr);
@@ -159,7 +159,7 @@ void Actor::MarkForDestruction(bool markChildren)
 	if (!isPendingDestroy)
 	{
 		isPendingDestroy = true;
-		level->RegisterToDestroy(this);
+		scene->RegisterToDestroy(this);
 
 		if (markChildren)
 		{
@@ -193,7 +193,7 @@ const Actor* Actor::GetParent() const
 void Actor::DetachFromHierarchy()
 {
 	root->DetachFromHierarchy();
-	level->GetSceneGraph()->RemoveNode(root->GetSceneNode());
+	scene->GetSceneGraph()->RemoveNode(root->GetSceneNode());
 }
 
 void Actor::InternalSpawnSceneComponent(SceneComponent* component, const SceneComponentSpawnInfo& spawnInfo)

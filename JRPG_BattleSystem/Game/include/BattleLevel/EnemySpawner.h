@@ -1,7 +1,7 @@
 #ifndef __ENEMY_SPAWNER_H_INCLUDED__
 #define __ENEMY_SPAWNER_H_INCLUDED__
 
-#include "World/Actor.h"
+#include "World/Level/Scene/Actor.h"
 #include "BattleLevel/Enemy.h"
 #include <vector>
 

@@ -2,7 +2,7 @@
 #define __ACTOR_COLLECTION_INCLUDED__
 
 #include "ObjectCollection.h"
-#include "World/Actor.h"
+#include "World/Level/Scene/Actor.h"
 
 class PlayerController;
 

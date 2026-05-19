@@ -1,7 +1,7 @@
 #ifndef __SCENE_MANAGER_H_INCLUDED__
 #define __SCENE_MANAGER_H_INCLUDED__
 
-#include "World/Level.h"
+#include "World/Level/Level.h"
 #include "World/Systems/UISystem.h"
 #include <string>
 #include <SDL3/SDL.h>

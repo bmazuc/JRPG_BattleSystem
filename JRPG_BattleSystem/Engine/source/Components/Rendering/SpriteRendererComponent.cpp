@@ -1,7 +1,7 @@
 #include "Components/Rendering/SpriteRendererComponent.h"
 #include "Rendering/Material.h"
-#include "World/Actor.h"
-#include "World/Level.h"
+#include "World/Level/Scene/Actor.h"
+#include "World/Level/Level.h"
 
 SpriteRendererComponent::SpriteRendererComponent(std::string textureName, std::string shaderName, glm::vec3 color)
 {
@@ -21,8 +21,8 @@ bool SpriteRendererComponent::IsHovered(glm::vec2 mousePos)
 		return false;
 	}
 
-	Level* level = GetOwner()->GetLevel();
-	glm::vec2 mouseWorldPos = level->ScreenToWorld(mousePos);
+	Scene* scene = GetOwner()->GetScene();
+	glm::vec2 mouseWorldPos = scene->ScreenToWorld(mousePos);
 
 	glm::vec2 bounds = (size * GetWorldScale()) / 2.0f;
 	glm::vec2 worldPos = GetWorldPosition();

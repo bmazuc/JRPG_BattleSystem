@@ -20,7 +20,9 @@ void BattleLevel::CreateLevel()
 {
 	BattleManager* battleManager = AddSubsystem<BattleManager>("battleManager");
 
-	EnemySpawner* spawner = SpawnActor<EnemySpawner>("EnemySpawner", ActorSpawnInfo(nullptr, TransformSpace::World, glm::vec2(320, 240)));
+	Scene* scene = GetScene();
+
+	EnemySpawner* spawner = scene->SpawnActor<EnemySpawner>("EnemySpawner", ActorSpawnInfo(nullptr, TransformSpace::World, glm::vec2(320, 240)));
 	battleManager->SetEnemySpawner(spawner);
 
 	EnemyData redEnemy;
@@ -41,13 +43,13 @@ void BattleLevel::CreateLevel()
 	greenEnemy.color = glm::vec3(0, 1, 0);
 	spawner->AddEnemyData(greenEnemy);
 
-	Actor* background = SpawnActor<Actor>("Background", ActorSpawnInfo(nullptr, TransformSpace::World, glm::vec2(320, 240)));
+	Actor* background = scene->SpawnActor<Actor>("Background", ActorSpawnInfo(nullptr, TransformSpace::World, glm::vec2(320, 240)));
 	SpriteRendererComponent* backgroundSpriteRenderer = background->SpawnSceneComponent<SpriteRendererComponent>("Sprite renderer", SceneComponentSpawnInfo(), "background");
 	backgroundSpriteRenderer->SetSize(glm::vec2(640, 480));
 
-	Actor* cameraObject = SpawnActor<Actor>("MainCamera", ActorSpawnInfo());
+	Actor* cameraObject = scene->SpawnActor<Actor>("MainCamera", ActorSpawnInfo());
 	CameraComponent* camera = cameraObject->SpawnSceneComponent<CameraComponent>("Camera component", SceneComponentSpawnInfo());
-	SetActiveCamera(camera);
+	scene->SetActiveCamera(camera);
 
 	UISystem* uiSystem = world->GetUISystem();
 

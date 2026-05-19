@@ -1,5 +1,5 @@
 #include "Rendering/Renderer.h"
-#include "World/Actor.h"
+#include "World/Level/Scene/Actor.h"
 #include "UI/Widget.h"
 #include "Components/Camera/CameraComponent.h"
 
@@ -75,7 +75,7 @@ void Renderer::RenderWorld(World* world, glm::vec2 viewportBaseResolution, glm::
     RenderQueue queue;
     world->BuildRenderQueue(queue);
 
-    RenderScene(queue.worldBuckets, world->GetActiveLevel()->GetActiveCamera(), viewportBaseResolution);
+    RenderScene(queue.worldBuckets, world->GetActiveLevel()->GetScene()->GetActiveCamera(), viewportBaseResolution);
     RenderUI(queue.uiItems, windowSize);
 
     queue.Clear();
