@@ -1,5 +1,6 @@
 #include "World/Level/Scene/Actor.h"
 #include "World/Level/Scene/Scene.h"
+#include "Components/SceneComponent.h"
 
 Actor::Actor()
 {
@@ -14,7 +15,6 @@ Actor::~Actor()
 void Actor::SetScene(Scene* newScene)
 {
 	scene = newScene;
-	
 	if (scene)
 	{
 		if (!root->GetParent())

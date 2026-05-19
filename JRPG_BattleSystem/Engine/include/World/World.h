@@ -1,17 +1,17 @@
 #ifndef __WORLD_H_INCLUDED__
 #define __WORLD_H_INCLUDED__
 
-#include "World/Level/Level.h"
-#include "World/Systems/UISystem.h"
-#include <string>
+#include "Rendering/RenderQueue.h"
+
 #include <SDL3/SDL.h>
 #include <unordered_map>
 
+class Level;
+class UISystem;
 class InputManager;
 
 /**
  * Defines possible level transition requests.
- * Used by Level to communicate with World without direct coupling.
  */
 enum class LevelRequestType
 {
@@ -20,10 +20,9 @@ enum class LevelRequestType
 };
 
 /**
- * Represents a pending request made by a Level.
- * This is used to decouple Level logic from World execution.
+ * Represents a world transition request.
  */
-struct LevelChangeRequest
+struct LevelTransitionRequest
 {
 	// Type of request (none, change level, etc.)
 	LevelRequestType type = LevelRequestType::None;
@@ -37,6 +36,7 @@ struct LevelChangeRequest
  * - storing all available levels
  * - managing the active level
  * - handling level transitions (load / unload)
+ * - UI system ownership
  */
 class World
 {
@@ -95,9 +95,20 @@ public:
 	UISystem* GetUISystem() { return uiSystem; }
 	const UISystem* GetUISystem() const { return uiSystem; }
 
+	/**
+	 * Builds the final frame render queue for the active world state.
+	 * Includes render data from:
+	 * - the active level
+	 * - UI systems
+	 */
 	void BuildRenderQueue(RenderQueue& queue);
 
-	static void RequestLevelChange(std::string levelName);
+	/**
+	 * Requests a level transition.
+	 * The request is processed at the end of the world update cycle.
+	 * If another transition request already exists, it is replaced.
+	 */
+	static void RequestLevelTransition(std::string levelName);
 
 private:
 	/**
@@ -121,7 +132,7 @@ private:
 
 	UISystem* uiSystem;
 
-	static LevelChangeRequest pendingLevelChangeRequest;
+	static LevelTransitionRequest pendingLevelTransitionRequest;
 };
 
 

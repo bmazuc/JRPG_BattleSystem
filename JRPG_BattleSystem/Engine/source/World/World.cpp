@@ -1,9 +1,8 @@
 #include "World/World.h"
 #include "World/Systems/UISystem.h"
+#include "World/Level/Level.h"
 
-#include <SDL3/SDL.h>
-
-LevelChangeRequest World::pendingLevelChangeRequest;
+LevelTransitionRequest World::pendingLevelTransitionRequest;
 
 World::World()
 {
@@ -34,12 +33,12 @@ void World::Update(float deltaTime, InputManager* inputManager)
 		activeLevel->FlushPendingDestroys();
 		uiSystem->FlushPendingDestroys();
 
-		if (pendingLevelChangeRequest.type == LevelRequestType::ChangeLevel)
+		if (pendingLevelTransitionRequest.type == LevelRequestType::ChangeLevel)
 		{
 			UnloadActiveLevel();
-			LoadLevel(pendingLevelChangeRequest.nextLevelName);
-			pendingLevelChangeRequest.type = LevelRequestType::None;
-			pendingLevelChangeRequest.nextLevelName = "";
+			LoadLevel(pendingLevelTransitionRequest.nextLevelName);
+			pendingLevelTransitionRequest.type = LevelRequestType::None;
+			pendingLevelTransitionRequest.nextLevelName = "";
 		}
 	}
 }
@@ -97,8 +96,8 @@ void World::BuildRenderQueue(RenderQueue& queue)
 	}
 }
 
-void World::RequestLevelChange(std::string sceneName)
+void World::RequestLevelTransition(std::string sceneName)
 {
-	pendingLevelChangeRequest.type = LevelRequestType::ChangeLevel;
-	pendingLevelChangeRequest.nextLevelName = sceneName;
+	pendingLevelTransitionRequest.type = LevelRequestType::ChangeLevel;
+	pendingLevelTransitionRequest.nextLevelName = sceneName;
 }

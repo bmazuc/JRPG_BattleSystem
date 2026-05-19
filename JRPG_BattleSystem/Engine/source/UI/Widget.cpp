@@ -1,9 +1,6 @@
 #include "UI/Widget.h"
 #include "World/Systems/UISystem.h"
 
-#include <glm/ext/matrix_transform.hpp>
-#include <SDL3/SDL.h>
-
 Widget::Widget()
 {
 	node.SetOwner(this);

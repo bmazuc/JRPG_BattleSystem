@@ -3,8 +3,8 @@
 
 #include "World/Object.h"
 #include "World/SpatialGraph/ISpatialNodeOwner.h"
+#include "World/SpatialGraph/SpatialNode.h"
 #include "Core/Math/Transform2D.h"
-#include <string>
 
 class UISystem;
 

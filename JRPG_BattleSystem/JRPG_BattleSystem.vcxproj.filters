@@ -52,9 +52,6 @@
     <Filter Include="Header Files\Engine\Components\Rendering">
       <UniqueIdentifier>{2eab34c5-3cc8-4c89-92b3-23f9a7ba01ab}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Engine\Components\Camera">
-      <UniqueIdentifier>{d1f93a64-4161-46ff-9ce6-5aa62269cce3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Engine\Components\Rendering">
       <UniqueIdentifier>{b6537714-3917-4781-ab69-d2c0523f2663}</UniqueIdentifier>
     </Filter>
@@ -170,9 +167,6 @@
     </ClCompile>
     <ClCompile Include="Engine\source\Components\Rendering\SpriteRendererComponent.cpp">
       <Filter>Source Files\Engine\Components\Rendering</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\source\Components\Camera\CameraComponent.cpp">
-      <Filter>Source Files\Engine\Components\Camera</Filter>
     </ClCompile>
     <ClCompile Include="Engine\source\Core\Resource\ResourceManager.cpp">
       <Filter>Source Files\Engine\Core\Resource</Filter>
@@ -400,6 +394,9 @@
     </ClInclude>
     <ClInclude Include="Engine\include\World\Level\Scene\Scene.h">
       <Filter>Header Files\Engine\World\Level\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\include\Core\SDLWindowConfig.h">
+      <Filter>Header Files\Engine\Core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

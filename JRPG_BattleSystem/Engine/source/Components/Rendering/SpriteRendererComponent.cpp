@@ -1,7 +1,7 @@
 #include "Components/Rendering/SpriteRendererComponent.h"
 #include "Rendering/Material.h"
 #include "World/Level/Scene/Actor.h"
-#include "World/Level/Level.h"
+#include "World/Level/Scene/Scene.h"
 
 SpriteRendererComponent::SpriteRendererComponent(std::string textureName, std::string shaderName, glm::vec3 color)
 {
@@ -37,6 +37,6 @@ void SpriteRendererComponent::AddToRenderQueue(RenderQueue& queue)
 {
 	if (isVisible)
 	{
-		queue.AddItem(new RenderTextureItem(GetTransform().world, size, material), zOrder);
+		queue.AddWorldItem(new RenderTextureItem(GetTransform().world, size, material), zOrder);
 	}
 }

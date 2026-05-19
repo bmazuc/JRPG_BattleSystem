@@ -2,6 +2,7 @@
 //
 
 #include "Core/Engine.h"
+#include "World/World.h"
 #include "MainMenu/MainMenuLevel.h"
 #include "BattleLevel/BattleLevel.h"
 

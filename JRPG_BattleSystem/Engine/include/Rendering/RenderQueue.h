@@ -11,6 +11,9 @@ class Material;
 class Font;
 enum class TextScaleMode;
 
+/**
+ * Base render item stored inside the render queue.
+ */
 struct RenderItem
 {
 public:
@@ -23,6 +26,9 @@ public:
 	
 };
 
+/**
+ * Render item representing a textured quad.
+ */
 struct RenderTextureItem : public RenderItem
 {
 public:
@@ -33,6 +39,9 @@ public:
 	Material* material;
 };
 
+/**
+ * Render item representing a text element.
+ */
 struct RenderTextItem : public RenderItem
 {
 public:
@@ -51,10 +60,16 @@ public:
 
 using RenderBucket = std::map<int, std::vector<RenderItem*>>;
 
+/**
+ * Frame-local render item container.
+ * Renderable objects submit transient render items into this queue every frame.
+ * The renderer later consumes and clears the queue.
+ * World items are grouped by z-order to preserve rendering order.
+ */
 struct RenderQueue
 {
 public:
-	void AddItem(RenderItem* item, int zOrder)
+	void AddWorldItem(RenderItem* item, int zOrder)
 	{
 		worldBuckets[zOrder].push_back(item);
 	}
@@ -83,7 +98,7 @@ public:
 		}
 	}
 
-	// Render buckets grouped by z-order (used for ordering sprites).
+	// Render buckets grouped by z-order.
 	RenderBucket worldBuckets;
 
 	std::vector<RenderItem*> uiItems;

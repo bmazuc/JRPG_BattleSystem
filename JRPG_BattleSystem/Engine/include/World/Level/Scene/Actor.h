@@ -1,12 +1,10 @@
 #ifndef __ACTOR_H_INCLUDED__
 #define __ACTOR_H_INCLUDED__
 
-#include "Components/SceneComponent.h"
-#include <glm/vec2.hpp>
-#include <vector>
 #include "World/ObjectCollections/ComponentCollection.h"
 #include "World/SpawnInfos.h"
 
+class SceneComponent;
 class Scene;
 class PlayerController;
 

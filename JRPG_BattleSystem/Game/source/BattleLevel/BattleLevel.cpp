@@ -9,6 +9,7 @@
 #include "BattleLevel/BattleManager.h"
 #include "World/World.h"
 #include "World/Systems/UISystem.h"
+#include "UI/UserWidget.h"
 
 void BattleLevel::LoadAssets()
 {

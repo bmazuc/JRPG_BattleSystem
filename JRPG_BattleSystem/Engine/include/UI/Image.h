@@ -2,11 +2,7 @@
 #define __IMAGE_H_INCLUDED__
 
 #include "Widget.h"
-
 #include "Rendering/IRenderable.h"
-
-#include <glm/vec2.hpp>
-#include <glm/vec3.hpp>
 
 class Material;
 

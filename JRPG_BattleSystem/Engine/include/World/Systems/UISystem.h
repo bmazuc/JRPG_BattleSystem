@@ -4,10 +4,21 @@
 #include "World/ObjectCollections/WidgetCollection.h"
 #include "World/SpatialGraph/SpatialGraph.h"
 #include "World/SpawnInfos.h"
-#include "UI/UserWidget.h"
 
 class InputManager;
+class UserWidget;
 
+/**
+ * Central UI runtime system.
+ *
+ * Responsible for:
+ * - widget lifetime management
+ * - UI hierarchy updates
+ * - UI input forwarding
+ * - UI rendering submission
+ *
+ * The UISystem owns a dedicated SpatialGraph separate from the world scene graph.
+ */
 class UISystem
 {
 public:
@@ -59,6 +70,9 @@ public:
 	 */
 	void RegisterToDestroy(Widget* widget);
 
+	/**
+	 * Builds the frame render queue from all renderable runtime objects.
+	 */
 	void BuildRenderQueue(RenderQueue& queue)
 	{
 		graph.BuildRenderQueue(queue);

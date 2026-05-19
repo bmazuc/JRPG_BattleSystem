@@ -1,12 +1,22 @@
 #ifndef __SCENE_H_INCLUDED__
 #define __SCENE_H_INCLUDED__
 
-#include "World/SpatialGraph/SpatialGraph.h"
 #include "World/ObjectCollections/ActorCollection.h"
+#include "World/SpatialGraph/SpatialGraph.h"
 
 class CameraComponent;
 class PlayerController;
 
+/**
+ * Runtime container for gameplay actors and world hierarchy.
+ * A Scene manages:
+ * - actor lifetime
+ * - transform hierarchy updates
+ * - render queue generation
+ * - active camera selection
+ *
+ * Scenes are owned by Levels.
+ */
 class Scene
 {
 public:
@@ -57,7 +67,10 @@ public:
 
 	SpatialGraph* GetSceneGraph() { return &graph; }
 	const SpatialGraph* GetSceneGraph() const { return &graph; }
-
+	
+	/**
+	 * Builds the frame render queue from all renderable runtime objects.
+	 */
 	void BuildRenderQueue(RenderQueue& queue)
 	{
 		graph.BuildRenderQueue(queue);

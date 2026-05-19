@@ -1,9 +1,9 @@
 #ifndef __SPATIAL_NODE_OWNER_H_INCLUDED__
 #define __SPATIAL_NODE_OWNER_H_INCLUDED__
 
-
 #include "Core/Math/Transform2D.h"
-#include "World/SpatialGraph/SpatialNode.h"
+
+class SpatialNode;
 
 /**
  * Interface defining ownership over a SpatialNode.

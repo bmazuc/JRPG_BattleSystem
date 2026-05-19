@@ -1,8 +1,9 @@
 #ifndef __SPATIAL_GRAPH_H_INCLUDED__
 #define __SPATIAL_GRAPH_H_INCLUDED__
 
-#include "World/SpatialGraph/SpatialNode.h"
 #include "Rendering/RenderQueue.h"
+
+class SpatialNode;
 
 /**
  * Spatial graph responsible for managing all transform nodes.
@@ -16,6 +17,10 @@ public:
 	 */
 	void UpdateTransforms();
 
+	/**
+	 * Traverses the hierarchy and submits render commands into the render queue.
+	 * Renderable objects generate transient render items consumed later by the Renderer during the frame rendering pass.
+	 */
 	void BuildRenderQueue(RenderQueue& queue);
 
 	/**

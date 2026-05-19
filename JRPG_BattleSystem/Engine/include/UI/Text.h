@@ -3,8 +3,9 @@
 
 #include "Widget.h"
 #include "Rendering/IRenderable.h"
-#include "Graphics/Font.h"
 #include <string>
+
+class Font;
 
 /*
  * Defines how text scaling behaves.

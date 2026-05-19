@@ -1,14 +1,11 @@
 #ifndef __ENGINE_H_INCLUDED__
 #define __ENGINE_H_INCLUDED__
 
-#include "World/World.h"
-#include "Core/Window.h"
-
-#include <GL/glew.h>
-#include <SDL3/SDL_opengl.h>
-
+#include "SDLWindowConfig.h"
 #include <chrono>
 
+class Window;
+class World;
 class Renderer;
 class InputManager;
 

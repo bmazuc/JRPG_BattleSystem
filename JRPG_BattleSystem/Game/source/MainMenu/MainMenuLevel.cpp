@@ -5,6 +5,7 @@
 #include "Core/Resource/ResourceManager.h"
 #include "World/World.h"
 #include "World/Systems/UISystem.h"
+#include "UI/UserWidget.h"
 
 void MainMenuLevel::LoadAssets()
 {

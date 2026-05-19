@@ -1,6 +1,7 @@
 #include "World/Systems/UISystem.h"
 #include "Core/Inputs/InputManager.h"
 #include "UI/Button.h"
+#include "UI/UserWidget.h"
 
 #include <SDL3/SDL_mouse.h>
 

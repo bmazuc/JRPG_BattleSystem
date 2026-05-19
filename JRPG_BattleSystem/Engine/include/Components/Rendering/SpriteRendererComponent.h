@@ -2,12 +2,7 @@
 #define __SPRITE_RENDERER_COMPONENT_H_INCLUDED__
 
 #include "Components/SceneComponent.h"
-#include "Rendering/Shader.h"
 #include "Rendering/IRenderable.h"
-
-#include <glm/vec2.hpp>
-#include <glm/vec3.hpp>
-#include <string>
 
 class Material;
 

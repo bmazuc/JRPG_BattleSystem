@@ -3,6 +3,7 @@
 
 #include "ActorComponent.h"
 #include "World/SpatialGraph/ISpatialNodeOwner.h"
+#include "World/SpatialGraph/SpatialNode.h"
 
 /**
  * Component that has a transform and supports attachment.

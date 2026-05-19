@@ -1,10 +1,10 @@
 #ifndef __PLAYER_CONTROLLER_H__
 #define __PLAYER_CONTROLLER_H__
 
-class InputManager;
-
 #include "Core/Delegate/Delegate.h"
 #include <glm/vec2.hpp>
+
+class InputManager;
 
 /**
  * Translates input into gameplay actions.

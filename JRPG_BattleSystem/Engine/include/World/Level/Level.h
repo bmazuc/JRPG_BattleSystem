@@ -1,10 +1,6 @@
 ﻿#ifndef __LEVEL_H_INCLUDED__
 #define __LEVEL_H_INCLUDED__
 
-#include <string>
-#include <vector>
-#include <glm/vec2.hpp>
-#include "World/Level/Scene/Actor.h"
 #include "UI/Widget.h"
 #include "World/ObjectCollections/LevelSubsystemCollection.h"
 #include "World/SpawnInfos.h"
@@ -19,14 +15,13 @@ class World;
 /**
  * A Level represents a complete game level or gameplay context.
  *
- * It owns and manages:
- * - Actors (game objects)
- * - Level graph (transform hierarchy)
- * - Active camera
+ * It owns:
+ * - a Scene
+ * - level-scoped subsystems
+ * - gameplay initialization logic
  * - Input processing
  *
- * It also handles lifecycle:
- * Load → BeginPlay → Update → Unload
+ * Levels are managed by the World and can be dynamically loaded/unloaded.
  */
 class Level
 {
@@ -95,6 +90,10 @@ public:
 	template<typename T>
 	const T* GetSubsystem() const;
 
+	/**
+	 * Builds render data for the active gameplay level.
+	 * Collects render commands from the scene into the frame render queue.
+	 */
 	void BuildRenderQueue(RenderQueue& queue);
 
 	void SetWorld(World* newWorld) { world = newWorld; }

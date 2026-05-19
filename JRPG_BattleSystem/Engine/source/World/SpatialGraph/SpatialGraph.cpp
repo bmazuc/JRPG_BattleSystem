@@ -1,4 +1,5 @@
 #include "World/SpatialGraph/SpatialGraph.h"
+#include "World/SpatialGraph/SpatialNode.h"
 
 void SpatialGraph::UpdateTransforms()
 {

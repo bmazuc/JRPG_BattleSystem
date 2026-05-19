@@ -1,22 +1,18 @@
 #include "Rendering/Renderer.h"
-#include "World/Level/Scene/Actor.h"
-#include "UI/Widget.h"
-#include "Components/Camera/CameraComponent.h"
 
 #include <GL/glew.h>
-#include <glm/ext/matrix_transform.hpp>
 
-#include "Components/Rendering/SpriteRendererComponent.h"
-#include "Rendering/Shader.h"
-#include <glm/ext/matrix_clip_space.hpp>
-
-#include "UI/Image.h"
-#include "Rendering/Material.h"
-#include "Graphics/Font.h"
-#include "UI/Text.h"
+#include "Components/Camera/CameraComponent.h"
 #include "Core/Resource/ResourceManager.h"
-
+#include "Graphics/Font.h"
+#include "Rendering/Material.h"
+#include "Rendering/Shader.h"
+#include "UI/Text.h"
 #include "World/World.h"
+#include "World/Level/Level.h"
+
+#include <glm/ext/matrix_transform.hpp>
+#include <glm/ext/matrix_clip_space.hpp>
 
 void Renderer::Init()
 {

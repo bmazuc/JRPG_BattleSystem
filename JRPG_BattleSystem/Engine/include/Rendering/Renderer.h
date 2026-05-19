@@ -1,20 +1,12 @@
 #ifndef __RENDERER_H_INCLUDED__
 #define __RENDERER_H_INCLUDED__
 
-class CameraComponent;
-class Texture;
-class Image;
-class Material;
-class Text;
-class Shader;
-class World;
-
 #include "RenderQueue.h"
 
-#include <glm/vec2.hpp>
-#include <glm/mat4x4.hpp>
-#include <map>
-#include <vector>
+class CameraComponent;
+class Texture;
+class Shader;
+class World;
 
 /**
  * OpenGL-based renderer responsible for world and UI rendering.

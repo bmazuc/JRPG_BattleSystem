@@ -3,8 +3,6 @@
 
 #include "Components/SceneComponent.h"
 
-#include <glm/vec2.hpp>
-
 /**
  *	Represents a camera viewpoint.
  */

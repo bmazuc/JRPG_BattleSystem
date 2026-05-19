@@ -1,18 +1,6 @@
 #include "World/Level/Level.h"
-#include "Components/ActorComponent.h"
-#include "Components/Camera/CameraComponent.h"
-#include "Components/Rendering/SpriteRendererComponent.h"
-#include "Rendering/Material.h"
 #include "World/PlayerController.h"
 #include "Core/Inputs/InputManager.h"
-#include "UI/Button.h"
-
-#include <glm/ext/matrix_transform.hpp>
-#include <glm/ext/matrix_clip_space.hpp>
-#include <UI/Image.h>
-
-#include "Graphics/Texture.h"
-#include "Rendering/Shader.h"
 
 
 void Level::Load()

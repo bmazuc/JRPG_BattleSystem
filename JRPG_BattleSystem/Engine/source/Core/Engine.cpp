@@ -1,13 +1,15 @@
 #include "Core/Engine.h"
 
+#include <GL/glew.h>
+
 #include "Rendering/Renderer.h"
 #include "World/World.h"
+#include "Core/Window.h"
 #include "Core/Resource/ResourceManager.h"
 #include "Core/Inputs/InputManager.h"
 #include "Core/Random.h"
 
-#include <glm/vec2.hpp>
-#include <glm/vec3.hpp>
+#include <SDL3/SDL_opengl.h>
 #include <algorithm>
 
 bool Engine::Start(const EngineConfig& config)

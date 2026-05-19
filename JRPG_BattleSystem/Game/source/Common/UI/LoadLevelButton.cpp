@@ -3,5 +3,5 @@
 
 void LoadLevelButton::OnClicked()
 {
-	World::RequestLevelChange(levelToLoad);
+	World::RequestLevelTransition(levelToLoad);
 }

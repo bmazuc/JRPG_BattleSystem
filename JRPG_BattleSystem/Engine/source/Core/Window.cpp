@@ -2,11 +2,6 @@
 
 #include "SDL3/SDL_opengl.h"
 
-SDLWindowConfig::SDLWindowConfig(const char* _title, glm::vec2 _resolution, SDL_WindowFlags _flags)
-	: title(_title), resolution(_resolution), flags(_flags)
-{
-}
-
 bool Window::CreateSDLWindow(const SDLWindowConfig& config)
 {
 	SDL_WindowFlags flags = config.flags;
