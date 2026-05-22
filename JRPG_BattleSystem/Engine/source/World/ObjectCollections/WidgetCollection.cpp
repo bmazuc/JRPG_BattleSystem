@@ -3,7 +3,7 @@
 
 void WidgetCollection::Construct()
 {
-    Iterate([](Widget* widget)
+    InitObject([](Widget* widget)
         {
             if (UserWidget* userWidget = dynamic_cast<UserWidget*>(widget))
             {
@@ -14,21 +14,13 @@ void WidgetCollection::Construct()
 
 void WidgetCollection::Update(float deltaTime)
 {
-    Iterate([deltaTime](Widget* widget)
+    ForEach([deltaTime](Widget* widget)
         {
             if (UserWidget* userWidget = dynamic_cast<UserWidget*>(widget))
             {
                 userWidget->Update(deltaTime);
             }
         });
-}
-
-void WidgetCollection::InitObject(Widget* widget)
-{
-    if (UserWidget* userWidget = dynamic_cast<UserWidget*>(widget))
-    {
-        userWidget->Construct();
-    }
 }
 
 void WidgetCollection::BeginDestroyObject(Widget* widget)

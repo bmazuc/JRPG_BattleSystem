@@ -24,10 +24,11 @@ public:
 	const SceneComponent* GetParent() const;
 	std::vector<SceneComponent*> GetChildren();
 
-	SpatialNode* GetSceneNode() { return &node; }
+	SpatialNode* GetNode() { return &node; }
 
 	void UpdateTransform();
 	void DetachFromHierarchy();
+	void SyncGraph(SpatialGraph* graph);
 
 	Transform2D& GetTransform() { return node.GetTransform(); }
 	const Transform2D& GetTransform() const { return node.GetTransform(); }

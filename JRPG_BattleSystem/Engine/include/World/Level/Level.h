@@ -55,7 +55,8 @@ public:
 	void BeginPlay();
 
 	void FlushPendingAdds();
-	void UpdateTransform();
+	void SyncSceneGraph();
+	void UpdateSceneTransform();
 	void UpdateInputs(InputManager* inputManager);
 	void Update(float deltaTime);
 	void FlushPendingDestroys();

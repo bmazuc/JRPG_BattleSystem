@@ -15,7 +15,6 @@ public:
 	void Update(float deltaTime);
 
 private:
-	void InitObject(ActorComponent* actor) override;
 	void BeginDestroyObject(ActorComponent* component) override;
 };
 

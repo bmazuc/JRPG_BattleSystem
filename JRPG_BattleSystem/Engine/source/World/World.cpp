@@ -21,8 +21,14 @@ void World::Update(float deltaTime, InputManager* inputManager)
 		activeLevel->FlushPendingAdds();
 		uiSystem->FlushPendingAdds();
 
-		activeLevel->UpdateTransform();
+		activeLevel->SyncSceneGraph();
+		uiSystem->SyncGraph();
+
+		activeLevel->UpdateSceneTransform();
 		uiSystem->UpdateTransform();
+
+		activeLevel->BeginPlay();
+		uiSystem->Construct();
 
 		activeLevel->UpdateInputs(inputManager);
 		uiSystem->UpdateInputs(inputManager);
@@ -52,7 +58,6 @@ void World::LoadLevel(std::string name)
 		if (activeLevel)
 		{
 			activeLevel->Load();
-			activeLevel->BeginPlay();
 		}
 		return;
 	}

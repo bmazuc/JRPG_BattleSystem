@@ -9,14 +9,6 @@ Widget::Widget()
 void Widget::SetUISystem(UISystem* newUISystem)
 { 
 	uiSystem = newUISystem;
-
-	if (uiSystem)
-	{
-		if (!GetParent())
-		{
-			uiSystem->GetUIGraph()->AddNode(GetSceneNode());
-		}
-	}
 }
 
 Widget* Widget::GetParent()
@@ -41,16 +33,12 @@ const Widget* Widget::GetParent() const
 
 void Widget::SetParent(Widget* element)
 {
-	if (!GetParent() && element)
+	if (!node.IsHierarchyDirty())
 	{
-		uiSystem->GetUIGraph()->RemoveNode(GetSceneNode());
-	}
-	else if (GetParent() && !element)
-	{
-		uiSystem->GetUIGraph()->AddNode(GetSceneNode());
+		uiSystem->RegisterDirtyWidget(this);
 	}
 
-	node.SetParent(element ? element->GetSceneNode() : nullptr);
+	node.SetParent(element ? element->GetNode() : nullptr);
 }
 
 std::vector<Widget*> Widget::GetChildren()

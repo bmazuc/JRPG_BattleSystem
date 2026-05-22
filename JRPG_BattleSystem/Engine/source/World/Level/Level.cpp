@@ -5,17 +5,16 @@
 
 void Level::Load()
 {
+	playerController = new PlayerController();
 	CreateLevel();
 }
 
 void Level::BeginPlay()
 {
-	playerController = new PlayerController();
-
 	scene.BeginPlay();
 	sceneSubsystemCollection.BeginPlay();
 
-	scene.SetupInputs(playerController);
+	scene.SetPlayerController(playerController);
 }
 
 void Level::FlushPendingAdds()
@@ -24,7 +23,12 @@ void Level::FlushPendingAdds()
 	sceneSubsystemCollection.FlushPendingAdds();
 }
 
-void Level::UpdateTransform()
+void Level::SyncSceneGraph()
+{
+	scene.SyncGraph();
+}
+
+void Level::UpdateSceneTransform()
 {
 	scene.UpdateTransform();
 }

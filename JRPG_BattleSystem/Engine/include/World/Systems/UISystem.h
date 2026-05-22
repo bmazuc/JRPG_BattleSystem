@@ -27,7 +27,9 @@ public:
 	void OnLevelUnload();
 
 	void FlushPendingAdds();
+	void SyncGraph();
 	void UpdateTransform();
+	void Construct();
 	void UpdateInputs(InputManager* inputManager);
 	void Update(float deltaTime);
 	void FlushPendingDestroys();
@@ -53,7 +55,6 @@ public:
 	template<typename T>
 	const T* GetUserWidget(std::string name) const;
 
-	// Temp
 	void AddWidget(Widget* widget) { widgetsCollection.RegisterToAdd(widget); }
 
 	/**
@@ -78,11 +79,17 @@ public:
 		graph.BuildRenderQueue(queue);
 	}
 
+	void RegisterDirtyWidget(Widget* widget)
+	{
+		dirtyWidgets.push_back(widget);
+	}
+
 private:
 	void InternalSpawnUserWidget(UserWidget* userWidget, std::string name, const UISpawnInfo& spawnInfo);
 
 	SpatialGraph graph;
 	WidgetCollection widgetsCollection;
+	std::vector<Widget*> dirtyWidgets;
 };
 
 #include "UISystem.inl"

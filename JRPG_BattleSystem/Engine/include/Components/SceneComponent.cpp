@@ -35,7 +35,7 @@ void SceneComponent::SetParent(SceneComponent* component)
 {
 	if (component)
 	{
-		node.SetParent(component->GetSceneNode());
+		node.SetParent(component->GetNode());
 	}
 	else
 	{
@@ -67,6 +67,11 @@ void SceneComponent::UpdateTransform()
 void SceneComponent::DetachFromHierarchy()
 {
 	node.DetachFromHierarchy();
+}
+
+void SceneComponent::SyncGraph(SpatialGraph* graph)
+{
+	node.SyncGraph(graph);
 }
 
 void SceneComponent::SetLocalPosition(glm::vec2 position)

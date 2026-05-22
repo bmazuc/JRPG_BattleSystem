@@ -2,7 +2,7 @@
 
 void ComponentCollection::BeginPlay()
 {
-    Iterate([](ActorComponent* component)
+    InitObject([](ActorComponent* component)
         {
             component->BeginPlay();
         });
@@ -10,15 +10,10 @@ void ComponentCollection::BeginPlay()
 
 void ComponentCollection::Update(float deltaTime)
 {
-    Iterate([deltaTime](ActorComponent* component)
+    ForEach([deltaTime](ActorComponent* component)
         {
             component->Update(deltaTime);
         });
-}
-
-void ComponentCollection::InitObject(ActorComponent* component)
-{
-    component->BeginPlay();
 }
 
 void ComponentCollection::BeginDestroyObject(ActorComponent* component)

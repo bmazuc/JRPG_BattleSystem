@@ -7,6 +7,7 @@
 #include <vector>
 
 class ISpatialNodeOwner;
+class SpatialGraph;
 
 /**
  * Node in a hierarchical transform tree.
@@ -46,6 +47,11 @@ public:
 	void DetachFromHierarchy();
 
 	/**
+	 * Synchronize the graph with the current state of this node
+	 */
+	void SyncGraph(SpatialGraph* graph);
+
+	/**
 	 * Transform accessors
 	 */
 
@@ -79,6 +85,8 @@ public:
 	SpatialNode* GetRoot();
 	const SpatialNode* GetRoot() const;
 
+	bool IsHierarchyDirty() const { return isHierarchyDirty; }
+
 private:
 	/**
 	 * Adds a child node to this node.
@@ -98,7 +106,12 @@ private:
 	/**
 	 * Marks this node as dirty, forcing transform recomputation.
 	 */
-	void SetDirty();
+	void MarkTransformDirty();
+
+	/**
+	 * Marks this node as dirty, forcing hierarchy recomputation.
+	 */
+	void MarkHierarchyDirty() { isHierarchyDirty = true; }
 
 	Transform2D transform;
 
@@ -106,7 +119,12 @@ private:
 	std::vector<SpatialNode*> children;
 
 	// Indicates whether the world transform needs recomputation.
-	bool isDirty = true;
+	bool isTransformDirty = true;
+
+	// Indicates whether the node should be moved inside the hierarchy.
+	bool isHierarchyDirty = true;
+
+	bool wasRoot = false;
 
 	ISpatialNodeOwner* owner;
 };

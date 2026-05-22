@@ -52,7 +52,6 @@ void EnemySpawner::PositionEnemies(std::vector<Enemy*>& spawnedEnemies)
 
 		enemy->SetWorldPosition(glm::vec2(x + size/2, position.y));
 
-
 		x += size + spacing;
 	}
 }

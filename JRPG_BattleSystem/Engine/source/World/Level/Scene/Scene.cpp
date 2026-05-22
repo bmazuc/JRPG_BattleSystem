@@ -9,20 +9,27 @@ void Scene::Unload()
 
 void Scene::BeginPlay()
 {
-	graph.UpdateTransforms();
-
 	actorsCollection.BeginPlay();
 }
 
-void Scene::SetupInputs(PlayerController* playerController)
+void Scene::SetPlayerController(PlayerController* playerController)
 {
-	actorsCollection.SetupInputs(playerController);
+	actorsCollection.SetPlayerController(playerController);
 }
 
 void Scene::FlushPendingAdds()
 {
 	actorsCollection.FlushPendingAdds();
 	actorsCollection.ProcessComponentsAdd();
+}
+
+void Scene::SyncGraph()
+{
+	for (Actor* actor : dirtyActors)
+	{
+		actor->GetRoot()->GetNode()->SyncGraph(&graph);
+	}
+	dirtyActors.clear();
 }
 
 void Scene::UpdateTransform()
@@ -64,7 +71,9 @@ void Scene::InternalSpawnActor(Actor* actor, std::string name, const ActorSpawnI
 		actor->SetLocalRotate(spawnInfo.rotate);
 		actor->SetLocalScale(spawnInfo.scale);
 	}
+
 	actorsCollection.RegisterToAdd(actor);
+	RegisterDirtyActor(actor);
 }
 
 glm::vec2 Scene::ScreenToWorld(glm::vec2 screenPos)

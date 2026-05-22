@@ -15,26 +15,14 @@ Actor::~Actor()
 void Actor::SetScene(Scene* newScene)
 {
 	scene = newScene;
-	if (scene)
-	{
-		if (!root->GetParent())
-		{
-			scene->GetSceneGraph()->AddNode(root->GetSceneNode());
-		}
-	}
 }
 
 void Actor::AttachToActor(Actor* actor)
 {
-	if (!root->GetParent() && actor)
+	if (!root->GetNode()->IsHierarchyDirty())
 	{
-		scene->GetSceneGraph()->RemoveNode(root->GetSceneNode());
+		scene->RegisterDirtyActor(this);
 	}
-	else if (root->GetParent() && !actor)
-	{
-		scene->GetSceneGraph()->AddNode(root->GetSceneNode());
-	}
-
 	root->SetParent(actor ? actor->GetRoot() : nullptr);
 }
 
@@ -194,7 +182,7 @@ const Actor* Actor::GetParent() const
 void Actor::DetachFromHierarchy()
 {
 	root->DetachFromHierarchy();
-	scene->GetSceneGraph()->RemoveNode(root->GetSceneNode());
+	scene->GetSceneGraph()->RemoveNode(root->GetNode());
 }
 
 void Actor::InternalSpawnSceneComponent(SceneComponent* component, const SceneComponentSpawnInfo& spawnInfo)

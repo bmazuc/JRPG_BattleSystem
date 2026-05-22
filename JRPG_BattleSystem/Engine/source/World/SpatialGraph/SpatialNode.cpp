@@ -1,13 +1,14 @@
 #include "World/SpatialGraph/SpatialNode.h"
 #include "Rendering/IRenderable.h"
 #include "World/SpatialGraph/ISpatialNodeOwner.h"
+#include "World/SpatialGraph/SpatialGraph.h"
 
 #include <glm/ext/matrix_transform.hpp>
 #include <SDL3/SDL.h>
 
 void SpatialNode::UpdateTransform()
 {
-	if (isDirty)
+	if (isTransformDirty)
 	{
 		glm::mat4 m(1.0f);
 
@@ -24,12 +25,32 @@ void SpatialNode::UpdateTransform()
 			transform.world = m;
 		}
 
-		isDirty = false;
+		isTransformDirty = false;
 	}
 
 	for (SpatialNode* child : children)
 	{
 		child->UpdateTransform();
+	}
+}
+
+void SpatialNode::SyncGraph(SpatialGraph* graph)
+{
+	if (isHierarchyDirty && graph) 
+	{
+		bool isRoot = (parent == nullptr);
+
+		if (isRoot && !wasRoot)
+		{
+			graph->AddNode(this);
+		}
+		else if (!isRoot && wasRoot)
+		{
+			graph->RemoveNode(this);
+		}
+
+		wasRoot = isRoot;
+		isHierarchyDirty = false;
 	}
 }
 
@@ -58,6 +79,8 @@ void SpatialNode::SetParent(SpatialNode* _parent)
 			SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Cannot attach parent to one of its children.");
 			return;
 		}
+
+		wasRoot = (parent == nullptr);
 
 		GetRoot()->UpdateTransform();
 
@@ -137,13 +160,13 @@ const SpatialNode* SpatialNode::GetRoot() const
 	return current;
 }
 
-void SpatialNode::SetDirty()
+void SpatialNode::MarkTransformDirty()
 {
-	isDirty = true;
+	isTransformDirty = true;
 
 	for (SpatialNode* child : children)
 	{
-		child->SetDirty();
+		child->MarkTransformDirty();
 	}
 }
 
@@ -164,19 +187,19 @@ void SpatialNode::DetachFromHierarchy()
 void SpatialNode::SetLocalPosition(glm::vec2 position)
 {
 	transform.position = position;
-	SetDirty();
+	MarkTransformDirty();
 }
 
 void SpatialNode::SetLocalRotate(float rotate)
 {
 	transform.rotate = rotate;
-	SetDirty();
+	MarkTransformDirty();
 }
 
 void SpatialNode::SetLocalScale(glm::vec2 scale)
 {
 	transform.scale = scale;
-	SetDirty();
+	MarkTransformDirty();
 }
 
 glm::vec2 SpatialNode::GetWorldPosition() const
@@ -211,7 +234,7 @@ void SpatialNode::SetWorldPosition(glm::vec2 position)
 	{
 		transform.position = position;
 	}
-	SetDirty();
+	MarkTransformDirty();
 }
 
 void SpatialNode::SetWorldRotate(float rotate)
@@ -227,7 +250,7 @@ void SpatialNode::SetWorldRotate(float rotate)
 	{
 		transform.rotate = rotate;
 	}
-	SetDirty();
+	MarkTransformDirty();
 }
 
 void SpatialNode::SetWorldScale(glm::vec2 scale)
@@ -245,5 +268,5 @@ void SpatialNode::SetWorldScale(glm::vec2 scale)
 	{
 		transform.scale = scale;
 	}
-	SetDirty();
+	MarkTransformDirty();
 }

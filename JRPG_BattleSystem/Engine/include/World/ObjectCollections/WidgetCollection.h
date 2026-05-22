@@ -15,7 +15,6 @@ public:
 	void Update(float deltaTime);
 
 private:
-	void InitObject(Widget* widget) override;
 	void BeginDestroyObject(Widget* widget) override;
 };
 

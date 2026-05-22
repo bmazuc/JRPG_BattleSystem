@@ -2,34 +2,26 @@
 
 void ActorCollection::BeginPlay()
 {
-    Iterate([](Actor* actor)
+    InitObject([this](Actor* actor)
         {
             actor->BeginPlay();
+            actor->SetupInputs(playerController);
             actor->ComponentsBeginPlay();
         });
 }
 
 void ActorCollection::Update(float deltaTime)
 {
-    Iterate([deltaTime](Actor* actor)
+    ForEach([deltaTime](Actor* actor)
         {
             actor->Update(deltaTime);
             actor->UpdateComponents(deltaTime);
         });
 }
 
-void ActorCollection::SetupInputs(PlayerController* _playerController)
-{
-    playerController = _playerController;
-    Iterate([_playerController](Actor* actor)
-        {
-            actor->SetupInputs(_playerController);
-        });
-}
-
 void ActorCollection::ProcessComponentsAdd()
 {
-    Iterate([](Actor* actor)
+    ForEach([](Actor* actor)
         {
             actor->ProcessComponentsAdd();
         });
@@ -37,16 +29,10 @@ void ActorCollection::ProcessComponentsAdd()
 
 void ActorCollection::ProcessComponentsDestroy()
 {
-    Iterate([](Actor* actor)
+    ForEach([](Actor* actor)
         {
             actor->ProcessComponentsDestroy();
         });
-}
-
-void ActorCollection::InitObject(Actor* actor)
-{
-    actor->BeginPlay();
-    actor->SetupInputs(playerController);
 }
 
 void ActorCollection::BeginDestroyObject(Actor* actor)

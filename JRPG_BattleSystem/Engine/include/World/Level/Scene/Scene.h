@@ -29,9 +29,10 @@ public:
 	 * Called once when the level becomes active.
 	 */
 	void BeginPlay();
-	void SetupInputs(PlayerController* playerController);
+	void SetPlayerController(PlayerController* playerController);
 
 	void FlushPendingAdds();
+	void SyncGraph();
 	void UpdateTransform();
 	void Update(float deltaTime);
 	void FlushPendingDestroys();
@@ -86,6 +87,11 @@ public:
 
 	glm::vec2 ScreenToWorld(glm::vec2 screenPos);
 
+	void RegisterDirtyActor(Actor* actor)
+	{
+		dirtyActors.push_back(actor);
+	}
+
 private:
 	void InternalSpawnActor(Actor* actor, std::string name, const ActorSpawnInfo& spawnInfo);
 
@@ -95,6 +101,7 @@ private:
 	SpatialGraph graph;
 
 	ActorCollection actorsCollection;
+	std::vector<Actor*> dirtyActors;
 };
 
 #include "Scene.inl"

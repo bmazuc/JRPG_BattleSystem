@@ -17,7 +17,7 @@ void MainMenuLevel::CreateLevel()
     UISystem* uiSystem = world->GetUISystem();
 
     mainMenuWidget = uiSystem->CreateUserWidget<UserWidget>("MainMenuWidget", UISpawnInfo());
-
+    
     Text* text = mainMenuWidget->CreateWidget<Text>("Title", UISpawnInfo(nullptr, TransformSpace::World, glm::vec2(320, 140)));
     text->SetContent("JRPG_BattleSystem");
     text->SetSize(36);

@@ -15,7 +15,6 @@ public:
 	void Update(float deltaTime);
 
 private:
-	void InitObject(LevelSubsystem* subsystem) override;
 	void BeginDestroyObject(LevelSubsystem* subsystem) override;
 };
 

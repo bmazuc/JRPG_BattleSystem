@@ -23,7 +23,7 @@ public:
 	 * Objects added or removed during iteration are deferred.
 	 */
 	template<typename Func>
-	void Iterate(Func&& func)
+	void ForEach(Func&& func)
 	{
 		for (T* object : objects)
 		{
@@ -35,29 +35,33 @@ public:
 	}
 
 	/**
+	 * Iterates safely over all objects pending for init.
+	 */
+	template<typename Func>
+	void InitObject(Func&& func)
+	{
+		for (T* object : pendingInitObjects)
+		{
+			if (object)
+			{
+				func(object);
+			}
+		}
+		pendingInitObjects.clear();
+	}
+
+	/**
 	 * Adds an object to the collection.
 	 * If iteration is in progress, defers insertion to avoid invalidation.
 	 */
 	void RegisterToAdd(T* object)
 	{
-		pendingAddObjects.push_back(object);
-	}
-
-	/**
-	 * Deletes all objects immediately.
-	 * Clears ownership of the collection.
-	 */
-	void Clear()
-	{
-		for (T* object : objects)
+		if (isClearing)
 		{
-			BeginDestroyObject(object);
 			delete object;
+			return;
 		}
-
-		objects.clear();
-		pendingAddObjects.clear();
-		pendingDestroyObjects.clear();
+		pendingAddObjects.push_back(object);
 	}
 
 	/**
@@ -66,7 +70,43 @@ public:
 	 */
 	void RegisterToDestroy(T* object)
 	{
-		pendingDestroyObjects.push_back(object);
+		if (!isClearing)
+		{
+			pendingDestroyObjects.push_back(object);
+		}
+	}
+
+	/**
+	 * Deletes all objects immediately.
+	 * Clears ownership of the collection.
+	 */
+	void Clear()
+	{
+		isClearing = true;
+		for (T* object : objects)
+		{
+			BeginDestroyObject(object);
+			delete object;
+		}
+		objects.clear();
+
+		for (T* object : pendingAddObjects)
+		{
+			BeginDestroyObject(object);
+			delete object;
+		}
+		pendingAddObjects.clear();
+
+		for (T* object : pendingDestroyObjects)
+		{
+			BeginDestroyObject(object);
+			delete object;
+		}
+		pendingDestroyObjects.clear();
+
+		pendingInitObjects.clear();
+
+		isClearing = false;
 	}
 
 	/**
@@ -156,18 +196,15 @@ public:
 	 */
 	void FlushPendingAdds()
 	{
-		while (pendingAddObjects.size() > 0)
-		{
-			std::vector<T*> newObjects = pendingAddObjects;
-			pendingAddObjects.clear();
+		std::vector<T*> newObjects = pendingAddObjects;
+		pendingAddObjects.clear();
 
-			for (T* object : newObjects)
+		for (T* object : newObjects)
+		{
+			if (object)
 			{
-				if (object)
-				{
-					InitObject(object);
-					objects.push_back(object);
-				}
+				objects.push_back(object);
+				pendingInitObjects.push_back(object);
 			}
 		}
 	}
@@ -177,7 +214,10 @@ public:
 	 */
 	void FlushPendingDestroys()
 	{
-		for (T* objectToDestroy : pendingDestroyObjects)
+		std::vector<T*> objectsToDestroy = pendingDestroyObjects;
+		pendingDestroyObjects.clear();
+
+		for (T* objectToDestroy : objectsToDestroy)
 		{
 			if (objectToDestroy)
 			{
@@ -187,14 +227,14 @@ public:
 				delete objectToDestroy;
 			}
 		}
-
-		pendingDestroyObjects.clear();
 	}
 
 protected:
-	virtual void InitObject(T* object) {}
-
 	virtual void BeginDestroyObject(T* object) {}
+	virtual void DeleteObject(T* object)
+	{
+		delete object;
+	}
 
 	// Active objects in the collection
 	std::vector<T*> objects;
@@ -202,9 +242,10 @@ protected:
 private:
 	// Deferred operations
 	std::vector<T*> pendingAddObjects;
+	std::vector<T*> pendingInitObjects;
 	std::vector<T*> pendingDestroyObjects;
 
-	bool isIterating = false;
+	bool isClearing = false;
 };
 
 #endif // __SCENE_OBJECT_COLLECTION_INCLUDED__

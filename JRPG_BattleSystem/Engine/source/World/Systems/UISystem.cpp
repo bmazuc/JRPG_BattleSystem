@@ -22,9 +22,23 @@ void UISystem::FlushPendingAdds()
 	widgetsCollection.FlushPendingAdds();
 }
 
+void UISystem::SyncGraph()
+{
+	for (Widget* widget : dirtyWidgets)
+	{
+		widget->GetNode()->SyncGraph(&graph);
+	}
+	dirtyWidgets.clear();
+}
+
 void UISystem::UpdateTransform()
 {
 	graph.UpdateTransforms();
+}
+
+void UISystem::Construct()
+{
+	widgetsCollection.Construct();
 }
 
 void UISystem::UpdateInputs(InputManager* inputManager)
@@ -71,7 +85,7 @@ void UISystem::InternalSpawnUserWidget(UserWidget* userWidget, std::string name,
 	userWidget->SetName(name);
 	userWidget->SetUISystem(this);
 	userWidget->SetParent(spawnInfo.parent);
-
+	
 	if (spawnInfo.transformSpace == TransformSpace::World)
 	{
 		userWidget->SetWorldPosition(spawnInfo.location);
@@ -84,5 +98,7 @@ void UISystem::InternalSpawnUserWidget(UserWidget* userWidget, std::string name,
 		userWidget->SetLocalRotate(spawnInfo.rotate);
 		userWidget->SetLocalScale(spawnInfo.scale);
 	}
+
 	widgetsCollection.RegisterToAdd(userWidget);
+	RegisterDirtyWidget(userWidget);
 }

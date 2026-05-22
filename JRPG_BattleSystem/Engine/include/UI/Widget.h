@@ -50,7 +50,7 @@ public:
 	 * Level graph integration
 	 */
 
-	SpatialNode* GetSceneNode() { return &node; }
+	SpatialNode* GetNode() { return &node; }
 
 	bool HasParent() { return node.HasParent(); }
 

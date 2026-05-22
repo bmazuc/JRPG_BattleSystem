@@ -20,18 +20,12 @@ public:
 	void BeginPlay();
 	void Update(float deltaTime);
 
-	/**
-	 * Injects player controller into actors that need input.
-	 */
-	void SetupInputs(PlayerController* _playerController);
-
 	void SetPlayerController(PlayerController* newPlayerController) { playerController = newPlayerController; }
 
 	void ProcessComponentsAdd();
 	void ProcessComponentsDestroy();
 
 private:
-	void InitObject(Actor* actor) override;
 	void BeginDestroyObject(Actor* actor) override;
 	PlayerController* playerController;
 };

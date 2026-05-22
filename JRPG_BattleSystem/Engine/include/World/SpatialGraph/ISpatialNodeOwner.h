@@ -4,6 +4,7 @@
 #include "Core/Math/Transform2D.h"
 
 class SpatialNode;
+class SpatialGraph;
 
 /**
  * Interface defining ownership over a SpatialNode.
@@ -17,7 +18,7 @@ public:
 	/**
 	 * Returns the SpatialNode owned by this object.
 	 */
-	virtual SpatialNode* GetSceneNode() = 0;
+	virtual SpatialNode* GetNode() = 0;
 
 	/**
 	 * Returns true if the node has a parent in the hierarchy.
