@@ -153,6 +153,7 @@
     <ClCompile Include="Engine\source\UI\Text.cpp" />
     <ClCompile Include="Engine\source\UI\Widget.cpp" />
     <ClCompile Include="Engine\source\UI\UserWidget.cpp" />
+    <ClCompile Include="Engine\source\UI\WidgetOrderProvider.cpp" />
     <ClCompile Include="Engine\source\World\Level\Level.cpp" />
     <ClCompile Include="Engine\source\World\Level\Scene\Actor.cpp" />
     <ClCompile Include="Engine\source\World\Level\Scene\Scene.cpp" />
@@ -166,6 +167,7 @@
     <ClCompile Include="Engine\source\World\Systems\UISystem.cpp" />
     <ClCompile Include="Engine\source\World\World.cpp" />
     <ClCompile Include="Game\include\BattleLevel\BattleManager.cpp" />
+    <ClCompile Include="Game\include\BattleLevel\SwitchZOrderButton.cpp" />
     <ClCompile Include="Game\source\BattleLevel\BattleLevel.cpp" />
     <ClCompile Include="Game\source\BattleLevel\Enemy.cpp" />
     <ClCompile Include="Game\source\BattleLevel\EnemySpawner.cpp" />
@@ -198,6 +200,7 @@
     <ClInclude Include="Engine\include\UI\Text.h" />
     <ClInclude Include="Engine\include\UI\Widget.h" />
     <ClInclude Include="Engine\include\UI\UserWidget.h" />
+    <ClInclude Include="Engine\include\UI\WidgetOrderProvider.h" />
     <ClInclude Include="Engine\include\World\Level\Level.h" />
     <ClInclude Include="Engine\include\World\Level\LevelSubsystem.h" />
     <ClInclude Include="Engine\include\World\Level\Scene\Actor.h" />
@@ -209,6 +212,7 @@
     <ClInclude Include="Engine\include\World\ObjectCollections\LevelSubsystemCollection.h" />
     <ClInclude Include="Engine\include\World\ObjectCollections\WidgetCollection.h" />
     <ClInclude Include="Engine\include\World\PlayerController.h" />
+    <ClInclude Include="Engine\include\World\SpatialGraph\ISpatialNodeOrderProvider.h" />
     <ClInclude Include="Engine\include\World\SpatialGraph\ISpatialNodeOwner.h" />
     <ClInclude Include="Engine\include\World\SpatialGraph\SpatialGraph.h" />
     <ClInclude Include="Engine\include\World\SpatialGraph\SpatialNode.h" />
@@ -219,6 +223,7 @@
     <ClInclude Include="Game\include\BattleLevel\BattleManager.h" />
     <ClInclude Include="Game\include\BattleLevel\Enemy.h" />
     <ClInclude Include="Game\include\BattleLevel\EnemySpawner.h" />
+    <ClInclude Include="Game\include\BattleLevel\SwitchZOrderButton.h" />
     <ClInclude Include="Game\include\Common\UI\LoadLevelButton.h" />
     <ClInclude Include="Game\include\MainMenu\MainMenuLevel.h" />
   </ItemGroup>

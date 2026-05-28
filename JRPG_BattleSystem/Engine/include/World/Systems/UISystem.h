@@ -3,10 +3,12 @@
 
 #include "World/ObjectCollections/WidgetCollection.h"
 #include "World/SpatialGraph/SpatialGraph.h"
+#include "UI/WidgetOrderProvider.h"
 #include "World/SpawnInfos.h"
 
 class InputManager;
 class UserWidget;
+class Widget;
 
 /**
  * Central UI runtime system.
@@ -75,8 +77,8 @@ public:
 	 * Builds the frame render queue from all renderable runtime objects.
 	 */
 	void BuildRenderQueue(RenderQueue& queue)
-	{
-		graph.BuildRenderQueue(queue);
+	{	
+		graph.BuildRenderQueue(queue, &provider);
 	}
 
 	void RegisterDirtyWidget(Widget* widget)
@@ -84,12 +86,21 @@ public:
 		dirtyWidgets.push_back(widget);
 	}
 
+	void MarkRootsDirty() { isRootsDirty = true; }
+
+	int GetInsertionCounter() { return insertionCounter++; }
+
 private:
 	void InternalSpawnUserWidget(UserWidget* userWidget, std::string name, const UISpawnInfo& spawnInfo);
 
 	SpatialGraph graph;
 	WidgetCollection widgetsCollection;
 	std::vector<Widget*> dirtyWidgets;
+
+	WidgetOrderProvider provider;
+
+	bool isRootsDirty = false;
+	int insertionCounter = 0;
 };
 
 #include "UISystem.inl"

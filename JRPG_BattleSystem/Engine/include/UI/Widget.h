@@ -1,5 +1,5 @@
-#ifndef __UI_ELEMENT_H_INCLUDED__
-#define __UI_ELEMENT_H_INCLUDED__
+#ifndef __WIDGET_H_INCLUDED__
+#define __WIDGET_H_INCLUDED__
 
 #include "World/Object.h"
 #include "World/SpatialGraph/ISpatialNodeOwner.h"
@@ -103,6 +103,14 @@ public:
 	void SetVisible(bool state) { isVisible = state; }
 	bool IsVisible() const { return isVisible; }
 
+	void SetZOrder(int newZOrder);
+	int GetZOrder() const { return zOrder; }
+
+	void SetInsertionOrder(int newInsertionOrder) { insertionOrder = newInsertionOrder; }
+	int GetInsertionOrder() const { return insertionOrder; }
+
+	int GetInsertionCounter() { return insertionCounter++; }
+
 protected:
 	UISystem* uiSystem;
 
@@ -110,6 +118,11 @@ private:
 	SpatialNode node;
 
 	bool isVisible = true;
+
+	int zOrder = 0;
+	int insertionOrder = 0;
+
+	int insertionCounter = 0;
 };
 
 #endif // __UI_ELEMENT_H_INCLUDED__

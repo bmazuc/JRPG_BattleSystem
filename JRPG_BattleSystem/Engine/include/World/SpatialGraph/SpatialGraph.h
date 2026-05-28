@@ -3,6 +3,7 @@
 
 #include "Rendering/RenderQueue.h"
 
+class ISpatialNodeOrderProvider;
 class SpatialNode;
 
 /**
@@ -21,7 +22,7 @@ public:
 	 * Traverses the hierarchy and submits render commands into the render queue.
 	 * Renderable objects generate transient render items consumed later by the Renderer during the frame rendering pass.
 	 */
-	void BuildRenderQueue(RenderQueue& queue);
+	void BuildRenderQueue(RenderQueue& queue, ISpatialNodeOrderProvider* provider);
 
 	/**
 	 * Registers a node into the level graph.

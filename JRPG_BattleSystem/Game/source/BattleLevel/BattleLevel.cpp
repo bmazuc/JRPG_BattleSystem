@@ -10,6 +10,7 @@
 #include "World/World.h"
 #include "World/Systems/UISystem.h"
 #include "UI/UserWidget.h"
+#include "BattleLevel/SwitchZOrderButton.h"
 
 void BattleLevel::LoadAssets()
 {
@@ -64,4 +65,19 @@ void BattleLevel::CreateLevel()
 	Text* mainMenuButtonText = userWidget->CreateWidget<Text>("MainMenuButtonText", UISpawnInfo(mainMenuButton, TransformSpace::Local));
 	mainMenuButtonText->SetContent("Main Menu");
 	mainMenuButtonText->SetSize(24);
+
+	Image* image1 = userWidget->CreateWidget<Image>("Image1", UISpawnInfo(nullptr, TransformSpace::World, glm::vec2(10, 390)), "goblin");
+	image1->SetSize(glm::vec2(75, 77));
+
+	Image* image2 = userWidget->CreateWidget<Image>("Image2", UISpawnInfo(nullptr, TransformSpace::World, glm::vec2(10, 390)));
+	image2->SetSize(glm::vec2(75, 77));
+
+	SwitchZOrderButton* switchButton = userWidget->CreateWidget<SwitchZOrderButton>("MainMenuButton", UISpawnInfo(nullptr, TransformSpace::World, glm::vec2(480, 390)));
+	switchButton->GetMaterial()->SetTexture("button");
+	switchButton->SetSize(glm::vec2(150, 50));
+	switchButton->SetWidget(image1);
+
+	Text* switchButtonText = userWidget->CreateWidget<Text>("SwitchButtonText", UISpawnInfo(switchButton, TransformSpace::Local));
+	switchButtonText->SetContent("zOrder");
+	switchButtonText->SetSize(24);
 }

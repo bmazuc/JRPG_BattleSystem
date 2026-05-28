@@ -12,13 +12,13 @@ void SpatialGraph::UpdateTransforms()
 	}
 }
 
-void SpatialGraph::BuildRenderQueue(RenderQueue& queue)
+void SpatialGraph::BuildRenderQueue(RenderQueue& queue, ISpatialNodeOrderProvider* provider)
 {
 	for (SpatialNode* node : nodes)
 	{
 		if (node)
 		{
-			node->BuildRenderQueue(queue);
+			node->BuildRenderQueue(queue, provider);
 		}
 	}
 }

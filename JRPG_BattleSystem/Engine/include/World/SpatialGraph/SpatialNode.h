@@ -8,6 +8,7 @@
 
 class ISpatialNodeOwner;
 class SpatialGraph;
+class ISpatialNodeOrderProvider;
 
 /**
  * Node in a hierarchical transform tree.
@@ -23,7 +24,7 @@ public:
 	 */
 	void UpdateTransform();
 
-	void BuildRenderQueue(RenderQueue& queue);
+	void BuildRenderQueue(RenderQueue& queue, ISpatialNodeOrderProvider* provider);
 
 	SpatialNode* GetParent() { return parent; }
 	const SpatialNode* GetParent() const { return parent; }
@@ -31,7 +32,7 @@ public:
 	/**
 	 * Sets the parent of this node.
 	 */
-	void SetParent(SpatialNode* _parent);
+	bool SetParent(SpatialNode* _parent);
 
 	/**
 	 * Returns true if this node has a parent.
@@ -87,6 +88,8 @@ public:
 
 	bool IsHierarchyDirty() const { return isHierarchyDirty; }
 
+	void MarkChildrenDirty() { isChildrenDirty = true; }
+
 private:
 	/**
 	 * Adds a child node to this node.
@@ -113,6 +116,8 @@ private:
 	 */
 	void MarkHierarchyDirty() { isHierarchyDirty = true; }
 
+	void SortChildrenIfNeeded(ISpatialNodeOrderProvider* provider);
+
 	Transform2D transform;
 
 	SpatialNode* parent = nullptr;
@@ -123,6 +128,8 @@ private:
 
 	// Indicates whether the node should be moved inside the hierarchy.
 	bool isHierarchyDirty = true;
+
+	bool isChildrenDirty = false;
 
 	bool wasRoot = false;
 

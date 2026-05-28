@@ -38,7 +38,18 @@ void Widget::SetParent(Widget* element)
 		uiSystem->RegisterDirtyWidget(this);
 	}
 
-	node.SetParent(element ? element->GetNode() : nullptr);
+	if (node.SetParent(element ? element->GetNode() : nullptr))
+	{
+		if (element)
+		{
+			insertionOrder = element->GetInsertionCounter();
+		}
+		else
+		{
+			insertionOrder = uiSystem->GetInsertionCounter();
+			uiSystem->MarkRootsDirty();
+		}
+	}
 }
 
 std::vector<Widget*> Widget::GetChildren()
@@ -132,4 +143,23 @@ const Widget* Widget::GetRoot() const
 {
 	const SpatialNode* root = node.GetRoot();
 	return root ? dynamic_cast<const Widget*>(root->GetOwner()) : nullptr;
+}
+
+void Widget::SetZOrder(int newZOrder)
+{ 
+	if (zOrder != newZOrder)
+	{
+		zOrder = newZOrder;
+
+		if (SpatialNode* parent = node.GetParent())
+		{
+			parent->MarkChildrenDirty();
+		}
+		else
+		{
+			uiSystem->MarkRootsDirty();
+		}
+
+	}
+
 }

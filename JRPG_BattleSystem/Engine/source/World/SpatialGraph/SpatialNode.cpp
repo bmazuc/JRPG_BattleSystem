@@ -2,7 +2,9 @@
 #include "Rendering/IRenderable.h"
 #include "World/SpatialGraph/ISpatialNodeOwner.h"
 #include "World/SpatialGraph/SpatialGraph.h"
+#include "World/SpatialGraph/ISpatialNodeOrderProvider.h"
 
+#include <algorithm>
 #include <glm/ext/matrix_transform.hpp>
 #include <SDL3/SDL.h>
 
@@ -54,8 +56,10 @@ void SpatialNode::SyncGraph(SpatialGraph* graph)
 	}
 }
 
-void SpatialNode::BuildRenderQueue(RenderQueue& queue)
+void SpatialNode::BuildRenderQueue(RenderQueue& queue, ISpatialNodeOrderProvider* provider)
 {
+	SortChildrenIfNeeded(provider);
+
 	if (IRenderable* renderable = dynamic_cast<IRenderable*>(GetOwner()))
 	{
 		renderable->AddToRenderQueue(queue);
@@ -65,19 +69,35 @@ void SpatialNode::BuildRenderQueue(RenderQueue& queue)
 	{
 		if (child)
 		{
-			child->BuildRenderQueue(queue);
+			child->BuildRenderQueue(queue, provider);
 		}
 	}
 }
 
-void SpatialNode::SetParent(SpatialNode* _parent)
+void SpatialNode::SortChildrenIfNeeded(ISpatialNodeOrderProvider* provider)
+{
+	if (!isChildrenDirty || !provider)
+	{
+		return;
+	}
+
+	std::stable_sort(children.begin(), children.end(),
+		[&](SpatialNode* a, SpatialNode* b)
+		{
+			return provider->Less(a, b);
+		});
+
+	isChildrenDirty = false;
+}
+
+bool SpatialNode::SetParent(SpatialNode* _parent)
 {
 	if (parent != _parent)
 	{
 		if (_parent && _parent->IsAncestorOf(this))
 		{
 			SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Cannot attach parent to one of its children.");
-			return;
+			return false;
 		}
 
 		wasRoot = (parent == nullptr);
@@ -105,17 +125,23 @@ void SpatialNode::SetParent(SpatialNode* _parent)
 		SetWorldPosition(worldPos);
 		SetWorldRotate(worldRot);
 		SetWorldScale(worldScale);
+
+		return true;
 	}
+
+	return false;
 }
 
 void SpatialNode::AddChild(SpatialNode* child)
 {
 	children.push_back(child);
+	MarkChildrenDirty();
 }
 
 void SpatialNode::RemoveChild(SpatialNode* child)
 {
 	children.erase(std::remove(children.begin(), children.end(), child), children.end());
+	MarkChildrenDirty();
 }
 
 bool SpatialNode::IsAncestorOf(SpatialNode* node)

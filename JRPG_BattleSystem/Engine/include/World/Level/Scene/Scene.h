@@ -74,7 +74,7 @@ public:
 	 */
 	void BuildRenderQueue(RenderQueue& queue)
 	{
-		graph.BuildRenderQueue(queue);
+		graph.BuildRenderQueue(queue, nullptr);
 	}
 
 	CameraComponent* GetActiveCamera() { return activeCamera; }

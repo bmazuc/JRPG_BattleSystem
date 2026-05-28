@@ -255,6 +255,12 @@
     <ClCompile Include="Engine\source\World\Level\Level.cpp">
       <Filter>Source Files\Engine\World\Level</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\source\UI\WidgetOrderProvider.cpp">
+      <Filter>Source Files\Engine\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\include\BattleLevel\SwitchZOrderButton.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\include\Core\Engine.h">
@@ -397,6 +403,15 @@
     </ClInclude>
     <ClInclude Include="Engine\include\Core\SDLWindowConfig.h">
       <Filter>Header Files\Engine\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\include\World\SpatialGraph\ISpatialNodeOrderProvider.h">
+      <Filter>Header Files\Engine\World\SpatialGraph</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\include\UI\WidgetOrderProvider.h">
+      <Filter>Header Files\Engine\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\include\BattleLevel\SwitchZOrderButton.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
