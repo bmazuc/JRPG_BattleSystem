@@ -24,7 +24,7 @@ public:
 	 */
 	void Init();
 
-	void RenderWorld(World* world, glm::vec2 viewportBaseResolution, glm::vec2 windowSize);
+	void RenderWorld(World* world, glm::vec2 viewportBaseResolution);
 	
 private:
 	/**
@@ -33,7 +33,7 @@ private:
 	void InitRenderData();
 
 	void RenderScene(RenderBucket& buckets, CameraComponent* camera, glm::vec2 viewportBaseResolution);
-	void RenderUI(std::vector<RenderItem*>& uiItems, glm::vec2 windowSize);
+	void RenderUI(std::vector<RenderItem*>& uiItems, glm::vec2 viewportBaseResolution);
 
 	/**
 	 * Renders a material using given transformation matrices.

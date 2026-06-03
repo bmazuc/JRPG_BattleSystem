@@ -16,7 +16,7 @@ bool Window::CreateSDLWindow(const SDLWindowConfig& config)
 		return false;
 	}
 
-	viewportBaseResolution = config.resolution;
+	viewportData = ViewportData(config.resolution);
 
 	return true;
 }
@@ -35,9 +35,7 @@ bool Window::CreateOpenGLContext(int swapInterval)
 
 glm::vec2 Window::GetSize() const
 {
-	int windowWidth, windowHeight;
-	SDL_GetWindowSize(window, &windowWidth, &windowHeight);
-	return glm::vec2(windowWidth, windowHeight);
+	return viewportData.windowSize;
 }
 
 Window::~Window()
@@ -62,4 +60,10 @@ bool Window::SwapBuffers()
 void Window::Resize(glm::vec2 size)
 {
 	glViewport(0, 0, (int)size.x, (int)size.y);
+	viewportData.windowSize = size;
+}
+
+glm::vec2 Window::ScreenToViewport(glm::vec2 screenPos) const
+{
+	return screenPos * viewportData.baseResolution / viewportData.windowSize;
 }

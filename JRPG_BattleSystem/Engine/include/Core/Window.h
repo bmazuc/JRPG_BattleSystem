@@ -3,12 +3,25 @@
 
 #include "SDLWindowConfig.h"
 
+struct ViewportData
+{
+public:
+	ViewportData() = default;
+	ViewportData(glm::vec2 initialResolution) : windowSize(initialResolution), baseResolution(initialResolution) {}
+
+	glm::vec2 windowSize;
+	// Initial resolution used for viewport calculations.
+	glm::vec2 baseResolution;
+};
+
 /**
  * Wrapper around an SDL window and OpenGL context.
  */
 class Window
 {
 public:
+	~Window();
+
 	/**
 	 * Creates the SDL window.
 	 * @param config Window creation configuration.
@@ -23,8 +36,6 @@ public:
 	 * @return True on success, false otherwise.
 	 */
 	bool CreateOpenGLContext(int swapInterval);
-
-	~Window();
 
 	/**
 	 * Swaps the front and back rendering buffers.
@@ -42,20 +53,21 @@ public:
 	/**
 	 * Returns the initial viewport resolution.
 	 */
-	glm::vec2 GetViewportBaseResolution() const { return viewportBaseResolution; }
+	const ViewportData& GetViewportData() const { return viewportData; }
 	
 	/**
 	 * Returns the current window size.
 	 */
 	glm::vec2 GetSize() const;
 
+	glm::vec2 ScreenToViewport(glm::vec2 screenPos) const;
+
 private: 
 	SDL_Window* window = nullptr;
 
 	SDL_GLContext glContext = nullptr;
 
-	// Initial resolution used for viewport calculations.
-	glm::vec2 viewportBaseResolution;
+	ViewportData viewportData;
 };
 
 #endif // __WINDOW_H_INCLUDED__

@@ -4,6 +4,7 @@
 #include "World/Level/LevelSubsystem.h"
 
 class EnemySpawner;
+class Enemy;
 
 class BattleManager : public LevelSubsystem
 {
@@ -15,6 +16,8 @@ public:
 private:
 	void SpawnEnemies();
 	void OnEnemyDeath();
+
+	void OnEnemySelected(Enemy* selectedEnemy);
 
 	EnemySpawner* enemySpawner;
 	size_t aliveEnemiesCount = 0;

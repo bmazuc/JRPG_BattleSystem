@@ -28,9 +28,12 @@ public:
 
 	void OnClick();
 
+	void Kill();
+
 	SpriteRendererComponent* GetSpriteRenderer() { return spriteRenderer; }
 	const SpriteRendererComponent* GetSpriteRenderer() const { return spriteRenderer; }
 
+	Delegate<void, Enemy*> OnSelected;
 	Delegate<void> OnDeath;
 
 private:
@@ -38,6 +41,8 @@ private:
 	SpriteRendererComponent* spriteRenderer;
 
 	DelegateHandle clickHandle;
+
+	bool isAlive = true;
 };
 
 #endif // __ENEMY_H_INCLUDED__

@@ -29,18 +29,26 @@ public:
 	 * If called during delegate execution, the binding is deferred until iteration completes.
 	 * @return Handle used to unbind the callback.
 	 */
-	DelegateHandle Bind(std::function<ReturnType(Parameters...)> func)
+	template<typename T>
+	DelegateHandle Bind(T* object, ReturnType(T::* func)(Parameters...))
 	{
-		DelegateFunction<ReturnType, Parameters...> delegateFunction = { nextId, func };
-		if (isIterating)
-		{
-			pendingBindFunctionHandles.push_back(delegateFunction);		
-		}
-		else
-		{
-			functions.push_back(delegateFunction);
-		}
-		return nextId++;
+		return InternalBind(
+			[object, func](Parameters... params)
+			{
+				(object->*func)(params...);
+			}
+		);
+	}
+
+	template<typename T>
+	DelegateHandle Bind(T* object, ReturnType(T::* func)(Parameters...) const)
+	{
+		return InternalBind(
+			[object, func](Parameters... params)
+			{
+				(object->*func)(params...);
+			}
+		);
 	}
 
 	/**
@@ -94,6 +102,20 @@ public:
 	}
 
 private:
+	DelegateHandle InternalBind(std::function<ReturnType(Parameters...)> func)
+	{
+		DelegateFunction<ReturnType, Parameters...> delegateFunction = { nextId, func };
+		if (isIterating)
+		{
+			pendingBindFunctionHandles.push_back(delegateFunction);
+		}
+		else
+		{
+			functions.push_back(delegateFunction);
+		}
+		return nextId++;
+	}
+
 	void InternalUnbind(DelegateHandle handle)
 	{
 		functions.erase(

@@ -75,16 +75,3 @@ void Scene::InternalSpawnActor(Actor* actor, std::string name, const ActorSpawnI
 	actorsCollection.RegisterToAdd(actor);
 	RegisterDirtyActor(actor);
 }
-
-glm::vec2 Scene::ScreenToWorld(glm::vec2 screenPos)
-{
-	glm::vec2 worldPos = screenPos;
-
-	if (activeCamera)
-	{
-		worldPos -= activeCamera->GetWorldPosition();
-		worldPos /= activeCamera->GetZoom();
-	}
-
-	return worldPos;
-}

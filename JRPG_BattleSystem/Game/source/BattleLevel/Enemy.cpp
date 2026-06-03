@@ -14,7 +14,7 @@ Enemy::Enemy(EnemyData data)
 void Enemy::SetupInputs(PlayerController* _playerController)
 {
     playerController = _playerController;
-    clickHandle = playerController->OnClick.Bind(std::bind(&Enemy::OnClick, this));
+    clickHandle = playerController->OnClick.Bind(this, &Enemy::OnClick);
 }
 
 void Enemy::OnClick()
@@ -24,9 +24,18 @@ void Enemy::OnClick()
         glm::vec2 mousePos = playerController->GetMousePosition();
         if (spriteRenderer && spriteRenderer->IsHovered(mousePos))
         {
-            MarkForDestruction();
-            OnDeath.Call();
+            OnSelected.Call(this);
         }
+    }
+}
+
+void Enemy::Kill()
+{
+    if (isAlive)
+    {
+        MarkForDestruction();
+        isAlive = false;
+        OnDeath.Call();
     }
 }
 

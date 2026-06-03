@@ -13,7 +13,8 @@ void BattleManager::SpawnEnemies()
 		std::vector<Enemy*> enemies = enemySpawner->GenerateEnemies();
 		for (Enemy* enemy : enemies)
 		{
-			enemy->OnDeath.Bind(std::bind(&BattleManager::OnEnemyDeath, this));
+			enemy->OnSelected.Bind(this, &BattleManager::OnEnemySelected);
+			enemy->OnDeath.Bind(this, &BattleManager::OnEnemyDeath);
 		}
 		aliveEnemiesCount = enemies.size();
 	}
@@ -26,4 +27,9 @@ void BattleManager::OnEnemyDeath()
 	{
 		SpawnEnemies();
 	}
+}
+
+void BattleManager::OnEnemySelected(Enemy* selectedEnemy)
+{
+	selectedEnemy->Kill();
 }

@@ -9,6 +9,8 @@
 class CameraComponent : public SceneComponent
 {
 public:
+	glm::vec2 ScreenToWorld(glm::vec2 screenPos);
+
 	float GetZoom() const { return zoom; }
 	void SetZoom(float newZoom) { zoom = newZoom; }
 

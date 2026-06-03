@@ -24,7 +24,7 @@ void BattleLevel::CreateLevel()
 
 	Scene* scene = GetScene();
 
-	EnemySpawner* spawner = scene->SpawnActor<EnemySpawner>("EnemySpawner", ActorSpawnInfo(nullptr, TransformSpace::World, glm::vec2(320, 240)));
+	EnemySpawner* spawner = scene->SpawnActor<EnemySpawner>("EnemySpawner", ActorSpawnInfo(nullptr, TransformSpace::World, glm::vec2(100, 240)));
 	battleManager->SetEnemySpawner(spawner);
 
 	EnemyData redEnemy;

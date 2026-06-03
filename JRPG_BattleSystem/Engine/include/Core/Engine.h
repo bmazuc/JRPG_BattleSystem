@@ -42,6 +42,8 @@ public:
 class Engine
 {
 public:
+	Engine();
+
 	/**
 	 * Initializes engine systems and resources.
 	 *
@@ -60,8 +62,17 @@ public:
 	 */
 	void Shutdown();
 
+	const Window* GetWindow() const { return window; }
+	const Renderer* GetRenderer() const { return renderer; }
+	const InputManager* GetInputManager() const { return inputManager; }
+
 	World* GetWorld() { return world; }
 	const World* GetWorld() const { return world; }
+
+	static const Engine* Get()
+	{
+		return instance;
+	}
 
 private:
 	/**
@@ -105,6 +116,8 @@ private:
 	// Delta time clamp range used to stabilize simulation updates. Values are the one that seems to be used in UE.
 	float minDeltaTime = 0.0005f;
 	float maxDeltaTime = 0.40f;
+
+	static Engine* instance;
 };
 
 #endif // __ENGINE_H_INCLUDED__

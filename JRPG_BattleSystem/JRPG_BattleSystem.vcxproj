@@ -137,6 +137,7 @@
   <ItemGroup>
     <ClCompile Include="Engine\include\Components\SceneComponent.cpp" />
     <ClCompile Include="Engine\source\Components\ActorComponent.cpp" />
+    <ClCompile Include="Engine\source\Components\Rendering\CameraComponent.cpp" />
     <ClCompile Include="Engine\source\Components\Rendering\SpriteRendererComponent.cpp" />
     <ClCompile Include="Engine\source\Core\Engine.cpp" />
     <ClCompile Include="Engine\source\Core\Inputs\InputManager.cpp" />

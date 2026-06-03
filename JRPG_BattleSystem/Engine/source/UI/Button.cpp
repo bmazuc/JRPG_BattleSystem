@@ -8,6 +8,7 @@ Button::Button(std::string textureName, std::string shaderName, glm::vec3 color)
 bool Button::IsPointInside(glm::vec2 point) const
 {
     glm::vec2 bounds = size * GetWorldScale();
+
     glm::vec2 worldPos = GetWorldPosition();
 
     return point.x >= worldPos.x - bounds.x &&

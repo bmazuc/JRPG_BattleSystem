@@ -12,6 +12,13 @@
 #include <SDL3/SDL_opengl.h>
 #include <algorithm>
 
+Engine* Engine::instance = nullptr;
+
+Engine::Engine()
+{
+    instance = this;
+}
+
 bool Engine::Start(const EngineConfig& config)
 {
     if (InitSDL() 
@@ -48,7 +55,7 @@ void Engine::Run()
         float deltaTime = ComputeDeltaTime(lastTime);
    
         world->Update(deltaTime, inputManager);
-        renderer->RenderWorld(world, window->GetViewportBaseResolution(), window->GetSize());
+        renderer->RenderWorld(world, window->GetViewportData().baseResolution);
 
         window->SwapBuffers();
     }

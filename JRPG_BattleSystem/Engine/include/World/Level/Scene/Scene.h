@@ -85,8 +85,6 @@ public:
 	 */
 	void SetActiveCamera(CameraComponent* camera) { activeCamera = camera; }
 
-	glm::vec2 ScreenToWorld(glm::vec2 screenPos);
-
 	void RegisterDirtyActor(Actor* actor)
 	{
 		dirtyActors.push_back(actor);

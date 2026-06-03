@@ -2,6 +2,8 @@
 #include "Core/Inputs/InputManager.h"
 #include "UI/Button.h"
 #include "UI/UserWidget.h"
+#include "Core/Engine.h"
+#include "Core/Window.h"
 
 #include <SDL3/SDL_mouse.h>
 
@@ -43,7 +45,15 @@ void UISystem::Construct()
 
 void UISystem::UpdateInputs(InputManager* inputManager)
 {
+	const Engine* engine = Engine::Get();
+
+	if (!engine)
+	{
+		return;
+	}
+
 	glm::vec2 mouse = inputManager->GetMousePosition();
+	mouse = engine->GetWindow()->ScreenToViewport(mouse);
 
 	for (Widget* element : widgetsCollection.GetCollection())
 	{

@@ -67,13 +67,13 @@ void Renderer::InitRenderData()
     glBindVertexArray(0);
 }
 
-void Renderer::RenderWorld(World* world, glm::vec2 viewportBaseResolution, glm::vec2 windowSize)
+void Renderer::RenderWorld(World* world, glm::vec2 viewportBaseResolution)
 {
     RenderQueue queue;
     world->BuildRenderQueue(queue);
 
     RenderScene(queue.worldBuckets, world->GetActiveLevel()->GetScene()->GetActiveCamera(), viewportBaseResolution);
-    RenderUI(queue.uiItems, windowSize);
+    RenderUI(queue.uiItems, viewportBaseResolution);
 
     queue.Clear();
 }
@@ -108,9 +108,9 @@ void Renderer::RenderScene(RenderBucket& buckets, CameraComponent* camera, glm::
     }
 }
 
-void Renderer::RenderUI(std::vector<RenderItem*>& uiItems, glm::vec2 windowSize)
+void Renderer::RenderUI(std::vector<RenderItem*>& uiItems, glm::vec2 viewportBaseResolution)
 {
-    glm::mat4 projection = glm::ortho(0.0f, windowSize.x, windowSize.y, 0.0f, -1.0f, 1.0f);
+    glm::mat4 projection = glm::ortho(0.0f, viewportBaseResolution.x, viewportBaseResolution.y, 0.0f, -1.0f, 1.0f);
 
     for (RenderItem* item : uiItems)
     {

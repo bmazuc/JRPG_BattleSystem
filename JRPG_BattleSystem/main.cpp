@@ -21,22 +21,20 @@ int main()
     EngineConfig config = EngineConfig();
     config.windowConfig = SDLWindowConfig("JRPG_BattleSystem", glm::vec2(640.0f, 480.0f), SDL_WINDOW_RESIZABLE);
     
-    Engine* engine = new Engine();
+    Engine engine = Engine();
 
-    if (engine->Start(config))
+    if (engine.Start(config))
     {
-        if (World* world = engine->GetWorld())
+        if (World* world = engine.GetWorld())
         {
             world->AddLevel<MainMenuLevel>("mainMenu");
             world->AddLevel<BattleLevel>("battleLevel");
             world->SetDefaultLevel("mainMenu");
         }
-        engine->Run();
+        engine.Run();
     }
 
-    engine->Shutdown();
-    delete engine;
-    engine = nullptr;
+    engine.Shutdown();
 
     return 0;
 }
