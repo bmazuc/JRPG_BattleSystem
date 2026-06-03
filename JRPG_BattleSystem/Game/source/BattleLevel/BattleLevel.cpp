@@ -1,5 +1,6 @@
 #include "BattleLevel/BattleLevel.h"
-#include "BattleLevel/EnemySpawner.h"
+#include "BattleLevel/Spawners/EnemySpawner.h"
+#include "BattleLevel/Spawners/PlayerSpawner.h"
 #include "Components/Camera/CameraComponent.h"
 #include "Components/Rendering/SpriteRendererComponent.h"
 #include "Common/UI/LoadLevelButton.h"
@@ -10,7 +11,6 @@
 #include "World/World.h"
 #include "World/Systems/UISystem.h"
 #include "UI/UserWidget.h"
-#include "BattleLevel/SwitchZOrderButton.h"
 
 void BattleLevel::LoadAssets()
 {
@@ -24,26 +24,17 @@ void BattleLevel::CreateLevel()
 
 	Scene* scene = GetScene();
 
-	EnemySpawner* spawner = scene->SpawnActor<EnemySpawner>("EnemySpawner", ActorSpawnInfo(nullptr, TransformSpace::World, glm::vec2(100, 240)));
-	battleManager->SetEnemySpawner(spawner);
+	EnemySpawner* enemySpawner = scene->SpawnActor<EnemySpawner>("EnemySpawner", ActorSpawnInfo(nullptr, TransformSpace::World, glm::vec2(100, 240)));
+	enemySpawner->AddCharacterData(CharacterData("goblin", "default", glm::vec3(1, 0, 0), glm::vec2(80, 83))); // Red enemy
+	enemySpawner->AddCharacterData(CharacterData("goblin", "default", glm::vec3(0, 1, 0), glm::vec2(80, 83))); // Green enemy
+	enemySpawner->AddCharacterData(CharacterData("goblin", "default", glm::vec3(0, 0, 1), glm::vec2(80, 83))); // Blue enemy
+	battleManager->SetEnemySpawner(enemySpawner);
 
-	EnemyData redEnemy;
-	redEnemy.textureName = "goblin";
-	redEnemy.spriteSize = glm::vec2(150, 153);
-	redEnemy.color = glm::vec3(1, 0, 0);
-	spawner->AddEnemyData(redEnemy);
-
-	EnemyData blueEnemy;
-	blueEnemy.textureName = "goblin";
-	blueEnemy.spriteSize = glm::vec2(150, 153);
-	blueEnemy.color = glm::vec3(0, 0, 1);
-	spawner->AddEnemyData(blueEnemy);
-
-	EnemyData greenEnemy;
-	greenEnemy.textureName = "goblin";
-	greenEnemy.spriteSize = glm::vec2(150, 153);
-	greenEnemy.color = glm::vec3(0, 1, 0);
-	spawner->AddEnemyData(greenEnemy);
+	PlayerSpawner* playerSpawner = scene->SpawnActor<PlayerSpawner>("EnemySpawner", ActorSpawnInfo(nullptr, TransformSpace::World, glm::vec2(540, 240)));
+	playerSpawner->AddCharacterData(CharacterData("goblin", "default", glm::vec3(1, 1, 0), glm::vec2(80, 83)));
+	playerSpawner->AddCharacterData(CharacterData("goblin", "default", glm::vec3(1, 0, 1), glm::vec2(80, 83)));
+	playerSpawner->AddCharacterData(CharacterData("goblin", "default", glm::vec3(0, 1, 1), glm::vec2(80, 83)));
+	battleManager->SetPlayerSpawner(playerSpawner);
 
 	Actor* background = scene->SpawnActor<Actor>("Background", ActorSpawnInfo(nullptr, TransformSpace::World, glm::vec2(320, 240)));
 	SpriteRendererComponent* backgroundSpriteRenderer = background->SpawnSceneComponent<SpriteRendererComponent>("Sprite renderer", SceneComponentSpawnInfo(), "background");
@@ -66,18 +57,7 @@ void BattleLevel::CreateLevel()
 	mainMenuButtonText->SetContent("Main Menu");
 	mainMenuButtonText->SetSize(24);
 
-	Image* image1 = userWidget->CreateWidget<Image>("Image1", UISpawnInfo(nullptr, TransformSpace::World, glm::vec2(10, 390)), "goblin");
-	image1->SetSize(glm::vec2(75, 77));
-
-	Image* image2 = userWidget->CreateWidget<Image>("Image2", UISpawnInfo(nullptr, TransformSpace::World, glm::vec2(10, 390)));
-	image2->SetSize(glm::vec2(75, 77));
-
-	SwitchZOrderButton* switchButton = userWidget->CreateWidget<SwitchZOrderButton>("MainMenuButton", UISpawnInfo(nullptr, TransformSpace::World, glm::vec2(480, 390)));
-	switchButton->GetMaterial()->SetTexture("button");
-	switchButton->SetSize(glm::vec2(150, 50));
-	switchButton->SetWidget(image1);
-
-	Text* switchButtonText = userWidget->CreateWidget<Text>("SwitchButtonText", UISpawnInfo(switchButton, TransformSpace::Local));
-	switchButtonText->SetContent("zOrder");
-	switchButtonText->SetSize(24);
+	Text* turnText = userWidget->CreateWidget<Text>("TurnText", UISpawnInfo(nullptr, TransformSpace::World, glm::vec2(100, 20)));
+	turnText->SetSize(24);
+	battleManager->SetTurnText(turnText);
 }

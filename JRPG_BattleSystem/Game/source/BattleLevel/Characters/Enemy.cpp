@@ -2,13 +2,9 @@
 #include "Components/Rendering/SpriteRendererComponent.h"
 #include "World/PlayerController.h"
 
-Enemy::Enemy(EnemyData data)
+Enemy::Enemy(CharacterData data)
+    : Character(data)
 {
-    spriteRenderer = SpawnSceneComponent<SpriteRendererComponent>("Sprite render", SceneComponentSpawnInfo(),
-        data.textureName, data.shaderName, data.color);
-
-    spriteRenderer->SetSize(data.spriteSize);
-    spriteRenderer->SetZOrder(1);
 }
 
 void Enemy::SetupInputs(PlayerController* _playerController)
@@ -26,16 +22,6 @@ void Enemy::OnClick()
         {
             OnSelected.Call(this);
         }
-    }
-}
-
-void Enemy::Kill()
-{
-    if (isAlive)
-    {
-        MarkForDestruction();
-        isAlive = false;
-        OnDeath.Call();
     }
 }
 

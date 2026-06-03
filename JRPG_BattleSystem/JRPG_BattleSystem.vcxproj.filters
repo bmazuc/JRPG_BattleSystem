@@ -142,6 +142,21 @@
     <Filter Include="Source Files\Engine\World\Level\Scene">
       <UniqueIdentifier>{1462d54a-aa31-47e0-ae1b-56e15cb64c61}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Engine\Components\Camera">
+      <UniqueIdentifier>{b804249a-c6b2-428d-ac28-4eab4bb9c72e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\BattleLevel\Characters">
+      <UniqueIdentifier>{ec0185c0-8d48-4342-bcf1-66e05e13aa02}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\BattleLevel\Spawners">
+      <UniqueIdentifier>{ee37cff0-df9e-467b-bd8c-2844c3b62748}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\BattleLevel\Characters">
+      <UniqueIdentifier>{4a37e99f-8119-4672-b439-a2b9e5f449e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\BattleLevel\Spawners">
+      <UniqueIdentifier>{34ecf80f-324c-40ad-bcd2-663b3e41c804}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -234,16 +249,7 @@
     <ClCompile Include="Engine\source\World\SpatialGraph\SpatialNode.cpp">
       <Filter>Source Files\Engine\World\SpatialGraph</Filter>
     </ClCompile>
-    <ClCompile Include="Game\include\BattleLevel\BattleManager.cpp">
-      <Filter>Header Files\Game\BattleLevel</Filter>
-    </ClCompile>
     <ClCompile Include="Game\source\BattleLevel\BattleLevel.cpp">
-      <Filter>Source Files\Game\BattleLevel</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\source\BattleLevel\Enemy.cpp">
-      <Filter>Source Files\Game\BattleLevel</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\source\BattleLevel\EnemySpawner.cpp">
       <Filter>Source Files\Game\BattleLevel</Filter>
     </ClCompile>
     <ClCompile Include="Engine\source\World\Level\Scene\Actor.cpp">
@@ -258,11 +264,26 @@
     <ClCompile Include="Engine\source\UI\WidgetOrderProvider.cpp">
       <Filter>Source Files\Engine\UI</Filter>
     </ClCompile>
-    <ClCompile Include="Game\include\BattleLevel\SwitchZOrderButton.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Engine\source\Components\Camera\CameraComponent.cpp">
+      <Filter>Source Files\Engine\Components\Camera</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\source\Components\Rendering\CameraComponent.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Game\source\BattleLevel\Characters\Character.cpp">
+      <Filter>Source Files\Game\BattleLevel\Characters</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\source\BattleLevel\Characters\Enemy.cpp">
+      <Filter>Source Files\Game\BattleLevel\Characters</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\source\BattleLevel\Spawners\CharacterSpawner.cpp">
+      <Filter>Source Files\Game\BattleLevel\Spawners</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\source\BattleLevel\Spawners\EnemySpawner.cpp">
+      <Filter>Source Files\Game\BattleLevel\Spawners</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\source\BattleLevel\Spawners\PlayerSpawner.cpp">
+      <Filter>Source Files\Game\BattleLevel\Spawners</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\source\BattleLevel\BattleManager.cpp">
+      <Filter>Source Files\Game\BattleLevel</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -386,12 +407,6 @@
     <ClInclude Include="Game\include\BattleLevel\BattleManager.h">
       <Filter>Header Files\Game\BattleLevel</Filter>
     </ClInclude>
-    <ClInclude Include="Game\include\BattleLevel\Enemy.h">
-      <Filter>Header Files\Game\BattleLevel</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\include\BattleLevel\EnemySpawner.h">
-      <Filter>Header Files\Game\BattleLevel</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\include\World\Level\Level.h">
       <Filter>Header Files\Engine\World\Level</Filter>
     </ClInclude>
@@ -413,8 +428,26 @@
     <ClInclude Include="Engine\include\UI\WidgetOrderProvider.h">
       <Filter>Header Files\Engine\UI</Filter>
     </ClInclude>
-    <ClInclude Include="Game\include\BattleLevel\SwitchZOrderButton.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Game\include\BattleLevel\CharacterSpawner.h">
+      <Filter>Header Files\Game\BattleLevel</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\include\BattleLevel\PlayerSpawner.h">
+      <Filter>Header Files\Game\BattleLevel</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\include\BattleLevel\Characters\Character.h">
+      <Filter>Header Files\Game\BattleLevel\Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\include\BattleLevel\Characters\Enemy.h">
+      <Filter>Header Files\Game\BattleLevel\Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\include\BattleLevel\Spawners\CharacterSpawner.h">
+      <Filter>Header Files\Game\BattleLevel\Spawners</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\include\BattleLevel\Spawners\EnemySpawner.h">
+      <Filter>Header Files\Game\BattleLevel\Spawners</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\include\BattleLevel\Spawners\PlayerSpawner.h">
+      <Filter>Header Files\Game\BattleLevel\Spawners</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

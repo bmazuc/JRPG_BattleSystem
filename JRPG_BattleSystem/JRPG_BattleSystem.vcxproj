@@ -137,7 +137,7 @@
   <ItemGroup>
     <ClCompile Include="Engine\include\Components\SceneComponent.cpp" />
     <ClCompile Include="Engine\source\Components\ActorComponent.cpp" />
-    <ClCompile Include="Engine\source\Components\Rendering\CameraComponent.cpp" />
+    <ClCompile Include="Engine\source\Components\Camera\CameraComponent.cpp" />
     <ClCompile Include="Engine\source\Components\Rendering\SpriteRendererComponent.cpp" />
     <ClCompile Include="Engine\source\Core\Engine.cpp" />
     <ClCompile Include="Engine\source\Core\Inputs\InputManager.cpp" />
@@ -167,11 +167,13 @@
     <ClCompile Include="Engine\source\World\SpatialGraph\SpatialNode.cpp" />
     <ClCompile Include="Engine\source\World\Systems\UISystem.cpp" />
     <ClCompile Include="Engine\source\World\World.cpp" />
-    <ClCompile Include="Game\include\BattleLevel\BattleManager.cpp" />
-    <ClCompile Include="Game\include\BattleLevel\SwitchZOrderButton.cpp" />
     <ClCompile Include="Game\source\BattleLevel\BattleLevel.cpp" />
-    <ClCompile Include="Game\source\BattleLevel\Enemy.cpp" />
-    <ClCompile Include="Game\source\BattleLevel\EnemySpawner.cpp" />
+    <ClCompile Include="Game\source\BattleLevel\BattleManager.cpp" />
+    <ClCompile Include="Game\source\BattleLevel\Characters\Character.cpp" />
+    <ClCompile Include="Game\source\BattleLevel\Characters\Enemy.cpp" />
+    <ClCompile Include="Game\source\BattleLevel\Spawners\CharacterSpawner.cpp" />
+    <ClCompile Include="Game\source\BattleLevel\Spawners\EnemySpawner.cpp" />
+    <ClCompile Include="Game\source\BattleLevel\Spawners\PlayerSpawner.cpp" />
     <ClCompile Include="Game\source\Common\UI\LoadLevelButton.cpp" />
     <ClCompile Include="Game\source\MainMenu\MainMenuLevel.cpp" />
     <ClCompile Include="main.cpp" />
@@ -222,9 +224,13 @@
     <ClInclude Include="Engine\include\World\World.h" />
     <ClInclude Include="Game\include\BattleLevel\BattleLevel.h" />
     <ClInclude Include="Game\include\BattleLevel\BattleManager.h" />
-    <ClInclude Include="Game\include\BattleLevel\Enemy.h" />
-    <ClInclude Include="Game\include\BattleLevel\EnemySpawner.h" />
-    <ClInclude Include="Game\include\BattleLevel\SwitchZOrderButton.h" />
+    <ClInclude Include="Game\include\BattleLevel\CharacterSpawner.h" />
+    <ClInclude Include="Game\include\BattleLevel\Characters\Character.h" />
+    <ClInclude Include="Game\include\BattleLevel\Characters\Enemy.h" />
+    <ClInclude Include="Game\include\BattleLevel\PlayerSpawner.h" />
+    <ClInclude Include="Game\include\BattleLevel\Spawners\CharacterSpawner.h" />
+    <ClInclude Include="Game\include\BattleLevel\Spawners\EnemySpawner.h" />
+    <ClInclude Include="Game\include\BattleLevel\Spawners\PlayerSpawner.h" />
     <ClInclude Include="Game\include\Common\UI\LoadLevelButton.h" />
     <ClInclude Include="Game\include\MainMenu\MainMenuLevel.h" />
   </ItemGroup>

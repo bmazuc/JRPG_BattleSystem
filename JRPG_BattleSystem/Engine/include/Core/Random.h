@@ -23,6 +23,12 @@ public:
 	 */
 	static float FromRange(float min, float max);
 
+	template<typename T>
+	static void ShuffleVector(std::vector<T>& v)
+	{
+		std::shuffle(v.begin(), v.end(), s_Generator);
+	}
+
 private:
 	// Shared random number generator instance.
 	static std::mt19937 s_Generator;
