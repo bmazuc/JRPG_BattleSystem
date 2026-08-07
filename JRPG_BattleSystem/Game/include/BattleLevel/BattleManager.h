@@ -26,6 +26,7 @@ public:
 	void SetEnemySpawner(EnemySpawner* newEnemySpawner) { enemySpawner = newEnemySpawner; }
 	void SetPlayerSpawner(PlayerSpawner* newPlayerSpawner) { playerSpawner = newPlayerSpawner; }
 	void SetTurnText(Text* text) { turnText = text; }
+	void SetEnemyTurnDuration(float duration) { enemyTurnDuration = duration; }
 
 private:
 	void GenerateTurnOrder();
@@ -56,8 +57,11 @@ private:
 
 	Text* turnText;
 
-	// Temp value used to simulate enemy turn.
-	float timer;
+	// Value used to simulate enemy turn and increase enemy turn readability.
+	float enemyTurnDuration = 1.0f;
+	float currentEnemyTurnDuration;
+
+	bool resolvingTurn = false;
 };
 
 #endif // __BATTLE_MANAGER_H_INCLUDED__

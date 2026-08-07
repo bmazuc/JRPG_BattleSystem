@@ -21,11 +21,12 @@ void BattleLevel::LoadAssets()
 void BattleLevel::CreateLevel()
 {
 	BattleManager* battleManager = AddSubsystem<BattleManager>("battleManager");
+	battleManager->SetEnemyTurnDuration(0.5f);
 
 	Scene* scene = GetScene();
 
 	EnemySpawner* enemySpawner = scene->SpawnActor<EnemySpawner>("EnemySpawner", ActorSpawnInfo(nullptr, TransformSpace::World, glm::vec2(100, 240)));
-	enemySpawner->AddCharacterData(CharacterData("goblin", "default", glm::vec3(1, 0, 0), glm::vec2(80, 83))); // Red enemy
+	enemySpawner->AddCharacterData(CharacterData("goblin", "default", glm::vec3(1, 1, 0), glm::vec2(80, 83))); // Yellow enemy
 	enemySpawner->AddCharacterData(CharacterData("goblin", "default", glm::vec3(0, 1, 0), glm::vec2(80, 83))); // Green enemy
 	enemySpawner->AddCharacterData(CharacterData("goblin", "default", glm::vec3(0, 0, 1), glm::vec2(80, 83))); // Blue enemy
 	battleManager->SetEnemySpawner(enemySpawner);

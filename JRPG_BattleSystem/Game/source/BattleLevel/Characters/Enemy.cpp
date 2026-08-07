@@ -1,4 +1,4 @@
-#include "BattleLevel/Enemy.h"
+#include "BattleLevel/Characters/Enemy.h"
 #include "Components/Rendering/SpriteRendererComponent.h"
 #include "World/PlayerController.h"
 

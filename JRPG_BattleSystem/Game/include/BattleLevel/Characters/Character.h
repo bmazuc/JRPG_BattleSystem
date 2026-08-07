@@ -27,16 +27,27 @@ class Character : public Actor
 public:
 	Character(CharacterData);
 
+	void Update(float deltaTime) override;
+		 
 	SpriteRendererComponent* GetSpriteRenderer() { return spriteRenderer; }
 	const SpriteRendererComponent* GetSpriteRenderer() const { return spriteRenderer; }
 
-	void Kill();
+	void TakeDamage(int damage);
 
 	Delegate<void, Character*> OnDeath;
+
+	glm::vec3 originalColor;
+	float damageTimer = 0.0f;
+	float damageDuration = 0.2f;
+
+private:
+	void Blink(float t);
+	void Kill();
 
 protected:
 	SpriteRendererComponent* spriteRenderer;
 	bool isAlive = true;
+	bool isPendingKill = false;
 };
 
 #endif // __CHARACTER_H_INCLUDED__

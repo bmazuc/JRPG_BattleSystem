@@ -15,12 +15,12 @@ void BattleManager::Update(float deltaTime)
 {
 	if (currentTurn == TurnType::EnemyTurn)
 	{
-		timer -= deltaTime;
-		if (timer <= 0.0f)
+		currentEnemyTurnDuration -= deltaTime;
+		if (currentEnemyTurnDuration <= 0.0f && !resolvingTurn)
 		{
-			int index = Random::FromRange(0, playerCharacters.size() - 1);
-			playerCharacters[index]->Kill();
-			NextTurn();
+			int index = Random::FromRange(0, (int)playerCharacters.size() - 1);
+			resolvingTurn = true;
+			playerCharacters[index]->TakeDamage(1);
 		}
 	}
 }
@@ -81,6 +81,7 @@ void BattleManager::NextTurn()
 	}
 
 	turnIndex = (turnIndex + 1) % turnOrder.size();
+	resolvingTurn = false;
 }
 
 void BattleManager::InitPlayerTurn()
@@ -99,7 +100,7 @@ void BattleManager::InitEnemyTurn()
 	{
 		turnText->SetContent("Enemy Turn");
 	}
-	timer = 2.0f;
+	currentEnemyTurnDuration = enemyTurnDuration;
 }
 
 void BattleManager::OnPlayerCharacterDeath(Character* playerCharacter)
@@ -116,6 +117,10 @@ void BattleManager::OnPlayerCharacterDeath(Character* playerCharacter)
 	{
 		SpawnPlayerCharacters();
 		StartNextBattle();
+	}
+	else
+	{
+		NextTurn();
 	}
 }
 
@@ -134,19 +139,24 @@ void BattleManager::OnEnemyDeath(Character* enemy)
 		SpawnEnemies();
 		StartNextBattle();
 	}
+	else
+	{
+		NextTurn();
+	}
 }
 
 void BattleManager::OnEnemySelected(Enemy* selectedEnemy)
 {
 	if (currentTurn == TurnType::PlayerTurn)
 	{
-		selectedEnemy->Kill();
-		NextTurn();
+		resolvingTurn = true;
+		selectedEnemy->TakeDamage(1);
 	}
 }
 
 void BattleManager::StartNextBattle()
 {
+	resolvingTurn = false;
 	turnIndex = 0;
 	GenerateTurnOrder();
 }

@@ -107,7 +107,7 @@ private:
 		DelegateFunction<ReturnType, Parameters...> delegateFunction = { nextId, func };
 		if (isIterating)
 		{
-			pendingBindFunctionHandles.push_back(delegateFunction);
+			pendingBindFunctionHandles.push_back(delegateFunction); // crash ici
 		}
 		else
 		{
