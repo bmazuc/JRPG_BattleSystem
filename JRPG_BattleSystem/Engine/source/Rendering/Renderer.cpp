@@ -145,7 +145,7 @@ void Renderer::RenderMaterial(RenderTextureItem* item, glm::mat4 view, glm::mat4
     shader->SetMatrix4("view", view);
     shader->SetMatrix4("model", model);
     shader->SetMatrix4("projection", projection);
-    shader->SetVector3f("spriteColor", item->material->GetColor());
+    shader->SetVector4f("spriteColor", item->material->GetColor());
 
     DrawTexture(item->material->GetTexture());
 }
@@ -174,7 +174,7 @@ void Renderer::RenderText(RenderTextItem* item, glm::mat4 projection)
     textShader->Use();
 
     textShader->SetMatrix4("projection", projection);
-    textShader->SetVector3f("textColor", item->color);
+    textShader->SetVector4f("textColor", item->color);
 
     glActiveTexture(GL_TEXTURE0);
     glBindVertexArray(textVAO);

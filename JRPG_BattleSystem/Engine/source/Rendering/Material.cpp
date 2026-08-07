@@ -2,13 +2,13 @@
 #include "Core/Resource/ResourceManager.h"
 
 Material::Material()
-	: color(glm::vec3(1,1,1))
+	: color(glm::vec4(1.0f, 1.0f, 1.0f, 1.0f))
 {
 	shader = &ResourceManager::GetShader("default");
 	texture = &ResourceManager::GetTexture("default");
 }
 
-Material::Material(std::string textureName, std::string shaderName, glm::vec3 _color)
+Material::Material(std::string textureName, std::string shaderName, glm::vec4 _color)
 	: color(_color)
 {
 	shader = &ResourceManager::GetShader(shaderName);

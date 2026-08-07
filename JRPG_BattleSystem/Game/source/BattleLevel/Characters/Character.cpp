@@ -20,9 +20,13 @@ void Character::Update(float deltaTime)
         float t = 1.0f - (damageTimer / damageDuration);
         Blink(t);
 
-        if (damageTimer <= 0.0f && isPendingKill)
+        if (damageTimer <= 0.0f)
         {
-            Kill();
+            if (isPendingKill)
+            {
+                Kill();
+            }
+            OnBlinkEnd.Call();
         }
     }
 }
@@ -31,7 +35,15 @@ void Character::TakeDamage(int damage)
 {
     originalColor = spriteRenderer->GetMaterial()->GetColor();
     damageTimer = damageDuration;
-    isPendingKill = true; // Currently directly set, later will only be if damage are deadly.
+
+    attributes.health -= damage;
+
+    if (attributes.health <= 0.0f)
+    {
+        isPendingKill = true;
+    }
+
+    OnDamageTaken.Call(this, damage);
 }
 
 void Character::Kill()
@@ -48,14 +60,12 @@ void Character::Blink(float t)
 {
     if (t < 0.5f)
     {
-        // Original -> rouge
         float lerp = t * 2.0f;
-        spriteRenderer->GetMaterial()->SetColor(glm::mix(originalColor, glm::vec3(1.0f, 0.0f, 0.0f), lerp));
+        spriteRenderer->GetMaterial()->SetColor(glm::mix(originalColor, glm::vec4(1.0f, 0.0f, 0.0f, originalColor.a), lerp));
     }
     else
     {
-        // Rouge -> original
         float lerp = (t - 0.5f) * 2.0f;
-        spriteRenderer->GetMaterial()->SetColor(glm::mix(glm::vec3(1.0f, 0.0f, 0.0f), originalColor, lerp));
+        spriteRenderer->GetMaterial()->SetColor(glm::mix(glm::vec4(1.0f, 0.0f, 0.0f, originalColor.a), originalColor, lerp));
     }
 }

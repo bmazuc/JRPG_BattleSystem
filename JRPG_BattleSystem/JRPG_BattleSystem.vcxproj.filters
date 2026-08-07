@@ -285,6 +285,12 @@
     <ClCompile Include="Game\source\BattleLevel\BattleManager.cpp">
       <Filter>Source Files\Game\BattleLevel</Filter>
     </ClCompile>
+    <ClCompile Include="Game\include\BattleLevel\UI\BattleWidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\include\BattleLevel\UI\DamageDisplayer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\include\Core\Engine.h">
@@ -448,6 +454,12 @@
     </ClInclude>
     <ClInclude Include="Game\include\BattleLevel\Spawners\PlayerSpawner.h">
       <Filter>Header Files\Game\BattleLevel\Spawners</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\include\BattleLevel\UI\BattleWidget.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\include\BattleLevel\UI\DamageDisplayer.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

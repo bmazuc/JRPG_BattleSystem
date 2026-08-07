@@ -3,6 +3,12 @@
 
 #include <SDL3/SDL.h>
 
+void UserWidget::NativeConstruct()
+{
+	Construct();
+	OnConstruct.Call(this);
+}
+
 void UserWidget::InternalSpawnWidget(Widget* widget, std::string name, const UISpawnInfo& spawnInfo)
 {
 	widget->SetName(name);

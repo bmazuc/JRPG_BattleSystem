@@ -7,7 +7,7 @@ void WidgetCollection::Construct()
         {
             if (UserWidget* userWidget = dynamic_cast<UserWidget*>(widget))
             {
-                userWidget->Construct();
+                userWidget->NativeConstruct();
             }
         });
 }

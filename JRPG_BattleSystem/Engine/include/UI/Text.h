@@ -28,11 +28,11 @@ enum class TextScaleMode
 class Text : public Widget, public IRenderable
 {
 public:
-    Text(std::string fontName = "default", bool isCenterX = true, glm::vec3 _color = glm::vec3(1.0f, 1.0f, 1.0f));
+    Text(std::string fontName = "default", bool isCenterX = true, glm::vec4 _color = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
 
     void SetFont(std::string fontName);
     void SetContent(std::string newContent) { content = newContent; }
-    void SetColor(glm::vec3 newColor) { color = newColor; }
+    void SetColor(glm::vec4 newColor) { color = newColor; }
     
     /*
      * Warning : if the text size is too different from the font size, we could get
@@ -48,7 +48,7 @@ public:
     const Font* GetFont() const { return font; }
 
     const std::string& GetContent() const { return content; }
-    glm::vec3 GetColor() const { return color; }
+    glm::vec4 GetColor() const { return color; }
     float GetSize() const { return size; }
 
     bool IsCenterX() const { return isCenterX; }
@@ -61,7 +61,7 @@ private:
 
     Font* font = nullptr;
 
-    glm::vec3 color = glm::vec3(1.0f, 1.0f, 1.0f);
+    glm::vec4 color = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
 
     float size = 1.0f;
 

@@ -2,13 +2,14 @@
 #include "BattleLevel/Spawners/EnemySpawner.h"
 #include "BattleLevel/Spawners/PlayerSpawner.h"
 #include "Core/Random.h"
-#include "UI/Text.h"
+#include "BattleLevel/UI/BattleWidget.h"
 
 void BattleManager::Initialize()
 {
 	SpawnPlayerCharacters();
 	SpawnEnemies();
-	StartNextBattle();
+	GenerateTurnOrder();
+	NextTurn();
 }
 
 void BattleManager::Update(float deltaTime)
@@ -19,9 +20,26 @@ void BattleManager::Update(float deltaTime)
 		if (currentEnemyTurnDuration <= 0.0f && !resolvingTurn)
 		{
 			int index = Random::FromRange(0, (int)playerCharacters.size() - 1);
-			resolvingTurn = true;
-			playerCharacters[index]->TakeDamage(1);
+			InflictDamage(currentCharacter, playerCharacters[index]);
 		}
+	}
+}
+
+void BattleManager::SetBattleWidget(BattleWidget* widget) 
+{ 
+	if (battleWidget)
+	{
+		battleWidget->OnAllDamageTextDestroy.Unbind(OnAllDamageTextDestroyHandle);
+	}
+
+	battleWidget = widget; 
+
+	if (battleWidget)
+	{
+		battleWidget->SetDamageTextDuration(battleConfig.damageTextDuration);
+		battleWidget->SetDamageTextSpeed(battleConfig.damageTextSpeed);
+
+		OnAllDamageTextDestroyHandle = battleWidget->OnAllDamageTextDestroy.Bind(this, &BattleManager::OnAllDamageTextDestroy);
 	}
 }
 
@@ -32,6 +50,10 @@ void BattleManager::SpawnPlayerCharacters()
 		playerCharacters = playerSpawner->GeneratePlayerGroup();
 		for (Character* playerCharacter : playerCharacters)
 		{
+			playerCharacter->SetDamageDuration(battleConfig.blinkDuration);
+
+			playerCharacter->OnDamageTaken.Bind(this, &BattleManager::OnCharacterTakeDamage);
+			playerCharacter->OnBlinkEnd.Bind(this, &BattleManager::OnBlinkEnd);
 			playerCharacter->OnDeath.Bind(this, &BattleManager::OnPlayerCharacterDeath);
 		}
 	}
@@ -44,7 +66,11 @@ void BattleManager::SpawnEnemies()
 		enemies = enemySpawner->GenerateEnemies();
 		for (Enemy* enemy : enemies)
 		{
+			enemy->SetDamageDuration(battleConfig.blinkDuration);
+
 			enemy->OnSelected.Bind(this, &BattleManager::OnEnemySelected);
+			enemy->OnDamageTaken.Bind(this, &BattleManager::OnCharacterTakeDamage);
+			enemy->OnBlinkEnd.Bind(this, &BattleManager::OnBlinkEnd);
 			enemy->OnDeath.Bind(this, &BattleManager::OnEnemyDeath);
 		}
 	}
@@ -63,13 +89,35 @@ void BattleManager::GenerateTurnOrder()
 	}
 
 	Random::ShuffleVector(turnOrder);
+}
 
+void BattleManager::OnAllDamageTextDestroy()
+{
+	waitingForDamageTextDestroy = false;
 	NextTurn();
 }
 
 void BattleManager::NextTurn()
 {
-	Character* currentCharacter = turnOrder[turnIndex];
+	if (waitingForBlinkEnd || waitingForDamageTextDestroy)
+	{
+		return;
+	}
+
+	if (enemies.size() == 0)
+	{
+		SpawnEnemies();
+		turnIndex = 0;
+		GenerateTurnOrder();
+	}
+	else if (playerCharacters.size() == 0)
+	{
+		SpawnPlayerCharacters();
+		turnIndex = 0;
+		GenerateTurnOrder();
+	}
+
+	currentCharacter = turnOrder[turnIndex];
 
 	if (dynamic_cast<Enemy*>(currentCharacter))
 	{
@@ -87,20 +135,28 @@ void BattleManager::NextTurn()
 void BattleManager::InitPlayerTurn()
 {
 	currentTurn = TurnType::PlayerTurn;
-	if (turnText)
+	if (battleWidget)
 	{
-		turnText->SetContent("Player Turn");
+		battleWidget->SetTurnText(currentTurn);
 	}
 }
 
 void BattleManager::InitEnemyTurn()
 {
 	currentTurn = TurnType::EnemyTurn;
-	if (turnText)
+	if (battleWidget)
 	{
-		turnText->SetContent("Enemy Turn");
+		battleWidget->SetTurnText(currentTurn);
 	}
-	currentEnemyTurnDuration = enemyTurnDuration;
+	currentEnemyTurnDuration = battleConfig.enemyTurnDuration;
+}
+
+void BattleManager::OnCharacterTakeDamage(Character* character, int damageTaken)
+{
+	if (battleWidget)
+	{
+		battleWidget->DisplayDamage(character->GetWorldPosition(), damageTaken);
+	}
 }
 
 void BattleManager::OnPlayerCharacterDeath(Character* playerCharacter)
@@ -113,19 +169,11 @@ void BattleManager::OnPlayerCharacterDeath(Character* playerCharacter)
 	}
 
 	playerCharacters.erase(std::remove(playerCharacters.begin(), playerCharacters.end(), playerCharacter), playerCharacters.end());
-	if (playerCharacters.size() <= 0)
-	{
-		SpawnPlayerCharacters();
-		StartNextBattle();
-	}
-	else
-	{
-		NextTurn();
-	}
 }
 
 void BattleManager::OnEnemyDeath(Character* enemy)
 {
+
 	turnOrder.erase(std::remove(turnOrder.begin(), turnOrder.end(), enemy), turnOrder.end());
 
 	if (turnIndex >= turnOrder.size())
@@ -134,29 +182,29 @@ void BattleManager::OnEnemyDeath(Character* enemy)
 	}
 
 	enemies.erase(std::remove(enemies.begin(), enemies.end(), enemy), enemies.end());
-	if (enemies.size() <= 0)
-	{
-		SpawnEnemies();
-		StartNextBattle();
-	}
-	else
-	{
-		NextTurn();
-	}
+}
+
+void BattleManager::OnBlinkEnd()
+{
+	waitingForBlinkEnd = false;
+	NextTurn();
 }
 
 void BattleManager::OnEnemySelected(Enemy* selectedEnemy)
 {
-	if (currentTurn == TurnType::PlayerTurn)
+	if (currentTurn == TurnType::PlayerTurn && !resolvingTurn)
 	{
-		resolvingTurn = true;
-		selectedEnemy->TakeDamage(1);
+		InflictDamage(currentCharacter, selectedEnemy);
 	}
 }
 
-void BattleManager::StartNextBattle()
+void BattleManager::InflictDamage(Character* attacker, Character* defender)
 {
-	resolvingTurn = false;
-	turnIndex = 0;
-	GenerateTurnOrder();
+	resolvingTurn = true;
+	waitingForBlinkEnd = true;
+	waitingForDamageTextDestroy = true;
+
+	int damages = std::max(0, attacker->GetAttributes().attack - defender->GetAttributes().defense);
+
+	defender->TakeDamage(damages);
 }

@@ -18,3 +18,17 @@ glm::vec2 CameraComponent::ScreenToWorld(glm::vec2 screenPos)
 
 	return worldPos;
 }
+
+glm::vec2 CameraComponent::WorldToScreen(glm::vec2 worldPos)
+{
+	const Engine* engine = Engine::Get();
+
+	if (!engine)
+	{
+		return worldPos;
+	}
+
+	glm::vec2 viewportPos = (worldPos - GetWorldPosition()) * zoom;
+
+	return viewportPos;
+}

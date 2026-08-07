@@ -3,6 +3,7 @@
 
 #include "Widget.h"
 #include "World/SpawnInfos.h"
+#include "Core/Delegate/Delegate.h"
 
 /**
  * Base class for interactive/custom UI widgets.
@@ -33,8 +34,13 @@ public:
 	template<typename T, typename... Args>
 	T* CreateWidget(std::string name, const UISpawnInfo& spawnInfo, Args&&... args);
 
+	void NativeConstruct();
+
 private:
 	void InternalSpawnWidget(Widget* widget, std::string name, const UISpawnInfo& spawnInfo);
+
+public:
+	Delegate<void, UserWidget*> OnConstruct;
 };
 
 #include "UserWidget.inl"

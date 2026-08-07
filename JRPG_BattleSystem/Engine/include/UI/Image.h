@@ -17,7 +17,7 @@ class Material;
 class Image : public Widget, public IRenderable
 {
 public:
-	Image(std::string textureName = "default", std::string shaderName = "default", glm::vec3 color = glm::vec3(1.0f, 1.0f, 1.0f));
+	Image(std::string textureName = "default", std::string shaderName = "default", glm::vec4 color = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
 	
 	~Image();
 

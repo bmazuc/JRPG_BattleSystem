@@ -4,7 +4,7 @@
 #include "World/Level/Scene/Scene.h"
 #include "Components/Camera/CameraComponent.h"
 
-SpriteRendererComponent::SpriteRendererComponent(std::string textureName, std::string shaderName, glm::vec3 color)
+SpriteRendererComponent::SpriteRendererComponent(std::string textureName, std::string shaderName, glm::vec4 color)
 {
 	material = new Material(textureName, shaderName, color);
 }

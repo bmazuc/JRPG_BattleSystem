@@ -45,11 +45,11 @@ public:
 struct RenderTextItem : public RenderItem
 {
 public:
-	RenderTextItem(glm::mat4 _world, float _size, std::string _content, Font* _font, glm::vec3 _color, TextScaleMode _scaleMode, bool _isCenterX)
+	RenderTextItem(glm::mat4 _world, float _size, std::string _content, Font* _font, glm::vec4 _color, TextScaleMode _scaleMode, bool _isCenterX)
 		: RenderItem(_world), size(_size), content(_content), font(_font), color(_color), scaleMode(_scaleMode), isCenterX(_isCenterX) {}
 
 	Font* font;
-	glm::vec3 color;
+	glm::vec4 color;
 
 	TextScaleMode scaleMode;
 	std::string content;

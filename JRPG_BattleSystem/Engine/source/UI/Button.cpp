@@ -1,6 +1,6 @@
 #include "UI/Button.h"
 
-Button::Button(std::string textureName, std::string shaderName, glm::vec3 color)
+Button::Button(std::string textureName, std::string shaderName, glm::vec4 color)
     : Image(textureName, shaderName, color)
 {
 }

@@ -10,7 +10,7 @@
 #include "BattleLevel/BattleManager.h"
 #include "World/World.h"
 #include "World/Systems/UISystem.h"
-#include "UI/UserWidget.h"
+#include "BattleLevel/UI/BattleWidget.h"
 
 void BattleLevel::LoadAssets()
 {
@@ -20,21 +20,27 @@ void BattleLevel::LoadAssets()
 
 void BattleLevel::CreateLevel()
 {
+	BattleConfig battleConfig;
+	battleConfig.enemyTurnDuration = 0.5f;
+	battleConfig.blinkDuration = 0.2f;
+	battleConfig.damageTextDuration = 1.0f;
+	battleConfig.damageTextSpeed = 30.0f;
+
 	BattleManager* battleManager = AddSubsystem<BattleManager>("battleManager");
-	battleManager->SetEnemyTurnDuration(0.5f);
+	battleManager->SetBattleConfig(battleConfig);
 
 	Scene* scene = GetScene();
 
 	EnemySpawner* enemySpawner = scene->SpawnActor<EnemySpawner>("EnemySpawner", ActorSpawnInfo(nullptr, TransformSpace::World, glm::vec2(100, 240)));
-	enemySpawner->AddCharacterData(CharacterData("goblin", "default", glm::vec3(1, 1, 0), glm::vec2(80, 83))); // Yellow enemy
-	enemySpawner->AddCharacterData(CharacterData("goblin", "default", glm::vec3(0, 1, 0), glm::vec2(80, 83))); // Green enemy
-	enemySpawner->AddCharacterData(CharacterData("goblin", "default", glm::vec3(0, 0, 1), glm::vec2(80, 83))); // Blue enemy
+	enemySpawner->AddCharacterData(CharacterData("goblin", "default", glm::vec4(1, 1, 0, 1), glm::vec2(80, 83))); // Yellow enemy
+	enemySpawner->AddCharacterData(CharacterData("goblin", "default", glm::vec4(0, 1, 0, 1), glm::vec2(80, 83))); // Green enemy
+	enemySpawner->AddCharacterData(CharacterData("goblin", "default", glm::vec4(0, 0, 1, 1), glm::vec2(80, 83))); // Blue enemy
 	battleManager->SetEnemySpawner(enemySpawner);
 
 	PlayerSpawner* playerSpawner = scene->SpawnActor<PlayerSpawner>("EnemySpawner", ActorSpawnInfo(nullptr, TransformSpace::World, glm::vec2(540, 240)));
-	playerSpawner->AddCharacterData(CharacterData("goblin", "default", glm::vec3(1, 1, 0), glm::vec2(80, 83)));
-	playerSpawner->AddCharacterData(CharacterData("goblin", "default", glm::vec3(1, 0, 1), glm::vec2(80, 83)));
-	playerSpawner->AddCharacterData(CharacterData("goblin", "default", glm::vec3(0, 1, 1), glm::vec2(80, 83)));
+	playerSpawner->AddCharacterData(CharacterData("goblin", "default", glm::vec4(1, 1, 0, 1), glm::vec2(80, 83)));
+	playerSpawner->AddCharacterData(CharacterData("goblin", "default", glm::vec4(1, 0, 1, 1), glm::vec2(80, 83)));
+	playerSpawner->AddCharacterData(CharacterData("goblin", "default", glm::vec4(0, 1, 1, 1), glm::vec2(80, 83)));
 	battleManager->SetPlayerSpawner(playerSpawner);
 
 	Actor* background = scene->SpawnActor<Actor>("Background", ActorSpawnInfo(nullptr, TransformSpace::World, glm::vec2(320, 240)));
@@ -58,7 +64,7 @@ void BattleLevel::CreateLevel()
 	mainMenuButtonText->SetContent("Main Menu");
 	mainMenuButtonText->SetSize(24);
 
-	Text* turnText = userWidget->CreateWidget<Text>("TurnText", UISpawnInfo(nullptr, TransformSpace::World, glm::vec2(100, 20)));
-	turnText->SetSize(24);
-	battleManager->SetTurnText(turnText);
+	BattleWidget* battleWidget = uiSystem->CreateUserWidget<BattleWidget>("BattleWidget", UISpawnInfo());
+	battleWidget->SetCurrentScene(GetScene());
+	battleManager->SetBattleWidget(battleWidget);
 }

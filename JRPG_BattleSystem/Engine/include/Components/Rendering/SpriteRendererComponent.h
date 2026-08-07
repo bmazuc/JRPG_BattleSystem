@@ -15,7 +15,7 @@ public:
 	/**
 	 * Creates a sprite renderer using the specified material settings.
 	 */
-	SpriteRendererComponent(std::string textureName = "default", std::string shaderName = "default", glm::vec3 color = glm::vec3(1.0f, 1.0f, 1.0f));
+	SpriteRendererComponent(std::string textureName = "default", std::string shaderName = "default", glm::vec4 color = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
 	~SpriteRendererComponent();
 
 	Material* GetMaterial() { return material; }
