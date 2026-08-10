@@ -1,6 +1,5 @@
-#include "BattleWidget.h"
+#include "BattleLevel/UI/BattleWidget.h"
 #include "UI/Text.h"
-#include "BattleLevel/BattleManager.h"
 #include "World/Level/Scene/Scene.h"
 #include "Components/Camera/CameraComponent.h"
 
@@ -8,10 +7,6 @@ void BattleWidget::Construct()
 {
 	turnText = CreateWidget<Text>("TurnText", UISpawnInfo(nullptr, TransformSpace::World, glm::vec2(100, 20)));
 	turnText->SetSize(24);
-	if (currentTurnType != TurnType::None)
-	{
-		turnText->SetContent(currentTurnType == TurnType::PlayerTurn ? "Player Turn" : "Enemy Turn");
-	}
 }
 
 void BattleWidget::Update(float deltaTime)
@@ -44,13 +39,11 @@ void BattleWidget::Update(float deltaTime)
 	}
 }
 
-void BattleWidget::SetTurnText(TurnType turnType)
+void BattleWidget::SetTurnText(std::string content)
 {
-	currentTurnType = turnType;
-
 	if (turnText)
 	{
-		turnText->SetContent(turnType == TurnType::PlayerTurn ? "Player Turn" : "Enemy Turn");
+		turnText->SetContent(content);
 	}
 }
 

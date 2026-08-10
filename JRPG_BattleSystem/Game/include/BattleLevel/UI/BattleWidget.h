@@ -3,8 +3,6 @@
 
 #include "UI/UserWidget.h"
 
-enum class TurnType;
-
 class Text;
 class Scene;
 
@@ -24,7 +22,7 @@ public:
 
 	void Update(float deltaTime) override;
 
-	void SetTurnText(TurnType turnType);
+	void SetTurnText(std::string content);
 	void SetCurrentScene(Scene* scene) { currentScene = scene; }
 	void SetDamageTextDuration(float duration) { damageTextDuration = duration; }
 	void SetDamageTextSpeed(float speed) { damageTextSpeed = speed; }
@@ -38,8 +36,6 @@ private:
 	Scene* currentScene;
 
 	std::vector<DamageDisplayTextData> currentDamageTextDisplayed;
-
-	TurnType currentTurnType;
 
 	float damageTextDuration = 1.0f;
 	float damageTextSpeed = 30.0f;

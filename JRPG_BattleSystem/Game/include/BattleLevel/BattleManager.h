@@ -6,18 +6,24 @@
 
 #include <vector>
 
-enum class TurnType
-{
-	None,
-	PlayerTurn,
-	EnemyTurn
-};
-
 class EnemySpawner;
 class PlayerSpawner;
 class Character;
 class Enemy;
+
+class CountdownWidget;
 class BattleWidget;
+class GameOverWidget;
+
+enum class BattleState
+{
+	INIT,
+	WAIT_FOR_COUNTDOWN_END,
+	ENEMY_TURN,
+	PLAYER_TURN,
+	RESOLVING_TURN,
+	BATTLE_END
+};
 
 /**
  * Allow to gather and config different battle parameters : enemy turn duration, feedbacks duration, ...
@@ -28,6 +34,14 @@ public:
 	// Value used to simulate enemy turn and increase enemy turn readability.
 	float enemyTurnDuration = 1.0f;
 	float blinkDuration = 1.0f;
+
+	/* Config for countdown */
+
+	float inBetweenCountDuration = 0.75f;
+	int count = 3;
+
+	/* Config for damage displayer */
+
 	float damageTextDuration = 1.0f;
 	float damageTextSpeed = 30.0f;
 };
@@ -40,12 +54,17 @@ public:
 
 	void SetEnemySpawner(EnemySpawner* newEnemySpawner) { enemySpawner = newEnemySpawner; }
 	void SetPlayerSpawner(PlayerSpawner* newPlayerSpawner) { playerSpawner = newPlayerSpawner; }
+
 	void SetBattleWidget(BattleWidget* widget);
+	void SetCountdownWidget(CountdownWidget* widget);
+	void SetGameOverwidget(GameOverWidget* widget) { gameOverWidget = widget; }
+
 	void SetBattleConfig(BattleConfig& config) { battleConfig = config; }
 
 private:
 	void GenerateTurnOrder();
 	void NextTurn();
+	void EndBattle();
 
 	void SpawnPlayerCharacters();
 	void SpawnEnemies();
@@ -63,6 +82,10 @@ private:
 
 	void InflictDamage(Character* attacker, Character* Defender);
 
+	void OnCountdownEnd();
+
+private:
+
 	PlayerSpawner* playerSpawner;
 	EnemySpawner* enemySpawner;
 
@@ -70,10 +93,13 @@ private:
 	std::vector<Enemy*> enemies;
 	std::vector<Character*> turnOrder;
 
-	TurnType currentTurn = TurnType::None;
 	int turnIndex = 0;
 
+	BattleState currentState;
+
+	CountdownWidget* countdownWidget;
 	BattleWidget* battleWidget;
+	GameOverWidget* gameOverWidget;
 
 	BattleConfig battleConfig;
 
@@ -83,9 +109,10 @@ private:
 
 	Character* currentCharacter;
 
-	bool resolvingTurn = false;
 	bool waitingForBlinkEnd = false;
 	bool waitingForDamageTextDestroy = false;
+
+	int killCount = 0;
 };
 
 #endif // __BATTLE_MANAGER_H_INCLUDED__

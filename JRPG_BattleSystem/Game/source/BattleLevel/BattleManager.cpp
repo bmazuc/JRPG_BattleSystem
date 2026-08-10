@@ -3,21 +3,38 @@
 #include "BattleLevel/Spawners/PlayerSpawner.h"
 #include "Core/Random.h"
 #include "BattleLevel/UI/BattleWidget.h"
+#include "BattleLevel/UI/CountdownWidget.h"
+#include "BattleLevel/UI/GameOverWidget.h"
 
 void BattleManager::Initialize()
 {
+	currentState = BattleState::INIT;
+
+	if (gameOverWidget)
+	{
+		gameOverWidget->SetVisible(false);
+	}
+
 	SpawnPlayerCharacters();
 	SpawnEnemies();
 	GenerateTurnOrder();
-	NextTurn();
+
+	if (!countdownWidget)
+	{
+		OnCountdownEnd();
+	}
+	else
+	{
+		currentState = BattleState::WAIT_FOR_COUNTDOWN_END;
+	}
 }
 
 void BattleManager::Update(float deltaTime)
 {
-	if (currentTurn == TurnType::EnemyTurn)
+	if (currentState == BattleState::ENEMY_TURN)
 	{
 		currentEnemyTurnDuration -= deltaTime;
-		if (currentEnemyTurnDuration <= 0.0f && !resolvingTurn)
+		if (currentEnemyTurnDuration <= 0.0f)
 		{
 			int index = Random::FromRange(0, (int)playerCharacters.size() - 1);
 			InflictDamage(currentCharacter, playerCharacters[index]);
@@ -40,6 +57,17 @@ void BattleManager::SetBattleWidget(BattleWidget* widget)
 		battleWidget->SetDamageTextSpeed(battleConfig.damageTextSpeed);
 
 		OnAllDamageTextDestroyHandle = battleWidget->OnAllDamageTextDestroy.Bind(this, &BattleManager::OnAllDamageTextDestroy);
+	}
+}
+
+void BattleManager::SetCountdownWidget(CountdownWidget* widget)
+{ 
+	countdownWidget = widget; 
+	if (countdownWidget)
+	{
+		countdownWidget->SetCount(battleConfig.count);
+		countdownWidget->SetInBetweenCountDuration(battleConfig.inBetweenCountDuration);
+		countdownWidget->OnCountdownEnd.Bind(this, &BattleManager::OnCountdownEnd);
 	}
 }
 
@@ -112,43 +140,30 @@ void BattleManager::NextTurn()
 	}
 	else if (playerCharacters.size() == 0)
 	{
-		SpawnPlayerCharacters();
-		turnIndex = 0;
-		GenerateTurnOrder();
+		EndBattle();
+		return;
 	}
 
 	currentCharacter = turnOrder[turnIndex];
 
+	currentState = dynamic_cast<Enemy*>(currentCharacter) ? BattleState::ENEMY_TURN : BattleState::PLAYER_TURN;
+
 	if (dynamic_cast<Enemy*>(currentCharacter))
 	{
-		InitEnemyTurn();
+		currentEnemyTurnDuration = battleConfig.enemyTurnDuration;
+		currentState = BattleState::ENEMY_TURN;
 	}
 	else
 	{
-		InitPlayerTurn();
+		currentState = BattleState::PLAYER_TURN;
+	}
+
+	if (battleWidget)
+	{
+		battleWidget->SetTurnText(currentState == BattleState::ENEMY_TURN ? "Enemy Turn" : "Player Turn");
 	}
 
 	turnIndex = (turnIndex + 1) % turnOrder.size();
-	resolvingTurn = false;
-}
-
-void BattleManager::InitPlayerTurn()
-{
-	currentTurn = TurnType::PlayerTurn;
-	if (battleWidget)
-	{
-		battleWidget->SetTurnText(currentTurn);
-	}
-}
-
-void BattleManager::InitEnemyTurn()
-{
-	currentTurn = TurnType::EnemyTurn;
-	if (battleWidget)
-	{
-		battleWidget->SetTurnText(currentTurn);
-	}
-	currentEnemyTurnDuration = battleConfig.enemyTurnDuration;
 }
 
 void BattleManager::OnCharacterTakeDamage(Character* character, int damageTaken)
@@ -182,6 +197,8 @@ void BattleManager::OnEnemyDeath(Character* enemy)
 	}
 
 	enemies.erase(std::remove(enemies.begin(), enemies.end(), enemy), enemies.end());
+
+	++killCount;
 }
 
 void BattleManager::OnBlinkEnd()
@@ -192,7 +209,7 @@ void BattleManager::OnBlinkEnd()
 
 void BattleManager::OnEnemySelected(Enemy* selectedEnemy)
 {
-	if (currentTurn == TurnType::PlayerTurn && !resolvingTurn)
+	if (currentState == BattleState::PLAYER_TURN)
 	{
 		InflictDamage(currentCharacter, selectedEnemy);
 	}
@@ -200,11 +217,33 @@ void BattleManager::OnEnemySelected(Enemy* selectedEnemy)
 
 void BattleManager::InflictDamage(Character* attacker, Character* defender)
 {
-	resolvingTurn = true;
+	currentState = BattleState::RESOLVING_TURN;
 	waitingForBlinkEnd = true;
 	waitingForDamageTextDestroy = true;
 
 	int damages = std::max(0, attacker->GetAttributes().attack - defender->GetAttributes().defense);
 
 	defender->TakeDamage(damages);
+}
+
+void BattleManager::OnCountdownEnd()
+{
+	countdownWidget = nullptr;
+	NextTurn();
+}
+
+void BattleManager::EndBattle()
+{
+	currentState = BattleState::BATTLE_END;
+	if (battleWidget)
+	{
+		battleWidget->SetTurnText("");
+	}
+
+	if (gameOverWidget)
+	{
+		gameOverWidget->SetKillCount(killCount);
+		gameOverWidget->SetVisible(true);
+	}
+
 }

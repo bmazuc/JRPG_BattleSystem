@@ -11,6 +11,8 @@
 #include "World/World.h"
 #include "World/Systems/UISystem.h"
 #include "BattleLevel/UI/BattleWidget.h"
+#include "BattleLevel/UI/CountdownWidget.h"
+#include "BattleLevel/UI/GameOverWidget.h"
 
 void BattleLevel::LoadAssets()
 {
@@ -20,14 +22,7 @@ void BattleLevel::LoadAssets()
 
 void BattleLevel::CreateLevel()
 {
-	BattleConfig battleConfig;
-	battleConfig.enemyTurnDuration = 0.5f;
-	battleConfig.blinkDuration = 0.2f;
-	battleConfig.damageTextDuration = 1.0f;
-	battleConfig.damageTextSpeed = 30.0f;
-
-	BattleManager* battleManager = AddSubsystem<BattleManager>("battleManager");
-	battleManager->SetBattleConfig(battleConfig);
+	BattleManager* battleManager = CreateBattleManager();
 
 	Scene* scene = GetScene();
 
@@ -64,7 +59,31 @@ void BattleLevel::CreateLevel()
 	mainMenuButtonText->SetContent("Main Menu");
 	mainMenuButtonText->SetSize(24);
 
+	CreateBattleUI(battleManager, uiSystem);
+}
+
+BattleManager* BattleLevel::CreateBattleManager()
+{
+	BattleConfig battleConfig;
+	battleConfig.enemyTurnDuration = 0.5f;
+	battleConfig.blinkDuration = 0.2f;
+	battleConfig.damageTextDuration = 1.0f;
+	battleConfig.damageTextSpeed = 30.0f;
+
+	BattleManager* battleManager = AddSubsystem<BattleManager>("battleManager");
+	battleManager->SetBattleConfig(battleConfig);
+	return battleManager;
+}
+
+void BattleLevel::CreateBattleUI(BattleManager* battleManager, UISystem* uiSystem)
+{
 	BattleWidget* battleWidget = uiSystem->CreateUserWidget<BattleWidget>("BattleWidget", UISpawnInfo());
 	battleWidget->SetCurrentScene(GetScene());
 	battleManager->SetBattleWidget(battleWidget);
+
+	CountdownWidget* countdownWidget = uiSystem->CreateUserWidget<CountdownWidget>("CountdownWidget", UISpawnInfo(nullptr, TransformSpace::World, glm::vec2(320, 240)));
+	battleManager->SetCountdownWidget(countdownWidget);
+
+	GameOverWidget* gameOverWidget = uiSystem->CreateUserWidget<GameOverWidget>("GameOverWidget", UISpawnInfo(nullptr, TransformSpace::World, glm::vec2(320, 240)));
+	battleManager->SetGameOverwidget(gameOverWidget);
 }

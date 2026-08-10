@@ -157,6 +157,12 @@
     <Filter Include="Header Files\Game\BattleLevel\Spawners">
       <UniqueIdentifier>{34ecf80f-324c-40ad-bcd2-663b3e41c804}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Game\BattleLevel\UI">
+      <UniqueIdentifier>{94f46b76-fbe8-49a8-be9a-ed825a20afd3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\BattleLevel\UI">
+      <UniqueIdentifier>{afb54cbe-d588-4436-8852-6282c458139c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -285,11 +291,17 @@
     <ClCompile Include="Game\source\BattleLevel\BattleManager.cpp">
       <Filter>Source Files\Game\BattleLevel</Filter>
     </ClCompile>
-    <ClCompile Include="Game\include\BattleLevel\UI\BattleWidget.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Game\source\BattleLevel\UI\CountdownWidget.cpp">
+      <Filter>Source Files\Game\BattleLevel\UI</Filter>
     </ClCompile>
-    <ClCompile Include="Game\include\BattleLevel\UI\DamageDisplayer.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Game\source\BattleLevel\UI\GameOverWidget.cpp">
+      <Filter>Source Files\Game\BattleLevel\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\source\BattleLevel\UI\BattleWidget.cpp">
+      <Filter>Source Files\Game\BattleLevel\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\source\BattleLevel\UI\DamageDisplayer.cpp">
+      <Filter>Source Files\Game\BattleLevel\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -456,10 +468,16 @@
       <Filter>Header Files\Game\BattleLevel\Spawners</Filter>
     </ClInclude>
     <ClInclude Include="Game\include\BattleLevel\UI\BattleWidget.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Game\BattleLevel\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\include\BattleLevel\UI\CountdownWidget.h">
+      <Filter>Header Files\Game\BattleLevel\UI</Filter>
     </ClInclude>
     <ClInclude Include="Game\include\BattleLevel\UI\DamageDisplayer.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Game\BattleLevel\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\include\BattleLevel\UI\GameOverWidget.h">
+      <Filter>Header Files\Game\BattleLevel\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -167,8 +167,6 @@
     <ClCompile Include="Engine\source\World\SpatialGraph\SpatialNode.cpp" />
     <ClCompile Include="Engine\source\World\Systems\UISystem.cpp" />
     <ClCompile Include="Engine\source\World\World.cpp" />
-    <ClCompile Include="Game\include\BattleLevel\UI\BattleWidget.cpp" />
-    <ClCompile Include="Game\include\BattleLevel\UI\DamageDisplayer.cpp" />
     <ClCompile Include="Game\source\BattleLevel\BattleLevel.cpp" />
     <ClCompile Include="Game\source\BattleLevel\BattleManager.cpp" />
     <ClCompile Include="Game\source\BattleLevel\Characters\Character.cpp" />
@@ -176,6 +174,10 @@
     <ClCompile Include="Game\source\BattleLevel\Spawners\CharacterSpawner.cpp" />
     <ClCompile Include="Game\source\BattleLevel\Spawners\EnemySpawner.cpp" />
     <ClCompile Include="Game\source\BattleLevel\Spawners\PlayerSpawner.cpp" />
+    <ClCompile Include="Game\source\BattleLevel\UI\BattleWidget.cpp" />
+    <ClCompile Include="Game\source\BattleLevel\UI\CountdownWidget.cpp" />
+    <ClCompile Include="Game\source\BattleLevel\UI\DamageDisplayer.cpp" />
+    <ClCompile Include="Game\source\BattleLevel\UI\GameOverWidget.cpp" />
     <ClCompile Include="Game\source\Common\UI\LoadLevelButton.cpp" />
     <ClCompile Include="Game\source\MainMenu\MainMenuLevel.cpp" />
     <ClCompile Include="main.cpp" />
@@ -234,7 +236,9 @@
     <ClInclude Include="Game\include\BattleLevel\Spawners\EnemySpawner.h" />
     <ClInclude Include="Game\include\BattleLevel\Spawners\PlayerSpawner.h" />
     <ClInclude Include="Game\include\BattleLevel\UI\BattleWidget.h" />
+    <ClInclude Include="Game\include\BattleLevel\UI\CountdownWidget.h" />
     <ClInclude Include="Game\include\BattleLevel\UI\DamageDisplayer.h" />
+    <ClInclude Include="Game\include\BattleLevel\UI\GameOverWidget.h" />
     <ClInclude Include="Game\include\Common\UI\LoadLevelButton.h" />
     <ClInclude Include="Game\include\MainMenu\MainMenuLevel.h" />
   </ItemGroup>
