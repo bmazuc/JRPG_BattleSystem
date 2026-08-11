@@ -175,6 +175,8 @@
     <ClCompile Include="Game\source\BattleLevel\Spawners\EnemySpawner.cpp" />
     <ClCompile Include="Game\source\BattleLevel\Spawners\PlayerSpawner.cpp" />
     <ClCompile Include="Game\source\BattleLevel\UI\BattleWidget.cpp" />
+    <ClCompile Include="Game\source\BattleLevel\UI\CharacterInfosText.cpp" />
+    <ClCompile Include="Game\source\BattleLevel\UI\CharactersInfoWidget.cpp" />
     <ClCompile Include="Game\source\BattleLevel\UI\CountdownWidget.cpp" />
     <ClCompile Include="Game\source\BattleLevel\UI\DamageDisplayer.cpp" />
     <ClCompile Include="Game\source\BattleLevel\UI\GameOverWidget.cpp" />
@@ -236,6 +238,8 @@
     <ClInclude Include="Game\include\BattleLevel\Spawners\EnemySpawner.h" />
     <ClInclude Include="Game\include\BattleLevel\Spawners\PlayerSpawner.h" />
     <ClInclude Include="Game\include\BattleLevel\UI\BattleWidget.h" />
+    <ClInclude Include="Game\include\BattleLevel\UI\CharacterInfosText.h" />
+    <ClInclude Include="Game\include\BattleLevel\UI\CharactersInfoWidget.h" />
     <ClInclude Include="Game\include\BattleLevel\UI\CountdownWidget.h" />
     <ClInclude Include="Game\include\BattleLevel\UI\DamageDisplayer.h" />
     <ClInclude Include="Game\include\BattleLevel\UI\GameOverWidget.h" />

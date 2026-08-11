@@ -303,6 +303,12 @@
     <ClCompile Include="Game\source\BattleLevel\UI\DamageDisplayer.cpp">
       <Filter>Source Files\Game\BattleLevel\UI</Filter>
     </ClCompile>
+    <ClCompile Include="Game\source\BattleLevel\UI\CharactersInfoWidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\source\BattleLevel\UI\CharacterInfosText.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\include\Core\Engine.h">
@@ -478,6 +484,12 @@
     </ClInclude>
     <ClInclude Include="Game\include\BattleLevel\UI\GameOverWidget.h">
       <Filter>Header Files\Game\BattleLevel\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\include\BattleLevel\UI\CharactersInfoWidget.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\include\BattleLevel\UI\CharacterInfosText.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

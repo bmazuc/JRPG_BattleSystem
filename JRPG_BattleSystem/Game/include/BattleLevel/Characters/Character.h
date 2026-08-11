@@ -12,9 +12,10 @@ struct CharacterData
 {
 public:
 	CharacterData() = default;
-	CharacterData(std::string _textureName, std::string _shaderName, glm::vec4 _color, glm::vec2 _spriteSize) 
-		: textureName(_textureName), shaderName(_shaderName), color(_color), spriteSize(_spriteSize) {}
+	CharacterData(std::string _characterName, std::string _textureName, std::string _shaderName, glm::vec4 _color, glm::vec2 _spriteSize)
+		: characterName(_characterName), textureName(_textureName), shaderName(_shaderName), color(_color), spriteSize(_spriteSize) {}
 
+	std::string characterName = "";
 	std::string textureName = "default";
 	std::string shaderName = "default";
 	glm::vec4 color = glm::vec4(1, 1, 1, 1);
@@ -25,6 +26,11 @@ public:
 struct CharacterAttributes
 {
 	int health = 3;
+	int maxHealth = 3;
+
+	int mana = 3;
+	int maxMana = 3;
+
 	int attack = 2;
 	int defense = 1;
 };
@@ -47,7 +53,13 @@ public:
 	Delegate<void> OnBlinkEnd;
 	Delegate<void, Character*> OnDeath;
 
+	Delegate<void, int, int> OnHealthUpdate;
+	Delegate<void, int, int> OnManaUpdate;
+
 	glm::vec4 originalColor;
+
+	void SetCharacterName(std::string inName) { name = inName; }
+	const std::string& GetCharacterName() const { return name; }
 
 	const CharacterAttributes& GetAttributes() { return attributes; }
 
@@ -62,6 +74,8 @@ protected:
 	SpriteRendererComponent* spriteRenderer;
 	bool isAlive = true;
 	bool isPendingKill = false;
+
+	std::string characterName;
 
 	CharacterAttributes attributes;
 };

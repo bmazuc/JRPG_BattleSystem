@@ -16,7 +16,7 @@ std::vector<Enemy*> EnemySpawner::GenerateEnemies()
 			characterDatas[Random::FromRange(0, (int)characterDatas.size() - 1)] :
 			CharacterData();
 
-		Enemy* enemy = GetScene()->SpawnActor<Enemy>("Enemy" + std::to_string(idx), ActorSpawnInfo(), data);
+		Enemy* enemy = GetScene()->SpawnActor<Enemy>(data.characterName, ActorSpawnInfo(), data);
 		spawnedEnemies.push_back(enemy);
 		charactersToPosition.push_back(enemy);
 	}

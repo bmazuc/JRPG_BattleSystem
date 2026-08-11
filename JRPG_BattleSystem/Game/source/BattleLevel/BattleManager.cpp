@@ -44,9 +44,15 @@ void BattleManager::Update(float deltaTime)
 
 void BattleManager::SetBattleWidget(BattleWidget* widget) 
 { 
+	if (battleWidget == widget)
+	{
+		return;
+	}
+
 	if (battleWidget)
 	{
 		battleWidget->OnAllDamageTextDestroy.Unbind(OnAllDamageTextDestroyHandle);
+		battleWidget->OnConstruct.Unbind(OnBattleWidgetConstructHandle);
 	}
 
 	battleWidget = widget; 
@@ -57,6 +63,7 @@ void BattleManager::SetBattleWidget(BattleWidget* widget)
 		battleWidget->SetDamageTextSpeed(battleConfig.damageTextSpeed);
 
 		OnAllDamageTextDestroyHandle = battleWidget->OnAllDamageTextDestroy.Bind(this, &BattleManager::OnAllDamageTextDestroy);
+		OnBattleWidgetConstructHandle = battleWidget->OnConstruct.Bind(this, &BattleManager::OnBattleWidgetConstruct);
 	}
 }
 
@@ -245,5 +252,9 @@ void BattleManager::EndBattle()
 		gameOverWidget->SetKillCount(killCount);
 		gameOverWidget->SetVisible(true);
 	}
+}
 
+void BattleManager::OnBattleWidgetConstruct(UserWidget* widget)
+{
+	battleWidget->InitCharacterInfos(playerCharacters);
 }

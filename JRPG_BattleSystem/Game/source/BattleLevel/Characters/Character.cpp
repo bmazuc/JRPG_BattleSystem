@@ -37,6 +37,7 @@ void Character::TakeDamage(int damage)
     damageTimer = damageDuration;
 
     attributes.health -= damage;
+    OnHealthUpdate.Call(attributes.health, attributes.maxHealth);
 
     if (attributes.health <= 0.0f)
     {

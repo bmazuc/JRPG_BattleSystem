@@ -11,7 +11,7 @@ std::vector<Character*> PlayerSpawner::GeneratePlayerGroup()
 	{
 		const CharacterData& data = characterDatas[idx];
 
-		Character* character = GetScene()->SpawnActor<Character>("Enemy" + std::to_string(idx), ActorSpawnInfo(), data);
+		Character* character = GetScene()->SpawnActor<Character>(data.characterName, ActorSpawnInfo(), data);
 		spawnedCharacters.push_back(character);
 	}
 

@@ -14,6 +14,7 @@ class Enemy;
 class CountdownWidget;
 class BattleWidget;
 class GameOverWidget;
+class UserWidget;
 
 enum class BattleState
 {
@@ -66,6 +67,8 @@ private:
 	void NextTurn();
 	void EndBattle();
 
+	void OnBattleWidgetConstruct(UserWidget* widget);
+
 	void SpawnPlayerCharacters();
 	void SpawnEnemies();
 
@@ -106,6 +109,7 @@ private:
 	float currentEnemyTurnDuration;
 
 	DelegateHandle OnAllDamageTextDestroyHandle;
+	DelegateHandle OnBattleWidgetConstructHandle;
 
 	Character* currentCharacter;
 

@@ -2,16 +2,36 @@
 #include "UI/Text.h"
 #include "World/Level/Scene/Scene.h"
 #include "Components/Camera/CameraComponent.h"
+#include "UI/Image.h"
+#include "Rendering/Material.h"
+#include "BattleLevel/UI/CharacterInfosText.h"
 
 void BattleWidget::Construct()
 {
 	turnText = CreateWidget<Text>("TurnText", UISpawnInfo(nullptr, TransformSpace::World, glm::vec2(100, 20)));
 	turnText->SetSize(24);
+
+	infosBackground = CreateWidget<Image>("InfosBackground", UISpawnInfo(nullptr, TransformSpace::World, glm::vec2(220, 385)));
+	infosBackground->SetSize(glm::vec2(400, 150));
+	infosBackground->GetMaterial()->SetTexture(infosBackgroundTextureName);
+}
+
+void BattleWidget::InitCharacterInfos(std::vector<Character*> characters)
+{
+	glm::vec2 position = glm::vec2(80, 345);
+	for (Character* character : characters)
+	{
+		CharacterInfosText* t = CreateWidget<CharacterInfosText>("CharacterInfosText", UISpawnInfo(nullptr, TransformSpace::World, position));
+		t->SetSize(20);
+		t->AssociateCharacter(character);
+		t->SetIsCenterX(false);
+		position.y += 30;
+	}
 }
 
 void BattleWidget::Update(float deltaTime)
 {
-	int damageTextCount = currentDamageTextDisplayed.size();
+	int damageTextCount = (int)currentDamageTextDisplayed.size();
 	for (int i = damageTextCount - 1; i >= 0; i--)
 	{
 		DamageDisplayTextData& damageTextData = currentDamageTextDisplayed[i];
