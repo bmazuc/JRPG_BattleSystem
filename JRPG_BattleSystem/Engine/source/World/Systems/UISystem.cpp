@@ -38,6 +38,11 @@ void UISystem::UpdateTransform()
 	graph.UpdateTransforms();
 }
 
+void UISystem::UpdateEffectiveVisibility()
+{
+	graph.UpdateEffectiveVisibility();
+}
+
 void UISystem::Construct()
 {
 	widgetsCollection.Construct();
@@ -58,7 +63,7 @@ void UISystem::UpdateInputs(InputManager* inputManager)
 	for (Widget* element : widgetsCollection.GetCollection())
 	{
 		Button* button = dynamic_cast<Button*>(element);
-		if (button && button->IsVisible())
+		if (button && button->IsEffectivelyVisible())
 		{
 			bool hover = button->IsPointInside(mouse);
 

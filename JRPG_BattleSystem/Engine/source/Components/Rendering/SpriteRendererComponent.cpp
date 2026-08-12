@@ -17,7 +17,7 @@ SpriteRendererComponent::~SpriteRendererComponent()
 
 bool SpriteRendererComponent::IsHovered(glm::vec2 mousePos)
 {
-	if (!IsVisible())
+	if (!IsEffectivelyVisible())
 	{
 		return false;
 	}
@@ -36,7 +36,7 @@ bool SpriteRendererComponent::IsHovered(glm::vec2 mousePos)
 
 void SpriteRendererComponent::AddToRenderQueue(RenderQueue& queue)
 {
-	if (isVisible)
+	if (IsEffectivelyVisible())
 	{
 		queue.AddWorldItem(new RenderTextureItem(GetTransform().world, size, material), zOrder);
 	}

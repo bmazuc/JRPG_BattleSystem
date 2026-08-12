@@ -5,6 +5,8 @@
 #include "UI/Image.h"
 #include "Rendering/Material.h"
 #include "BattleLevel/UI/CharacterInfosText.h"
+#include "BattleLevel/UI/PlayerActionsMenu/PlayerActionsMenu.h"
+#include "BattleLevel/Characters/PlayerCharacter.h"
 
 void BattleWidget::Construct()
 {
@@ -14,12 +16,16 @@ void BattleWidget::Construct()
 	infosBackground = CreateWidget<Image>("InfosBackground", UISpawnInfo(nullptr, TransformSpace::World, glm::vec2(220, 385)));
 	infosBackground->SetSize(glm::vec2(400, 150));
 	infosBackground->GetMaterial()->SetTexture(infosBackgroundTextureName);
+
+	playerActionsMenu = CreateWidget<PlayerActionsMenu>("PlayerActionsMenu", UISpawnInfo(nullptr, TransformSpace::World, glm::vec2(440, 385)));
+	playerActionsMenu->SetSize(glm::vec2(180, 150));
+	playerActionsMenu->SetVisible(false);
 }
 
-void BattleWidget::InitCharacterInfos(std::vector<Character*> characters)
+void BattleWidget::InitCharacterInfos(std::vector<PlayerCharacter*> characters)
 {
 	glm::vec2 position = glm::vec2(80, 345);
-	for (Character* character : characters)
+	for (PlayerCharacter* character : characters)
 	{
 		CharacterInfosText* t = CreateWidget<CharacterInfosText>("CharacterInfosText", UISpawnInfo(nullptr, TransformSpace::World, position));
 		t->SetSize(20);
@@ -77,5 +83,21 @@ void BattleWidget::DisplayDamage(glm::vec2 worldPosition, int damageTaken)
 		text->SetContent(std::to_string(damageTaken));
 
 		currentDamageTextDisplayed.push_back(DamageDisplayTextData(text));
+	}
+}
+
+void BattleWidget::ShowPlayerActionsMenu(PlayerCharacter* character)
+{
+	if (playerActionsMenu)
+	{
+		playerActionsMenu->Show(character);
+	}
+}
+
+void BattleWidget::HidePlayerActionsMenu()
+{
+	if (playerActionsMenu)
+	{
+		playerActionsMenu->Hide();
 	}
 }

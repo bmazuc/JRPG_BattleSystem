@@ -27,8 +27,9 @@ public:
 	void SetSize(glm::vec2 newSize) { size = newSize; }
 	void SetZOrder(int newZOrder) { zOrder = newZOrder; }
 	
-	void SetVisible(bool state) { isVisible = state; }
-	bool IsVisible() const { return isVisible; }
+	void SetVisible(bool state) { GetNode()->SetVisible(state); }
+	bool IsVisible() const { return GetNode()->IsVisible(); }
+	bool IsEffectivelyVisible() const { return GetNode()->IsEffectivelyVisible(); }
 
 	/**
 	 * Returns true is mouse currently hover this sprite.

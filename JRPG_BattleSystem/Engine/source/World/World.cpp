@@ -27,6 +27,9 @@ void World::Update(float deltaTime, InputManager* inputManager)
 		activeLevel->UpdateSceneTransform();
 		uiSystem->UpdateTransform();
 
+		activeLevel->UpdateSceneEffectiveVisibity();
+		uiSystem->UpdateEffectiveVisibility();
+
 		activeLevel->BeginPlay();
 		uiSystem->Construct();
 

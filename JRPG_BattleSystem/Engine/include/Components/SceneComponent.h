@@ -25,6 +25,7 @@ public:
 	std::vector<SceneComponent*> GetChildren();
 
 	SpatialNode* GetNode() { return &node; }
+	const SpatialNode* GetNode() const { return &node; }
 
 	void UpdateTransform();
 	void DetachFromHierarchy();

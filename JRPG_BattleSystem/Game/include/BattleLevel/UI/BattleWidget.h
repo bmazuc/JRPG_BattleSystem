@@ -6,7 +6,8 @@
 class Text;
 class Scene;
 class Image;
-class Character;
+class PlayerCharacter;
+class PlayerActionsMenu;
 
 struct DamageDisplayTextData
 {
@@ -22,7 +23,7 @@ class BattleWidget : public UserWidget
 public:
 	void Construct() override;
 
-	void InitCharacterInfos(std::vector<Character*> characters);
+	void InitCharacterInfos(std::vector<PlayerCharacter*> characters);
 
 	void Update(float deltaTime) override;
 
@@ -35,12 +36,16 @@ public:
 
 	void DisplayDamage(glm::vec2 worldPosition, int damageTaken);
 
+	void ShowPlayerActionsMenu(PlayerCharacter* character);
+	void HidePlayerActionsMenu();
+
 	Delegate<void> OnAllDamageTextDestroy;
 
 private:
 	Text* turnText;
 	Scene* currentScene;
 	Image* infosBackground;
+	PlayerActionsMenu* playerActionsMenu;
 
 	std::vector<DamageDisplayTextData> currentDamageTextDisplayed;
 

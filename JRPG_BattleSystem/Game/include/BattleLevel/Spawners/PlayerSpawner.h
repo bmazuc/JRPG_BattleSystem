@@ -3,10 +3,12 @@
 
 #include "CharacterSpawner.h"
 
+class PlayerCharacter;
+
 class PlayerSpawner : public CharacterSpawner
 {
 public:
-	std::vector<Character*> GeneratePlayerGroup();
+	std::vector<PlayerCharacter*> GeneratePlayerGroup();
 };
 
 #endif // __PLAYER_SPAWNER_H_INCLUDED__

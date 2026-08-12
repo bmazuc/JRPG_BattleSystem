@@ -24,6 +24,12 @@ public:
 	 */
 	void UpdateTransform();
 
+	/**
+	 * Recomputes visibility if the node is marked dirty.
+	 * Propagates update to children nodes.
+	 */
+	void UpdateEffectiveVisibility();
+
 	void BuildRenderQueue(RenderQueue& queue, ISpatialNodeOrderProvider* provider);
 
 	SpatialNode* GetParent() { return parent; }
@@ -90,6 +96,10 @@ public:
 
 	void MarkChildrenDirty() { isChildrenDirty = true; }
 
+	void SetVisible(bool state) { isVisible = state; }
+	bool IsVisible() const { return isVisible; }
+	bool IsEffectivelyVisible() const { return isEffectivelyVisible; }
+
 private:
 	/**
 	 * Adds a child node to this node.
@@ -129,9 +139,14 @@ private:
 	// Indicates whether the node should be moved inside the hierarchy.
 	bool isHierarchyDirty = true;
 
+	bool isVisibilityDirty = true;
+
 	bool isChildrenDirty = false;
 
 	bool wasRoot = false;
+
+	bool isVisible = true;
+	bool isEffectivelyVisible = true;
 
 	ISpatialNodeOwner* owner;
 };

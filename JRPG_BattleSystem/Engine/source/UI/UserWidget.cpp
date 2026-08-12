@@ -16,7 +16,7 @@ void UserWidget::InternalSpawnWidget(Widget* widget, std::string name, const UIS
 	Widget* parent = this;
 	if (spawnInfo.parent)
 	{
-		if (spawnInfo.parent->GetRoot() == this)
+		if (spawnInfo.parent->GetRoot() == GetRoot())
 		{
 			parent = spawnInfo.parent;
 		}

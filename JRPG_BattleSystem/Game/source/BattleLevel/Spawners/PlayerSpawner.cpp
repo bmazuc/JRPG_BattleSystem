@@ -1,21 +1,25 @@
 #include "BattleLevel/Spawners/PlayerSpawner.h"
 #include "World/Level/Scene/Scene.h"
+#include "BattleLevel/Characters/PlayerCharacter.h"
 
-std::vector<Character*> PlayerSpawner::GeneratePlayerGroup()
+std::vector<PlayerCharacter*> PlayerSpawner::GeneratePlayerGroup()
 {
-	std::vector<Character*> spawnedCharacters;
+	std::vector<PlayerCharacter*> spawnedCharacters;
+	std::vector<Character*> charactersToPosition;
 
 	spawnedCharacters.reserve(characterDatas.size());
+	charactersToPosition.reserve(characterDatas.size());
 
 	for (unsigned int idx = 0; idx < characterDatas.size(); idx++)
 	{
 		const CharacterData& data = characterDatas[idx];
 
-		Character* character = GetScene()->SpawnActor<Character>(data.characterName, ActorSpawnInfo(), data);
+		PlayerCharacter* character = GetScene()->SpawnActor<PlayerCharacter>(data.characterName, ActorSpawnInfo(), data);
 		spawnedCharacters.push_back(character);
+		charactersToPosition.push_back(character);
 	}
 
-	PositionCharacters(spawnedCharacters);
+	PositionCharacters(charactersToPosition);
 
 	return spawnedCharacters;
 }

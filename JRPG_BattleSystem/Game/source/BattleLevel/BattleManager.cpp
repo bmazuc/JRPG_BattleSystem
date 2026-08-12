@@ -5,6 +5,8 @@
 #include "BattleLevel/UI/BattleWidget.h"
 #include "BattleLevel/UI/CountdownWidget.h"
 #include "BattleLevel/UI/GameOverWidget.h"
+#include "BattleLevel/Characters/PlayerCharacter.h"
+#include "BattleLevel/UI/FleeAbility.h"
 
 void BattleManager::Initialize()
 {
@@ -83,13 +85,18 @@ void BattleManager::SpawnPlayerCharacters()
 	if (playerSpawner)
 	{
 		playerCharacters = playerSpawner->GeneratePlayerGroup();
-		for (Character* playerCharacter : playerCharacters)
+		for (PlayerCharacter* playerCharacter : playerCharacters)
 		{
 			playerCharacter->SetDamageDuration(battleConfig.blinkDuration);
 
 			playerCharacter->OnDamageTaken.Bind(this, &BattleManager::OnCharacterTakeDamage);
 			playerCharacter->OnBlinkEnd.Bind(this, &BattleManager::OnBlinkEnd);
 			playerCharacter->OnDeath.Bind(this, &BattleManager::OnPlayerCharacterDeath);
+
+			if (FleeAbility* fleeAbility = dynamic_cast<FleeAbility*>(playerCharacter->TryGetAbility("flee")))
+			{
+				fleeAbility->SetBattleManager(this);
+			}
 		}
 	}
 }
@@ -159,10 +166,12 @@ void BattleManager::NextTurn()
 	{
 		currentEnemyTurnDuration = battleConfig.enemyTurnDuration;
 		currentState = BattleState::ENEMY_TURN;
+		battleWidget->HidePlayerActionsMenu();
 	}
 	else
 	{
 		currentState = BattleState::PLAYER_TURN;
+		battleWidget->ShowPlayerActionsMenu(dynamic_cast<PlayerCharacter*>(currentCharacter));
 	}
 
 	if (battleWidget)
@@ -245,6 +254,7 @@ void BattleManager::EndBattle()
 	if (battleWidget)
 	{
 		battleWidget->SetTurnText("");
+		battleWidget->HidePlayerActionsMenu();
 	}
 
 	if (gameOverWidget)

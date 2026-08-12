@@ -38,7 +38,7 @@ struct CharacterAttributes
 class Character : public Actor
 {
 public:
-	Character(CharacterData);
+	Character(CharacterData data);
 
 	void Update(float deltaTime) override;
 		

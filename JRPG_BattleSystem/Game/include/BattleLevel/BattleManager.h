@@ -10,6 +10,7 @@ class EnemySpawner;
 class PlayerSpawner;
 class Character;
 class Enemy;
+class PlayerCharacter;
 
 class CountdownWidget;
 class BattleWidget;
@@ -62,10 +63,11 @@ public:
 
 	void SetBattleConfig(BattleConfig& config) { battleConfig = config; }
 
+	void EndBattle();
+
 private:
 	void GenerateTurnOrder();
 	void NextTurn();
-	void EndBattle();
 
 	void OnBattleWidgetConstruct(UserWidget* widget);
 
@@ -92,7 +94,7 @@ private:
 	PlayerSpawner* playerSpawner;
 	EnemySpawner* enemySpawner;
 
-	std::vector<Character*> playerCharacters;
+	std::vector<PlayerCharacter*> playerCharacters;
 	std::vector<Enemy*> enemies;
 	std::vector<Character*> turnOrder;
 

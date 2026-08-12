@@ -36,6 +36,30 @@ void SpatialNode::UpdateTransform()
 	}
 }
 
+void SpatialNode::UpdateEffectiveVisibility()
+{
+	if (isVisibilityDirty)
+	{
+		if (!isVisible)
+		{
+			isEffectivelyVisible = false;
+		}
+		else if (HasParent())
+		{
+			isEffectivelyVisible = parent->IsEffectivelyVisible();
+		}
+		else
+		{
+			isEffectivelyVisible = true;
+		}
+	}
+
+	for (SpatialNode* child : children)
+	{
+		child->UpdateEffectiveVisibility();
+	}
+}
+
 void SpatialNode::SyncGraph(SpatialGraph* graph)
 {
 	if (isHierarchyDirty && graph) 

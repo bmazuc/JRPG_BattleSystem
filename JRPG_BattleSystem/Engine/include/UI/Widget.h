@@ -100,8 +100,9 @@ public:
 	const UISystem* GetUISystem() const { return uiSystem; }
 	void SetUISystem(UISystem* newUISystem);
 
-	void SetVisible(bool state) { isVisible = state; }
-	bool IsVisible() const { return isVisible; }
+	void SetVisible(bool state) { node.SetVisible(state); }
+	bool IsVisible() const { return node.IsVisible(); }
+	bool IsEffectivelyVisible() const { return node.IsEffectivelyVisible(); }
 
 	void SetZOrder(int newZOrder);
 	int GetZOrder() const { return zOrder; }
@@ -116,8 +117,6 @@ protected:
 
 private:
 	SpatialNode node;
-
-	bool isVisible = true;
 
 	int zOrder = 0;
 	int insertionOrder = 0;

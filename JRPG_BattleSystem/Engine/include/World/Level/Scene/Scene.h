@@ -34,6 +34,7 @@ public:
 	void FlushPendingAdds();
 	void SyncGraph();
 	void UpdateTransform();
+	void UpdateEffectiveVisibility();
 	void Update(float deltaTime);
 	void FlushPendingDestroys();
 

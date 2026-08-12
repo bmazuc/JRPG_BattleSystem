@@ -14,7 +14,8 @@ void Text::SetFont(std::string fontName)
 
 void Text::AddToRenderQueue(RenderQueue& queue)
 {
-	queue.AddUIItem(new RenderTextItem(
-		GetTransform().world, size, content, font, color, scaleMode, isCenterX
-	));
+	if (GetNode()->IsEffectivelyVisible())
+	{
+		queue.AddUIItem(new RenderTextItem(GetTransform().world, size, content, font, color, scaleMode, isCenterX));
+	}
 }

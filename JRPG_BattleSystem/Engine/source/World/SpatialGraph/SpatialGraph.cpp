@@ -12,6 +12,17 @@ void SpatialGraph::UpdateTransforms()
 	}
 }
 
+void SpatialGraph::UpdateEffectiveVisibility()
+{
+	for (SpatialNode* node : nodes)
+	{
+		if (node)
+		{
+			node->UpdateEffectiveVisibility();
+		}
+	}
+}
+
 void SpatialGraph::BuildRenderQueue(RenderQueue& queue, ISpatialNodeOrderProvider* provider)
 {
 	for (SpatialNode* node : nodes)

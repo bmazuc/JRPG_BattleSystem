@@ -57,6 +57,7 @@ public:
 	void FlushPendingAdds();
 	void SyncSceneGraph();
 	void UpdateSceneTransform();
+	void UpdateSceneEffectiveVisibity();
 	void UpdateInputs(InputManager* inputManager);
 	void Update(float deltaTime);
 	void FlushPendingDestroys();

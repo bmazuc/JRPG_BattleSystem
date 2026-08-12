@@ -19,6 +19,11 @@ public:
 	void UpdateTransforms();
 
 	/**
+	 * Updates all node effective visibility, i.e. if the node and its parents are visible.
+	 */
+	void UpdateEffectiveVisibility();
+
+	/**
 	 * Traverses the hierarchy and submits render commands into the render queue.
 	 * Renderable objects generate transient render items consumed later by the Renderer during the frame rendering pass.
 	 */

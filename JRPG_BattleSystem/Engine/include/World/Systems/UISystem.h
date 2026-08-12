@@ -31,6 +31,7 @@ public:
 	void FlushPendingAdds();
 	void SyncGraph();
 	void UpdateTransform();
+	void UpdateEffectiveVisibility();
 	void Construct();
 	void UpdateInputs(InputManager* inputManager);
 	void Update(float deltaTime);

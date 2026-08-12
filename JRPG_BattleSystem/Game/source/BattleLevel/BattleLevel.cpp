@@ -48,17 +48,6 @@ void BattleLevel::CreateLevel()
 
 	UISystem* uiSystem = world->GetUISystem();
 
-	UserWidget* userWidget = uiSystem->CreateUserWidget<UserWidget>("UserWidget", UISpawnInfo());
-
-	LoadLevelButton* mainMenuButton = userWidget->CreateWidget<LoadLevelButton>("MainMenuButton", UISpawnInfo(nullptr, TransformSpace::World, glm::vec2(320, 390)));
-	mainMenuButton->GetMaterial()->SetTexture("button");
-	mainMenuButton->SetSize(glm::vec2(150, 50));
-	mainMenuButton->SetLevelToLoad("mainMenu");
-
-	Text* mainMenuButtonText = userWidget->CreateWidget<Text>("MainMenuButtonText", UISpawnInfo(mainMenuButton, TransformSpace::Local));
-	mainMenuButtonText->SetContent("Main Menu");
-	mainMenuButtonText->SetSize(24);
-
 	CreateBattleUI(battleManager, uiSystem);
 }
 

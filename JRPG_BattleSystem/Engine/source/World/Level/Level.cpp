@@ -33,6 +33,11 @@ void Level::UpdateSceneTransform()
 	scene.UpdateTransform();
 }
 
+void Level::UpdateSceneEffectiveVisibity()
+{
+	scene.UpdateEffectiveVisibility();
+}
+
 void Level::UpdateInputs(InputManager* inputManager)
 {
 	playerController->UpdateInputs(inputManager);

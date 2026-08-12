@@ -37,6 +37,11 @@ void Scene::UpdateTransform()
 	graph.UpdateTransforms();
 }
 
+void Scene::UpdateEffectiveVisibility()
+{
+	graph.UpdateEffectiveVisibility();
+}
+
 void Scene::Update(float deltaTime)
 {
 	actorsCollection.Update(deltaTime);

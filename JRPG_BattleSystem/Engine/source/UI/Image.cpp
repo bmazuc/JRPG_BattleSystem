@@ -14,5 +14,8 @@ Image::~Image()
 
 void Image::AddToRenderQueue(RenderQueue& queue)
 {
-	queue.AddUIItem(new RenderTextureItem(GetTransform().world, size, material));
+	if (GetNode()->IsEffectivelyVisible())
+	{
+		queue.AddUIItem(new RenderTextureItem(GetTransform().world, size, material));
+	}
 }
