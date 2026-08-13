@@ -5,8 +5,11 @@
 #include "BattleLevel/UI/BattleWidget.h"
 #include "BattleLevel/UI/CountdownWidget.h"
 #include "BattleLevel/UI/GameOverWidget.h"
+#include "BattleLevel/UI/PlayerActionsMenu/PlayerActionsMenu.h"
 #include "BattleLevel/Characters/PlayerCharacter.h"
-#include "BattleLevel/UI/FleeAbility.h"
+#include "BattleLevel/Abilities/FleeAbility.h"
+#include "BattleLevel/Abilities/AttackAbility.h"
+#include "World/PlayerController.h"
 
 void BattleManager::Initialize()
 {
@@ -33,13 +36,23 @@ void BattleManager::Initialize()
 
 void BattleManager::Update(float deltaTime)
 {
+	// Enemy turn simulation
 	if (currentState == BattleState::ENEMY_TURN)
 	{
 		currentEnemyTurnDuration -= deltaTime;
 		if (currentEnemyTurnDuration <= 0.0f)
 		{
 			int index = Random::FromRange(0, (int)playerCharacters.size() - 1);
-			InflictDamage(currentCharacter, playerCharacters[index]);
+			if (Enemy* enemy = dynamic_cast<Enemy*>(currentCharacter))
+			{
+				currentState = BattleState::RESOLVING_TURN;
+				waitingForBlinkEnd = true;
+				waitingForDamageTextDestroy = true;
+
+				AttackAbility* attackAbility = enemy->GetAttackAbility();
+				attackAbility->SetTarget(playerCharacters[index]);
+				attackAbility->Execute();
+			}
 		}
 	}
 }
@@ -158,25 +171,28 @@ void BattleManager::NextTurn()
 		return;
 	}
 
-	currentCharacter = turnOrder[turnIndex];
+	currentAbilityWithActorTarget = nullptr;
 
-	currentState = dynamic_cast<Enemy*>(currentCharacter) ? BattleState::ENEMY_TURN : BattleState::PLAYER_TURN;
+	currentCharacter = turnOrder[turnIndex];
 
 	if (dynamic_cast<Enemy*>(currentCharacter))
 	{
 		currentEnemyTurnDuration = battleConfig.enemyTurnDuration;
 		currentState = BattleState::ENEMY_TURN;
-		battleWidget->HidePlayerActionsMenu();
+		if (battleWidget)
+		{
+			battleWidget->HidePlayerActionsMenu();
+			battleWidget->SetTurnText("Enemy Turn");
+		}
 	}
 	else
 	{
-		currentState = BattleState::PLAYER_TURN;
-		battleWidget->ShowPlayerActionsMenu(dynamic_cast<PlayerCharacter*>(currentCharacter));
-	}
-
-	if (battleWidget)
-	{
-		battleWidget->SetTurnText(currentState == BattleState::ENEMY_TURN ? "Enemy Turn" : "Player Turn");
+		currentState = BattleState::WAIT_FOR_ACTION_SELECTION;
+		if (battleWidget)
+		{
+			battleWidget->ShowPlayerActionsMenu(dynamic_cast<PlayerCharacter*>(currentCharacter));
+			battleWidget->SetTurnText("Player Turn");
+		}
 	}
 
 	turnIndex = (turnIndex + 1) % turnOrder.size();
@@ -225,9 +241,14 @@ void BattleManager::OnBlinkEnd()
 
 void BattleManager::OnEnemySelected(Enemy* selectedEnemy)
 {
-	if (currentState == BattleState::PLAYER_TURN)
+	if (currentState == BattleState::WAIT_FOR_TARGET)
 	{
-		InflictDamage(currentCharacter, selectedEnemy);
+		currentState = BattleState::RESOLVING_TURN;
+		waitingForBlinkEnd = true;
+		waitingForDamageTextDestroy = true;
+
+		currentAbilityWithActorTarget->SetTarget(selectedEnemy);
+		currentAbilityWithActorTarget->Execute();
 	}
 }
 
@@ -267,4 +288,66 @@ void BattleManager::EndBattle()
 void BattleManager::OnBattleWidgetConstruct(UserWidget* widget)
 {
 	battleWidget->InitCharacterInfos(playerCharacters);
+	if (PlayerActionsMenu* playerActionsMenu = battleWidget->GetPlayerActionsMenu())
+	{
+		OnPlayerActionsMenuConstructHandle = playerActionsMenu->OnConstruct.Bind(this, &BattleManager::OnPlayerActionsMenuConstruct);
+	}
+
+}
+
+void BattleManager::OnPlayerActionsMenuConstruct(UserWidget* widget)
+{
+	if (PlayerActionsMenu* playerActionsMenu = battleWidget->GetPlayerActionsMenu())
+	{
+		playerActionsMenu->OnConstruct.Unbind(OnPlayerActionsMenuConstructHandle);
+		playerActionsMenu->Init(this);
+	}
+}
+
+void BattleManager::SetCurrentAbility(Ability* inAbility)
+{ 
+	currentAbilityWithActorTarget = dynamic_cast<AbilityWithActorTarget*>(inAbility);
+	if (currentAbilityWithActorTarget)
+	{
+		currentState = BattleState::WAIT_FOR_TARGET;
+		if (battleWidget)
+		{
+			battleWidget->HidePlayerActionsMenu();
+		}
+	}
+	else
+	{
+		inAbility->Execute();
+	}
+}
+
+void BattleManager::SetPlayerController(PlayerController* inPlayerController)
+{
+	if (playerController)
+	{
+		playerController->OnRightClick.Unbind(OnRightClickHandle);
+	}
+	
+	playerController = inPlayerController;
+
+	if (playerController)
+	{
+		OnRightClickHandle = playerController->OnRightClick.Bind(this, &BattleManager::OnRightClick);
+	}
+}
+
+void BattleManager::OnRightClick()
+{
+	if (currentState == BattleState::WAIT_FOR_TARGET)
+	{
+		if (battleWidget)
+		{
+			currentAbilityWithActorTarget = nullptr;
+			currentState = BattleState::WAIT_FOR_ACTION_SELECTION;
+			if (battleWidget)
+			{
+				battleWidget->ShowPlayerActionsMenu(dynamic_cast<PlayerCharacter*>(currentCharacter));
+			}
+		}
+	}
 }

@@ -169,6 +169,12 @@
     <Filter Include="Source Files\Game\BattleLevel\UI\PlayerActionsMenu">
       <UniqueIdentifier>{eda7cf7d-8113-41a8-ba76-35efb7fb283f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Game\BattleLevel\Abilities">
+      <UniqueIdentifier>{d0b090a2-0063-4a20-bf95-d3c5201cb6e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\BattleLevel\Abilities">
+      <UniqueIdentifier>{f2689706-d103-4107-a8e7-d1905facfe91}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -315,17 +321,20 @@
     <ClCompile Include="Game\source\BattleLevel\UI\PlayerActionsMenu\PlayerActionsMenu.cpp">
       <Filter>Source Files\Game\BattleLevel\UI\PlayerActionsMenu</Filter>
     </ClCompile>
-    <ClCompile Include="Game\include\BattleLevel\Ability\Ability.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\source\BattleLevel\UI\FleeAbility.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Game\source\BattleLevel\Characters\PlayerCharacter.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Game\BattleLevel\Characters</Filter>
     </ClCompile>
-    <ClCompile Include="Game\source\BattleLevel\UI\AbilityButton.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Game\source\BattleLevel\UI\PlayerActionsMenu\AbilityButton.cpp">
+      <Filter>Source Files\Game\BattleLevel\UI\PlayerActionsMenu</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\source\BattleLevel\Abilities\AbilityWithTarget.cpp">
+      <Filter>Source Files\Game\BattleLevel\Abilities</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\source\BattleLevel\Abilities\AttackAbility.cpp">
+      <Filter>Source Files\Game\BattleLevel\Abilities</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\source\BattleLevel\Abilities\FleeAbility.cpp">
+      <Filter>Source Files\Game\BattleLevel\Abilities</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -506,17 +515,23 @@
     <ClInclude Include="Game\include\BattleLevel\UI\PlayerActionsMenu\PlayerActionsMenu.h">
       <Filter>Header Files\Game\BattleLevel\UI\PlayerActionsMenu</Filter>
     </ClInclude>
-    <ClInclude Include="Game\include\BattleLevel\Ability\Ability.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\include\BattleLevel\UI\FleeAbility.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Game\include\BattleLevel\Characters\PlayerCharacter.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Game\BattleLevel\Characters</Filter>
     </ClInclude>
-    <ClInclude Include="Game\include\BattleLevel\UI\AbilityButton.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Game\include\BattleLevel\UI\PlayerActionsMenu\AbilityButton.h">
+      <Filter>Header Files\Game\BattleLevel\UI\PlayerActionsMenu</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\include\BattleLevel\Abilities\Ability.h">
+      <Filter>Header Files\Game\BattleLevel\Abilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\include\BattleLevel\Abilities\AbilityWithTarget.h">
+      <Filter>Header Files\Game\BattleLevel\Abilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\include\BattleLevel\Abilities\AttackAbility.h">
+      <Filter>Header Files\Game\BattleLevel\Abilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\include\BattleLevel\Abilities\FleeAbility.h">
+      <Filter>Header Files\Game\BattleLevel\Abilities</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

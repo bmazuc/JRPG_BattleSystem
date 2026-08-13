@@ -35,10 +35,10 @@ private:
     glm::vec2 mousePos;
 
     // Current mouse button states.
-    bool mouseDown[3];
+    bool mouseDown[4];
 
     // Mouse buttons pressed during the current frame.
-    bool mousePressed[3];
+    bool mousePressed[4];
 
     // Have the application requested shutdown ?
     bool isQuitRequested;

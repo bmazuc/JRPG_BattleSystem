@@ -3,15 +3,22 @@
 
 #include <string>
 
+class Actor;
+
 class Ability
 {
 public:
 	std::string GetName() const { return name; }
 
-	virtual void Execute() = 0;
+	virtual bool CanExecuteAbility() { return true; }
+
+	virtual bool Execute() = 0;
+
+	void SetOwner(Actor* inOwner) { owner = inOwner; }
 
 protected:
 	std::string name;
+	Actor* owner;
 };
 
 #endif // __ABILITY_H_INCLUDED__

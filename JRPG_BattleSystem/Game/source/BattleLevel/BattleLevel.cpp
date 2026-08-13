@@ -23,7 +23,7 @@ void BattleLevel::LoadAssets()
 void BattleLevel::CreateLevel()
 {
 	BattleManager* battleManager = CreateBattleManager();
-
+	battleManager->SetPlayerController(playerController);
 	Scene* scene = GetScene();
 
 	EnemySpawner* enemySpawner = scene->SpawnActor<EnemySpawner>("EnemySpawner", ActorSpawnInfo(nullptr, TransformSpace::World, glm::vec2(100, 160)));

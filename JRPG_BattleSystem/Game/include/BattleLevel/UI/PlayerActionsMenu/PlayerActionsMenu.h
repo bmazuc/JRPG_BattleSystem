@@ -5,6 +5,8 @@
 
 class AbilityButton;
 class PlayerCharacter;
+class BattleManager;
+class Text;
 
 class PlayerActionsMenu : public UserWidget
 {
@@ -13,6 +15,7 @@ public:
 
 	void SetSize(glm::vec2 inSize);
 
+	void Init(BattleManager* battleManager);
 	void Show(PlayerCharacter* currentCharacter);
 	void Hide();
 
@@ -26,6 +29,10 @@ private:
 	AbilityButton* attackButton;
 	AbilityButton* skillButton;
 	AbilityButton* fleeButton;
+
+	Text* attackButtonText;
+	Text* skillButtonText;
+	Text* fleeButtonText;
 };
 
 #endif // __PLAYER_ACTIONS_MENU_INCLUDED__

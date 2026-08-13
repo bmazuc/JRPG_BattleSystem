@@ -11,18 +11,23 @@ class PlayerSpawner;
 class Character;
 class Enemy;
 class PlayerCharacter;
+class PlayerController;
 
 class CountdownWidget;
 class BattleWidget;
 class GameOverWidget;
 class UserWidget;
 
+class Ability;
+class AbilityWithActorTarget;
+
 enum class BattleState
 {
 	INIT,
 	WAIT_FOR_COUNTDOWN_END,
 	ENEMY_TURN,
-	PLAYER_TURN,
+	WAIT_FOR_ACTION_SELECTION,
+	WAIT_FOR_TARGET,
 	RESOLVING_TURN,
 	BATTLE_END
 };
@@ -54,8 +59,12 @@ public:
 	void Initialize() override;
 	void Update(float deltaTime) override;
 
+	void SetPlayerController(PlayerController* inPlayerController);
+
 	void SetEnemySpawner(EnemySpawner* newEnemySpawner) { enemySpawner = newEnemySpawner; }
 	void SetPlayerSpawner(PlayerSpawner* newPlayerSpawner) { playerSpawner = newPlayerSpawner; }
+
+	void SetCurrentAbility(Ability* inAbility);
 
 	void SetBattleWidget(BattleWidget* widget);
 	void SetCountdownWidget(CountdownWidget* widget);
@@ -70,6 +79,7 @@ private:
 	void NextTurn();
 
 	void OnBattleWidgetConstruct(UserWidget* widget);
+	void OnPlayerActionsMenuConstruct(UserWidget* widget);
 
 	void SpawnPlayerCharacters();
 	void SpawnEnemies();
@@ -80,10 +90,8 @@ private:
 	void OnEnemyDeath(Character* enemy);
 	void OnBlinkEnd();
 
+	void OnRightClick();
 	void OnEnemySelected(Enemy* selectedEnemy);
-
-	void InitPlayerTurn();
-	void InitEnemyTurn();
 
 	void InflictDamage(Character* attacker, Character* Defender);
 
@@ -112,6 +120,7 @@ private:
 
 	DelegateHandle OnAllDamageTextDestroyHandle;
 	DelegateHandle OnBattleWidgetConstructHandle;
+	DelegateHandle OnPlayerActionsMenuConstructHandle;
 
 	Character* currentCharacter;
 
@@ -119,6 +128,11 @@ private:
 	bool waitingForDamageTextDestroy = false;
 
 	int killCount = 0;
+
+	AbilityWithActorTarget* currentAbilityWithActorTarget = nullptr;
+
+	PlayerController* playerController;
+	DelegateHandle OnRightClickHandle;
 };
 
 #endif // __BATTLE_MANAGER_H_INCLUDED__

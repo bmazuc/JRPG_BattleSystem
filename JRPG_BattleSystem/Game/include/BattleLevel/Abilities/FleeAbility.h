@@ -1,7 +1,7 @@
 #ifndef __FLEE_ABILITY_H_INCLUDED__
 #define __FLEE_ABILITY_H_INCLUDED__
 
-#include "BattleLevel/Ability/Ability.h"
+#include "BattleLevel/Abilities/Ability.h"
 
 class BattleManager;
 
@@ -10,7 +10,9 @@ class FleeAbility : public Ability
 public:
 	FleeAbility();
 
-	void Execute() override;
+	bool CanExecuteAbility() override;
+
+	bool Execute() override;
 	void SetBattleManager(BattleManager* inBattleManager) { battleManager = inBattleManager; }
 
 private:

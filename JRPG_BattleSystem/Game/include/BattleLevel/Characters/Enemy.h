@@ -3,6 +3,8 @@
 
 #include "BattleLevel/Characters/Character.h"
 
+class AttackAbility;
+
 class Enemy : public Character
 {
 public:
@@ -13,12 +15,16 @@ public:
 
 	void OnClick();
 
+	AttackAbility* GetAttackAbility() { return attackAbility; }
+
 	Delegate<void, Enemy*> OnSelected;
 
 private:
 	PlayerController* playerController;
 
 	DelegateHandle clickHandle;
+
+	AttackAbility* attackAbility;
 
 	bool isAlive = true;
 };

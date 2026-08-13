@@ -4,15 +4,18 @@
 #include "UI/Button.h"
 
 class Ability;
+class BattleManager;
 
 class AbilityButton : public Button
 {
 public:
 	void OnClicked() override;
 
+	void SetBattleManager(BattleManager* inBattleManager) { battleManager = inBattleManager; }
 	void AssociateAbility(Ability* inAbility) { ability = inAbility; }
 
 private:
+	BattleManager* battleManager;
 	Ability* ability;
 };
 

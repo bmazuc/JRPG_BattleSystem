@@ -1,5 +1,5 @@
-#ifndef __PLAYER_CONTROLLER_H__
-#define __PLAYER_CONTROLLER_H__
+#ifndef __PLAYER_CONTROLLER_H_INCLUDED__
+#define __PLAYER_CONTROLLER_H_INCLUDED__
 
 #include "Core/Delegate/Delegate.h"
 #include <glm/vec2.hpp>
@@ -23,9 +23,14 @@ public:
 	void UpdateInputs(const InputManager* inputManager);
 
 	/**
-	 * Triggered when the player clicks (mouse or action input).
+	 * Triggered when the player clicks on left button.
 	 */
 	Delegate<void> OnClick;
+
+	/**
+	 * Triggered when the player clicks on right button.
+	 */
+	Delegate<void> OnRightClick;
 
 	/**
 	 * Current mouse position in screen space.
@@ -36,4 +41,4 @@ private:
 	glm::vec2 mousePos;
 };
 
-#endif // __PLAYER_CONTROLLER_H__
+#endif // __PLAYER_CONTROLLER_H_INCLUDED__

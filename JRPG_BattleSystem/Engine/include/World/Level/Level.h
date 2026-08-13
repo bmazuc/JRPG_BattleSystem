@@ -102,11 +102,10 @@ public:
 
 protected:
 	World* world;
+	PlayerController* playerController = nullptr;
 
 private:
 	Scene scene;
-
-	PlayerController* playerController = nullptr;
 
 	LevelSubsystemCollection sceneSubsystemCollection;
 };

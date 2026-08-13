@@ -8,6 +8,7 @@ class Scene;
 class Image;
 class PlayerCharacter;
 class PlayerActionsMenu;
+class BattleManager;
 
 struct DamageDisplayTextData
 {
@@ -38,6 +39,8 @@ public:
 
 	void ShowPlayerActionsMenu(PlayerCharacter* character);
 	void HidePlayerActionsMenu();
+
+	PlayerActionsMenu* GetPlayerActionsMenu() { return playerActionsMenu; }
 
 	Delegate<void> OnAllDamageTextDestroy;
 

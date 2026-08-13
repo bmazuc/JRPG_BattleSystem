@@ -1,10 +1,13 @@
 #include "BattleLevel/Characters/Enemy.h"
 #include "Components/Rendering/SpriteRendererComponent.h"
 #include "World/PlayerController.h"
+#include "BattleLevel/Abilities/AttackAbility.h"
 
 Enemy::Enemy(CharacterData data)
     : Character(data)
 {
+    attackAbility = new AttackAbility();
+    attackAbility->SetOwner(this);
 }
 
 void Enemy::SetupInputs(PlayerController* _playerController)
@@ -28,8 +31,12 @@ void Enemy::OnClick()
 void Enemy::BeginDestroy()
 {
     Actor::BeginDestroy();
+
     if (playerController)
     {
         playerController->OnClick.Unbind(clickHandle);
     }
+
+    delete attackAbility;
+    attackAbility = nullptr;
 }

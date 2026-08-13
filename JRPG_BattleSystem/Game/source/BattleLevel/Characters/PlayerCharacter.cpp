@@ -1,14 +1,23 @@
 #include "BattleLevel/Characters/PlayerCharacter.h"
-#include "BattleLevel/UI/FleeAbility.h"
+#include "BattleLevel/Abilities/FleeAbility.h"
+#include "BattleLevel/Abilities/AttackAbility.h"
 
 PlayerCharacter::PlayerCharacter(CharacterData data)
 	: Character(data)
 {
-    abilities["flee"] = new FleeAbility();
+    AttackAbility* attackAbility = new AttackAbility();
+    attackAbility->SetOwner(this);
+    abilities["attack"] = attackAbility;
+
+    FleeAbility* fleeAbility = new FleeAbility();
+    fleeAbility->SetOwner(this);
+    abilities["flee"] = fleeAbility;
 }
 
 void PlayerCharacter::BeginDestroy()
 {
+    Actor::BeginDestroy();
+
     for (auto& it : abilities)
     {
         delete it.second;

@@ -38,14 +38,14 @@ void InputManager::UpdateInputs()
 
         case SDL_EVENT_MOUSE_BUTTON_DOWN:
             {
-                mouseDown[event.button.button] = true;
-                mousePressed[event.button.button] = true;
+                mouseDown[event.button.button - 1] = true;
+                mousePressed[event.button.button - 1] = true;
             }
             break;
 
         case SDL_EVENT_MOUSE_BUTTON_UP:
             {
-                mouseDown[event.button.button] = false;
+                mouseDown[event.button.button - 1] = false;
             }
             break;
         }
@@ -54,6 +54,7 @@ void InputManager::UpdateInputs()
 
 bool InputManager::IsMouseDown(int button) const
 {
+    button -= 1;
     if (button >= 3)
     {
         return false;
@@ -64,6 +65,7 @@ bool InputManager::IsMouseDown(int button) const
 
 bool InputManager::IsMousePressed(int button) const
 {
+    button -= 1;
     if (button >= 3)
     {
         return false;

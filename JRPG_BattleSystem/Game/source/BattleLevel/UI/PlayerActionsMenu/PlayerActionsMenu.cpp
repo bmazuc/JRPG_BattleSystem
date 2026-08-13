@@ -1,8 +1,9 @@
 #include "BattleLevel/UI/PlayerActionsMenu/PlayerActionsMenu.h"
-#include "BattleLevel/UI/AbilityButton.h"
+#include "BattleLevel/UI/PlayerActionsMenu/AbilityButton.h"
 #include "Rendering/Material.h"
 #include "BattleLevel/Characters/PlayerCharacter.h"
 #include "UI/Text.h"
+#include "BattleLevel/Abilities/Ability.h"
 
 void PlayerActionsMenu::Construct()
 {
@@ -13,13 +14,25 @@ void PlayerActionsMenu::Construct()
 	fleeButton = CreateWidget<AbilityButton>("FleeButton", UISpawnInfo());
 	fleeButton->GetMaterial()->SetTexture("button");
 
-	Text* mainMenuButtonText = CreateWidget<Text>("FleeButtonText", UISpawnInfo(fleeButton, TransformSpace::Local));
-	mainMenuButtonText->SetContent("Flee");
-	mainMenuButtonText->SetSize(24);
+	attackButtonText = CreateWidget<Text>("AttackButtonText", UISpawnInfo(attackButton, TransformSpace::Local));
+	attackButtonText->SetSize(24);
+
+	skillButtonText = CreateWidget<Text>("SkillButtonText", UISpawnInfo(skillButton, TransformSpace::Local));
+	skillButtonText->SetSize(24);
+
+	fleeButtonText = CreateWidget<Text>("FleeButtonText", UISpawnInfo(fleeButton, TransformSpace::Local));
+	fleeButtonText->SetSize(24);
 
 	UpdateSize();
 
 	isConstructed = true;
+}
+
+void PlayerActionsMenu::Init(BattleManager* battleManager)
+{
+	attackButton->SetBattleManager(battleManager);
+	skillButton->SetBattleManager(battleManager);
+	fleeButton->SetBattleManager(battleManager);
 }
 
 void PlayerActionsMenu::Show(PlayerCharacter* currentCharacter)
@@ -28,8 +41,25 @@ void PlayerActionsMenu::Show(PlayerCharacter* currentCharacter)
 	{
 		return;
 	}
+	Ability* ability = currentCharacter->TryGetAbility("attack");
 
-	fleeButton->AssociateAbility(currentCharacter->TryGetAbility("flee"));
+	if (ability)
+	{
+		attackButton->AssociateAbility(ability);
+		attackButtonText->SetContent(ability->GetName());
+	}
+
+	if (ability = currentCharacter->TryGetAbility("skill"))
+	{
+		skillButton->AssociateAbility(ability);
+		skillButtonText->SetContent(ability->GetName());
+	}
+
+	if (ability = currentCharacter->TryGetAbility("flee"))
+	{
+		fleeButton->AssociateAbility(ability);
+		fleeButtonText->SetContent(ability->GetName());
+	}
 
 	SetVisible(true);
 }

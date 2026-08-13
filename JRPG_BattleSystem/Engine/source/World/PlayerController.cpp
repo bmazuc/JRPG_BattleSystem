@@ -14,4 +14,8 @@ void PlayerController::UpdateInputs(const InputManager* inputManager)
 	{
 		OnClick.Call();
 	}
+	else if (inputManager->IsMousePressed(SDL_BUTTON_RIGHT))
+	{
+		OnRightClick.Call();
+	}
 }
