@@ -19,6 +19,7 @@ void BattleWidget::Construct()
 
 	playerActionsMenu = CreateWidget<PlayerActionsMenu>("PlayerActionsMenu", UISpawnInfo(nullptr, TransformSpace::World, glm::vec2(440, 385)));
 	playerActionsMenu->SetSize(glm::vec2(180, 150));
+	playerActionsMenu->SetMargin(glm::vec2(4.0f, 4.0f));
 	playerActionsMenu->SetVisible(false);
 }
 
@@ -27,10 +28,10 @@ void BattleWidget::InitCharacterInfos(std::vector<PlayerCharacter*> characters)
 	glm::vec2 position = glm::vec2(80, 345);
 	for (PlayerCharacter* character : characters)
 	{
-		CharacterInfosText* t = CreateWidget<CharacterInfosText>("CharacterInfosText", UISpawnInfo(nullptr, TransformSpace::World, position));
-		t->SetSize(20);
-		t->AssociateCharacter(character);
-		t->SetIsCenterX(false);
+		CharacterInfosText* text = CreateWidget<CharacterInfosText>("CharacterInfosText", UISpawnInfo(nullptr, TransformSpace::World, position));
+		text->SetSize(15);
+		text->AssociateCharacter(character);
+		text->SetIsCenterX(false);
 		position.y += 30;
 	}
 }
@@ -44,7 +45,7 @@ void BattleWidget::Update(float deltaTime)
 
 		damageTextData.lifeTime += deltaTime;
 
-		glm::vec4 color = damageTextData.text->GetColor();
+		Color color = damageTextData.text->GetColor();
 		color.a = 1.0f - damageTextData.lifeTime / damageTextDuration;
 		damageTextData.text->SetColor(color);
 

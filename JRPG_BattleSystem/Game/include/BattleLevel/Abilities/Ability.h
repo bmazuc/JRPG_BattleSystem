@@ -3,22 +3,28 @@
 
 #include <string>
 
-class Actor;
+class Character;
 
 class Ability
 {
 public:
 	std::string GetName() const { return name; }
 
-	virtual bool CanExecuteAbility() { return true; }
+	virtual bool CanExecuteAbility() const { return CanPayCost(); }
+	bool CanPayCost() const;
+	void PayCost();
 
 	virtual bool Execute() = 0;
 
-	void SetOwner(Actor* inOwner) { owner = inOwner; }
+	void SetOwner(Character* inOwner) { owner = inOwner; }
+
+	unsigned int GetManaCost() const { return manaCost; }
 
 protected:
 	std::string name;
-	Actor* owner;
+	Character* owner;
+
+	unsigned int manaCost = 0;
 };
 
 #endif // __ABILITY_H_INCLUDED__

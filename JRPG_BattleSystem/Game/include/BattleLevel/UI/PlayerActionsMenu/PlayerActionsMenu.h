@@ -14,6 +14,7 @@ public:
 	void Construct() override;
 
 	void SetSize(glm::vec2 inSize);
+	void SetMargin(glm::vec2 inMargin) { margin = inMargin; }
 
 	void Init(BattleManager* battleManager);
 	void Show(PlayerCharacter* currentCharacter);
@@ -24,6 +25,8 @@ private:
 
 private:
 	glm::vec2 size;
+	glm::vec2 margin = glm::vec2(1.0f, 1.0f);
+
 	bool isConstructed = false;
 
 	AbilityButton* attackButton;

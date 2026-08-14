@@ -101,7 +101,7 @@ void BattleManager::SpawnPlayerCharacters()
 		for (PlayerCharacter* playerCharacter : playerCharacters)
 		{
 			playerCharacter->SetDamageDuration(battleConfig.blinkDuration);
-
+			playerCharacter->OnSelected.Bind(this, &BattleManager::OnPlayerCharacterSelected);
 			playerCharacter->OnDamageTaken.Bind(this, &BattleManager::OnCharacterTakeDamage);
 			playerCharacter->OnBlinkEnd.Bind(this, &BattleManager::OnBlinkEnd);
 			playerCharacter->OnDeath.Bind(this, &BattleManager::OnPlayerCharacterDeath);
@@ -191,7 +191,7 @@ void BattleManager::NextTurn()
 		if (battleWidget)
 		{
 			battleWidget->ShowPlayerActionsMenu(dynamic_cast<PlayerCharacter*>(currentCharacter));
-			battleWidget->SetTurnText("Player Turn");
+			battleWidget->SetTurnText(currentCharacter->GetName() + " Turn");
 		}
 	}
 
@@ -239,15 +239,28 @@ void BattleManager::OnBlinkEnd()
 	NextTurn();
 }
 
-void BattleManager::OnEnemySelected(Enemy* selectedEnemy)
+void BattleManager::OnPlayerCharacterSelected(Character* selectedCharacter)
 {
-	if (currentState == BattleState::WAIT_FOR_TARGET)
+	if (currentState == BattleState::WAIT_FOR_TARGET && currentAbilityWithActorTarget->GetTargetType() == TargetType::ALLY)
 	{
 		currentState = BattleState::RESOLVING_TURN;
 		waitingForBlinkEnd = true;
 		waitingForDamageTextDestroy = true;
 
-		currentAbilityWithActorTarget->SetTarget(selectedEnemy);
+		currentAbilityWithActorTarget->SetTarget(selectedCharacter);
+		currentAbilityWithActorTarget->Execute();
+	}
+}
+
+void BattleManager::OnEnemySelected(Character* selectedCharacter)
+{
+	if (currentState == BattleState::WAIT_FOR_TARGET && currentAbilityWithActorTarget->GetTargetType() == TargetType::ENEMY)
+	{
+		currentState = BattleState::RESOLVING_TURN;
+		waitingForBlinkEnd = true;
+		waitingForDamageTextDestroy = true;
+
+		currentAbilityWithActorTarget->SetTarget(selectedCharacter);
 		currentAbilityWithActorTarget->Execute();
 	}
 }

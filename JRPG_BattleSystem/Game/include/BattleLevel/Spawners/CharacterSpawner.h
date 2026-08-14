@@ -9,9 +9,6 @@
 class CharacterSpawner : public Actor
 {
 public:
-	~CharacterSpawner();
-	void AddCharacterData(CharacterData data) { characterDatas.push_back(data); }
-
 	void SetSpacing(float newSpacing) { spacing = newSpacing; }
 
 protected:
@@ -19,8 +16,6 @@ protected:
 
 	unsigned int groupSize = 3;
 	float spacing = 0;
-
-	std::vector<CharacterData> characterDatas;
 };
 
 #endif // __CHARACTER_SPAWNER_H_INCLUDED__

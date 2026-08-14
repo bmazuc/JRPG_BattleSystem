@@ -13,15 +13,14 @@ bool AttackAbility::Execute()
 		return false;
 	}
 
-	Character* attacker = dynamic_cast<Character*>(owner);
 	Character* defender = dynamic_cast<Character*>(target);
 
-	if (!attacker || !defender)
+	if (!owner || !defender)
 	{
 		return false;
 	}
 
-	int damages = std::max(0, attacker->GetAttributes().attack - defender->GetAttributes().defense);
+	int damages = std::max(0, owner->GetAttributes().attack - defender->GetAttributes().defense);
 	defender->TakeDamage(damages);
 
 	return true;

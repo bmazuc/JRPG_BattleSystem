@@ -1,7 +1,7 @@
 #include "UI/Text.h"
 #include "Core/Resource/ResourceManager.h"
 
-Text::Text(std::string fontName, bool _isCenter, glm::vec4 _color)
+Text::Text(std::string fontName, bool _isCenter, Color _color)
 	: isCenterX(_isCenter), color(_color)
 {
 	font = &ResourceManager::GetFont(fontName);

@@ -15,7 +15,7 @@
 class Button : public Image
 {
 public:
-	Button(std::string textureName = "default", std::string shaderName = "default", glm::vec4 color = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+	Button(std::string textureName = "default", std::string shaderName = "default", Color color = Colors::White);
 
 	/**
 	 * Checks if a screen-space point is inside the button bounds.

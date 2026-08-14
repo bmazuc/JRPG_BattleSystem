@@ -167,9 +167,13 @@
     <ClCompile Include="Engine\source\World\SpatialGraph\SpatialNode.cpp" />
     <ClCompile Include="Engine\source\World\Systems\UISystem.cpp" />
     <ClCompile Include="Engine\source\World\World.cpp" />
+    <ClCompile Include="Game\source\BattleLevel\Abilities\Ability.cpp" />
     <ClCompile Include="Game\source\BattleLevel\Abilities\AbilityWithTarget.cpp" />
+    <ClCompile Include="Game\source\BattleLevel\Abilities\AllOrNothingAbility.cpp" />
     <ClCompile Include="Game\source\BattleLevel\Abilities\AttackAbility.cpp" />
     <ClCompile Include="Game\source\BattleLevel\Abilities\FleeAbility.cpp" />
+    <ClCompile Include="Game\source\BattleLevel\Abilities\RegenerateAbility.cpp" />
+    <ClCompile Include="Game\source\BattleLevel\Abilities\SpellAbility.cpp" />
     <ClCompile Include="Game\source\BattleLevel\BattleLevel.cpp" />
     <ClCompile Include="Game\source\BattleLevel\BattleManager.cpp" />
     <ClCompile Include="Game\source\BattleLevel\Characters\Character.cpp" />
@@ -204,6 +208,7 @@
     <ClInclude Include="Engine\include\Core\Window.h" />
     <ClInclude Include="Engine\include\Graphics\Font.h" />
     <ClInclude Include="Engine\include\Graphics\Texture.h" />
+    <ClInclude Include="Engine\include\Rendering\Color.h" />
     <ClInclude Include="Engine\include\Rendering\IRenderable.h" />
     <ClInclude Include="Engine\include\Rendering\Material.h" />
     <ClInclude Include="Engine\include\Rendering\Renderer.h" />
@@ -235,8 +240,11 @@
     <ClInclude Include="Engine\include\World\World.h" />
     <ClInclude Include="Game\include\BattleLevel\Abilities\Ability.h" />
     <ClInclude Include="Game\include\BattleLevel\Abilities\AbilityWithTarget.h" />
+    <ClInclude Include="Game\include\BattleLevel\Abilities\AllOrNothingAbility.h" />
     <ClInclude Include="Game\include\BattleLevel\Abilities\AttackAbility.h" />
     <ClInclude Include="Game\include\BattleLevel\Abilities\FleeAbility.h" />
+    <ClInclude Include="Game\include\BattleLevel\Abilities\RegenerateAbility.h" />
+    <ClInclude Include="Game\include\BattleLevel\Abilities\SpellAbility.h" />
     <ClInclude Include="Game\include\BattleLevel\BattleLevel.h" />
     <ClInclude Include="Game\include\BattleLevel\BattleManager.h" />
     <ClInclude Include="Game\include\BattleLevel\CharacterSpawner.h" />

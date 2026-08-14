@@ -3,6 +3,7 @@
 
 #include "Widget.h"
 #include "Rendering/IRenderable.h"
+#include "Rendering/Color.h"
 
 class Material;
 
@@ -17,7 +18,7 @@ class Material;
 class Image : public Widget, public IRenderable
 {
 public:
-	Image(std::string textureName = "default", std::string shaderName = "default", glm::vec4 color = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+	Image(std::string textureName = "default", std::string shaderName = "default", Color color = Colors::White);
 	
 	~Image();
 

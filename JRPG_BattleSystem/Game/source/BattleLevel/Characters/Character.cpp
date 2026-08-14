@@ -1,26 +1,49 @@
 #include "BattleLevel/Characters/Character.h"
 #include "Components/Rendering/SpriteRendererComponent.h"
 #include "Rendering/Material.h"
+#include "World/PlayerController.h"
 
 Character::Character(CharacterData data)
 {
+    characterName = data.characterName;
+
     spriteRenderer = SpawnSceneComponent<SpriteRendererComponent>("Sprite render", SceneComponentSpawnInfo(),
         data.textureName, data.shaderName, data.color);
 
     spriteRenderer->SetSize(data.spriteSize);
     spriteRenderer->SetZOrder(1);
+
+    attributes = data.attributes;
+}
+
+void Character::SetupInputs(PlayerController* _playerController)
+{
+    playerController = _playerController;
+    clickHandle = playerController->OnClick.Bind(this, &Character::OnClick);
+}
+
+void Character::OnClick()
+{
+    if (playerController)
+    {
+        glm::vec2 mousePos = playerController->GetMousePosition();
+        if (spriteRenderer && spriteRenderer->IsHovered(mousePos))
+        {
+            OnSelected.Call(this);
+        }
+    }
 }
 
 void Character::Update(float deltaTime)
 {
-    if (damageTimer > 0.0f)
+    if (blinkTimer > 0.0f)
     {
-        damageTimer -= deltaTime;
+        blinkTimer -= deltaTime;
 
-        float t = 1.0f - (damageTimer / damageDuration);
+        float t = 1.0f - (blinkTimer / blinkDuration);
         Blink(t);
 
-        if (damageTimer <= 0.0f)
+        if (blinkTimer <= 0.0f)
         {
             if (isPendingKill)
             {
@@ -34,7 +57,10 @@ void Character::Update(float deltaTime)
 void Character::TakeDamage(int damage)
 {
     originalColor = spriteRenderer->GetMaterial()->GetColor();
-    damageTimer = damageDuration;
+    blinkColor = Colors::Red;
+    blinkColor.a = originalColor.a;
+
+    blinkTimer = blinkDuration;
 
     attributes.health -= damage;
     OnHealthUpdate.Call(attributes.health, attributes.maxHealth);
@@ -45,6 +71,44 @@ void Character::TakeDamage(int damage)
     }
 
     OnDamageTaken.Call(this, damage);
+}
+
+void Character::UseMana(int manaAmount)
+{
+    attributes.mana -= manaAmount;
+
+    if (attributes.mana < 0)
+    {
+        attributes.mana = 0;
+    }
+    
+    OnManaUpdate.Call(attributes.mana, attributes.maxMana);
+}
+
+void Character::Regen(int healthRegen, int manaRegen)
+{
+    originalColor = spriteRenderer->GetMaterial()->GetColor();
+    blinkColor = Colors::Green;
+    blinkColor.a = originalColor.a;
+
+    blinkTimer = blinkDuration;
+
+    attributes.health += healthRegen;
+    if (attributes.health > attributes.maxHealth)
+    {
+        attributes.health = attributes.maxHealth;
+    }
+
+    attributes.mana += manaRegen;
+    if (attributes.mana > attributes.maxMana)
+    {
+        attributes.mana = attributes.maxMana;
+    }
+
+    OnHealthUpdate.Call(attributes.health, attributes.maxHealth);
+    OnManaUpdate.Call(attributes.mana, attributes.maxMana);
+
+    OnDamageTaken.Call(this, healthRegen);
 }
 
 void Character::Kill()
@@ -62,11 +126,22 @@ void Character::Blink(float t)
     if (t < 0.5f)
     {
         float lerp = t * 2.0f;
-        spriteRenderer->GetMaterial()->SetColor(glm::mix(originalColor, glm::vec4(1.0f, 0.0f, 0.0f, originalColor.a), lerp));
+        spriteRenderer->GetMaterial()->SetColor(glm::mix(originalColor, blinkColor, lerp));
     }
     else
     {
         float lerp = (t - 0.5f) * 2.0f;
-        spriteRenderer->GetMaterial()->SetColor(glm::mix(glm::vec4(1.0f, 0.0f, 0.0f, originalColor.a), originalColor, lerp));
+        spriteRenderer->GetMaterial()->SetColor(glm::mix(blinkColor, originalColor, lerp));
+    }
+}
+
+void Character::BeginDestroy()
+{
+    Actor::BeginDestroy();
+
+
+    if (playerController)
+    {
+        playerController->OnClick.Unbind(clickHandle);
     }
 }

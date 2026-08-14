@@ -3,6 +3,7 @@
 
 #include "Widget.h"
 #include "Rendering/IRenderable.h"
+#include "Rendering/Color.h"
 #include <string>
 
 class Font;
@@ -28,11 +29,11 @@ enum class TextScaleMode
 class Text : public Widget, public IRenderable
 {
 public:
-    Text(std::string fontName = "default", bool isCenterX = true, glm::vec4 _color = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+    Text(std::string fontName = "default", bool isCenterX = true, Color _color = Colors::White);
 
     void SetFont(std::string fontName);
     void SetContent(std::string newContent) { content = newContent; }
-    void SetColor(glm::vec4 newColor) { color = newColor; }
+    void SetColor(Color newColor) { color = newColor; }
     
     /*
      * Warning : if the text size is too different from the font size, we could get
@@ -48,7 +49,7 @@ public:
     const Font* GetFont() const { return font; }
 
     const std::string& GetContent() const { return content; }
-    glm::vec4 GetColor() const { return color; }
+    Color GetColor() const { return color; }
     float GetSize() const { return size; }
 
     bool IsCenterX() const { return isCenterX; }
@@ -61,7 +62,7 @@ private:
 
     Font* font = nullptr;
 
-    glm::vec4 color = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
+    Color color = Colors::White;
 
     float size = 1.0f;
 

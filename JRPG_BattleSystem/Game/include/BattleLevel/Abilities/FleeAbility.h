@@ -10,7 +10,7 @@ class FleeAbility : public Ability
 public:
 	FleeAbility();
 
-	bool CanExecuteAbility() override;
+	bool CanExecuteAbility() const override;
 
 	bool Execute() override;
 	void SetBattleManager(BattleManager* inBattleManager) { battleManager = inBattleManager; }

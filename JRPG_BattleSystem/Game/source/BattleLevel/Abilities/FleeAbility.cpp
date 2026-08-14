@@ -6,9 +6,9 @@ FleeAbility::FleeAbility()
 	name = "Flee";
 }
 
-bool FleeAbility::CanExecuteAbility()
+bool FleeAbility::CanExecuteAbility() const
 {
-	return battleManager != nullptr;
+	return Ability::CanExecuteAbility() && (battleManager != nullptr);
 }
 
 bool FleeAbility::Execute()

@@ -336,6 +336,18 @@
     <ClCompile Include="Game\source\BattleLevel\Abilities\FleeAbility.cpp">
       <Filter>Source Files\Game\BattleLevel\Abilities</Filter>
     </ClCompile>
+    <ClCompile Include="Game\source\BattleLevel\Abilities\Ability.cpp">
+      <Filter>Source Files\Game\BattleLevel\Abilities</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\source\BattleLevel\Abilities\AllOrNothingAbility.cpp">
+      <Filter>Source Files\Game\BattleLevel\Abilities</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\source\BattleLevel\Abilities\RegenerateAbility.cpp">
+      <Filter>Source Files\Game\BattleLevel\Abilities</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\source\BattleLevel\Abilities\SpellAbility.cpp">
+      <Filter>Source Files\Game\BattleLevel\Abilities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\include\Core\Engine.h">
@@ -532,6 +544,18 @@
     </ClInclude>
     <ClInclude Include="Game\include\BattleLevel\Abilities\FleeAbility.h">
       <Filter>Header Files\Game\BattleLevel\Abilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\include\BattleLevel\Abilities\AllOrNothingAbility.h">
+      <Filter>Header Files\Game\BattleLevel\Abilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\include\BattleLevel\Abilities\RegenerateAbility.h">
+      <Filter>Header Files\Game\BattleLevel\Abilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\include\BattleLevel\Abilities\SpellAbility.h">
+      <Filter>Header Files\Game\BattleLevel\Abilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\include\Rendering\Color.h">
+      <Filter>Header Files\Engine\Rendering</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

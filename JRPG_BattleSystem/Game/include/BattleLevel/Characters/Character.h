@@ -3,28 +3,19 @@
 
 #include "World/Level/Scene/Actor.h"
 #include <string>
-#include <glm/vec3.hpp>
+#include "Rendering/Color.h"
 #include "Core/Delegate/Delegate.h"
 
 class SpriteRendererComponent;
 
-struct CharacterData
-{
-public:
-	CharacterData() = default;
-	CharacterData(std::string _characterName, std::string _textureName, std::string _shaderName, glm::vec4 _color, glm::vec2 _spriteSize)
-		: characterName(_characterName), textureName(_textureName), shaderName(_shaderName), color(_color), spriteSize(_spriteSize) {}
-
-	std::string characterName = "";
-	std::string textureName = "default";
-	std::string shaderName = "default";
-	glm::vec4 color = glm::vec4(1, 1, 1, 1);
-
-	glm::vec2 spriteSize = glm::vec2(1, 1);
-};
-
 struct CharacterAttributes
 {
+public:
+	CharacterAttributes() = default;
+	CharacterAttributes(int _maxHealth, int _maxMana, int _attack, int _defense, int _magickAttack, int _magickDefense)
+		: health(_maxHealth), maxHealth(_maxHealth), mana(_maxMana), maxMana(_maxMana), attack(_attack), defense(_defense), magickAttack(_magickAttack), magickDefense(_magickDefense) {
+	}
+
 	int health = 3;
 	int maxHealth = 3;
 
@@ -33,21 +24,54 @@ struct CharacterAttributes
 
 	int attack = 2;
 	int defense = 1;
+
+	int magickAttack = 2;
+	int magickDefense = 0;
+};
+
+struct CharacterData
+{
+public:
+	CharacterData() = default;
+	CharacterData(std::string _characterName, std::string _textureName, std::string _shaderName, Color _color, glm::vec2 _spriteSize, CharacterAttributes _attributes)
+		: characterName(_characterName), textureName(_textureName), shaderName(_shaderName), color(_color), spriteSize(_spriteSize), attributes(_attributes) {}
+
+	virtual ~CharacterData() = default;
+
+	std::string characterName = "";
+	std::string textureName = "default";
+	std::string shaderName = "default";
+	Color color = Colors::White;
+
+	glm::vec2 spriteSize = glm::vec2(1, 1);
+
+	CharacterAttributes attributes;
 };
 
 class Character : public Actor
 {
 public:
+	Character() = default;
 	Character(CharacterData data);
+
+	void BeginDestroy() override;
 
 	void Update(float deltaTime) override;
 		
-	void SetDamageDuration(float _damageDuration) { damageDuration = _damageDuration; }
+	void SetupInputs(PlayerController* _playerController) override;
+
+	void OnClick();
+
+	Delegate<void, Character*> OnSelected;
+
+	void SetDamageDuration(float _damageDuration) { blinkDuration = _damageDuration; }
 
 	SpriteRendererComponent* GetSpriteRenderer() { return spriteRenderer; }
 	const SpriteRendererComponent* GetSpriteRenderer() const { return spriteRenderer; }
 
 	void TakeDamage(int damage);
+	void UseMana(int manaAmount);
+	void Regen(int healthRegen, int manaRegen);
 
 	Delegate<void, Character*, int> OnDamageTaken;
 	Delegate<void> OnBlinkEnd;
@@ -55,8 +79,6 @@ public:
 
 	Delegate<void, int, int> OnHealthUpdate;
 	Delegate<void, int, int> OnManaUpdate;
-
-	glm::vec4 originalColor;
 
 	void SetCharacterName(std::string inName) { name = inName; }
 	const std::string& GetCharacterName() const { return name; }
@@ -68,8 +90,11 @@ private:
 	void Kill();
 
 protected:
-	float damageTimer = 0.0f;
-	float damageDuration = 0.2f;
+	float blinkTimer = 0.0f;
+	float blinkDuration = 0.2f;
+
+	Color originalColor;
+	Color blinkColor;
 
 	SpriteRendererComponent* spriteRenderer;
 	bool isAlive = true;
@@ -78,6 +103,11 @@ protected:
 	std::string characterName;
 
 	CharacterAttributes attributes;
+
+private:
+	PlayerController* playerController;
+
+	DelegateHandle clickHandle;
 };
 
 #endif // __CHARACTER_H_INCLUDED__

@@ -2,6 +2,11 @@
 #include "Core/Random.h"
 #include "World/Level/Scene/Scene.h"
 
+EnemySpawner::~EnemySpawner()
+{
+	characterDatas.clear();
+}
+
 std::vector<Enemy*> EnemySpawner::GenerateEnemies()
 {
 	std::vector<Enemy*> spawnedEnemies;

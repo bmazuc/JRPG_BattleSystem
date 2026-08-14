@@ -91,7 +91,8 @@ private:
 	void OnBlinkEnd();
 
 	void OnRightClick();
-	void OnEnemySelected(Enemy* selectedEnemy);
+	void OnPlayerCharacterSelected(Character* selectedCharacter);
+	void OnEnemySelected(Character* selectedCharacter);
 
 	void InflictDamage(Character* attacker, Character* Defender);
 

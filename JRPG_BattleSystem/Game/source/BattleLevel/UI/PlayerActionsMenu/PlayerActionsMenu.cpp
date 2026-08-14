@@ -15,13 +15,13 @@ void PlayerActionsMenu::Construct()
 	fleeButton->GetMaterial()->SetTexture("button");
 
 	attackButtonText = CreateWidget<Text>("AttackButtonText", UISpawnInfo(attackButton, TransformSpace::Local));
-	attackButtonText->SetSize(24);
+	attackButtonText->SetSize(20);
 
 	skillButtonText = CreateWidget<Text>("SkillButtonText", UISpawnInfo(skillButton, TransformSpace::Local));
-	skillButtonText->SetSize(24);
+	skillButtonText->SetSize(20);
 
 	fleeButtonText = CreateWidget<Text>("FleeButtonText", UISpawnInfo(fleeButton, TransformSpace::Local));
-	fleeButtonText->SetSize(24);
+	fleeButtonText->SetSize(20);
 
 	UpdateSize();
 
@@ -45,19 +45,31 @@ void PlayerActionsMenu::Show(PlayerCharacter* currentCharacter)
 
 	if (ability)
 	{
-		attackButton->AssociateAbility(ability);
+		Color color = ability->CanPayCost() ? Colors::White : Colors::Grey;
+
+		attackButton->AssociateAbility(ability->CanPayCost() ? ability : nullptr);
+		attackButton->GetMaterial()->SetColor(color);
+		attackButtonText->SetColor(color);
 		attackButtonText->SetContent(ability->GetName());
 	}
 
 	if (ability = currentCharacter->TryGetAbility("skill"))
 	{
-		skillButton->AssociateAbility(ability);
-		skillButtonText->SetContent(ability->GetName());
+		Color color = ability->CanPayCost() ? Colors::White : Colors::Grey;
+
+		skillButton->AssociateAbility(ability->CanPayCost() ? ability : nullptr);
+		skillButton->GetMaterial()->SetColor(color);
+		skillButtonText->SetColor(color);
+		skillButtonText->SetContent(ability->GetName() + " [" + std::to_string(ability->GetManaCost()) + "]");
 	}
 
 	if (ability = currentCharacter->TryGetAbility("flee"))
 	{
-		fleeButton->AssociateAbility(ability);
+		Color color = ability->CanPayCost() ? Colors::White : Colors::Grey;
+
+		fleeButton->AssociateAbility(ability->CanPayCost() ? ability : nullptr);
+		fleeButton->GetMaterial()->SetColor(color);
+		fleeButtonText->SetColor(color);
 		fleeButtonText->SetContent(ability->GetName());
 	}
 
@@ -86,11 +98,11 @@ void PlayerActionsMenu::UpdateSize()
 	buttonSize.y /= 3.0f;
 
 	attackButton->SetLocalPosition(glm::vec2(buttonSize.x / 2.0f, -buttonSize.y));
-	attackButton->SetSize(buttonSize);
+	attackButton->SetSize(buttonSize - (margin / 2.0f));
 
 	skillButton->SetLocalPosition(glm::vec2(buttonSize.x / 2.0f, 0.0f));
-	skillButton->SetSize(buttonSize);
+	skillButton->SetSize(buttonSize - (margin / 2.0f));
 
 	fleeButton->SetLocalPosition(glm::vec2(buttonSize.x / 2.0f, buttonSize.y));
-	fleeButton->SetSize(buttonSize);
+	fleeButton->SetSize(buttonSize - (margin / 2.0f));
 }

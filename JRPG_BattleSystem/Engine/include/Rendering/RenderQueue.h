@@ -1,6 +1,8 @@
 #ifndef __RENDER_QUEUE_H_INCLUDED__
 #define __RENDER_QUEUE_H_INCLUDED__
 
+#include "Rendering/Color.h"
+
 #include <map>
 #include <glm/vec2.hpp>
 #include <glm/vec3.hpp>
@@ -45,11 +47,11 @@ public:
 struct RenderTextItem : public RenderItem
 {
 public:
-	RenderTextItem(glm::mat4 _world, float _size, std::string _content, Font* _font, glm::vec4 _color, TextScaleMode _scaleMode, bool _isCenterX)
+	RenderTextItem(glm::mat4 _world, float _size, std::string _content, Font* _font, Color _color, TextScaleMode _scaleMode, bool _isCenterX)
 		: RenderItem(_world), size(_size), content(_content), font(_font), color(_color), scaleMode(_scaleMode), isCenterX(_isCenterX) {}
 
 	Font* font;
-	glm::vec4 color;
+	Color color;
 
 	TextScaleMode scaleMode;
 	std::string content;

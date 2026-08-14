@@ -11,19 +11,9 @@ public:
 	Enemy(CharacterData data);
 	void BeginDestroy() override;
 
-	void SetupInputs(PlayerController* _playerController) override;
-
-	void OnClick();
-
 	AttackAbility* GetAttackAbility() { return attackAbility; }
 
-	Delegate<void, Enemy*> OnSelected;
-
 private:
-	PlayerController* playerController;
-
-	DelegateHandle clickHandle;
-
 	AttackAbility* attackAbility;
 
 	bool isAlive = true;

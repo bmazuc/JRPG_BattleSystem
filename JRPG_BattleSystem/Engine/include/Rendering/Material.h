@@ -4,7 +4,7 @@
 class Texture;
 class Shader;
 
-#include <glm/vec4.hpp>
+#include "Rendering/Color.h"
 #include <string>
 
 /**
@@ -23,9 +23,9 @@ public:
 	 * @param shaderName Shader resource name.
 	 * @param _color Tint color applied during rendering.
 	 */
-	Material(std::string textureName, std::string shaderName, glm::vec4 _color);
+	Material(std::string textureName, std::string shaderName, Color _color);
 
-	glm::vec4 GetColor() const { return color; }
+	Color GetColor() const { return color; }
 
 	Shader* GetShader() { return shader; }
 	const Shader* GetShader() const { return shader; }
@@ -33,12 +33,12 @@ public:
 	Texture* GetTexture() { return texture; }
 	const Texture* GetTexture() const { return texture; }
 
-	void SetColor(glm::vec4 newColor) { color = newColor; }
+	void SetColor(Color newColor) { color = newColor; }
 	void SetShader(std::string name);
 	void SetTexture(std::string name);
 
 private:
-	glm::vec4 color = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
+	Color color = Colors::White;
 
 	Texture* texture = nullptr;
 	Shader* shader = nullptr;

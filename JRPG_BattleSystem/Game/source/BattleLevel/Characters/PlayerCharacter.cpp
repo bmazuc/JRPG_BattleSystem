@@ -1,13 +1,26 @@
 #include "BattleLevel/Characters/PlayerCharacter.h"
 #include "BattleLevel/Abilities/FleeAbility.h"
 #include "BattleLevel/Abilities/AttackAbility.h"
+#include "Components/Rendering/SpriteRendererComponent.h"
 
-PlayerCharacter::PlayerCharacter(CharacterData data)
-	: Character(data)
+PlayerCharacter::PlayerCharacter(PlayerCharacterData data)
 {
+    characterName = data.characterName;
+
+    spriteRenderer = SpawnSceneComponent<SpriteRendererComponent>("Sprite render", SceneComponentSpawnInfo(),
+        data.textureName, data.shaderName, data.color);
+
+    spriteRenderer->SetSize(data.spriteSize);
+    spriteRenderer->SetZOrder(1);
+
+    attributes = data.attributes;
+
     AttackAbility* attackAbility = new AttackAbility();
     attackAbility->SetOwner(this);
     abilities["attack"] = attackAbility;
+
+    data.skill->SetOwner(this);
+    abilities["skill"] = data.skill;
 
     FleeAbility* fleeAbility = new FleeAbility();
     fleeAbility->SetOwner(this);

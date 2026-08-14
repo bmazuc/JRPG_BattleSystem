@@ -6,10 +6,20 @@
 
 class Ability;
 
+struct PlayerCharacterData : CharacterData
+{
+public:
+	PlayerCharacterData() = default;
+	PlayerCharacterData(std::string _characterName, std::string _textureName, std::string _shaderName, Color _color, glm::vec2 _spriteSize, CharacterAttributes _attributes, Ability* _skill)
+		: CharacterData(_characterName, _textureName, _shaderName, _color, _spriteSize, _attributes), skill(_skill) {}
+
+	Ability* skill;
+};
+
 class PlayerCharacter : public Character
 {
 public:
-	PlayerCharacter(CharacterData data);
+	PlayerCharacter(PlayerCharacterData data);
 
 	void BeginDestroy() override;
 

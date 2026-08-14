@@ -1,11 +1,6 @@
 #include "BattleLevel/Spawners/CharacterSpawner.h"
 #include "Components/Rendering/SpriteRendererComponent.h"
 
-CharacterSpawner::~CharacterSpawner()
-{
-	characterDatas.clear();
-}
-
 void CharacterSpawner::PositionCharacters(std::vector<Character*>& spawnedCharacters)
 {
 	// Compute total width

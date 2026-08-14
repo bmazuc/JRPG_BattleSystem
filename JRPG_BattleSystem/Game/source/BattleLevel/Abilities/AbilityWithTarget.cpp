@@ -1,6 +1,6 @@
 #include "BattleLevel/Abilities/AbilityWithTarget.h"
 
-bool AbilityWithActorTarget::CanExecuteAbility()
+bool AbilityWithActorTarget::CanExecuteAbility() const 
 {
-	return target != nullptr;
+	return Ability::CanExecuteAbility() && (target != nullptr);
 }

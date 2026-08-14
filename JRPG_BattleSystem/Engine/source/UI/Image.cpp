@@ -1,7 +1,7 @@
 #include "UI/Image.h"
 #include "Rendering/Material.h"
 
-Image::Image(std::string textureName, std::string shaderName, glm::vec4 color)
+Image::Image(std::string textureName, std::string shaderName, Color color)
 {
 	material = new Material(textureName, shaderName, color);
 }

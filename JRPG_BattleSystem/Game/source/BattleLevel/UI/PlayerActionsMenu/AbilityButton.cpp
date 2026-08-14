@@ -4,7 +4,7 @@
 
 void AbilityButton::OnClicked()
 {
-	if (ability && battleManager)
+	if (ability && battleManager && ability->CanPayCost())
 	{
 		battleManager->SetCurrentAbility(ability);
 	}

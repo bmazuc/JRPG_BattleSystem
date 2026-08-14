@@ -1,6 +1,4 @@
 #include "BattleLevel/Characters/Enemy.h"
-#include "Components/Rendering/SpriteRendererComponent.h"
-#include "World/PlayerController.h"
 #include "BattleLevel/Abilities/AttackAbility.h"
 
 Enemy::Enemy(CharacterData data)
@@ -10,32 +8,9 @@ Enemy::Enemy(CharacterData data)
     attackAbility->SetOwner(this);
 }
 
-void Enemy::SetupInputs(PlayerController* _playerController)
-{
-    playerController = _playerController;
-    clickHandle = playerController->OnClick.Bind(this, &Enemy::OnClick);
-}
-
-void Enemy::OnClick()
-{
-    if (playerController)
-    {
-        glm::vec2 mousePos = playerController->GetMousePosition();
-        if (spriteRenderer && spriteRenderer->IsHovered(mousePos))
-        {
-            OnSelected.Call(this);
-        }
-    }
-}
-
 void Enemy::BeginDestroy()
 {
-    Actor::BeginDestroy();
-
-    if (playerController)
-    {
-        playerController->OnClick.Unbind(clickHandle);
-    }
+    Character::BeginDestroy();
 
     delete attackAbility;
     attackAbility = nullptr;
