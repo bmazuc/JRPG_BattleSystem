@@ -105,10 +105,9 @@ public:
 	 * Consumes mana from the character.
 	 */
 	void ConsumeMana(int manaAmount);
-	/**
-	 * Restores health and mana.
-	 */
-	void Regenerate(int healthRegen, int manaRegen);
+
+	void RestoreHealth(int amount);
+	void RestoreMana(int amount);
 
 	/**
 	 * Event triggered after the character takes damage.

@@ -29,7 +29,8 @@ bool RegenerateAbility::Execute()
 		return false;
 	}
 
-	characterTarget->Regenerate(healthRegen, manaRegen);
+	characterTarget->RestoreHealth(healthRegen);
+	characterTarget->RestoreMana(manaRegen);
 
 	return true;
 }

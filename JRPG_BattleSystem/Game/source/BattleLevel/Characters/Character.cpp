@@ -87,7 +87,7 @@ void Character::ConsumeMana(int manaAmount)
     OnManaUpdate.Call(attributes.mana, attributes.maxMana);
 }
 
-void Character::Regenerate(int healthRegen, int manaRegen)
+void Character::RestoreHealth(int amount)
 {
     originalColor = spriteRenderer->GetMaterial()->GetColor();
     blinkColor = Colors::Green;
@@ -95,23 +95,26 @@ void Character::Regenerate(int healthRegen, int manaRegen)
 
     blinkTimer = blinkDuration;
 
-    attributes.health += healthRegen;
+    attributes.health += amount;
     if (attributes.health > attributes.maxHealth)
     {
         attributes.health = attributes.maxHealth;
     }
 
-    attributes.mana += manaRegen;
+    OnHealthUpdate.Call(attributes.health, attributes.maxHealth);
+    // Reuse the damage display system to display the healing amount.
+    OnDamageTaken.Call(this, amount);
+}
+
+void Character::RestoreMana(int amount)
+{
+    attributes.mana += amount;
     if (attributes.mana > attributes.maxMana)
     {
         attributes.mana = attributes.maxMana;
     }
 
-    OnHealthUpdate.Call(attributes.health, attributes.maxHealth);
     OnManaUpdate.Call(attributes.mana, attributes.maxMana);
-
-    // Reuse the damage display system to display the healing amount.
-    OnDamageTaken.Call(this, healthRegen);
 }
 
 void Character::Kill()
