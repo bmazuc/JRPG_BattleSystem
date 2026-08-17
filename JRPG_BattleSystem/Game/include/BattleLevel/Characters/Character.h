@@ -64,7 +64,7 @@ public:
 
 	Delegate<void, Character*> OnSelected;
 
-	void SetDamageDuration(float _damageDuration) { blinkDuration = _damageDuration; }
+	void SetBlinkDuration(float _damageDuration) { blinkDuration = _damageDuration; }
 
 	SpriteRendererComponent* GetSpriteRenderer() { return spriteRenderer; }
 	const SpriteRendererComponent* GetSpriteRenderer() const { return spriteRenderer; }
@@ -85,29 +85,29 @@ public:
 
 	const CharacterAttributes& GetAttributes() { return attributes; }
 
-private:
-	void Blink(float t);
-	void Kill();
-
 protected:
-	float blinkTimer = 0.0f;
-	float blinkDuration = 0.2f;
-
-	Color originalColor;
-	Color blinkColor;
-
 	SpriteRendererComponent* spriteRenderer;
-	bool isAlive = true;
-	bool isPendingKill = false;
 
 	std::string characterName;
 
 	CharacterAttributes attributes;
 
 private:
+	void Blink(float t);
+	void Kill();
+
+	float blinkTimer = 0.0f;
+	float blinkDuration = 0.2f;
+
+	Color originalColor;
+	Color blinkColor;
+
 	PlayerController* playerController;
 
 	DelegateHandle clickHandle;
+
+	bool isPendingKill = false;
+	bool isAlive = true;
 };
 
 #endif // __CHARACTER_H_INCLUDED__

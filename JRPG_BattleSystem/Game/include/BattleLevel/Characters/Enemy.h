@@ -15,8 +15,6 @@ public:
 
 private:
 	AttackAbility* attackAbility;
-
-	bool isAlive = true;
 };
 
 #endif // __ENEMY_H_INCLUDED__

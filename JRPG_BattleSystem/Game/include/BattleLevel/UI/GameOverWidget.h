@@ -5,6 +5,12 @@
 
 class Text;
 
+/**
+ * Defines the game over screen, including its UI composition, layout, and appearance.
+ *
+ * This widget encapsulates the construction and visual configuration of its
+ * UI elements. Gameplay-specific data is supplied through its public interface.
+ */
 class GameOverWidget : public UserWidget
 {
 public:

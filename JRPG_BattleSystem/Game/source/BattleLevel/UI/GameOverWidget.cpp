@@ -6,7 +6,7 @@
 void GameOverWidget::Construct()
 {
 	text = CreateWidget<Text>("GameOverText", UISpawnInfo(nullptr, TransformSpace::Local,glm::vec2(0, -30)));
-	text->SetSize(24);
+	text->SetSize(24.0f);
 
 	LoadLevelButton* mainMenuButton = CreateWidget<LoadLevelButton>("MainMenuButton", UISpawnInfo(nullptr, TransformSpace::Local, glm::vec2(0, 30)));
 	mainMenuButton->GetMaterial()->SetTexture("button");
@@ -15,7 +15,7 @@ void GameOverWidget::Construct()
 
 	Text* mainMenuButtonText = CreateWidget<Text>("MainMenuButtonText", UISpawnInfo(mainMenuButton, TransformSpace::Local));
 	mainMenuButtonText->SetContent("Main Menu");
-	mainMenuButtonText->SetSize(24);
+	mainMenuButtonText->SetSize(24.0f);
 }
 
 void GameOverWidget::SetKillCount(int killCount)

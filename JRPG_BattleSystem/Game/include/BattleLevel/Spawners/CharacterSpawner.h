@@ -14,7 +14,6 @@ public:
 protected:
 	void PositionCharacters(std::vector<Character*>& spawnedCharacters);
 
-	unsigned int groupSize = 3;
 	float spacing = 0;
 };
 

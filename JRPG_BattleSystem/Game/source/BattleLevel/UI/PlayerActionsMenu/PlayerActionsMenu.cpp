@@ -15,13 +15,13 @@ void PlayerActionsMenu::Construct()
 	fleeButton->GetMaterial()->SetTexture("button");
 
 	attackButtonText = CreateWidget<Text>("AttackButtonText", UISpawnInfo(attackButton, TransformSpace::Local));
-	attackButtonText->SetSize(20);
+	attackButtonText->SetSize(fontSize);
 
 	skillButtonText = CreateWidget<Text>("SkillButtonText", UISpawnInfo(skillButton, TransformSpace::Local));
-	skillButtonText->SetSize(20);
+	skillButtonText->SetSize(fontSize);
 
 	fleeButtonText = CreateWidget<Text>("FleeButtonText", UISpawnInfo(fleeButton, TransformSpace::Local));
-	fleeButtonText->SetSize(20);
+	fleeButtonText->SetSize(fontSize);
 
 	UpdateSize();
 

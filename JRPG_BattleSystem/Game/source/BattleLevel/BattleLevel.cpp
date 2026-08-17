@@ -38,6 +38,7 @@ void BattleLevel::CreateLevel()
 	Scene* scene = GetScene();
 
 	EnemySpawner* enemySpawner = scene->SpawnActor<EnemySpawner>("EnemySpawner", ActorSpawnInfo(nullptr, TransformSpace::World, glm::vec2(100, 160)));
+	enemySpawner->SetGroupSize(3);
 	enemySpawner->AddCharacterData(CharacterData("", "goblin", "default", Colors::White, glm::vec2(80, 83), 
 		CharacterAttributes(60, 0, 30, 10, 0, 0)));
 	enemySpawner->AddCharacterData(CharacterData("", "goblin2", "default", Colors::White, glm::vec2(80, 83),
@@ -83,7 +84,6 @@ void BattleLevel::CreateBattleUI(BattleManager* battleManager, UISystem* uiSyste
 {
 	BattleWidget* battleWidget = uiSystem->CreateUserWidget<BattleWidget>("BattleWidget", UISpawnInfo());
 	battleWidget->SetCurrentScene(GetScene());
-	battleWidget->SetInfosBackgroundTexture("button");
 	battleManager->SetBattleWidget(battleWidget);
 
 	CountdownWidget* countdownWidget = uiSystem->CreateUserWidget<CountdownWidget>("CountdownWidget", UISpawnInfo(nullptr, TransformSpace::World, glm::vec2(320, 240)));

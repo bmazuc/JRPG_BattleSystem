@@ -100,7 +100,7 @@ void BattleManager::SpawnPlayerCharacters()
 		playerCharacters = playerSpawner->GeneratePlayerGroup();
 		for (PlayerCharacter* playerCharacter : playerCharacters)
 		{
-			playerCharacter->SetDamageDuration(battleConfig.blinkDuration);
+			playerCharacter->SetBlinkDuration(battleConfig.blinkDuration);
 			playerCharacter->OnSelected.Bind(this, &BattleManager::OnPlayerCharacterSelected);
 			playerCharacter->OnDamageTaken.Bind(this, &BattleManager::OnCharacterTakeDamage);
 			playerCharacter->OnBlinkEnd.Bind(this, &BattleManager::OnBlinkEnd);
@@ -121,7 +121,7 @@ void BattleManager::SpawnEnemies()
 		enemies = enemySpawner->GenerateEnemies();
 		for (Enemy* enemy : enemies)
 		{
-			enemy->SetDamageDuration(battleConfig.blinkDuration);
+			enemy->SetBlinkDuration(battleConfig.blinkDuration);
 
 			enemy->OnSelected.Bind(this, &BattleManager::OnEnemySelected);
 			enemy->OnDamageTaken.Bind(this, &BattleManager::OnCharacterTakeDamage);

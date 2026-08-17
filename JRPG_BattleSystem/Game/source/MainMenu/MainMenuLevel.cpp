@@ -20,7 +20,7 @@ void MainMenuLevel::CreateLevel()
     
     Text* text = mainMenuWidget->CreateWidget<Text>("Title", UISpawnInfo(nullptr, TransformSpace::World, glm::vec2(320, 140)));
     text->SetContent("JRPG_BattleSystem");
-    text->SetSize(36);
+    text->SetSize(36.0f);
 
     CreateLoadLevelButton(glm::vec2(320, 300), glm::vec2(75, 50),
         "battleLevel",

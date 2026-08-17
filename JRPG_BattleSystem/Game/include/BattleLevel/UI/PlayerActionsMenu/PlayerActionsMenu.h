@@ -15,6 +15,7 @@ public:
 
 	void SetSize(glm::vec2 inSize);
 	void SetMargin(glm::vec2 inMargin) { margin = inMargin; }
+	void SetFontSize(float inFontSize) { fontSize = inFontSize; }
 
 	void Init(BattleManager* battleManager);
 	void Show(PlayerCharacter* currentCharacter);
@@ -23,9 +24,9 @@ public:
 private:
 	void UpdateSize();
 
-private:
 	glm::vec2 size;
 	glm::vec2 margin = glm::vec2(1.0f, 1.0f);
+	float fontSize = 20.0f;
 
 	bool isConstructed = false;
 

@@ -5,7 +5,7 @@ void CountdownWidget::Construct()
 {
 	countdownText = CreateWidget<Text>("TurnText", UISpawnInfo(nullptr, TransformSpace::Local));
 	countdownText->SetContent(std::to_string(count));
-	countdownText->SetSize(24);
+	countdownText->SetSize(24.0f);
 
 	timer = inBetweenCountDuration;
 }

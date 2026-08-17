@@ -19,6 +19,12 @@ public:
 	float lifeTime = 0.0f;
 };
 
+/**
+ * Defines the battle UI, including its composition, layout, and appearance.
+ * It is also responsible for displaying damage.
+ * This widget encapsulates the construction and visual configuration of its
+ * UI elements. Gameplay-specific data is supplied through its public interface.
+ */
 class BattleWidget : public UserWidget
 {
 public:
@@ -32,8 +38,6 @@ public:
 	void SetCurrentScene(Scene* scene) { currentScene = scene; }
 	void SetDamageTextDuration(float duration) { damageTextDuration = duration; }
 	void SetDamageTextSpeed(float speed) { damageTextSpeed = speed; }
-
-	void SetInfosBackgroundTexture(std::string textureName) { infosBackgroundTextureName = textureName; }
 
 	void DisplayDamage(glm::vec2 worldPosition, int damageTaken);
 
@@ -54,8 +58,6 @@ private:
 
 	float damageTextDuration = 1.0f;
 	float damageTextSpeed = 30.0f;
-
-	std::string infosBackgroundTextureName = "default";
 };
  
 #endif // __BATTLE_WIDGET_H_INCLUDED__

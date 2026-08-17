@@ -11,15 +11,16 @@
 void BattleWidget::Construct()
 {
 	turnText = CreateWidget<Text>("TurnText", UISpawnInfo(nullptr, TransformSpace::World, glm::vec2(100, 20)));
-	turnText->SetSize(24);
+	turnText->SetSize(24.0f);
 
 	infosBackground = CreateWidget<Image>("InfosBackground", UISpawnInfo(nullptr, TransformSpace::World, glm::vec2(220, 385)));
 	infosBackground->SetSize(glm::vec2(400, 150));
-	infosBackground->GetMaterial()->SetTexture(infosBackgroundTextureName);
+	infosBackground->GetMaterial()->SetTexture("button");
 
 	playerActionsMenu = CreateWidget<PlayerActionsMenu>("PlayerActionsMenu", UISpawnInfo(nullptr, TransformSpace::World, glm::vec2(440, 385)));
 	playerActionsMenu->SetSize(glm::vec2(180, 150));
 	playerActionsMenu->SetMargin(glm::vec2(4.0f, 4.0f));
+	playerActionsMenu->SetFontSize(20.0f);
 	playerActionsMenu->SetVisible(false);
 }
 
@@ -29,7 +30,7 @@ void BattleWidget::InitCharacterInfos(std::vector<PlayerCharacter*> characters)
 	for (PlayerCharacter* character : characters)
 	{
 		CharacterInfosText* text = CreateWidget<CharacterInfosText>("CharacterInfosText", UISpawnInfo(nullptr, TransformSpace::World, position));
-		text->SetSize(15);
+		text->SetSize(15.0f);
 		text->AssociateCharacter(character);
 		text->SetIsCenterX(false);
 		position.y += 30;
@@ -80,7 +81,7 @@ void BattleWidget::DisplayDamage(glm::vec2 worldPosition, int damageTaken)
 	{
 		glm::vec2 screenPosition = currentScene->GetActiveCamera()->WorldToScreen(worldPosition);
 		Text* text = CreateWidget<Text>("DamageText", UISpawnInfo(nullptr, TransformSpace::World, screenPosition));
-		text->SetSize(24);
+		text->SetSize(24.0f);
 		text->SetContent(std::to_string(damageTaken));
 
 		currentDamageTextDisplayed.push_back(DamageDisplayTextData(text));

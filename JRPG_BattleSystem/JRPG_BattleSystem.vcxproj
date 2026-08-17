@@ -247,7 +247,6 @@
     <ClInclude Include="Game\include\BattleLevel\Abilities\SpellAbility.h" />
     <ClInclude Include="Game\include\BattleLevel\BattleLevel.h" />
     <ClInclude Include="Game\include\BattleLevel\BattleManager.h" />
-    <ClInclude Include="Game\include\BattleLevel\CharacterSpawner.h" />
     <ClInclude Include="Game\include\BattleLevel\Characters\Character.h" />
     <ClInclude Include="Game\include\BattleLevel\Characters\Enemy.h" />
     <ClInclude Include="Game\include\BattleLevel\Characters\PlayerCharacter.h" />
