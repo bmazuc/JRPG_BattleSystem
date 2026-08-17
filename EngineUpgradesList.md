@@ -4,6 +4,12 @@ Some can be done later in the project. Others will be over-engineering for this 
 
 
 
+\#editor
+
+* Add an editor.
+
+
+
 \#Persistance
 
 * Add object living through levels
