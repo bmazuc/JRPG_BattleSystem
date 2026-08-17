@@ -36,7 +36,7 @@ void BattleManager::Initialize()
 
 void BattleManager::Update(float deltaTime)
 {
-	// Enemy turn simulation
+	// Enemy turn simulation. Delay enemy actions to make the AI turn easier to follow visually.
 	if (currentState == BattleState::ENEMY_TURN)
 	{
 		currentEnemyTurnDuration -= deltaTime;
@@ -154,6 +154,7 @@ void BattleManager::OnAllDamageTextDestroy()
 
 void BattleManager::NextTurn()
 {
+	// Do not start the next turn until all visual feedback from the previous action has completed.
 	if (waitingForBlinkEnd || waitingForDamageTextDestroy)
 	{
 		return;
@@ -265,17 +266,6 @@ void BattleManager::OnEnemySelected(Character* selectedCharacter)
 	}
 }
 
-void BattleManager::InflictDamage(Character* attacker, Character* defender)
-{
-	currentState = BattleState::RESOLVING_TURN;
-	waitingForBlinkEnd = true;
-	waitingForDamageTextDestroy = true;
-
-	int damages = std::max(0, attacker->GetAttributes().attack - defender->GetAttributes().defense);
-
-	defender->TakeDamage(damages);
-}
-
 void BattleManager::OnCountdownEnd()
 {
 	countdownWidget = nullptr;
@@ -322,6 +312,7 @@ void BattleManager::SetCurrentAbility(Ability* inAbility)
 	currentAbilityWithActorTarget = dynamic_cast<AbilityWithActorTarget*>(inAbility);
 	if (currentAbilityWithActorTarget)
 	{
+		// Targeted abilities require an additional player input step.
 		currentState = BattleState::WAIT_FOR_TARGET;
 		if (battleWidget)
 		{
@@ -330,6 +321,7 @@ void BattleManager::SetCurrentAbility(Ability* inAbility)
 	}
 	else
 	{
+		// Non-targeted abilities can be executed immediately.
 		inAbility->Execute();
 	}
 }

@@ -185,7 +185,6 @@
     <ClCompile Include="Game\source\BattleLevel\UI\BattleWidget.cpp" />
     <ClCompile Include="Game\source\BattleLevel\UI\CharacterInfosText.cpp" />
     <ClCompile Include="Game\source\BattleLevel\UI\CountdownWidget.cpp" />
-    <ClCompile Include="Game\source\BattleLevel\UI\DamageDisplayer.cpp" />
     <ClCompile Include="Game\source\BattleLevel\UI\GameOverWidget.cpp" />
     <ClCompile Include="Game\source\BattleLevel\UI\PlayerActionsMenu\AbilityButton.cpp" />
     <ClCompile Include="Game\source\BattleLevel\UI\PlayerActionsMenu\PlayerActionsMenu.cpp" />
@@ -256,7 +255,6 @@
     <ClInclude Include="Game\include\BattleLevel\UI\BattleWidget.h" />
     <ClInclude Include="Game\include\BattleLevel\UI\CharacterInfosText.h" />
     <ClInclude Include="Game\include\BattleLevel\UI\CountdownWidget.h" />
-    <ClInclude Include="Game\include\BattleLevel\UI\DamageDisplayer.h" />
     <ClInclude Include="Game\include\BattleLevel\UI\GameOverWidget.h" />
     <ClInclude Include="Game\include\BattleLevel\UI\PlayerActionsMenu\AbilityButton.h" />
     <ClInclude Include="Game\include\BattleLevel\UI\PlayerActionsMenu\PlayerActionsMenu.h" />

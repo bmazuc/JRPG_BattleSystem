@@ -5,6 +5,10 @@
 
 class BattleManager;
 
+/**
+ * Ability used to flee from the current battle.
+ * It interacts directly with the battle manager to end the current battle.
+ */
 class FleeAbility : public Ability
 {
 public:
@@ -12,10 +16,14 @@ public:
 
 	bool CanExecuteAbility() const override;
 
+	/**
+	 * Ends the current battle.
+	 */
 	bool Execute() override;
 	void SetBattleManager(BattleManager* inBattleManager) { battleManager = inBattleManager; }
 
 private:
+	// Battle manager responsible for ending the current battle.
 	BattleManager* battleManager;
 };
 

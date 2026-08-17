@@ -24,7 +24,7 @@ void GameOverWidget::SetKillCount(int killCount)
 	{
 		std::string gameOverText = "You have killed ";
 		gameOverText += std::to_string(killCount);
-		gameOverText += (killCount > 1) ? " enemies" : " enemy.";
+		gameOverText += (killCount > 1) ? " enemies." : " enemy.";
 
 		text->SetContent(gameOverText);
 	}

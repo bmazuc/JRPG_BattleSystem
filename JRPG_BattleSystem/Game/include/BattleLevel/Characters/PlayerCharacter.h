@@ -6,6 +6,10 @@
 
 class Ability;
 
+/**
+ * Configuration data used to initialize a player character.
+ * Extends CharacterData with the character's unique skill ability.
+ */
 struct PlayerCharacterData : CharacterData
 {
 public:
@@ -16,6 +20,10 @@ public:
 	Ability* skill;
 };
 
+/**
+ * Playable character controlled by the player.
+ * Extends Character with a collection of abilities, including basic attack, unique skill, and flee actions.
+ */
 class PlayerCharacter : public Character
 {
 public:
@@ -23,10 +31,14 @@ public:
 
 	void BeginDestroy() override;
 
+	/**
+	 * Searches for an ability by name.
+	 */
 	Ability* TryGetAbility(std::string abilityName);
 	const Ability* TryGetAbility(std::string abilityName) const;
 
 private:
+	// Abilities owned by the player character, indexed by name.
 	std::map<std::string, Ability*> abilities;
 };
 

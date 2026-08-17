@@ -21,6 +21,12 @@ class UserWidget;
 class Ability;
 class AbilityWithActorTarget;
 
+/**
+ * Represents the different states of a battle turn.
+ *
+ * The battle manager uses this state machine to control the flow
+ * of the battle and determine which player interactions are allowed.
+ */
 enum class BattleState
 {
 	INIT,
@@ -53,9 +59,28 @@ public:
 	float damageTextSpeed = 30.0f;
 };
 
+/**
+ * Manages the complete flow of a turn-based battle.
+ *
+ * Responsible for:
+ * - battle initialization and character spawning
+ * - turn order generation and progression
+ * - player action and target selection
+ * - enemy turn simulation
+ * - action resolution and visual feedback synchronization
+ * - battle state management
+ * - battle UI coordination
+ * - battle end conditions
+ *
+ * The battle flow is controlled through BattleState, allowing gameplay
+ * actions, input and visual feedback to be processed independently.
+ */
 class BattleManager : public LevelSubsystem
 {
 public:
+	/**
+	 * Initializes the battle and starts the opening countdown.
+	 */
 	void Initialize() override;
 	void Update(float deltaTime) override;
 
@@ -72,30 +97,58 @@ public:
 
 	void SetBattleConfig(BattleConfig& config) { battleConfig = config; }
 
+	/**
+	 * Ends the current battle and displays the game over screen.
+	 */
 	void EndBattle();
 
 private:
+	/**
+	 * Builds a randomized turn order from all living characters.
+	 */
 	void GenerateTurnOrder();
+	/**
+	 * Advances to the next character in the turn order.
+	 */
 	void NextTurn();
 
 	void OnBattleWidgetConstruct(UserWidget* widget);
 	void OnPlayerActionsMenuConstruct(UserWidget* widget);
 
+	/**
+	 * Spawns and initializes all player characters participating in the battle.
+	 */
 	void SpawnPlayerCharacters();
+	/**
+	 * Spawns and initializes the current group of enemies.
+	 */
 	void SpawnEnemies();
 
 	void OnAllDamageTextDestroy();
+	/**
+	 * Displays visual feedback for damage or regeneration applied to a character.
+	 */
 	void OnCharacterTakeDamage(Character* character, int damage);
+	/**
+	 * Handles player character death and removes the character from the active turn order.
+	 */
 	void OnPlayerCharacterDeath(Character* playerCharacter);
+	/**
+	 * Handles enemy death, removes the enemy from the active turn order, and updates the kill counter.
+	 */
 	void OnEnemyDeath(Character* enemy);
 	void OnBlinkEnd();
 
+	/**
+	 * Handles right-click input used to cancel target selection.
+	 */
 	void OnRightClick();
 	void OnPlayerCharacterSelected(Character* selectedCharacter);
 	void OnEnemySelected(Character* selectedCharacter);
 
-	void InflictDamage(Character* attacker, Character* Defender);
-
+	/**
+	 * Starts the battle once the initial countdown has completed.
+	 */
 	void OnCountdownEnd();
 
 private:
@@ -103,10 +156,15 @@ private:
 	PlayerSpawner* playerSpawner;
 	EnemySpawner* enemySpawner;
 
+	// Characters participating in the current battle.
+
 	std::vector<PlayerCharacter*> playerCharacters;
 	std::vector<Enemy*> enemies;
+
+	// Randomized order in which characters take their turns.
 	std::vector<Character*> turnOrder;
 
+	// Index of the next character in the turn order.
 	int turnIndex = 0;
 
 	BattleState currentState;
@@ -117,6 +175,7 @@ private:
 
 	BattleConfig battleConfig;
 
+	// Remaining delay before an enemy executes its action.
 	float currentEnemyTurnDuration;
 
 	DelegateHandle OnAllDamageTextDestroyHandle;
@@ -125,11 +184,15 @@ private:
 
 	Character* currentCharacter;
 
+	// Action resolution waits for visual feedback to complete.
+
 	bool waitingForBlinkEnd = false;
 	bool waitingForDamageTextDestroy = false;
 
+	// Number of enemies defeated during the battle.
 	int killCount = 0;
 
+	// Currently selected targeted ability.
 	AbilityWithActorTarget* currentAbilityWithActorTarget = nullptr;
 
 	PlayerController* playerController;

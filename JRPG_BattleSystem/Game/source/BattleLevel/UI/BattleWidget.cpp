@@ -46,10 +46,12 @@ void BattleWidget::Update(float deltaTime)
 
 		damageTextData.lifeTime += deltaTime;
 
+		// Fade the text linearly over its configured lifetime.
 		Color color = damageTextData.text->GetColor();
 		color.a = 1.0f - damageTextData.lifeTime / damageTextDuration;
 		damageTextData.text->SetColor(color);
 
+		// Move the damage amount upward while it is displayed.
 		glm::vec2 pos = damageTextData.text->GetWorldPosition();
 		pos.y -= damageTextSpeed * deltaTime;
 		damageTextData.text->SetWorldPosition(pos);
@@ -61,6 +63,7 @@ void BattleWidget::Update(float deltaTime)
 		}
 	}
 
+	// Notify listeners once the last active damage text has been destroyed.
 	if (damageTextCount > 0 && currentDamageTextDisplayed.size() <= 0)
 	{
 		OnAllDamageTextDestroy.Call();
@@ -79,6 +82,7 @@ void BattleWidget::DisplayDamage(glm::vec2 worldPosition, int damageTaken)
 {
 	if (currentScene)
 	{
+		// Convert the character's world position into a screen-space UI position.
 		glm::vec2 screenPosition = currentScene->GetActiveCamera()->WorldToScreen(worldPosition);
 		Text* text = CreateWidget<Text>("DamageText", UISpawnInfo(nullptr, TransformSpace::World, screenPosition));
 		text->SetSize(24.0f);

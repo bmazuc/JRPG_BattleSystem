@@ -6,6 +6,10 @@
 class Ability;
 class BattleManager;
 
+/**
+ * Button associated with a gameplay ability.
+ * When clicked, the button validates the associated ability and asks the battle manager to make it the currently selected action.
+ */
 class AbilityButton : public Button
 {
 public:

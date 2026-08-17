@@ -23,7 +23,7 @@ void PlayerActionsMenu::Construct()
 	fleeButtonText = CreateWidget<Text>("FleeButtonText", UISpawnInfo(fleeButton, TransformSpace::Local));
 	fleeButtonText->SetSize(fontSize);
 
-	UpdateSize();
+	UpdateButtonsSize();
 
 	isConstructed = true;
 }
@@ -88,11 +88,11 @@ void PlayerActionsMenu::SetSize(glm::vec2 inSize)
 	size = inSize; 
 	if (isConstructed)
 	{
-		UpdateSize();
+		UpdateButtonsSize();
 	}
 }
 
-void PlayerActionsMenu::UpdateSize()
+void PlayerActionsMenu::UpdateButtonsSize()
 {
 	glm::vec2 buttonSize = size;
 	buttonSize.y /= 3.0f;

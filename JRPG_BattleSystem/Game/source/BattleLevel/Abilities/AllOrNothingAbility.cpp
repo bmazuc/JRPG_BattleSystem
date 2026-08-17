@@ -25,6 +25,7 @@ bool AllOrNothingAbility::Execute()
 	}
 
 	const CharacterAttributes& attributes = owner->GetAttributes();
+	// Bonus damage increases as the owner's health decreases.
 	int damages = std::max(0, attributes.attack - defender->GetAttributes().defense) + (int)std::ceil(bonusDamage * (1.0f - (attributes.health / attributes.maxHealth)));
 	defender->TakeDamage(damages);
 

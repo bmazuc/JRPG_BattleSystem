@@ -5,6 +5,10 @@
 
 class AttackAbility;
 
+/**
+ * Non-playable character controlled by the game.
+ * Extends Character with enemy-specific combat abilities.
+ */
 class Enemy : public Character
 {
 public:

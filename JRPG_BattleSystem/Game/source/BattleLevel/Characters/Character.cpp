@@ -40,11 +40,13 @@ void Character::Update(float deltaTime)
     {
         blinkTimer -= deltaTime;
 
+        // Convert remaining time into a normalized interpolation value.
         float t = 1.0f - (blinkTimer / blinkDuration);
         Blink(t);
 
         if (blinkTimer <= 0.0f)
         {
+            // Delay destruction until the visual feedback has finished.
             if (isPendingKill)
             {
                 Kill();
@@ -73,7 +75,7 @@ void Character::TakeDamage(int damage)
     OnDamageTaken.Call(this, damage);
 }
 
-void Character::UseMana(int manaAmount)
+void Character::ConsumeMana(int manaAmount)
 {
     attributes.mana -= manaAmount;
 
@@ -85,7 +87,7 @@ void Character::UseMana(int manaAmount)
     OnManaUpdate.Call(attributes.mana, attributes.maxMana);
 }
 
-void Character::Regen(int healthRegen, int manaRegen)
+void Character::Regenerate(int healthRegen, int manaRegen)
 {
     originalColor = spriteRenderer->GetMaterial()->GetColor();
     blinkColor = Colors::Green;
@@ -108,6 +110,7 @@ void Character::Regen(int healthRegen, int manaRegen)
     OnHealthUpdate.Call(attributes.health, attributes.maxHealth);
     OnManaUpdate.Call(attributes.mana, attributes.maxMana);
 
+    // Reuse the damage display system to display the healing amount.
     OnDamageTaken.Call(this, healthRegen);
 }
 

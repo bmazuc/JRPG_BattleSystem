@@ -18,11 +18,13 @@ void CountdownWidget::Update(float deltaTime)
 		count -= 1;
 		if (count < 0)
 		{
+			// Notify listeners that the countdown has completed.
 			OnCountdownEnd.Call();
 			MarkForDestruction();
 		}
 		else if (count == 0)
 		{
+			// Replace the final number with the start message.
 			countdownText->SetContent("Start");
 			timer = inBetweenCountDuration;
 		}

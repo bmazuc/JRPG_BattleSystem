@@ -3,7 +3,7 @@
 
 void CharacterSpawner::PositionCharacters(std::vector<Character*>& spawnedCharacters)
 {
-	// Compute total width
+	// Compute total height
 	float totalHeight = 0;
 	for (const Character* character : spawnedCharacters)
 	{

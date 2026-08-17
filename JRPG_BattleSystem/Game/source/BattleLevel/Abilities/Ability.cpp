@@ -3,6 +3,7 @@
 
 bool Ability::CanPayCost() const
 {
+	// Abilities with no mana cost are always affordable.
 	if (manaCost == 0)
 	{
 		return true;
@@ -20,6 +21,6 @@ void Ability::PayCost()
 {
 	if (owner)
 	{
-		owner->UseMana(manaCost);
+		owner->ConsumeMana(manaCost);
 	}
 }
